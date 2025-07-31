@@ -11,15 +11,25 @@ const Header = () => {
 
   const navigation = [
     { name: "Home", href: "/" },
-    { name: "Assessments", href: "/assessments" },
     { name: "About", href: "/about" },
     { name: "Blog", href: "/blog" },
+  ];
+
+  // Assessment categories for secondary navigation
+  const assessmentCategories = [
+    { name: "Technology", href: "/assessments#technology-programming" },
+    { name: "Bussiness", href: "/assessments#bussiness-information-systems" },
+    { name: "Design", href: "/assessments#design-user-experience" },
+    { name: "Health Care", href: "/assessments#health-care" },
+    { name: "Engineering", href: "/assessments#engineering" },
+    { name: "Security", href: "/assessments#security" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+         <header className="sticky top-0 z-50 w-full border-b bg-background">
+      {/* Main Header */}
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
@@ -48,7 +58,7 @@ const Header = () => {
           </nav>
 
           {/* Search Bar */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* <div className="hidden md:flex items-center space-x-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
@@ -59,7 +69,7 @@ const Header = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Mobile menu button */}
           <Button
@@ -110,6 +120,29 @@ const Header = () => {
           </div>
         )}
       </div>
+
+      {/* Secondary Navigation - Assessment Categories (Only on Assessments page) */}
+      {location.pathname === "/assessments" && (
+        <div className="border-t border-border/40 bg-background/80">
+          <div className="container mx-auto px-4">
+                         <nav className="flex items-center space-x-12 overflow-x-auto py-4">
+               {assessmentCategories.map((category) => (
+                 <Link
+                   key={category.name}
+                   to={category.href}
+                   className={`text-sm font-medium whitespace-nowrap transition-colors hover:text-thinkera-purple px-2 py-1 ${
+                     location.hash === category.href.split("#")[1]
+                       ? "text-thinkera-purple border-b-2 border-thinkera-purple"
+                       : "text-muted-foreground"
+                   }`}
+                 >
+                   {category.name}
+                 </Link>
+               ))}
+             </nav>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

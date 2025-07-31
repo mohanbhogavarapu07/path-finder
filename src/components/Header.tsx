@@ -16,7 +16,7 @@ const Header: React.FC<HeaderProps> = ({
   logoType = "sparkles",
   navLinks = [
     { to: "/", label: "Home" },
-    { to: "/assessments", label: "Assessments" },
+    // { to: "/assessments", label: "Assessments" },
     { to: "/about", label: "About" },
     { to: "/blog", label: "Blog" },
   ],

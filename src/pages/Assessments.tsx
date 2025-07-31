@@ -19,8 +19,7 @@ const Assessments = () => {
           id: "full-stack",
           title: "Full Stack Development",
           description: "Comprehensive assessment for front-end and back-end development skills",
-          duration: "45 minutes",
-          difficulty: "Intermediate",
+          duration: "45 mins",
           tags: ["JavaScript", "React", "Node.js"],
           popular: true,
           participants: "75K+",
@@ -32,8 +31,7 @@ const Assessments = () => {
           id: "data-science",
           title: "Data Science & AI/ML",
           description: "Evaluate your aptitude for data science and machine learning careers",
-          duration: "50 minutes",
-          difficulty: "Advanced",
+          duration: "50 mins",
           tags: ["Python", "Statistics", "Machine Learning"],
           popular: true,
           participants: "50K+",
@@ -45,8 +43,7 @@ const Assessments = () => {
           id: "devops",
           title: "DevOps Engineering",
           description: "Assessment for cloud infrastructure and deployment expertise",
-          duration: "40 minutes",
-          difficulty: "Intermediate",
+          duration: "40 mins",
           tags: ["AWS", "Docker", "CI/CD"],
           popular: false,
           participants: "30K+",
@@ -65,8 +62,7 @@ const Assessments = () => {
           id: "aws-cloud",
           title: "AWS Cloud Architect",
           description: "Comprehensive AWS skills and cloud architecture assessment",
-          duration: "55 minutes",
-          difficulty: "Advanced",
+          duration: "55 mins",
           tags: ["AWS", "Cloud Architecture", "Security"],
           popular: true,
           participants: "40K+",
@@ -78,8 +74,7 @@ const Assessments = () => {
           id: "multi-cloud",
           title: "Multi-Cloud Engineer",
           description: "Cross-platform cloud expertise evaluation",
-          duration: "60 minutes",
-          difficulty: "Expert",
+          duration: "60 mins",
           tags: ["AWS", "Azure", "GCP"],
           popular: false,
           participants: "25K+",
@@ -98,8 +93,7 @@ const Assessments = () => {
           id: "flutter",
           title: "Flutter Development",
           description: "Cross-platform mobile development skills assessment",
-          duration: "45 minutes",
-          difficulty: "Intermediate",
+          duration: "45 mins",
           tags: ["Flutter", "Dart", "Mobile UI"],
           popular: false,
           participants: "20K+",
@@ -111,8 +105,7 @@ const Assessments = () => {
           id: "react-native",
           title: "React Native",
           description: "JavaScript-based mobile app development evaluation",
-          duration: "40 minutes",
-          difficulty: "Intermediate",
+          duration: "40 mins",
           tags: ["React Native", "JavaScript", "iOS/Android"],
           popular: false,
           participants: "35K+",
@@ -131,8 +124,7 @@ const Assessments = () => {
           id: "cybersecurity",
           title: "Cybersecurity Specialist",
           description: "Information security and threat analysis capabilities",
-          duration: "50 minutes",
-          difficulty: "Advanced",
+          duration: "50 mins",
           tags: ["Security", "Penetration Testing", "Risk Analysis"],
           popular: true,
           participants: "35K+",
@@ -144,8 +136,7 @@ const Assessments = () => {
           id: "ethical-hacking",
           title: "Ethical Hacking",
           description: "White-hat hacking and vulnerability assessment skills",
-          duration: "55 minutes",
-          difficulty: "Expert",
+          duration: "55 mins",
           tags: ["Penetration Testing", "Network Security", "Vulnerability Assessment"],
           popular: false,
           participants: "15K+",
@@ -164,8 +155,7 @@ const Assessments = () => {
           id: "business-analyst",
           title: "Business Analyst",
           description: "Requirements analysis and business process optimization",
-          duration: "35 minutes",
-          difficulty: "Beginner",
+          duration: "35 mins",
           tags: ["Requirements Analysis", "Process Improvement", "Stakeholder Management"],
           popular: false,
           participants: "25K+",
@@ -177,8 +167,7 @@ const Assessments = () => {
           id: "digital-marketing",
           title: "Digital Marketing",
           description: "Online marketing strategies and campaign management",
-          duration: "40 minutes",
-          difficulty: "Intermediate",
+          duration: "40 mins",
           tags: ["SEO", "Social Media", "Analytics"],
           popular: true,
           participants: "45K+",
@@ -197,8 +186,7 @@ const Assessments = () => {
           id: "ui-ux-design",
           title: "UI/UX Design",
           description: "User interface and experience design capabilities",
-          duration: "45 minutes",
-          difficulty: "Intermediate",
+          duration: "45 mins",
           tags: ["Design Thinking", "Prototyping", "User Research"],
           popular: false,
           participants: "30K+",
@@ -217,7 +205,7 @@ const Assessments = () => {
       <Header />
       
       {/* Hero Section - Omni Calculator Style */}
-      <section className="relative py-24 bg-gradient-to-br from-primary to-primary-variant overflow-hidden">
+      {/* <section className="relative py-24 bg-gradient-to-br from-primary to-primary-variant overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
         <div className="relative container mx-auto px-4">
           <div className="max-w-5xl mx-auto text-center text-white">
@@ -251,30 +239,32 @@ const Assessments = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      {/* Assessment Categories - Omni Style */}
-      <section className="py-20 bg-background">
+             {/* Assessment Categories - Omni Style */}
+       <section className="pt-32 pb-20 bg-background">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <div className="text-left mb-16">
             <h2 className="text-4xl font-bold mb-4 text-foreground">Choose Your Assessment</h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
               Explore our comprehensive range of career assessments, each designed with cutting-edge psychometric research 
               to provide you with accurate, actionable insights about your ideal career path.
             </p>
           </div>
 
-          <div className="space-y-12">
-            {assessmentCategories.map((category, categoryIndex) => {
-              const Icon = category.icon;
-              return (
-                <div key={categoryIndex}>
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className={`p-3 rounded-lg ${category.color}`}>
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-foreground">{category.title}</h3>
-                  </div>
+                     <div className="space-y-12">
+             {assessmentCategories.map((category, categoryIndex) => {
+               const Icon = category.icon;
+               // Create anchor ID from category title
+               const anchorId = category.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+               return (
+                 <div key={categoryIndex} id={anchorId}>
+                   <div className="flex items-center gap-3 mb-6">
+                     <div className={`p-3 rounded-lg ${category.color}`}>
+                       <Icon className="h-6 w-6" />
+                     </div>
+                     <h3 className="text-2xl font-bold text-foreground">{category.title}</h3>
+                   </div>
                   
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {category.assessments.map((assessment, index) => (

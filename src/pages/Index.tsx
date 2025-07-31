@@ -23,8 +23,7 @@ const Index = () => {
       rating: 4.8,
       category: "Technology",
       icon: <BarChart className="h-6 w-6" />,
-      tags: ["Python", "Statistics", "Machine Learning"],
-      difficulty: "Intermediate"
+      tags: ["Python", "Statistics", "Machine Learning"]
     },
     {
       id: "cyber-security",
@@ -35,8 +34,7 @@ const Index = () => {
       rating: 4.9,
       category: "Security",
       icon: <Shield className="h-6 w-6" />,
-      tags: ["Security", "Networking", "Ethical Hacking"],
-      difficulty: "Advanced"
+      tags: ["Security", "Networking", "Ethical Hacking"]
     },
     {
       id: "full-stack",
@@ -47,8 +45,7 @@ const Index = () => {
       rating: 4.7,
       category: "Development",
       icon: <Code className="h-6 w-6" />,
-      tags: ["JavaScript", "React", "Node.js"],
-      difficulty: "Intermediate"
+      tags: ["JavaScript", "React", "Node.js"]
     },
     {
       id: "aws-cloud",
@@ -59,8 +56,7 @@ const Index = () => {
       rating: 4.8,
       category: "Cloud",
       icon: <Cloud className="h-6 w-6" />,
-      tags: ["AWS", "Cloud Architecture", "DevOps"],
-      difficulty: "Advanced"
+      tags: ["AWS", "Cloud Architecture", "DevOps"]
     },
     {
       id: "ux-design",
@@ -71,8 +67,7 @@ const Index = () => {
       rating: 4.6,
       category: "Design",
       icon: <Palette className="h-6 w-6" />,
-      tags: ["Design Thinking", "Prototyping", "User Research"],
-      difficulty: "Beginner"
+      tags: ["Design Thinking", "Prototyping", "User Research"]
     },
     {
       id: "ai-ml",
@@ -83,8 +78,7 @@ const Index = () => {
       rating: 4.9,
       category: "AI/ML",
       icon: <Brain className="h-6 w-6" />,
-      tags: ["AI", "Machine Learning", "Deep Learning"],
-      difficulty: "Advanced"
+      tags: ["AI", "Machine Learning", "Deep Learning"]
     }
   ];
 

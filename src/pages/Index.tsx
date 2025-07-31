@@ -22,7 +22,9 @@ const Index = () => {
       participants: "50K+",
       rating: 4.8,
       category: "Technology",
-      icon: <BarChart className="h-6 w-6" />
+      icon: <BarChart className="h-6 w-6" />,
+      tags: ["Python", "Statistics", "Machine Learning"],
+      difficulty: "Intermediate"
     },
     {
       id: "cyber-security",
@@ -32,7 +34,9 @@ const Index = () => {
       participants: "35K+",
       rating: 4.9,
       category: "Security",
-      icon: <Shield className="h-6 w-6" />
+      icon: <Shield className="h-6 w-6" />,
+      tags: ["Security", "Networking", "Ethical Hacking"],
+      difficulty: "Advanced"
     },
     {
       id: "full-stack",
@@ -42,7 +46,9 @@ const Index = () => {
       participants: "75K+", 
       rating: 4.7,
       category: "Development",
-      icon: <Code className="h-6 w-6" />
+      icon: <Code className="h-6 w-6" />,
+      tags: ["JavaScript", "React", "Node.js"],
+      difficulty: "Intermediate"
     },
     {
       id: "aws-cloud",
@@ -52,7 +58,9 @@ const Index = () => {
       participants: "40K+",
       rating: 4.8,
       category: "Cloud",
-      icon: <Cloud className="h-6 w-6" />
+      icon: <Cloud className="h-6 w-6" />,
+      tags: ["AWS", "Cloud Architecture", "DevOps"],
+      difficulty: "Advanced"
     },
     {
       id: "ux-design",
@@ -62,7 +70,9 @@ const Index = () => {
       participants: "25K+",
       rating: 4.6,
       category: "Design",
-      icon: <Palette className="h-6 w-6" />
+      icon: <Palette className="h-6 w-6" />,
+      tags: ["Design Thinking", "Prototyping", "User Research"],
+      difficulty: "Beginner"
     },
     {
       id: "ai-ml",
@@ -72,7 +82,9 @@ const Index = () => {
       participants: "30K+",
       rating: 4.9,
       category: "AI/ML",
-      icon: <Brain className="h-6 w-6" />
+      icon: <Brain className="h-6 w-6" />,
+      tags: ["AI", "Machine Learning", "Deep Learning"],
+      difficulty: "Advanced"
     }
   ];
 
@@ -101,7 +113,7 @@ const Index = () => {
         {/* Background Elements */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-10 left-10 h-64 w-64 rounded-full bg-primary/5 blur-3xl"></div>
-          <div className="absolute bottom-10 right-10 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 h-48 w-48 rounded-full bg-thinkera-purple/5 blur-3xl"></div>
         </div>
 
         <div className="container mx-auto text-center">
@@ -202,10 +214,10 @@ const Index = () => {
       <section className="py-16 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Complete Coverage for Every Stage of Life
             </h2>
-            <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               From high school stream selection to career pivots, we've got assessments for every major decision point in your educational and professional journey.
             </p>
           </div>
@@ -215,10 +227,10 @@ const Index = () => {
                 <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Target className="h-6 w-6 text-white" />
                 </div>
-                <CardTitle className="text-lg font-semibold text-slate-900">High School Students</CardTitle>
+                <CardTitle className="text-lg font-semibold text-foreground">High School Students</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-slate-600 text-center mb-4">
+                <p className="text-sm text-muted-foreground text-center mb-4">
                   Stream selection, entrance exam guidance, and career exploration for grades 9-12.
                 </p>
                 <div className="flex flex-wrap gap-1 justify-center">
@@ -234,10 +246,10 @@ const Index = () => {
                 <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Lightbulb className="h-6 w-6 text-white" />
                 </div>
-                <CardTitle className="text-lg font-semibold text-slate-900">College Students</CardTitle>
+                <CardTitle className="text-lg font-semibold text-foreground">College Students</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-slate-600 text-center mb-4">
+                <p className="text-sm text-muted-foreground text-center mb-4">
                   Engineering specializations, skill development, and career planning for undergraduates.
                 </p>
                 <div className="flex flex-wrap gap-1 justify-center">
@@ -253,10 +265,10 @@ const Index = () => {
                 <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-accent-500 to-secondary-500 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Brain className="h-6 w-6 text-white" />
                 </div>
-                <CardTitle className="text-lg font-semibold text-slate-900">Graduates & Professionals</CardTitle>
+                <CardTitle className="text-lg font-semibold text-foreground">Graduates & Professionals</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-slate-600 text-center mb-4">
+                <p className="text-sm text-muted-foreground text-center mb-4">
                   Career transitions, skill upgrades, and industry switches for working professionals.
                 </p>
                 <div className="flex flex-wrap gap-1 justify-center">
@@ -272,10 +284,10 @@ const Index = () => {
                 <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-accent-500 to-secondary-500 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Compass className="h-6 w-6 text-white" />
                 </div>
-                <CardTitle className="text-lg font-semibold text-slate-900">Creative & Arts</CardTitle>
+                <CardTitle className="text-lg font-semibold text-foreground">Creative & Arts</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-slate-600 text-center mb-4">
+                <p className="text-sm text-muted-foreground text-center mb-4">
                   Design thinking, artistic mediums, and creative career paths across all art forms.
                 </p>
                 <div className="flex flex-wrap gap-1 justify-center">
@@ -291,10 +303,10 @@ const Index = () => {
                 <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Users className="h-6 w-6 text-white" />
                 </div>
-                <CardTitle className="text-lg font-semibold text-slate-900">Business & Commerce</CardTitle>
+                <CardTitle className="text-lg font-semibold text-foreground">Business & Commerce</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-slate-600 text-center mb-4">
+                <p className="text-sm text-muted-foreground text-center mb-4">
                   Entrepreneurship readiness, business acumen, and finance career assessments.
                 </p>
                 <div className="flex flex-wrap gap-1 justify-center">
@@ -310,10 +322,10 @@ const Index = () => {
                 <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Award className="h-6 w-6 text-white" />
                 </div>
-                <CardTitle className="text-lg font-semibold text-slate-900">International Opportunities</CardTitle>
+                <CardTitle className="text-lg font-semibold text-foreground">International Opportunities</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-slate-600 text-center mb-4">
+                <p className="text-sm text-muted-foreground text-center mb-4">
                   Study abroad readiness, global career paths, and international education guidance.
                 </p>
                 <div className="flex flex-wrap gap-1 justify-center">
@@ -331,8 +343,8 @@ const Index = () => {
       <section className="py-16 px-4 bg-white/60 backdrop-blur-sm">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">What Students Say</h2>
-            <p className="text-lg text-slate-600">Real feedback from students who found their path</p>
+            <h2 className="text-3xl font-bold text-foreground mb-4">What Students Say</h2>
+            <p className="text-lg text-muted-foreground">Real feedback from students who found their path</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             <Card className="bg-gradient-to-br from-primary-50 to-white border-primary-100 hover:shadow-lg transition-all">
@@ -342,11 +354,11 @@ const Index = () => {
                     <Star key={i} className="h-4 w-4 fill-accent-400 text-accent-400" />
                   ))}
                 </div>
-                <p className="text-slate-900 mb-4">
+                <p className="text-foreground mb-4">
                   "Finally understood why I was struggling with programming. The assessment helped me switch to UX design - best decision ever!"
                 </p>
-                <div className="text-sm text-slate-600">
-                  <p className="font-semibold text-slate-900">Priya S.</p>
+                <div className="text-sm text-muted-foreground">
+                  <p className="font-semibold text-foreground">Priya S.</p>
                   <p>Engineering Student</p>
                 </div>
               </CardContent>
@@ -359,11 +371,11 @@ const Index = () => {
                     <Star key={i} className="h-4 w-4 fill-accent-400 text-accent-400" />
                   ))}
                 </div>
-                <p className="text-slate-900 mb-4">
+                <p className="text-foreground mb-4">
                   "The career assessment showed me I'm perfect for data analysis. Now I'm interning at a tech startup!"
                 </p>
-                <div className="text-sm text-slate-600">
-                  <p className="font-semibold text-slate-900">Rahul K.</p>
+                <div className="text-sm text-muted-foreground">
+                  <p className="font-semibold text-foreground">Rahul K.</p>
                   <p>CS Graduate</p>
                 </div>
               </CardContent>
@@ -376,11 +388,11 @@ const Index = () => {
                     <Star key={i} className="h-4 w-4 fill-accent-400 text-accent-400" />
                   ))}
                 </div>
-                <p className="text-slate-900 mb-4">
+                <p className="text-foreground mb-4">
                   "Saved me from making a costly mistake. Almost switched streams until this assessment revealed my true strengths."
                 </p>
-                <div className="text-sm text-slate-600">
-                  <p className="font-semibold text-slate-900">Ananya M.</p>
+                <div className="text-sm text-muted-foreground">
+                  <p className="font-semibold text-foreground">Ananya M.</p>
                   <p>Electronics Engineering</p>
                 </div>
               </CardContent>

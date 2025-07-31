@@ -4,12 +4,12 @@ import React from "react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-slate-900 text-white py-12 px-4">
+    <footer className="bg-thinkera-dark text-white py-12 px-4">
       <div className="container mx-auto max-w-6xl">
         <div className="grid md:grid-cols-4 gap-12 lg:gap-20 xl:gap-28">
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <div className="p-2 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl">
+              <div className="p-2 bg-gradient-hero rounded-xl">
                 <Brain className="h-5 w-5 text-white" />
               </div>
               <span className="text-xl font-bold">PathFinder</span>

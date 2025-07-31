@@ -139,18 +139,18 @@ const About = () => {
       </section>
 
       {/* Achievements */}
-      <section className="bg-blue-50 py-16">
+      <section className="bg-thinkera-blue/5 py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-blue-900">Our Impact</h2>
+          <h2 className="text-3xl font-bold text-center mb-12 text-foreground">Our Impact</h2>
           <div className="grid md:grid-cols-4 gap-8">
             {achievements.map((achievement, index) => {
               const Icon = achievement.icon;
               return (
                 <div key={index} className="text-center">
                   <div className="bg-white p-6 rounded-lg shadow-sm">
-                    <Icon className="h-8 w-8 text-blue-600 mx-auto mb-4" />
-                    <div className="text-3xl font-bold text-blue-900 mb-2">{achievement.number}</div>
-                    <div className="text-gray-600">{achievement.label}</div>
+                                    <Icon className="h-8 w-8 text-thinkera-blue mx-auto mb-4" />
+                <div className="text-3xl font-bold text-foreground mb-2">{achievement.number}</div>
+                <div className="text-muted-foreground">{achievement.label}</div>
                   </div>
                 </div>
               );
@@ -162,20 +162,20 @@ const About = () => {
       {/* Our Values */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-blue-900">Our Core Values</h2>
+          <h2 className="text-3xl font-bold text-center mb-12 text-foreground">Our Core Values</h2>
           <div className="grid md:grid-cols-2 gap-8">
             {values.map((value, index) => {
               const Icon = value.icon;
               return (
                 <Card key={index} className="p-6">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-3 text-xl text-blue-900">
+                    <CardTitle className="flex items-center gap-3 text-xl text-foreground">
                       <Icon className="h-6 w-6" />
                       {value.title}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-700 leading-relaxed">{value.description}</p>
+                    <p className="text-muted-foreground leading-relaxed">{value.description}</p>
                   </CardContent>
                 </Card>
               );
@@ -185,10 +185,10 @@ const About = () => {
       </section>
 
       {/* Team Section */}
-      <section className="bg-gray-100 py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-4 text-blue-900">Meet Our Team</h2>
-          <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+              <section className="bg-muted/30 py-16">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-4 text-foreground">Meet Our Team</h2>
+            <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
             Our diverse team of experts combines years of experience in education, psychology, 
             technology, and student development to create the best possible experience for our users.
           </p>
@@ -197,12 +197,12 @@ const About = () => {
             {teamMembers.map((member, index) => (
               <Card key={index} className="text-center">
                 <CardHeader>
-                  <div className="w-24 h-24 bg-gray-300 rounded-full mx-auto mb-4"></div>
-                  <CardTitle className="text-lg text-blue-900">{member.name}</CardTitle>
+                  <div className="w-24 h-24 bg-muted rounded-full mx-auto mb-4"></div>
+                  <CardTitle className="text-lg text-foreground">{member.name}</CardTitle>
                   <Badge variant="secondary" className="mx-auto">{member.role}</Badge>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-600 mb-4">{member.bio}</p>
+                  <p className="text-sm text-muted-foreground mb-4">{member.bio}</p>
                   <div className="flex flex-wrap gap-1 justify-center">
                     {member.specialties.map((specialty, idx) => (
                       <Badge key={idx} variant="outline" className="text-xs">
@@ -220,15 +220,15 @@ const About = () => {
       {/* How We Work */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-blue-900">How We Work</h2>
+          <h2 className="text-3xl font-bold text-center mb-12 text-foreground">How We Work</h2>
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center">
-                <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-blue-600">1</span>
+                <div className="bg-thinkera-blue/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-thinkera-blue">1</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-blue-900">Research & Development</h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-semibold mb-3 text-foreground">Research & Development</h3>
+                <p className="text-muted-foreground">
                   We continuously research the latest trends in education and career development to ensure our assessments remain relevant and accurate.
                 </p>
               </div>
@@ -237,8 +237,8 @@ const About = () => {
                 <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl font-bold text-purple-600">2</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-blue-900">Assessment Design</h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-semibold mb-3 text-foreground">Assessment Design</h3>
+                <p className="text-muted-foreground">
                   Our psychologists and education experts design comprehensive assessments that evaluate multiple dimensions of student potential.
                 </p>
               </div>
@@ -247,8 +247,8 @@ const About = () => {
                 <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl font-bold text-green-600">3</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-blue-900">Personalized Insights</h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-semibold mb-3 text-foreground">Personalized Insights</h3>
+                <p className="text-muted-foreground">
                   We provide detailed, actionable insights and recommendations tailored to each student's unique profile and aspirations.
                 </p>
               </div>
@@ -258,7 +258,7 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-blue-600 text-white py-16">
+      <section className="bg-gradient-hero text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Discover Your Path?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">

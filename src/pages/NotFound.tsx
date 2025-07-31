@@ -25,17 +25,17 @@ const NotFound = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-muted/30 flex flex-col">
       <Header />
       
       <div className="flex-1 flex items-center justify-center py-16">
         <div className="text-center max-w-2xl mx-auto px-4">
           {/* Large 404 */}
           <div className="mb-8">
-            <h1 className="text-9xl font-bold text-blue-600 opacity-20">404</h1>
+            <h1 className="text-9xl font-bold text-thinkera-purple opacity-20">404</h1>
             <div className="-mt-8">
-              <h2 className="text-4xl font-bold text-gray-800 mb-4">Page Not Found</h2>
-              <p className="text-xl text-gray-600 mb-8">
+              <h2 className="text-4xl font-bold text-foreground mb-4">Page Not Found</h2>
+              <p className="text-xl text-muted-foreground mb-8">
                 Oops! The page you're looking for doesn't exist or has been moved.
               </p>
             </div>
@@ -58,7 +58,7 @@ const NotFound = () => {
 
           {/* Popular Pages */}
           <div className="bg-white rounded-lg p-8 shadow-sm">
-            <h3 className="text-xl font-semibold text-gray-800 mb-6 flex items-center justify-center gap-2">
+            <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center justify-center gap-2">
               <Search className="h-5 w-5" />
               Popular Pages
             </h3>
@@ -68,20 +68,20 @@ const NotFound = () => {
                 <Link
                   key={page.path}
                   to={page.path}
-                  className="block p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors text-left"
+                  className="block p-4 border border-border rounded-lg hover:border-thinkera-purple/30 hover:bg-thinkera-purple/5 transition-colors text-left"
                 >
-                  <h4 className="font-semibold text-gray-800 mb-1">{page.name}</h4>
-                  <p className="text-sm text-gray-600">{page.description}</p>
+                                      <h4 className="font-semibold text-foreground mb-1">{page.name}</h4>
+                    <p className="text-sm text-muted-foreground">{page.description}</p>
                 </Link>
               ))}
             </div>
           </div>
 
           {/* Help Text */}
-          <div className="mt-8 text-sm text-gray-500">
+          <div className="mt-8 text-sm text-muted-foreground">
             <p>
               If you believe this is an error, please{' '}
-              <a href="mailto:support@pathfinder.com" className="text-blue-600 hover:underline">
+              <a href="mailto:support@pathfinder.com" className="text-thinkera-purple hover:underline">
                 contact our support team
               </a>
               .

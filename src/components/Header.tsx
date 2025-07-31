@@ -25,16 +25,16 @@ const Header: React.FC<HeaderProps> = ({
   className = "",
 }) => {
   return (
-    <header className={`bg-white/80 backdrop-blur-sm border-b border-blue-100 sticky top-0 z-50 ${className}`}>
+    <header className={`bg-white/80 backdrop-blur-sm border-b border-thinkera-purple/20 sticky top-0 z-50 ${className}`}>
       <div className={showContainer ? "container mx-auto px-4 py-4 flex justify-between items-center" : "px-4 py-4 flex justify-between items-center"}>
         <Link to="/" className="flex items-center space-x-2">
           <div className="flex items-center space-x-2">
             {logoType === "sparkles" ? (
-              <Sparkles className="h-8 w-8 text-blue-600" />
+              <Sparkles className="h-8 w-8 text-thinkera-purple" />
             ) : (
-              <Brain className="h-8 w-8 text-blue-600" />
+              <Brain className="h-8 w-8 text-thinkera-purple" />
             )}
-            <span className="text-2xl font-bold text-gray-800">PathFinder</span>
+            <span className="text-2xl font-bold text-foreground">PathFinder</span>
           </div>
         </Link>
         <nav className="hidden md:flex space-x-6">
@@ -42,7 +42,7 @@ const Header: React.FC<HeaderProps> = ({
             <Link
               key={link.to}
               to={link.to}
-              className={`text-gray-600 hover:text-blue-600 transition-colors font-medium ${link.active ? "text-blue-600 font-semibold" : ""}`}
+              className={`text-muted-foreground hover:text-thinkera-purple transition-colors font-medium ${link.active ? "text-thinkera-purple font-semibold" : ""}`}
             >
               {link.label}
             </Link>

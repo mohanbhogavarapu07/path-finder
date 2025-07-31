@@ -99,7 +99,7 @@ const Assessment = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800">Assessment not found</h1>
+          <h1 className="text-2xl font-bold text-foreground">Assessment not found</h1>
           <Link to="/assessments">
             <Button className="mt-4">Back to Assessments</Button>
           </Link>
@@ -145,27 +145,27 @@ const Assessment = () => {
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Assessment Header */}
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
+          <h1 className="text-3xl font-bold text-foreground mb-2">
             {currentAssessment.title}
           </h1>
-          <p className="text-gray-600 mb-6">
+          <p className="text-muted-foreground mb-6">
             {currentAssessment.description}
           </p>
           
           {/* Progress Bar */}
           <div className="max-w-2xl mx-auto">
-            <div className="flex justify-between text-sm text-gray-600 mb-2">
+            <div className="flex justify-between text-sm text-muted-foreground mb-2">
               <span>Progress</span>
               <span>{Math.round(progress)}% Complete</span>
             </div>
-            <Progress value={progress} className="h-3 bg-gray-200" />
+            <Progress value={progress} className="h-3 bg-muted" />
           </div>
         </div>
 
         {/* Question Card */}
-        <Card className="max-w-3xl mx-auto shadow-lg border-blue-100">
+        <Card className="max-w-3xl mx-auto shadow-lg border-thinkera-blue/20">
           <CardHeader className="pb-4">
-            <CardTitle className="text-xl text-gray-800 leading-relaxed">
+            <CardTitle className="text-xl text-foreground leading-relaxed">
               {currentQuestionData?.question}
             </CardTitle>
           </CardHeader>
@@ -178,9 +178,9 @@ const Assessment = () => {
                 className="space-y-4"
               >
                 {currentQuestionData.options.map((option: string, idx: number) => (
-                  <div key={idx} className="flex items-center space-x-3 p-4 rounded-lg hover:bg-blue-50 transition-colors border border-gray-200 hover:border-blue-200">
-                    <RadioGroupItem value={option} id={`option-${idx}`} />
-                    <Label htmlFor={`option-${idx}`} className="flex-1 cursor-pointer text-gray-700 font-medium">
+                                <div key={idx} className="flex items-center space-x-3 p-4 rounded-lg hover:bg-thinkera-blue/5 transition-colors border border-border hover:border-thinkera-blue/30">
+                <RadioGroupItem value={option} id={`option-${idx}`} />
+                <Label htmlFor={`option-${idx}`} className="flex-1 cursor-pointer text-foreground font-medium">
                       {option}
                     </Label>
                   </div>
@@ -199,9 +199,9 @@ const Assessment = () => {
                     step={1}
                     className="w-full"
                   />
-                  <div className="flex justify-between text-sm text-gray-600 mt-2">
+                  <div className="flex justify-between text-sm text-muted-foreground mt-2">
                     <span>{currentQuestionData.labels[0]}</span>
-                    <span className="font-semibold text-blue-600">
+                    <span className="font-semibold text-thinkera-blue">
                       {answers[currentQuestion] || 5}
                     </span>
                     <span>{currentQuestionData.labels[1]}</span>
@@ -225,7 +225,7 @@ const Assessment = () => {
           </Button>
 
           <div className="text-center">
-            <p className="text-sm text-gray-500 mb-2">
+            <p className="text-sm text-muted-foreground mb-2">
               There are no right or wrong answers — just insights.
             </p>
           </div>
@@ -233,7 +233,7 @@ const Assessment = () => {
           <Button 
             onClick={handleNext}
             disabled={!canProceed}
-            className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2"
+                            className="bg-thinkera-blue hover:bg-thinkera-blue/90 flex items-center space-x-2"
           >
             <span>{currentQuestion === currentAssessment.questions.length - 1 ? "Complete" : "Next"}</span>
             {currentQuestion === currentAssessment.questions.length - 1 ? 
@@ -245,13 +245,13 @@ const Assessment = () => {
 
         {/* Encouragement Message */}
         <div className="text-center mt-8 max-w-2xl mx-auto">
-          <Card className="bg-gradient-to-r from-blue-200 to-green-100 border-blue-200">
+          <Card className="bg-gradient-to-r from-thinkera-blue/20 to-thinkera-purple/20 border-thinkera-blue/30">
             <CardContent className="p-6">
               <div className="flex items-center justify-center space-x-2 mb-3">
-                <Users className="h-5 w-5 text-blue-600" />
-                <span className="font-semibold text-gray-700">You're doing great!</span>
+                <Users className="h-5 w-5 text-thinkera-blue" />
+                <span className="font-semibold text-foreground">You're doing great!</span>
               </div>
-              <p className="text-gray-600 text-sm">
+              <p className="text-muted-foreground text-sm">
                 Over 10,000 students have found clarity through our assessments. 
                 Your personalized insights are just a few questions away.
               </p>

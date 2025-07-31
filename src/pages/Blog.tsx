@@ -205,7 +205,7 @@ const Blog = () => {
             <div className="mb-8">
               <div className="flex flex-col sm:flex-row gap-4 mb-6">
                 <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                   <Input
                     type="text"
                     placeholder="Search articles..."
@@ -215,11 +215,11 @@ const Blog = () => {
                   />
                 </div>
                 <div className="flex items-center gap-2">
-                  <Filter className="h-4 w-4 text-gray-400" />
+                  <Filter className="h-4 w-4 text-muted-foreground" />
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="border border-gray-300 rounded-md px-3 py-2 text-sm"
+                                          className="border border-border rounded-md px-3 py-2 text-sm"
                   >
                     {categories.map(category => (
                       <option key={category} value={category}>{category}</option>
@@ -312,7 +312,7 @@ const Blog = () => {
 
             {filteredPosts.length === 0 && (
               <div className="text-center py-12">
-                <p className="text-gray-500 text-lg">No articles found matching your search criteria.</p>
+                <p className="text-muted-foreground text-lg">No articles found matching your search criteria.</p>
               </div>
             )}
           </div>
@@ -329,10 +329,10 @@ const Blog = () => {
                   {recentPosts.map(post => (
                     <Link key={post.id} to={`/blog/${post.title.toLowerCase().replace(/\s+/g, '-')}`}>
                       <div className="group cursor-pointer">
-                      <h4 className="font-medium text-sm group-hover:text-blue-600 transition-colors mb-1 line-clamp-2">
+                      <h4 className="font-medium text-sm group-hover:text-thinkera-purple transition-colors mb-1 line-clamp-2">
                         {post.title}
                       </h4>
-                      <div className="flex items-center gap-2 text-xs text-gray-500">
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <Calendar className="h-3 w-3" />
                         {new Date(post.date).toLocaleDateString()}
                       </div>
@@ -354,7 +354,7 @@ const Blog = () => {
                     <button
                       key={category}
                       onClick={() => setSelectedCategory(category)}
-                      className="block w-full text-left text-sm text-gray-600 hover:text-blue-600 py-1"
+                      className="block w-full text-left text-sm text-muted-foreground hover:text-thinkera-purple py-1"
                     >
                       {category}
                     </button>
@@ -369,7 +369,7 @@ const Blog = () => {
                 <CardTitle className="text-lg">Stay Updated</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-600 mb-4">
+                <p className="text-sm text-muted-foreground mb-4">
                   Subscribe to get the latest career insights and educational guidance.
                 </p>
                 <div className="space-y-3">

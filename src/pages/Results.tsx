@@ -86,7 +86,7 @@ const Results = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800">Results not found</h1>
+          <h1 className="text-2xl font-bold text-foreground">Results not found</h1>
           <Link to="/assessments">
             <Button className="mt-4">Back to Assessments</Button>
           </Link>
@@ -108,7 +108,7 @@ const Results = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+          <div className="min-h-screen bg-gradient-to-br from-thinkera-purple/5 via-white to-thinkera-blue/5">
       <Header logoType="brain" navLinks={[
         { to: "/", label: "Home" },
         { to: "/assessments", label: "Assessments" },
@@ -121,33 +121,33 @@ const Results = () => {
         <div className="text-center mb-8">
           <div className="inline-flex items-center space-x-2 mb-4">
             <CheckCircle className="h-8 w-8 text-green-600" />
-            <span className="text-2xl font-bold text-gray-800">Assessment Complete!</span>
+            <span className="text-2xl font-bold text-foreground">Assessment Complete!</span>
           </div>
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
+          <h1 className="text-4xl font-bold text-foreground mb-2">
             Your {result.title} Results
           </h1>
         </div>
 
         {/* Overall Score Card */}
-        <Card className="mb-8 bg-gradient-to-r from-green-50 via-white to-blue-50 border-green-200 shadow-lg">
+        <Card className="mb-8 bg-gradient-to-r from-thinkera-blue/10 via-white to-thinkera-purple/10 border-thinkera-blue/20 shadow-lg">
           <CardContent className="p-8">
             <div className="text-center">
               <div className="flex items-center justify-center mb-4">
                 <div className="relative">
-                  <div className="w-32 h-32 rounded-full bg-gradient-to-r from-green-500 to-blue-500 flex items-center justify-center">
+                  <div className="w-32 h-32 rounded-full bg-gradient-to-r from-thinkera-blue to-thinkera-purple flex items-center justify-center">
                     <div className="w-28 h-28 bg-white rounded-full flex items-center justify-center">
-                      <span className="text-4xl font-bold text-gray-800">{result.overallScore}</span>
+                      <span className="text-4xl font-bold text-foreground">{result.overallScore}</span>
                     </div>
                   </div>
-                  <Badge className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-4 py-1">
+                  <Badge className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-thinkera-blue text-white px-4 py-1">
                     {result.scoreLabel}
                   </Badge>
                 </div>
               </div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              <h2 className="text-2xl font-bold text-foreground mb-4">
                 Strong Fit for Python Programming
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                 {result.summary}
               </p>
             </div>
@@ -160,15 +160,15 @@ const Results = () => {
             <Card className="shadow-lg">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
-                  <Brain className="h-6 w-6 text-blue-600" />
+                  <Brain className="h-6 w-6 text-thinkera-blue" />
                   <span>Detailed Analysis</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 {result.breakdown.map((item, idx) => (
-                  <div key={idx} className="p-4 rounded-lg bg-gray-50 border border-gray-200">
+                  <div key={idx} className="p-4 rounded-lg bg-muted/50 border border-border">
                     <div className="flex items-center justify-between mb-3">
-                      <h3 className="font-semibold text-gray-800">{item.category}</h3>
+                      <h3 className="font-semibold text-foreground">{item.category}</h3>
                       <div className="flex items-center space-x-2">
                         {getScoreIcon(item.score)}
                         <Badge className={`${getScoreColor(item.score)} font-bold`}>
@@ -177,7 +177,7 @@ const Results = () => {
                       </div>
                     </div>
                     <Progress value={item.score} className="mb-3 h-2" />
-                    <p className="text-sm text-gray-600">{item.description}</p>
+                                          <p className="text-sm text-muted-foreground">{item.description}</p>
                   </div>
                 ))}
               </CardContent>
@@ -197,16 +197,16 @@ const Results = () => {
                     {result.strengths.map((strength, idx) => (
                       <li key={idx} className="flex items-start space-x-2">
                         <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700 text-sm">{strength}</span>
+                        <span className="text-foreground text-sm">{strength}</span>
                       </li>
                     ))}
                   </ul>
                 </CardContent>
               </Card>
 
-              <Card className="shadow-lg border-blue-200">
-                <CardHeader>
-                  <CardTitle className="flex items-center space-x-2 text-blue-700">
+                      <Card className="shadow-lg border-thinkera-blue/20">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2 text-thinkera-blue">
                     <Lightbulb className="h-5 w-5" />
                     <span>Key Considerations</span>
                   </CardTitle>
@@ -215,8 +215,8 @@ const Results = () => {
                   <ul className="space-y-3">
                     {result.considerations.map((consideration, idx) => (
                       <li key={idx} className="flex items-start space-x-2">
-                        <Lightbulb className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700 text-sm">{consideration}</span>
+                                          <Lightbulb className="h-4 w-4 text-thinkera-blue mt-0.5 flex-shrink-0" />
+                  <span className="text-foreground text-sm">{consideration}</span>
                       </li>
                     ))}
                   </ul>
@@ -236,14 +236,14 @@ const Results = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 {result.recommendations.map((rec, idx) => (
-                  <div key={idx} className="p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                  <div key={idx} className="p-4 rounded-lg border border-border hover:shadow-md transition-shadow">
                     <div className="flex items-start space-x-3">
                       <div className="p-2 bg-purple-100 rounded-full">
                         {rec.icon}
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-semibold text-gray-800 mb-1">{rec.title}</h4>
-                        <p className="text-sm text-gray-600 mb-3">{rec.description}</p>
+                                              <h4 className="font-semibold text-foreground mb-1">{rec.title}</h4>
+                      <p className="text-sm text-muted-foreground mb-3">{rec.description}</p>
                         <Button size="sm" variant="outline" className="w-full">
                           <span>Explore</span>
                           <ExternalLink className="ml-2 h-3 w-3" />
@@ -256,20 +256,20 @@ const Results = () => {
             </Card>
 
             {/* Next Steps */}
-            <Card className="shadow-lg bg-gradient-to-r from-blue-600 to-green-600 text-white">
+            <Card className="shadow-lg bg-gradient-to-r from-thinkera-blue to-thinkera-purple text-white">
               <CardContent className="p-6 text-center">
                 <h3 className="font-bold text-xl mb-4">Ready for Your Next Assessment?</h3>
-                <p className="mb-6 text-blue-100">
+                <p className="mb-6 text-white/90">
                   Explore more areas to build a complete picture of your ideal path.
                 </p>
                 <div className="space-y-3">
                   <Link to="/assessments">
-                    <Button className="w-full bg-white text-blue-600 hover:bg-gray-100">
+                    <Button className="w-full bg-white text-thinkera-blue hover:bg-muted">
                       Take Another Assessment
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
-                  <Button variant="outline" className="w-full border-white text-white hover:bg-white hover:text-blue-600">
+                  <Button variant="outline" className="w-full border-white text-white hover:bg-white hover:text-thinkera-blue">
                     <RefreshCw className="mr-2 h-4 w-4" />
                     Retake This Assessment
                   </Button>
@@ -280,16 +280,16 @@ const Results = () => {
         </div>
 
         {/* Share Your Results */}
-        <Card className="mt-8 bg-gradient-to-r from-gray-50 to-blue-50 border-blue-200">
+        <Card className="mt-8 bg-gradient-to-r from-muted/50 to-thinkera-blue/5 border-thinkera-blue/20">
           <CardContent className="p-6 text-center">
-            <h3 className="font-bold text-xl text-gray-800 mb-4">
+            <h3 className="font-bold text-xl text-foreground mb-4">
               Share Your Journey with Friends
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-muted-foreground mb-6">
               Invite friends to take assessments and compare your career strengths and interests.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-blue-600 hover:bg-blue-700">
+                              <Button className="bg-thinkera-blue hover:bg-thinkera-blue/90">
                 <Share2 className="mr-2 h-4 w-4" />
                 Share Results
               </Button>

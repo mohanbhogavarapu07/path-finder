@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, Clock, User, Tag, Search, Filter, ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,379 +8,437 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import { getBlogPosts, getBlogCategories, searchBlogPosts, getBlogPostsByCategory, BlogPost, BlogPostList } from '@/lib/api';
+import { format } from 'date-fns';
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [categories, setCategories] = useState<Array<{ _id: string; count: number }>>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalPosts, setTotalPosts] = useState(0);
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: "How to Choose the Right Engineering Stream in 2024",
-      excerpt: "A comprehensive guide to understanding different engineering disciplines and making an informed choice that aligns with your interests and career goals.",
-      author: "Dr. Sarah Johnson",
-      date: "2024-01-15",
-      readTime: "8 min read",
-      category: "Career Guidance",
-      tags: ["Engineering", "Career Choice", "Students"],
-      image: "/api/placeholder/600/300",
-      featured: true
-    },
-    {
-      id: 2,
-      title: "The Psychology Behind Career Assessment Tests",
-      excerpt: "Discover the scientific principles that make career assessments effective tools for understanding your professional potential and personality fit.",
-      author: "Dr. Priya Patel",
-      date: "2024-01-12",
-      readTime: "6 min read",
-      category: "Assessment Science",
-      tags: ["Psychology", "Assessment", "Research"],
-      image: "/api/placeholder/600/300",
-      featured: false
-    },
-    {
-      id: 3,
-      title: "Top 10 Emerging Tech Careers for 2024",
-      excerpt: "Explore the fastest-growing technology careers and understand what skills you need to succeed in the digital economy of tomorrow.",
-      author: "Michael Chen",
-      date: "2024-01-10",
-      readTime: "10 min read",
-      category: "Technology",
-      tags: ["Technology", "Future Careers", "Skills"],
-      image: "/api/placeholder/600/300",
-      featured: true
-    },
-    {
-      id: 4,
-      title: "Understanding Your WISCAR Analysis Results",
-      excerpt: "A detailed breakdown of how to interpret your WISCAR assessment results and use them to make informed academic and career decisions.",
-      author: "James Wilson",
-      date: "2024-01-08",
-      readTime: "7 min read",
-      category: "Assessment Guide",
-      tags: ["WISCAR", "Assessment", "Career Planning"],
-      image: "/api/placeholder/600/300",
-      featured: false
-    },
-    {
-      id: 5,
-      title: "The Rise of Data Science: Is It Right for You?",
-      excerpt: "Explore the world of data science, understand the required skills, and discover if this rapidly growing field aligns with your interests.",
-      author: "Dr. Sarah Johnson",
-      date: "2024-01-05",
-      readTime: "9 min read",
-      category: "Career Spotlight",
-      tags: ["Data Science", "Analytics", "Career Path"],
-      image: "/api/placeholder/600/300",
-      featured: false
-    },
-    {
-      id: 6,
-      title: "Medical vs Engineering: Making the Right Choice",
-      excerpt: "A comprehensive comparison of medical and engineering careers to help you understand which path might be the better fit for your goals.",
-      author: "Dr. Priya Patel",
-      date: "2024-01-03",
-      readTime: "12 min read",
-      category: "Career Guidance",
-      tags: ["Medical", "Engineering", "Comparison"],
-      image: "/api/placeholder/600/300",
-      featured: false
+  // Fetch blog posts and categories on component mount
+  useEffect(() => {
+    fetchBlogData();
+  }, [currentPage, selectedCategory]);
+
+  const fetchBlogData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Fetch categories if not already loaded
+      if (categories.length === 0) {
+        const categoriesData = await getBlogCategories();
+        setCategories(categoriesData);
+      }
+
+      // Fetch blog posts
+      let postsData: BlogPostList;
+      
+      if (searchTerm.trim()) {
+        postsData = await searchBlogPosts(searchTerm, currentPage, 10);
+      } else if (selectedCategory !== 'All') {
+        postsData = await getBlogPostsByCategory(selectedCategory, currentPage, 10);
+      } else {
+        postsData = await getBlogPosts({
+          page: currentPage,
+          limit: 10,
+          category: selectedCategory === 'All' ? undefined : selectedCategory
+        });
+      }
+
+      setBlogPosts(postsData.posts);
+      setTotalPages(postsData.totalPages);
+      setTotalPosts(postsData.total);
+    } catch (err) {
+      console.error('Error fetching blog data:', err);
+      setError(err instanceof Error ? err.message : 'Failed to load blog posts');
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
-  const categories = ["All", "Career Guidance", "Assessment Science", "Technology", "Assessment Guide", "Career Spotlight"];
+  const handleSearch = async () => {
+    setCurrentPage(1);
+    await fetchBlogData();
+  };
 
-  const filteredPosts = blogPosts.filter(post => {
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || post.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+    setSearchTerm('');
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const filteredPosts = blogPosts;
 
   const featuredPosts = blogPosts.filter(post => post.featured);
-  const recentPosts = blogPosts.slice(0, 5);
+
+  if (loading && blogPosts.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+        <Header />
+        <div className="container mx-auto px-4 py-16">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading blog posts...</p>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+        <Header />
+        <div className="container mx-auto px-4 py-16">
+          <div className="text-center">
+            <div className="text-red-500 text-xl mb-4">⚠️</div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Error Loading Blog</h2>
+            <p className="text-gray-600 mb-4">{error}</p>
+            <Button onClick={fetchBlogData} variant="outline">
+              Try Again
+            </Button>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <Header />
       
       {/* Hero Section */}
-      <section className="relative py-24 bg-gradient-to-br from-primary to-primary-variant overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-        <div className="relative container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center text-white">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
-              <span className="text-sm font-medium">Expert Career Insights & Guidance</span>
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Career Insights &
-              <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent"> Expert Guidance</span>
+      <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              Career Insights & Guidance
             </h1>
-            <p className="text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-              Discover actionable insights, expert advice, and the latest trends to accelerate your career journey and make informed educational decisions.
+            <p className="text-xl md:text-2xl mb-8 text-blue-100">
+              Discover expert insights, career guidance, and industry trends to help you navigate your professional journey
             </p>
+            
+            {/* Search Bar */}
+            <div className="max-w-2xl mx-auto">
+              <div className="flex gap-2">
+                <Input
+                  type="text"
+                  placeholder="Search articles..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                  className="flex-1 text-gray-900"
+                />
+                <Button onClick={handleSearch} className="px-6">
+                  <Search className="h-4 w-4 mr-2" />
+                  Search
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Featured Posts */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-foreground">Featured Articles</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Our most popular and impactful career guidance articles, handpicked by our experts
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {featuredPosts.map(post => (
-              <Link key={post.id} to={`/blog/${post.title.toLowerCase().replace(/\s+/g, '-')}`}>
-                <Card className="group cursor-pointer hover:shadow-card transition-all duration-300 border-2 hover:border-primary/20 bg-card">
-                <div className="relative overflow-hidden">
-                  <div className="h-56 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-                    <div className="text-4xl opacity-20">📚</div>
-                  </div>
-                  <div className="absolute top-4 left-4">
-                    <Badge className="bg-yellow-500 text-white shadow-sm">Featured</Badge>
-                  </div>
-                </div>
-                
-                <CardHeader className="pb-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
-                      {post.category}
-                    </Badge>
-                  </div>
-                  <CardTitle className="text-xl group-hover:text-primary transition-colors leading-tight">
-                    {post.title}
-                  </CardTitle>
-                </CardHeader>
-                
-                <CardContent className="pt-0">
-                  <p className="text-muted-foreground mb-6 leading-relaxed line-clamp-3">{post.excerpt}</p>
-                  
-                  <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
-                    <div className="flex items-center gap-4">
-                      <span className="flex items-center gap-1">
-                        <User className="h-4 w-4" />
-                        {post.author}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
-                        {new Date(post.date).toLocaleDateString()}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        {post.readTime}
-                      </span>
+      {featuredPosts.length > 0 && (
+        <section className="py-12 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-3xl font-bold text-gray-900">Featured Articles</h2>
+              <Link to="/blog" className="text-primary hover:text-primary/80 font-medium">
+                View All
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {featuredPosts.slice(0, 3).map((post) => (
+                <Card key={post._id} className="group hover:shadow-lg transition-shadow overflow-hidden">
+                  {/* Featured Image */}
+                  {post.featuredImage && (
+                    <div className="aspect-video overflow-hidden">
+                      <img 
+                        src={`http://localhost:5000${post.featuredImage}`}
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
                     </div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex flex-wrap gap-1">
-                      {post.tags.slice(0, 3).map(tag => (
-                        <Badge key={tag} variant="outline" className="text-xs border-primary/20 text-primary/80">
-                          {tag}
+                  )}
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge variant="secondary" className="text-xs">
+                        {post.category}
+                      </Badge>
+                      {post.featured && (
+                        <Badge variant="default" className="text-xs">
+                          Featured
                         </Badge>
-                      ))}
+                      )}
                     </div>
-                    <Button variant="ghost" size="sm" className="group-hover:bg-primary/5 text-primary">
-                      Read More <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                    <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                      <Link to={`/blog/${post.slug}`}>
+                        {post.title}
+                      </Link>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+                    <div className="flex items-center justify-between text-xs text-gray-500">
+                      <div className="flex items-center gap-4">
+                        <span className="flex items-center gap-1">
+                          <User className="h-3 w-3" />
+                          {post.author}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Calendar className="h-3 w-3" />
+                          {format(new Date(post.date), 'MMM d, yyyy')}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="h-3 w-3" />
+                          {post.readTime}
+                        </span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Main Content */}
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            {/* Main Content */}
+            <div className="lg:col-span-3">
+              {/* Category Filter */}
+              <div className="flex items-center gap-4 mb-8">
+                <Filter className="h-5 w-5 text-gray-500" />
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    variant={selectedCategory === 'All' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => handleCategoryChange('All')}
+                  >
+                    All ({totalPosts})
+                  </Button>
+                  {categories.map((category) => (
+                    <Button
+                      key={category._id}
+                      variant={selectedCategory === category._id ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => handleCategoryChange(category._id)}
+                    >
+                      {category._id} ({category.count})
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Blog Posts */}
+              {filteredPosts.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="text-gray-400 text-6xl mb-4">📝</div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">No posts found</h3>
+                  <p className="text-gray-600">
+                    {searchTerm ? `No posts match "${searchTerm}"` : 'No posts in this category yet'}
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  {filteredPosts.map((post) => (
+                    <Card key={post._id} className="group hover:shadow-lg transition-shadow overflow-hidden">
+                      {/* Featured Image */}
+                      {post.featuredImage && (
+                        <div className="aspect-video overflow-hidden">
+                          <img 
+                            src={`http://localhost:5000${post.featuredImage}`}
+                            alt={post.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                      )}
+                      <CardContent className="p-6">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Badge variant="secondary" className="text-xs">
+                                {post.category}
+                              </Badge>
+                              {post.featured && (
+                                <Badge variant="default" className="text-xs">
+                                  Featured
+                                </Badge>
+                              )}
+                            </div>
+                            <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+                              <Link to={`/blog/${post.slug}`}>
+                                {post.title}
+                              </Link>
+                            </h3>
+                            <p className="text-gray-600 mb-4 line-clamp-2">
+                              {post.excerpt}
+                            </p>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-4 text-sm text-gray-500">
+                                <span className="flex items-center gap-1">
+                                  <User className="h-4 w-4" />
+                                  {post.author}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Calendar className="h-4 w-4" />
+                                  {format(new Date(post.date), 'MMM d, yyyy')}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Clock className="h-4 w-4" />
+                                  {post.readTime}
+                                </span>
+                              </div>
+                              <Link
+                                to={`/blog/${post.slug}`}
+                                className="flex items-center gap-1 text-primary hover:text-primary/80 font-medium"
+                              >
+                                Read More
+                                <ArrowRight className="h-4 w-4" />
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Tags */}
+                        {post.tags && post.tags.length > 0 && (
+                          <div className="flex items-center gap-2 pt-4 border-t border-gray-100">
+                            <Tag className="h-4 w-4 text-gray-400" />
+                            <div className="flex flex-wrap gap-1">
+                              {post.tags.slice(0, 3).map((tag, index) => (
+                                <Badge key={index} variant="outline" className="text-xs">
+                                  {tag}
+                                </Badge>
+                              ))}
+                              {post.tags.length > 3 && (
+                                <Badge variant="outline" className="text-xs">
+                                  +{post.tags.length - 3} more
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex justify-center mt-8">
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                    >
+                      Previous
+                    </Button>
+                    
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <Button
+                        key={page}
+                        variant={currentPage === page ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => handlePageChange(page)}
+                      >
+                        {page}
+                      </Button>
+                    ))}
+                    
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                    >
+                      Next
                     </Button>
                   </div>
-                </CardContent>
-              </Card>
-            </Link>
-            ))}
+                </div>
+              )}
+            </div>
+
+            {/* Sidebar */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-8 space-y-6">
+                {/* Categories */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg">Categories</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      <Button
+                        variant={selectedCategory === 'All' ? 'default' : 'ghost'}
+                        className="w-full justify-start"
+                        onClick={() => handleCategoryChange('All')}
+                      >
+                        All Posts ({totalPosts})
+                      </Button>
+                      {categories.map((category) => (
+                        <Button
+                          key={category._id}
+                          variant={selectedCategory === category._id ? 'default' : 'ghost'}
+                          className="w-full justify-start"
+                          onClick={() => handleCategoryChange(category._id)}
+                        >
+                          {category._id} ({category.count})
+                        </Button>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Newsletter Signup */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg">Stay Updated</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Get the latest career insights and assessment tips delivered to your inbox.
+                    </p>
+                    <div className="space-y-2">
+                      <Input
+                        type="email"
+                        placeholder="Enter your email"
+                        className="text-sm"
+                      />
+                      <Button className="w-full" size="sm">
+                        Subscribe
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
           </div>
         </div>
       </section>
-
-      <div className="container mx-auto px-4 pb-16">
-        <div className="grid lg:grid-cols-4 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-3">
-            {/* Search and Filter */}
-            <div className="mb-8">
-              <div className="flex flex-col sm:flex-row gap-4 mb-6">
-                <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                  <Input
-                    type="text"
-                    placeholder="Search articles..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-                <div className="flex items-center gap-2">
-                  <Filter className="h-4 w-4 text-muted-foreground" />
-                  <select
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                                          className="border border-border rounded-md px-3 py-2 text-sm"
-                  >
-                    {categories.map(category => (
-                      <option key={category} value={category}>{category}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              
-              <div className="flex flex-wrap gap-2">
-                {categories.map(category => (
-                  <Button
-                    key={category}
-                    variant={selectedCategory === category ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedCategory(category)}
-                  >
-                    {category}
-                  </Button>
-                ))}
-              </div>
-            </div>
-
-            {/* Blog Posts Grid */}
-            <div className="space-y-6">
-              {filteredPosts.map(post => (
-                <Link key={post.id} to={`/blog/${post.title.toLowerCase().replace(/\s+/g, '-')}`}>
-                  <Card className="group cursor-pointer hover:shadow-card transition-all duration-300 border hover:border-primary/20 bg-card">
-                    <div className="md:flex">
-                    <div className="md:w-80 flex-shrink-0">
-                      <div className="h-48 md:h-full bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center">
-                        <div className="text-3xl opacity-30">
-                          {post.category === 'Technology' ? '💻' :
-                           post.category === 'Career Guidance' ? '🎯' :
-                           post.category === 'Assessment Science' ? '🧠' : '📖'}
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex-1 p-6">
-                      <div className="flex items-center gap-2 mb-3">
-                        <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
-                          {post.category}
-                        </Badge>
-                        {post.featured && (
-                          <Badge className="bg-yellow-500 text-white">Featured</Badge>
-                        )}
-                      </div>
-                      
-                      <CardTitle className="text-xl group-hover:text-primary transition-colors mb-3 leading-tight">
-                        {post.title}
-                      </CardTitle>
-                      
-                      <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-2">{post.excerpt}</p>
-                      
-                      <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
-                        <div className="flex items-center gap-4">
-                          <span className="flex items-center gap-1">
-                            <User className="h-4 w-4" />
-                            {post.author}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Calendar className="h-4 w-4" />
-                            {new Date(post.date).toLocaleDateString()}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Clock className="h-4 w-4" />
-                            {post.readTime}
-                          </span>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex flex-wrap gap-1">
-                          {post.tags.slice(0, 3).map(tag => (
-                            <Badge key={tag} variant="outline" className="text-xs border-primary/20 text-primary/80">
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
-                        <Button variant="ghost" size="sm" className="group-hover:bg-primary/5 text-primary">
-                          Read More <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              </Link>
-              ))}
-            </div>
-
-            {filteredPosts.length === 0 && (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground text-lg">No articles found matching your search criteria.</p>
-              </div>
-            )}
-          </div>
-
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            {/* Recent Posts */}
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle className="text-lg">Recent Articles</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {recentPosts.map(post => (
-                    <Link key={post.id} to={`/blog/${post.title.toLowerCase().replace(/\s+/g, '-')}`}>
-                      <div className="group cursor-pointer">
-                      <h4 className="font-medium text-sm group-hover:text-thinkera-purple transition-colors mb-1 line-clamp-2">
-                        {post.title}
-                      </h4>
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <Calendar className="h-3 w-3" />
-                        {new Date(post.date).toLocaleDateString()}
-                      </div>
-                    </div>
-                  </Link>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Categories */}
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle className="text-lg">Categories</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  {categories.slice(1).map(category => (
-                    <button
-                      key={category}
-                      onClick={() => setSelectedCategory(category)}
-                      className="block w-full text-left text-sm text-muted-foreground hover:text-thinkera-purple py-1"
-                    >
-                      {category}
-                    </button>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Newsletter Signup */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Stay Updated</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Subscribe to get the latest career insights and educational guidance.
-                </p>
-                <div className="space-y-3">
-                  <Input type="email" placeholder="Enter your email" />
-                  <Button className="w-full" size="sm">Subscribe</Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </div>
 
       <Footer />
     </div>

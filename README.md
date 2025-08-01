@@ -1,73 +1,235 @@
-# Welcome to your Lovable project
+# Path Finder - Career Assessment Platform
 
-## Project info
+A comprehensive career assessment platform built with React, TypeScript, and connected to a Node.js backend API.
 
-**URL**: https://lovable.dev/projects/455e4df4-d05d-4f9b-a7a5-bbeb4e4ec15c
+## 🚀 Features
 
-## How can I edit this code?
+- **Career Assessments**: 25+ specialized assessments across different career domains
+- **Blog System**: Expert career guidance articles with search and categorization
+- **Real-time Analytics**: Assessment statistics and user progress tracking
+- **Responsive Design**: Modern UI built with Tailwind CSS and shadcn/ui
+- **API Integration**: Full backend connectivity for data persistence
 
-There are several ways of editing your application.
+## 🛠️ Tech Stack
 
-**Use Lovable**
+### Frontend
+- **React 18** with TypeScript
+- **Vite** for build tooling
+- **Tailwind CSS** for styling
+- **shadcn/ui** for UI components
+- **React Router** for navigation
+- **React Query** for data fetching
+- **date-fns** for date formatting
+- **Lucide React** for icons
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/455e4df4-d05d-4f9b-a7a5-bbeb4e4ec15c) and start prompting.
+### Backend Integration
+- **Node.js/Express** API server
+- **MongoDB** with Mongoose ODM
+- **JWT Authentication**
+- **File Upload** with Multer
+- **Email Services** with Nodemailer
 
-Changes made via Lovable will be committed automatically to this repo.
+## 📡 API Endpoints
 
-**Use your preferred IDE**
+### Blog System
+- `GET /api/blog/posts/public` - Get published blog posts
+- `GET /api/blog/posts/featured` - Get featured posts
+- `GET /api/blog/posts/:slug/public` - Get single blog post
+- `GET /api/blog/categories` - Get blog categories
+- `GET /api/blog/search` - Search blog posts
+- `GET /api/blog/category/:category` - Get posts by category
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Assessment System
+- `GET /api/assessment/types` - Get all assessment types
+- `GET /api/assessment/stats` - Get assessment statistics
+- `POST /api/assessment/start` - Start new assessment
+- `GET /api/assessment/:id` - Get assessment details
+- `POST /api/assessment/:id/answers` - Submit assessment answers
+- `PUT /api/assessment/:id/complete` - Complete assessment
+- `GET /api/assessment/user/:email` - Get user's assessment history
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Contact & Newsletter
+- `POST /api/contact` - Submit contact form
+- `POST /api/subscribers` - Subscribe to newsletter
 
-Follow these steps:
+## 🏃‍♂️ Getting Started
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+- MongoDB database
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Installation
 
-# Step 3: Install the necessary dependencies.
-npm i
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd path-finder
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Setup**
+   Create a `.env` file in the root directory:
+   ```env
+   VITE_API_BASE_URL=http://localhost:5000
+   ```
+
+4. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Build for production**
+   ```bash
+   npm run build
+   ```
+
+## 📁 Project Structure
+
+```
+src/
+├── components/          # Reusable UI components
+│   ├── ui/             # shadcn/ui components
+│   └── layout/         # Layout components (Header, Footer)
+├── pages/              # Page components
+│   ├── Index.tsx       # Homepage
+│   ├── About.tsx       # About page
+│   ├── Blog.tsx        # Blog listing
+│   ├── BlogPost.tsx    # Individual blog post
+│   ├── Assessments.tsx # Assessment catalog
+│   └── Contact.tsx     # Contact form
+├── lib/                # Utility libraries
+│   ├── api.ts          # API client and types
+│   └── utils.ts        # Helper functions
+├── hooks/              # Custom React hooks
+└── data/               # Static data files
 ```
 
-**Edit a file directly in GitHub**
+## 🔧 API Integration
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The frontend connects to the backend API through the `lib/api.ts` file, which provides:
 
-**Use GitHub Codespaces**
+- **Type-safe API calls** with TypeScript interfaces
+- **Error handling** and loading states
+- **Request/response interceptors**
+- **Centralized API configuration**
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Example Usage
 
-## What technologies are used for this project?
+```typescript
+import { getBlogPosts, startAssessment } from '@/lib/api';
 
-This project is built with:
+// Fetch blog posts
+const { posts, totalPages } = await getBlogPosts({
+  page: 1,
+  limit: 10,
+  category: 'Career Guidance'
+});
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+// Start an assessment
+const assessment = await startAssessment({
+  name: 'John Doe',
+  email: 'john@example.com',
+  age: '25 to 34',
+  gender: 'male',
+  assessmentType: 'full-stack'
+});
+```
 
-## How can I deploy this project?
+## 🎨 UI Components
 
-Simply open [Lovable](https://lovable.dev/projects/455e4df4-d05d-4f9b-a7a5-bbeb4e4ec15c) and click on Share -> Publish.
+The project uses shadcn/ui components for consistent design:
 
-## Can I connect a custom domain to my Lovable project?
+- **Cards** for content containers
+- **Buttons** with various styles and states
+- **Input fields** with validation
+- **Badges** for tags and categories
+- **Loading spinners** and error states
 
-Yes, you can!
+## 📊 Assessment Categories
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+1. **Technology & Programming**
+   - Full Stack Development
+   - Data Science & AI/ML
+   - DevOps Engineering
+   - React.js Development
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+2. **Cloud & Infrastructure**
+   - AWS Cloud Architect
+   - Google Cloud Platform
+   - Multi-Cloud Engineer
+   - Microsoft 365
+
+3. **Security & Compliance**
+   - Cybersecurity
+   - Ethical Hacking
+   - ServiceNow
+
+4. **Business & Management**
+   - Scrum Master
+   - Business Analyst
+   - Medical Coding
+
+5. **AI & Emerging Tech**
+   - AI/ML
+   - Generative AI
+   - Blockchain
+
+## 🔐 Authentication
+
+The platform supports:
+- **OTP-based admin authentication** for content management
+- **User session management** for assessment tracking
+- **Secure API endpoints** with JWT tokens
+
+## 📈 Analytics & Tracking
+
+- **Assessment completion rates**
+- **User engagement metrics**
+- **Blog post view tracking**
+- **Performance analytics**
+
+## 🚀 Development Setup
+
+### Backend (Local)
+```bash
+cd Pf-backend
+npm install
+npm start
+```
+Backend will be available at: http://localhost:5000
+
+### Frontend (Local)
+```bash
+cd path-finder
+npm install
+npm run dev
+```
+Frontend will be available at: http://localhost:5173
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🆘 Support
+
+For support and questions:
+- Email: support@pathfinder.com
+- Documentation: [API Docs](http://localhost:5000/)
+- Issues: GitHub Issues
+
+---
+
+Built with ❤️ for career development and guidance.

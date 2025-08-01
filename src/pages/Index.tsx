@@ -99,60 +99,60 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       <Header />
 
-      {/* Hero Section - Omni Style */}
-      <section className="relative py-20 px-4 overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-10 left-10 h-64 w-64 rounded-full bg-primary/5 blur-3xl"></div>
-          <div className="absolute bottom-10 right-10 h-48 w-48 rounded-full bg-thinkera-purple/5 blur-3xl"></div>
-        </div>
-
-        <div className="container mx-auto text-center">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              Your career in{' '}
-              <span className="text-gradient">50+ free</span>
-              <br />
-              assessments
-            </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Discover your perfect career path with comprehensive assessments. 
-              Make informed decisions about your future with data-driven insights.
-            </p>
-            
-            {/* Search Bar - Omni Style */}
-            <div className="max-w-2xl mx-auto mb-8">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Search assessments..."
-                  className="h-14 pl-12 pr-4 text-lg border-2 rounded-2xl shadow-card"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
+      {/* Hero Section with Gradient Background */}
+      <section className="relative bg-gradient-to-br from-pink-100 via-pink-50 to-blue-100 pt-20 pb-16 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+            {/* Left Side - Text and Icon */}
+            <div className="flex-1 text-center lg:text-left">
+              <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
+                <div className="text-4xl lg:text-6xl font-bold text-gray-900">
+                  {/* <div>Your career in</div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-blue-600">50+</span>
+                    <span className="text-gray-900">free</span>
+                  </div>
+                  <div>assessments</div> */}
+                </div>
+                {/* Calculator Icon */}
+                {/* <div className="hidden lg:block w-16 h-16 bg-gradient-to-br from-red-400 via-yellow-400 to-blue-500 rounded-lg p-3 shadow-lg">
+                  <div className="grid grid-cols-3 gap-1 text-white text-sm font-bold">
+                    <div className="bg-red-500 rounded p-1 text-center">+</div>
+                    <div className="bg-blue-500 rounded p-1 text-center">-</div>
+                    <div className="bg-yellow-500 rounded p-1 text-center">=</div>
+                    <div className="bg-blue-500 rounded p-1 text-center">/</div>
+                    <div className="bg-gray-600 rounded p-1 text-center">•</div>
+                    <div className="bg-gray-600 rounded p-1 text-center"></div>
+                  </div>
+                </div> */}
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="h-12 text-lg px-8 rounded-xl">
-                Start Free Assessment
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button variant="outline" size="lg" className="h-12 text-lg px-8 rounded-xl">
-                Explore All Assessments
-              </Button>
-            </div>
+            {/* Right Side - Search Bar */}
+            {/* <div className="flex-1 w-full max-w-md">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search assessments..."
+                  className="w-full h-14 pl-6 pr-14 text-lg border border-gray-200 rounded-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                />
+                <button className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                  <Search className="h-5 w-5" />
+                </button>
+              </div>
+            </div> */}
           </div>
         </div>
+        {/* Gradient fade overlay */}
+        <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent"></div>
       </section>
 
       {/* Categories Grid - Omni Style */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto">
+      <section className="relative -mt-12 pb-16 px-4">
+        <div className="container mx-auto max-w-6xl">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {categories.map((category, index) => (
               <Link
@@ -160,14 +160,14 @@ const Index = () => {
                 to="/assessments"
                 className="group"
               >
-                <div className="bg-card rounded-2xl border-2 border-border hover:border-primary/20 p-6 text-center transition-all duration-300 hover:shadow-lg-custom shadow-card">
+                <div className="bg-white rounded-2xl border border-gray-100 hover:border-blue-200 p-6 text-center transition-all duration-300 hover:shadow-md shadow-sm">
                   <div className="flex justify-center mb-4">
-                    <div className="h-12 w-12 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors flex items-center justify-center">
+                    <div className="h-12 w-12 rounded-xl bg-blue-50 text-blue-600 group-hover:bg-blue-500 group-hover:text-white transition-colors flex items-center justify-center">
                       {category.icon}
                     </div>
                   </div>
-                  <h3 className="font-semibold text-foreground mb-1">{category.name}</h3>
-                  <p className="text-sm text-muted-foreground">{category.count}</p>
+                  <h3 className="font-semibold text-gray-900 mb-1">{category.name}</h3>
+                  <p className="text-sm text-gray-500">{category.count}</p>
                 </div>
               </Link>
             ))}

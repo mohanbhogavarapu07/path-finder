@@ -10,8 +10,12 @@ const Header = () => {
   const location = useLocation();
 
   const navigation = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
+    // { name: "Home", href: "/" },
+    // { name: "Design", href: "/design" },
+    // { name: "Healthcare", href: "/healthcare" },
+    // { name: "Engineering", href: "/engineering" },
+    // { name: "Security", href: "/security" },
+    // { name: "About", href: "/about" },
     { name: "Blog", href: "/blog" },
   ];
 
@@ -222,7 +226,7 @@ const Header = () => {
                  <Link
                    key={category.name}
                    to={category.href}
-                   className={`text-sm font-medium whitespace-nowrap transition-colors hover:text-thinkera-purple px-2 py-1 ${
+                   className={`text-base font-medium whitespace-nowrap transition-colors hover:text-thinkera-purple px-2 py-1 ${
                      location.hash === category.href.split("#")[1]
                        ? "text-thinkera-purple border-b-2 border-thinkera-purple"
                        : "text-muted-foreground"

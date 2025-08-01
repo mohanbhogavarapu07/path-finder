@@ -1,20 +1,12 @@
 
 import React from 'react';
 import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 
 export interface AssessmentCardProps {
   id: string;
   title: string;
-  description?: string;
-  icon?: React.ComponentType<{ className?: string }>;
-  duration?: string;
-  difficulty?: 'Beginner' | 'Intermediate' | 'Advanced';
-  userCount?: string;
-  tags?: string[];
-  category?: string;
   comingSoon?: boolean;
-  gradient?: string;
-  rating?: number;
 }
 
 const AssessmentCard: React.FC<AssessmentCardProps> = ({
@@ -23,22 +15,21 @@ const AssessmentCard: React.FC<AssessmentCardProps> = ({
   comingSoon = false,
 }) => {
   return (
-    <div className="flex items-center mb-3">
-      {/* Bullet point */}
-      <div className="w-2 h-2 bg-black rounded-full mr-3 flex-shrink-0"></div>
-      
-      {/* Link */}
+    <div className="mb-4">
       {!comingSoon ? (
         <Link 
           to={`/assessments/${id}`}
-          className="text-blue-600 underline hover:text-blue-800 transition-colors duration-200 text-base"
+          className="block w-full"
         >
-          {title}
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 text-gray-700 px-6 py-4 rounded-xl border border-blue-100 hover:border-blue-200 shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-between group">
+            <span className="font-medium text-lg">{title}</span>
+            <ArrowRight className="h-5 w-5 text-blue-500 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-200" />
+          </div>
         </Link>
       ) : (
-        <span className="text-gray-500 text-base">
-          {title} (Coming Soon)
-        </span>
+        <div className="bg-gray-50 text-gray-400 px-6 py-4 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+          <span className="font-medium text-lg">{title} (Coming Soon)</span>
+        </div>
       )}
     </div>
   );

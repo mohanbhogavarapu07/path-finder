@@ -105,7 +105,7 @@ const Blog = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative py-24 bg-gradient-to-br from-primary to-primary-variant overflow-hidden">
+      <section className="relative py-24 bg-blue-600 overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
         <div className="relative container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center text-white">
@@ -138,7 +138,7 @@ const Blog = () => {
               <Link key={post.id} to={`/blog/${post.title.toLowerCase().replace(/\s+/g, '-')}`}>
                 <Card className="group cursor-pointer hover:shadow-card transition-all duration-300 border-2 hover:border-primary/20 bg-card">
                 <div className="relative overflow-hidden">
-                  <div className="h-56 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+                  <div className="h-56 bg-blue-50 flex items-center justify-center">
                     <div className="text-4xl opacity-20">📚</div>
                   </div>
                   <div className="absolute top-4 left-4">
@@ -249,7 +249,7 @@ const Blog = () => {
                   <Card className="group cursor-pointer hover:shadow-card transition-all duration-300 border hover:border-primary/20 bg-card">
                     <div className="md:flex">
                     <div className="md:w-80 flex-shrink-0">
-                      <div className="h-48 md:h-full bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center">
+                      <div className="h-48 md:h-full bg-blue-50 flex items-center justify-center">
                         <div className="text-3xl opacity-30">
                           {post.category === 'Technology' ? '💻' :
                            post.category === 'Career Guidance' ? '🎯' :

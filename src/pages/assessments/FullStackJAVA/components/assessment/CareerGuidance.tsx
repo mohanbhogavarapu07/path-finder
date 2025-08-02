@@ -320,7 +320,7 @@ const CareerGuidance = ({ onPrev, assessmentData }: CareerGuidanceProps) => {
       )}
 
       {/* Final Actions */}
-      <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200">
+              <Card className="bg-blue-50 border-2 border-blue-200">
         <CardContent className="p-6 text-center">
           <h3 className="text-xl font-bold mb-4">Ready to Start Your Journey?</h3>
           <p className="text-gray-600 mb-6">

@@ -53,7 +53,7 @@ const BlogPost = () => {
       <Header />
       
       {/* Article Header */}
-      <section className="py-16 bg-gradient-to-br from-primary/5 to-secondary/5">
+      <section className="py-16 bg-blue-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <Link to="/blog" className="inline-flex items-center text-primary hover:text-primary/80 mb-6">
@@ -130,7 +130,7 @@ const BlogPost = () => {
             </Card>
             
             {/* Call to Action */}
-            <Card className="mt-12 p-8 bg-gradient-to-r from-primary/5 to-secondary/5 border-primary/20">
+            <Card className="mt-12 p-8 bg-blue-50 border-blue-200">
               <CardContent className="text-center">
                 <h3 className="text-2xl font-bold text-foreground mb-4">
                   Ready to Find Your Perfect Career Path?

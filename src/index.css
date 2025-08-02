@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    --background: 240 10% 97%;
+    --background: 199 88% 95%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -15,13 +15,13 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 262 54% 56%;
+    --primary: 199 88% 49%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 199 88% 90%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 210 40% 96.1%;
+    --muted: 199 88% 90%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
     --accent: 199 88% 49%;
@@ -30,27 +30,27 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --border: 199 88% 85%;
+    --input: 199 88% 85%;
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.75rem;
 
-    /* Thinkera custom colors */
-    --thinkera-purple: 262 54% 56%;
-    --thinkera-purple-light: 259 80% 83%;
-    --thinkera-purple-dark: 262 54% 40%;
+    /* Thinkera custom colors - updated to blue only */
+    --thinkera-purple: 199 88% 49%;
+    --thinkera-purple-light: 199 88% 70%;
+    --thinkera-purple-dark: 199 88% 35%;
     --thinkera-blue: 199 88% 49%;
-    --thinkera-blue-light: 195 85% 60%;
+    --thinkera-blue-light: 199 88% 70%;
     --thinkera-blue-dark: 199 88% 35%;
     --thinkera-dark: 228 24% 15%;
-    --gradient-hero: linear-gradient(to right, hsl(262 54% 40%), hsl(199 88% 49%));
-    --gradient-card: linear-gradient(135deg, #8B5CF6 0%, #1EAEDB 100%);
-    --gradient-cta: linear-gradient(90deg, #8B5CF6 0%, #3B82F6 100%);
+    --gradient-hero: linear-gradient(to right, hsl(199 88% 35%), hsl(199 88% 49%));
+    --gradient-card: linear-gradient(135deg, #1EAEDB 0%, #33C3F0 100%);
+    --gradient-cta: linear-gradient(90deg, #1EAEDB 0%, #0FA0CE 100%);
   }
 
   .dark {
-    --background: 225 25% 10%;
+    --background: 199 88% 10%;
     --foreground: 210 40% 98%;
 
     --card: 228 24% 15%;
@@ -59,13 +59,13 @@
     --popover: 228 24% 15%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 262 54% 70%;
+    --primary: 199 88% 70%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 199 88% 20%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
+    --muted: 199 88% 20%;
     --muted-foreground: 215 20.2% 65.1%;
 
     --accent: 199 88% 55%;
@@ -74,8 +74,8 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+    --border: 199 88% 20%;
+    --input: 199 88% 20%;
     --ring: 212.7 26.8% 83.9%;
   }
 }

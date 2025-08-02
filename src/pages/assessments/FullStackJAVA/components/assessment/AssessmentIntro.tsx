@@ -33,7 +33,7 @@ const AssessmentIntro = ({ onNext }: AssessmentIntroProps) => {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Hero Section */}
-      <Card className="border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+              <Card className="border-2 border-blue-200 bg-blue-50">
         <CardHeader className="text-center pb-4">
           <CardTitle className="text-3xl font-bold text-gray-900 mb-2">
             Discover Your Java Career Potential

@@ -10,6 +10,7 @@ import { AssessmentResponse, AssessmentScores } from "../types/assessment";
 import { Brain, Code, Target, Award, BookOpen, TrendingUp, ArrowRight, CheckCircle } from "lucide-react";
 import { RadioGroup } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
+import AssessmentLayout from '../../../../components/AssessmentLayout';
 
 export default function Assessment() {
   const navigate = useNavigate();
@@ -151,7 +152,7 @@ export default function Assessment() {
   if (currentSection.questions.length === 0) {
     // Introduction section
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <AssessmentLayout>
         {/* Header */}
         <div className="bg-white shadow-sm border-b">
           <div className="container mx-auto px-4 py-4">
@@ -179,7 +180,7 @@ export default function Assessment() {
         {/* Main Content */}
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
-            <Card className="border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+            <Card className="border-2 border-blue-200 bg-blue-50">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold text-gray-900">
                   🚀 Should I Learn Flutter?
@@ -224,7 +225,7 @@ export default function Assessment() {
               <Button 
                 onClick={handleNext} 
                 size="lg" 
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3"
+                className="bg-blue-600/60 hover:bg-blue-700/70 text-white px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold"
               >
                 Start Assessment
                 <ArrowRight className="ml-2 w-5 h-5" />
@@ -232,12 +233,12 @@ export default function Assessment() {
             </div>
           </div>
         </div>
-      </div>
+      </AssessmentLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <AssessmentLayout>
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="container mx-auto px-4 py-4">
@@ -406,6 +407,6 @@ export default function Assessment() {
           })()}
         </div>
       </div>
-    </div>
+    </AssessmentLayout>
   );
 }

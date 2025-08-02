@@ -33,7 +33,7 @@ const Security = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-pink-50 to-blue-100">
+    <div className="min-h-screen bg-blue-50">
       <Header />
       
       {/* Hero Section */}

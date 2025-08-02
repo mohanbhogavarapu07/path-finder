@@ -74,7 +74,7 @@ const About = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative py-24 bg-gradient-to-br from-primary to-primary-variant overflow-hidden">
+      <section className="relative py-24 bg-blue-600 overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
         <div className="relative container mx-auto px-4">
           <div className="max-w-5xl mx-auto text-center text-white">
@@ -258,7 +258,7 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-hero text-white py-16">
+      <section className="bg-blue-600 text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Discover Your Path?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">

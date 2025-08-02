@@ -5,6 +5,7 @@ import { Assessment as AssessmentType, AssessmentAnswer, AssessmentResult } from
 import { AssessmentProgress } from './AssessmentProgress';
 import AssessmentIntroduction from './AssessmentIntroduction';
 import { QuestionCard } from './QuestionCard';
+import AssessmentLayout from '../../../../components/AssessmentLayout';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface AssessmentProps {
@@ -190,7 +191,7 @@ const Assessment = ({ assessment, onBack, onComplete }: AssessmentProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <AssessmentLayout>
       <AssessmentProgress 
         currentSection={currentSection}
         progress={calculateProgress()}
@@ -262,7 +263,7 @@ const Assessment = ({ assessment, onBack, onComplete }: AssessmentProps) => {
           </div>
         )}
       </div>
-    </div>
+    </AssessmentLayout>
   );
 };
 

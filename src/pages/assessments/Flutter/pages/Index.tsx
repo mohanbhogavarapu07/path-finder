@@ -125,7 +125,7 @@ const AssessmentIntro = ({ onNext }: { onNext: () => void }) => {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Hero Section */}
-      <Card className="border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+      <Card className="border-2 border-blue-200 bg-blue-50">
         <CardHeader className="text-center pb-4">
           <CardTitle className="text-3xl font-bold text-gray-900 mb-2">
             Discover Your Flutter Career Potential
@@ -150,14 +150,14 @@ const AssessmentIntro = ({ onNext }: { onNext: () => void }) => {
               <span>Career Guidance</span>
             </div>
           </div>
-          <Button 
-            onClick={onNext} 
-            size="lg" 
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3"
-          >
-            Start Assessment
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
+                        <Button 
+                onClick={onNext} 
+                size="lg" 
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold"
+              >
+                Start Assessment
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
         </CardContent>
       </Card>
 

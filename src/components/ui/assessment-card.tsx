@@ -43,7 +43,7 @@ export function AssessmentCard({
       onClick={onClick}
     >
       {/* Hover overlay effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-thinkera-purple/5 to-thinkera-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       
       <CardContent className="p-6 relative flex flex-col h-full z-10">
         {/* Header with Title, Duration, and Participants */}
@@ -82,17 +82,17 @@ export function AssessmentCard({
         {/* Button */}
         <div className="mt-auto">
           {id ? (
-            <Link to={`/assessments/${id}`}>
-              <Button 
-                className="w-full bg-gradient-to-r from-thinkera-purple to-thinkera-blue hover:opacity-90 text-white shadow-lg hover:shadow-xl transition-all border-0 group-hover:shadow-2xl group-hover:scale-105 duration-300"
-              >
-                Start Assessment
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-              </Button>
-            </Link>
+                            <Link to={`/assessments/${id}`}>
+                  <Button 
+                    className="w-full bg-blue-600/60 hover:bg-blue-700/70 text-white shadow-lg hover:shadow-xl transition-all border-0 group-hover:shadow-2xl group-hover:scale-105 duration-300 font-semibold"
+                  >
+                    Start Assessment
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+                  </Button>
+                </Link>
           ) : (
             <Button 
-              className="w-full bg-gradient-to-r from-thinkera-purple to-thinkera-blue hover:opacity-90 text-white shadow-lg hover:shadow-xl transition-all border-0 group-hover:shadow-2xl group-hover:scale-105 duration-300"
+              className="w-full bg-gray-800 hover:bg-gray-900 text-white shadow-lg hover:shadow-xl transition-all border-0 group-hover:shadow-2xl group-hover:scale-105 duration-300 font-semibold"
             >
               Start Assessment
               <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />

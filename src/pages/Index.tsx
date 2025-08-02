@@ -99,7 +99,7 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-pink-50 to-blue-100">
+    <div className="min-h-screen bg-blue-50">
       <Header />
 
       {/* Main Content */}
@@ -192,7 +192,7 @@ const Index = () => {
           </div>
           <div className="text-center">
             <Link to="/assessments">
-              <Button size="lg" className="bg-gradient-to-r from-secondary-500 to-accent-500 hover:opacity-90 text-white px-8 border-0 shadow-lg hover:shadow-xl transition-all">
+                              <Button size="lg" className="bg-blue-600/60 hover:bg-blue-700/70 text-white px-8 border-0 shadow-lg hover:shadow-xl transition-all">
                 Explore All Assessments
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
@@ -214,9 +214,9 @@ const Index = () => {
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="group hover:shadow-xl transition-all duration-300 border-primary-100 hover:border-primary-200 bg-gradient-to-br from-white to-primary-50">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-blue-100 hover:border-blue-200 bg-gradient-to-br from-white to-blue-50">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-blue-600 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Target className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">High School Students</CardTitle>
@@ -233,9 +233,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-secondary-100 hover:border-secondary-200 bg-gradient-to-br from-white to-secondary-50">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-blue-100 hover:border-blue-200 bg-gradient-to-br from-white to-blue-50">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-blue-600 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Lightbulb className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">College Students</CardTitle>
@@ -252,9 +252,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-accent-100 hover:border-accent-200 bg-gradient-to-br from-white to-accent-50">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-blue-100 hover:border-blue-200 bg-gradient-to-br from-white to-blue-50">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-accent-500 to-secondary-500 rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-blue-600 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Brain className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">Graduates & Professionals</CardTitle>
@@ -271,9 +271,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-primary-100 hover:border-primary-200 bg-gradient-to-br from-white to-primary-50">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-blue-100 hover:border-blue-200 bg-gradient-to-br from-white to-blue-50">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-accent-500 to-secondary-500 rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-blue-600 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Compass className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">Creative & Arts</CardTitle>
@@ -290,9 +290,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-secondary-100 hover:border-secondary-200 bg-gradient-to-br from-white to-secondary-50">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-blue-100 hover:border-blue-200 bg-gradient-to-br from-white to-blue-50">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-blue-600 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Users className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">Business & Commerce</CardTitle>
@@ -309,9 +309,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-accent-100 hover:border-accent-200 bg-gradient-to-br from-white to-accent-50">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-blue-100 hover:border-blue-200 bg-gradient-to-br from-white to-blue-50">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-blue-600 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Award className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">International Opportunities</CardTitle>
@@ -339,7 +339,7 @@ const Index = () => {
             <p className="text-lg text-muted-foreground">Real feedback from students who found their path</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            <Card className="bg-gradient-to-br from-primary-50 to-white border-primary-100 hover:shadow-lg transition-all">
+            <Card className="bg-gradient-to-br from-blue-50 to-white border-blue-100 hover:shadow-lg transition-all">
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -356,7 +356,7 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-secondary-50 to-white border-secondary-100 hover:shadow-lg transition-all">
+            <Card className="bg-gradient-to-br from-blue-50 to-white border-blue-100 hover:shadow-lg transition-all">
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -373,7 +373,7 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-accent-50 to-white border-accent-100 hover:shadow-lg transition-all">
+            <Card className="bg-gradient-to-br from-blue-50 to-white border-blue-100 hover:shadow-lg transition-all">
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (

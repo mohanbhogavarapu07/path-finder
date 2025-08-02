@@ -44,22 +44,22 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-muted/30 border-t mt-auto">
+         <footer className="bg-blue-600/50 text-white border-t border-blue-700/40 mt-auto">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center space-x-2 mb-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
-                <Calculator className="h-5 w-5 text-primary-foreground" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
+                <Calculator className="h-5 w-5 text-blue-600" />
               </div>
-              <span className="text-xl font-bold text-gradient">career compass</span>
+              <span className="text-xl font-bold text-white">career compass</span>
             </Link>
-            <p className="text-muted-foreground mb-4 max-w-sm">
+            <p className="text-blue-100 mb-4 max-w-sm">
               Discover your perfect career path with our comprehensive assessments. 
               Make informed decisions about your future with data-driven insights.
             </p>
-            <div className="space-y-2 text-sm text-muted-foreground">
+            <div className="space-y-2 text-sm text-blue-100">
               <div className="flex items-center space-x-2">
                 <Mail className="h-4 w-4" />
                 <span>hello@careercompass.com</span>
@@ -78,13 +78,13 @@ const Footer = () => {
           {/* Footer Links */}
           {footerSections.map((section) => (
             <div key={section.title}>
-              <h3 className="font-semibold text-foreground mb-4">{section.title}</h3>
+              <h3 className="font-semibold text-white mb-4">{section.title}</h3>
               <ul className="space-y-2">
                 {section.links.map((link) => (
                   <li key={link.name}>
                     <Link
                       to={link.href}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      className="text-sm text-blue-100 hover:text-white transition-colors"
                     >
                       {link.name}
                     </Link>
@@ -96,19 +96,19 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t pt-8 mt-8">
+                 <div className="border-t border-blue-700/40 pt-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm text-blue-100">
               © {currentYear} Career Compass. All rights reserved.
             </div>
-            <div className="flex space-x-6 text-sm text-muted-foreground">
-              <Link to="#" className="hover:text-primary transition-colors">
+            <div className="flex space-x-6 text-sm text-blue-100">
+              <Link to="#" className="hover:text-white transition-colors">
                 Privacy Policy
               </Link>
-              <Link to="#" className="hover:text-primary transition-colors">
+              <Link to="#" className="hover:text-white transition-colors">
                 Terms of Service
               </Link>
-              <Link to="#" className="hover:text-primary transition-colors">
+              <Link to="#" className="hover:text-white transition-colors">
                 Cookie Policy
               </Link>
             </div>

@@ -144,7 +144,11 @@ const BlogPost = () => {
       <Header />
       
       {/* Article Header */}
+<<<<<<< HEAD
       <section className="py-16 bg-gradient-to-br from-blue-600 to-purple-600 text-white">
+=======
+      <section className="py-16 bg-blue-50">
+>>>>>>> ce0838f303210210d050824cc351a712a2849313
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <Button 
@@ -295,7 +299,11 @@ const BlogPost = () => {
             )}
             
             {/* Call to Action */}
+<<<<<<< HEAD
             <Card className="mt-12 p-8 bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
+=======
+            <Card className="mt-12 p-8 bg-blue-50 border-blue-200">
+>>>>>>> ce0838f303210210d050824cc351a712a2849313
               <CardContent className="text-center">
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
                   Ready to Find Your Perfect Career Path?

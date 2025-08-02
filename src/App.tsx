@@ -9,6 +9,10 @@ import About from "./pages/About";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Assessments from "./pages/Assessments";
+import Design from "./pages/Design";
+import Healthcare from "./pages/Healthcare";
+import Engineering from "./pages/Engineering";
+import Security from "./pages/Security";
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import AdminBlogEditor from "./pages/AdminBlogEditor";
@@ -28,6 +32,10 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/assessments" element={<Assessments />} />
+          <Route path="/design" element={<Design />} />
+          <Route path="/healthcare" element={<Healthcare />} />
+          <Route path="/engineering" element={<Engineering />} />
+          <Route path="/security" element={<Security />} />
           <Route path="/contact" element={<Contact />} />
           
           {/* Admin Routes */}

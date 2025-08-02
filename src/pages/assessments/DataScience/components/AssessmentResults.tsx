@@ -61,7 +61,7 @@ const AssessmentResults = ({ result, onRestart }: AssessmentResultsProps) => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
+          <div className="min-h-screen bg-blue-50 py-8">
       {/* Top Bar: Progress/Navigation */}
       <AssessmentProgress currentSection="results" progress={100} />
       <div className="container mx-auto px-4 max-w-6xl">

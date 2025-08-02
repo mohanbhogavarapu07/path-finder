@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Brain, Code, Cloud, Smartphone, Shield, BarChart3, Palette, Briefcase } from 'lucide-react';
+import { Brain, Code, Cloud, Smartphone, Shield, BarChart3, Palette, Briefcase, Award } from 'lucide-react';
 import AssessmentCard from '@/components/AssessmentCard';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -8,51 +8,106 @@ import Footer from '@/components/layout/Footer';
 const Assessments = () => {
   const assessmentCategories = [
     {
-      title: "Technology & Programming",
-      icon: Code,
-      color: "bg-thinkera-blue/10 text-thinkera-blue border-thinkera-blue/20",
-      assessments: [
-        {
-          id: "full-stack",
-          title: "Full Stack Development Assessment",
-        },
-        {
-          id: "data-science",
-          title: "Data Science & AI/ML Assessment",
-        },
-        {
-          id: "devops",
-          title: "DevOps Engineering Assessment",
-        }
-      ]
-    },
-    {
       title: "Cloud & Infrastructure",
       icon: Cloud,
       color: "bg-purple-100 text-purple-700",
       assessments: [
         {
-          id: "aws-cloud",
-          title: "AWS Cloud Architect Assessment",
+          id: "aws",
+          title: "AWS Assessment",
         },
         {
-          id: "multi-cloud",
-          title: "Multi-Cloud Engineer Assessment",
+          id: "google-cloud-platform",
+          title: "Google Cloud Platform Assessment",
+        },
+        {
+          id: "snowflake",
+          title: "Snowflake Assessment",
+        },
+        {
+          id: "oracle-cloud",
+          title: "Oracle Cloud Assessment",
+        },
+        {
+          id: "multi-cloud-engineer",
+          title: "Multi Cloud Engineer Assessment",
         }
       ]
     },
     {
-      title: "Mobile Development",
-      icon: Smartphone,
+      title: "Technology & Programming",
+      icon: Code,
+      color: "bg-thinkera-blue/10 text-thinkera-blue border-thinkera-blue/20",
+      assessments: [
+        {
+          id: "full-stack-python",
+          title: "Full Stack Python Assessment",
+        },
+        {
+          id: "full-stack-java",
+          title: "Full Stack JAVA Assessment",
+        },
+        {
+          id: "full-stack-dotnet",
+          title: "Full Stack Dot Net Assessment",
+        },
+        {
+          id: "mern-stack",
+          title: "MERN Stack Assessment",
+        },
+        {
+          id: "react-js",
+          title: "React JS Assessment",
+        },
+        {
+          id: "mean-stack",
+          title: "Mean Stack Assessment",
+        },
+        {
+          id: "flutter",
+          title: "Flutter Assessment",
+        }
+      ]
+    },
+    {
+      title: "Data Science & AI",
+      icon: Brain,
+      color: "bg-blue-100 text-blue-700",
+      assessments: [
+        {
+          id: "data-science",
+          title: "Data Science Assessment",
+        },
+        {
+          id: "ai-ml",
+          title: "AI/ML Assessment",
+        },
+        {
+          id: "gen-ai",
+          title: "Gen AI Assessment",
+        },
+        {
+          id: "python-data-analytics",
+          title: "Python with Data Analytics Assessment",
+        },
+        {
+          id: "power-bi-tableau",
+          title: "Power BI & Tableau Assessment",
+        }
+      ]
+    },
+    {
+      title: "DevOps & Engineering",
+      icon: Shield,
       color: "bg-green-100 text-green-700",
       assessments: [
         {
-          id: "flutter",
-          title: "Flutter Development Assessment",
+          id: "devops",
+          title: "DevOps Assessment",
         },
         {
-          id: "react-native",
-          title: "React Native Assessment",
+          id: "scrum-master",
+          title: "Scrum Master Assessment",
         }
       ]
     },
@@ -62,8 +117,8 @@ const Assessments = () => {
       color: "bg-red-100 text-red-700",
       assessments: [
         {
-          id: "cybersecurity",
-          title: "Cybersecurity Specialist Assessment",
+          id: "cyber-security",
+          title: "Cyber Security Assessment",
         },
         {
           id: "ethical-hacking",
@@ -81,30 +136,56 @@ const Assessments = () => {
           title: "Business Analyst Assessment",
         },
         {
-          id: "digital-marketing",
-          title: "Digital Marketing Assessment",
+          id: "salesforce",
+          title: "Salesforce Assessment",
+        },
+        {
+          id: "microsoft-dynamics-365",
+          title: "Microsoft Dynamics 365 Assessment",
         }
       ]
     },
     {
-      title: "Design & User Experience",
-      icon: Palette,
+      title: "Blockchain & Emerging Tech",
+      icon: Code,
+      color: "bg-indigo-100 text-indigo-700",
+      assessments: [
+        {
+          id: "blockchain",
+          title: "Block Chain Assessment",
+        }
+      ]
+    },
+    {
+      title: "Healthcare & Medical",
+      icon: Award,
       color: "bg-pink-100 text-pink-700",
       assessments: [
         {
-          id: "ui-ux-design",
-          title: "UI/UX Design Assessment",
+          id: "medical-coding",
+          title: "Medical Coding Assessment",
+        }
+      ]
+    },
+    {
+      title: "Marketing & Digital",
+      icon: Palette,
+      color: "bg-yellow-100 text-yellow-700",
+      assessments: [
+        {
+          id: "digital-marketing",
+          title: "Digital Marketing Assessment",
         }
       ]
     }
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-blue-50">
       <Header />
       
-      {/* Hero Section with Gradient Background */}
-      <section className="relative bg-gradient-to-br from-pink-100 via-pink-50 to-blue-100 pt-40 pb-16 px-4">
+      {/* Hero Section */}
+      <div className="pt-40 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-left mb-12">
             <h2 className="text-4xl font-bold mb-4 text-gray-900">Choose Your Assessment</h2>
@@ -114,14 +195,12 @@ const Assessments = () => {
             </p>
           </div>
         </div>
-        {/* Gradient fade overlay */}
-        <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent"></div>
-      </section>
+      </div>
       
       {/* Assessment Categories Section */}
-      <section className="relative -mt-20 pb-20 px-4">
+      <div className="px-4 pb-20">
         <div className="container mx-auto max-w-6xl">
-          <div className="space-y-12">
+          <div className="space-y-16">
             {assessmentCategories.map((category, categoryIndex) => {
               const Icon = category.icon;
               // Create anchor ID from category title
@@ -157,11 +236,11 @@ const Assessments = () => {
             })}
           </div>
         </div>
-      </section>
+      </div>
 
       {/* How It Works */}
-      <section className="bg-thinkera-blue/5 py-16">
-        <div className="container mx-auto px-4">
+      <div className="px-4 py-16">
+        <div className="container mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 text-foreground">How Our Assessments Work</h2>
           
           <div className="grid md:grid-cols-4 gap-8">
@@ -190,7 +269,7 @@ const Assessments = () => {
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       <Footer />
     </div>

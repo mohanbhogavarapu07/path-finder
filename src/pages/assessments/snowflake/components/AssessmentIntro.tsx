@@ -10,7 +10,7 @@ export const AssessmentIntro = ({ onStartAssessment }: AssessmentIntroProps) => 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Hero Section */}
-      <Card className="border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+              <Card className="border-2 border-blue-200 bg-blue-50">
         <CardContent className="text-center">
           <div className="flex justify-center mb-4">
             <Snowflake className="h-16 w-16 text-blue-600" />

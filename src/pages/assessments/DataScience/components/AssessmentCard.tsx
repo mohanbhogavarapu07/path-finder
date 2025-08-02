@@ -19,7 +19,7 @@ export const AssessmentCard = ({
   onStartAssessment 
 }: AssessmentCardProps) => {
   return (
-    <Card className="border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 w-full max-w-4xl mx-auto shadow-lg">
+          <Card className="border-2 border-blue-200 bg-blue-50 w-full max-w-4xl mx-auto shadow-lg">
       <CardContent className="p-8">
         <div className="text-center space-y-6">
           <div className="space-y-2">

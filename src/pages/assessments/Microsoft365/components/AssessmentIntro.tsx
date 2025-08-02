@@ -28,7 +28,7 @@ const AssessmentIntro = ({ onNext }: AssessmentIntroProps) => {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Hero Section */}
-      <Card className="border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+              <Card className="border-2 border-blue-200 bg-blue-50">
         <CardHeader className="text-center pb-4">
           <CardTitle className="text-3xl font-bold text-gray-900 mb-2">
             Discover Your Microsoft Dynamics 365 Career Potential
@@ -137,7 +137,7 @@ const AssessmentIntro = ({ onNext }: AssessmentIntroProps) => {
       </Card>
 
       {/* Assessment Overview */}
-      <Card className="bg-gradient-to-r from-indigo-50 to-blue-50 border-2 border-indigo-200">
+              <Card className="bg-blue-50 border-2 border-blue-200">
         <CardHeader>
           <CardTitle className="text-center text-indigo-900">
             What You'll Learn

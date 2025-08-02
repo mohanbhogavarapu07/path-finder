@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { AssessmentCard } from "@/components/ui/assessment-card";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { Search, ArrowRight, BookOpen, Users, Award, TrendingUp, Brain, Code, Shield, Cloud, Palette, BarChart, Target, Lightbulb, Compass, Star } from "lucide-react";
+import { Search, ArrowRight, BookOpen, Users, Award, TrendingUp, Brain, Code, Shield, Cloud, Palette, BarChart, Target, Lightbulb, Compass, Star, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -83,12 +83,12 @@ const Index = () => {
   ];
 
   const categories = [
-    { name: "Technology", count: "15 assessments", icon: <Code className="h-6 w-6" /> },
-    { name: "Business", count: "8 assessments", icon: <BarChart className="h-6 w-6" /> },
-    { name: "Design", count: "6 assessments", icon: <Palette className="h-6 w-6" /> },
-    { name: "Healthcare", count: "7 assessments", icon: <Award className="h-6 w-6" /> },
-    { name: "Engineering", count: "12 assessments", icon: <Users className="h-6 w-6" /> },
-    { name: "Security", count: "5 assessments", icon: <Shield className="h-6 w-6" /> }
+    { name: "Technology", count: "5 assessments", icon: <Cloud className="h-6 w-6" /> },
+    { name: "Bussiness", count: "7 assessments", icon: <Code className="h-6 w-6" /> },
+    { name: "Design", count: "5 assessments", icon: <Brain className="h-6 w-6" /> },
+    { name: "HealthCare", count: "2 assessments", icon: <Shield className="h-6 w-6" /> },
+    { name: "Engineering", count: "2 assessments", icon: <Shield className="h-6 w-6" /> },
+    { name: "Security", count: "3 assessments", icon: <BarChart3 className="h-6 w-6" /> }
   ];
 
   const stats = [
@@ -99,11 +99,11 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-blue-50">
       <Header />
 
-      {/* Hero Section with Gradient Background */}
-      <section className="relative bg-gradient-to-br from-pink-100 via-pink-50 to-blue-100 pt-20 pb-16 px-4">
+      {/* Main Content */}
+      <div className="pt-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
             {/* Left Side - Text and Icon */}
@@ -129,7 +129,7 @@ const Index = () => {
                   </div>
                 </div> */}
               </div>
-            </div>
+        </div>
 
             {/* Right Side - Search Bar */}
             {/* <div className="flex-1 w-full max-w-md">
@@ -146,37 +146,35 @@ const Index = () => {
             </div> */}
           </div>
         </div>
-        {/* Gradient fade overlay */}
-        <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent"></div>
-      </section>
+      </div>
 
-      {/* Categories Grid - Omni Style */}
-      <section className="relative -mt-12 pb-16 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      {/* Categories Grid */}
+      <div className="px-4 py-16">
+        <div className="container mx-auto max-w-7xl">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {categories.map((category, index) => (
               <Link
                 key={index}
                 to="/assessments"
                 className="group"
               >
-                <div className="bg-white rounded-2xl border border-gray-100 hover:border-blue-200 p-6 text-center transition-all duration-300 hover:shadow-md shadow-sm">
-                  <div className="flex justify-center mb-4">
-                    <div className="h-12 w-12 rounded-xl bg-blue-50 text-blue-600 group-hover:bg-blue-500 group-hover:text-white transition-colors flex items-center justify-center">
+                <div className="bg-white rounded-2xl border border-gray-100 hover:border-blue-200 p-8 text-center transition-all duration-300 hover:shadow-md shadow-sm min-h-[200px] flex flex-col justify-center">
+                  <div className="flex justify-center mb-6">
+                    <div className="h-16 w-16 rounded-xl bg-blue-50 text-blue-600 group-hover:bg-blue-500 group-hover:text-white transition-colors flex items-center justify-center">
                       {category.icon}
                     </div>
                   </div>
-                  <h3 className="font-semibold text-gray-900 mb-1">{category.name}</h3>
+                  <h3 className="font-semibold text-gray-900 mb-2 text-lg">{category.name}</h3>
                   <p className="text-sm text-gray-500">{category.count}</p>
                 </div>
               </Link>
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Featured Assessments */}
-      <section className="py-16 px-4 bg-white/60 backdrop-blur-sm">
+      <div className="px-4 py-16">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -194,18 +192,18 @@ const Index = () => {
           </div>
           <div className="text-center">
             <Link to="/assessments">
-              <Button size="lg" className="bg-gradient-to-r from-secondary-500 to-accent-500 hover:opacity-90 text-white px-8 border-0 shadow-lg hover:shadow-xl transition-all">
+                              <Button size="lg" className="bg-blue-600/60 hover:bg-blue-700/70 text-white px-8 border-0 shadow-lg hover:shadow-xl transition-all">
                 Explore All Assessments
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>
         </div>
-      </section>
+      </div>
           
 
      
-      <section className="py-16 px-4">
+      <div className="px-4 py-16">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -216,9 +214,9 @@ const Index = () => {
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="group hover:shadow-xl transition-all duration-300 border-primary-100 hover:border-primary-200 bg-gradient-to-br from-white to-primary-50">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-blue-100 hover:border-blue-200 bg-gradient-to-br from-white to-blue-50">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-blue-600 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Target className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">High School Students</CardTitle>
@@ -235,9 +233,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-secondary-100 hover:border-secondary-200 bg-gradient-to-br from-white to-secondary-50">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-blue-100 hover:border-blue-200 bg-gradient-to-br from-white to-blue-50">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-blue-600 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Lightbulb className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">College Students</CardTitle>
@@ -254,9 +252,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-accent-100 hover:border-accent-200 bg-gradient-to-br from-white to-accent-50">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-blue-100 hover:border-blue-200 bg-gradient-to-br from-white to-blue-50">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-accent-500 to-secondary-500 rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-blue-600 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Brain className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">Graduates & Professionals</CardTitle>
@@ -273,9 +271,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-primary-100 hover:border-primary-200 bg-gradient-to-br from-white to-primary-50">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-blue-100 hover:border-blue-200 bg-gradient-to-br from-white to-blue-50">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-accent-500 to-secondary-500 rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-blue-600 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Compass className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">Creative & Arts</CardTitle>
@@ -292,9 +290,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-secondary-100 hover:border-secondary-200 bg-gradient-to-br from-white to-secondary-50">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-blue-100 hover:border-blue-200 bg-gradient-to-br from-white to-blue-50">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-blue-600 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Users className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">Business & Commerce</CardTitle>
@@ -311,9 +309,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-accent-100 hover:border-accent-200 bg-gradient-to-br from-white to-accent-50">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-blue-100 hover:border-blue-200 bg-gradient-to-br from-white to-blue-50">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-gradient-to-r from-secondary-500 to-primary-500 rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-blue-600 rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Award className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">International Opportunities</CardTitle>
@@ -331,17 +329,17 @@ const Index = () => {
             </Card>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Social Proof & Testimonials */}
-      <section className="py-16 px-4 bg-white/60 backdrop-blur-sm">
+      <div className="px-4 py-16">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">What Students Say</h2>
             <p className="text-lg text-muted-foreground">Real feedback from students who found their path</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            <Card className="bg-gradient-to-br from-primary-50 to-white border-primary-100 hover:shadow-lg transition-all">
+            <Card className="bg-gradient-to-br from-blue-50 to-white border-blue-100 hover:shadow-lg transition-all">
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -358,7 +356,7 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-secondary-50 to-white border-secondary-100 hover:shadow-lg transition-all">
+            <Card className="bg-gradient-to-br from-blue-50 to-white border-blue-100 hover:shadow-lg transition-all">
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -375,7 +373,7 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-accent-50 to-white border-accent-100 hover:shadow-lg transition-all">
+            <Card className="bg-gradient-to-br from-blue-50 to-white border-blue-100 hover:shadow-lg transition-all">
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -393,10 +391,10 @@ const Index = () => {
             </Card>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* CTA Section */}
-      <section className="py-20 px-4">
+      {/* <div className="px-4 py-20">
         <div className="container mx-auto text-center">
           <div className="max-w-3xl mx-auto bg-card rounded-3xl p-12 shadow-lg-custom border-2 border-border">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -413,7 +411,7 @@ const Index = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </div> */}
 
     
       <Footer />

@@ -108,7 +108,7 @@ const Results = () => {
   };
 
   return (
-          <div className="min-h-screen bg-gradient-to-br from-thinkera-purple/5 via-white to-thinkera-blue/5">
+          <div className="min-h-screen bg-blue-50">
       <Header logoType="brain" navLinks={[
         { to: "/", label: "Home" },
         { to: "/assessments", label: "Assessments" },
@@ -129,12 +129,12 @@ const Results = () => {
         </div>
 
         {/* Overall Score Card */}
-        <Card className="mb-8 bg-gradient-to-r from-thinkera-blue/10 via-white to-thinkera-purple/10 border-thinkera-blue/20 shadow-lg">
+        <Card className="mb-8 bg-blue-50 border-blue-200 shadow-lg">
           <CardContent className="p-8">
             <div className="text-center">
               <div className="flex items-center justify-center mb-4">
                 <div className="relative">
-                  <div className="w-32 h-32 rounded-full bg-gradient-to-r from-thinkera-blue to-thinkera-purple flex items-center justify-center">
+                  <div className="w-32 h-32 rounded-full bg-blue-600 flex items-center justify-center">
                     <div className="w-28 h-28 bg-white rounded-full flex items-center justify-center">
                       <span className="text-4xl font-bold text-foreground">{result.overallScore}</span>
                     </div>
@@ -256,7 +256,7 @@ const Results = () => {
             </Card>
 
             {/* Next Steps */}
-            <Card className="shadow-lg bg-gradient-to-r from-thinkera-blue to-thinkera-purple text-white">
+            <Card className="shadow-lg bg-blue-600 text-white">
               <CardContent className="p-6 text-center">
                 <h3 className="font-bold text-xl mb-4">Ready for Your Next Assessment?</h3>
                 <p className="mb-6 text-white/90">
@@ -280,7 +280,7 @@ const Results = () => {
         </div>
 
         {/* Share Your Results */}
-        <Card className="mt-8 bg-gradient-to-r from-muted/50 to-thinkera-blue/5 border-thinkera-blue/20">
+        <Card className="mt-8 bg-blue-50 border-blue-200">
           <CardContent className="p-6 text-center">
             <h3 className="font-bold text-xl text-foreground mb-4">
               Share Your Journey with Friends

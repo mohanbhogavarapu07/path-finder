@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import AssessmentLayout from "../../../../components/AssessmentLayout";
 import AssessmentResults from "./AssessmentResults";
 
 interface Question {
@@ -708,7 +709,8 @@ const AssessmentFlow = ({ onBack }: AssessmentFlowProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
+    <AssessmentLayout>
+      <div className="p-4">
       <div className="container mx-auto max-w-4xl">
         {/* Header */}
         <div className="mb-8">
@@ -771,7 +773,8 @@ const AssessmentFlow = ({ onBack }: AssessmentFlowProps) => {
           </CardContent>
         </Card>
       </div>
-    </div>
+      </div>
+    </AssessmentLayout>
   );
 };
 

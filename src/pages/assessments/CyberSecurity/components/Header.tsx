@@ -8,7 +8,7 @@ interface HeaderProps {
 
 const Header = ({ onMenuClick }: HeaderProps) => {
   return (
-    <header className="bg-blue-900 text-white shadow-lg">
+    <header className="bg-gradient-to-r from-blue-900 to-purple-900 text-white shadow-lg">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">

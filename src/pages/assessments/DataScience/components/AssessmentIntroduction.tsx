@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Zap, Users, CheckCircle, ArrowRight, Clock, Target, TrendingUp } from 'lucide-react';
-import { Assessment } from '../types/assessment';
+import { Assessment } from '@/types/assessment';
 
 interface AssessmentIntroductionProps {
   assessment: Assessment;
@@ -28,13 +28,13 @@ const AssessmentIntroduction = ({ assessment, onContinue }: AssessmentIntroducti
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Hero Section */}
-              <Card className="border-2 border-blue-200 bg-blue-50">
+      <Card className="border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50">
         <CardHeader className="text-center pb-4">
           <CardTitle className="text-3xl font-bold text-gray-900 mb-2">
             Discover Your Data Science Career Potential
           </CardTitle>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            {assessment.description || 'Take our comprehensive assessment to evaluate your psychological fit, technical readiness, and career alignment for a future in data science.'}
+            {assessment.intro_description || 'Take our comprehensive assessment to evaluate your psychological fit, technical readiness, and career alignment for a future in data science.'}
           </p>
         </CardHeader>
         <CardContent className="text-center">
@@ -55,7 +55,7 @@ const AssessmentIntroduction = ({ assessment, onContinue }: AssessmentIntroducti
           <Button 
             onClick={onContinue} 
             size="lg" 
-            className="bg-blue-600/60 hover:bg-blue-700/70 text-white px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3"
           >
             Start Assessment
             <ArrowRight className="ml-2 w-5 h-5" />

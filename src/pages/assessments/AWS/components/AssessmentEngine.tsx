@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { QuestionCard } from "./QuestionCard";
-import { assessmentSections } from "../data/assessmentData";
-import { AssessmentResponse, AssessmentResult, AssessmentScores } from "../types/assessment";
+import { assessmentSections } from "@/data/assessmentData";
+import { AssessmentResponse, AssessmentResult, AssessmentScores } from "@/types/assessment";
 import { AssessmentResults } from "./AssessmentResults";
 
 interface AssessmentEngineProps {

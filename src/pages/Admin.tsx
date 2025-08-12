@@ -15,12 +15,15 @@ import {
   User, 
   Search,
   Filter,
-  LogOut
+  LogOut,
+  FileText,
+  Target,
+  Settings
 } from 'lucide-react';
 import { toast } from 'sonner';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { apiClient } from '@/lib/api';
+import { assessmentAPI, DynamicAssessment } from '@/lib/api';
 
 interface BlogPost {
   _id: string;
@@ -41,6 +44,11 @@ interface BlogPost {
 
 const Admin = () => {
   const navigate = useNavigate();
+  
+  // Dashboard type state
+  const [dashboardType, setDashboardType] = useState<'blog' | 'assessment'>('blog');
+  
+  // Blog states
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -50,6 +58,13 @@ const Admin = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalPosts, setTotalPosts] = useState(0);
+  
+  // Assessment states
+  const [assessments, setAssessments] = useState<DynamicAssessment[]>([]);
+  const [assessmentLoading, setAssessmentLoading] = useState(false);
+  const [assessmentError, setAssessmentError] = useState<string | null>(null);
+  const [assessmentSearchTerm, setAssessmentSearchTerm] = useState('');
+  const [assessmentCategoryFilter, setAssessmentCategoryFilter] = useState('all');
   
   // Authentication states
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -83,14 +98,18 @@ const Admin = () => {
   // Add effect to refetch posts when filters change (only if authenticated)
   useEffect(() => {
     if (isAuthenticated && !showAuthModal) {
-      fetchPosts();
+      if (dashboardType === 'blog') {
+        fetchPosts();
+      } else {
+        fetchAssessments();
+      }
     }
-  }, [currentPage, statusFilter, categoryFilter, isAuthenticated, showAuthModal]);
+  }, [currentPage, statusFilter, categoryFilter, assessmentCategoryFilter, dashboardType, isAuthenticated, showAuthModal]);
 
   // Request OTP
   const requestOTP = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/send-otp', {
+      const response = await fetch('https://pf-backend-6p4g.onrender.com/api/auth/send-otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -168,7 +187,7 @@ const Admin = () => {
         return;
       }
 
-      const response = await fetch('http://localhost:5000/api/auth/verify-otp', {
+      const response = await fetch('https://pf-backend-6p4g.onrender.com/api/auth/verify-otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -221,7 +240,7 @@ const Admin = () => {
         params.append('category', categoryFilter);
       }
 
-      const response = await fetch(`http://localhost:5000/api/blog/posts?${params.toString()}`, {
+      const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/blog/posts?${params.toString()}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -263,7 +282,7 @@ const Admin = () => {
 
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await fetch(`http://localhost:5000/api/blog/posts/${postId}`, {
+      const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/blog/posts/${postId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -290,7 +309,7 @@ const Admin = () => {
       const post = posts.find(p => p._id === postId);
       if (!post) return;
 
-      const response = await fetch(`http://localhost:5000/api/blog/posts/${postId}`, {
+      const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/blog/posts/${postId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -321,7 +340,7 @@ const Admin = () => {
       const post = posts.find(p => p._id === postId);
       if (!post) return;
 
-      const response = await fetch(`http://localhost:5000/api/blog/posts/${postId}`, {
+      const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/blog/posts/${postId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -353,10 +372,105 @@ const Admin = () => {
     toast.success('Logged out successfully');
   };
 
+  const fetchAssessments = async () => {
+    try {
+      setAssessmentLoading(true);
+      setAssessmentError(null);
+      
+      const data = await assessmentAPI.getAllAssessments();
+      setAssessments(data || []);
+    } catch (err) {
+      setAssessmentError(err instanceof Error ? err.message : 'Failed to fetch assessments');
+      toast.error('Failed to fetch assessments');
+    } finally {
+      setAssessmentLoading(false);
+    }
+  };
+
+  const handleAssessmentDelete = async (assessmentId: string) => {
+    if (!confirm('Are you sure you want to delete this assessment? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/admin/assessments/${assessmentId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete assessment');
+      }
+
+      toast.success('Assessment deleted successfully');
+      fetchAssessments();
+    } catch (err) {
+      toast.error('Failed to delete assessment');
+    }
+  };
+
+  const handleAssessmentToggleActive = async (assessmentId: string, currentStatus: boolean) => {
+    try {
+      const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/admin/assessments/${assessmentId}/toggle-active`, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ isActive: !currentStatus }),
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update assessment status');
+      }
+
+      toast.success(`Assessment ${!currentStatus ? 'activated' : 'deactivated'} successfully`);
+      fetchAssessments();
+    } catch (err) {
+      toast.error('Failed to update assessment status');
+    }
+  };
+
+  const handleAssessmentToggleFeatured = async (assessmentId: string, currentStatus: boolean) => {
+    try {
+      const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/admin/assessments/${assessmentId}/toggle-featured`, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ featured: !currentStatus }),
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update assessment featured status');
+      }
+
+      toast.success(`Assessment ${!currentStatus ? 'featured' : 'unfeatured'} successfully`);
+      fetchAssessments();
+    } catch (err) {
+      toast.error('Failed to update assessment featured status');
+    }
+  };
+
   const filteredPosts = posts.filter(post =>
     post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
     post.author.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const filteredAssessments = assessments.filter(assessment =>
+    assessment.title.toLowerCase().includes(assessmentSearchTerm.toLowerCase()) ||
+    assessment.description.toLowerCase().includes(assessmentSearchTerm.toLowerCase()) ||
+    assessment.category.toLowerCase().includes(assessmentSearchTerm.toLowerCase())
+  ).filter(assessment =>
+    assessmentCategoryFilter === 'all' || assessment.category === assessmentCategoryFilter
   );
 
   // Auth Modal Component
@@ -421,7 +535,7 @@ const Admin = () => {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <div className="min-h-screen bg-blue-50">
         <Header />
         <AuthModal />
         <Footer />
@@ -431,7 +545,7 @@ const Admin = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <div className="min-h-screen bg-blue-50">
         <Header />
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
@@ -446,7 +560,7 @@ const Admin = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <div className="min-h-screen bg-blue-50">
         <Header />
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
@@ -464,28 +578,63 @@ const Admin = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-blue-50">
       <Header />
       
       {/* Admin Header */}
-      <section className="py-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+      <section className="py-8 bg-white border-b border-gray-100">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-              <p className="text-blue-100">Manage your blog posts and content</p>
+              <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+              <p className="text-gray-600">
+                {dashboardType === 'blog' ? 'Manage your blog posts and content' : 'Manage your assessments and evaluations'}
+              </p>
             </div>
             <div className="flex gap-4">
-              <Button 
-                onClick={() => navigate('/admin/new-post')}
-                className="bg-white text-blue-600 hover:bg-blue-50"
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                New Post
-              </Button>
+              {/* Dashboard Toggle */}
+              <div className="flex bg-gray-100 rounded-lg p-1">
+                <Button
+                  variant={dashboardType === 'blog' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setDashboardType('blog')}
+                  className="flex items-center gap-2"
+                >
+                  <FileText className="h-4 w-4" />
+                  Blog
+                </Button>
+                <Button
+                  variant={dashboardType === 'assessment' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setDashboardType('assessment')}
+                  className="flex items-center gap-2"
+                >
+                  <Target className="h-4 w-4" />
+                  Assessments
+                </Button>
+              </div>
+              
+              {dashboardType === 'blog' ? (
+                <Button 
+                  onClick={() => navigate('/admin/new-post')}
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  New Post
+                </Button>
+              ) : (
+                <Button 
+                  onClick={() => navigate('/admin/new-assessment')}
+                  className="bg-green-600 hover:bg-green-700 text-white"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  New Assessment
+                </Button>
+              )}
+              
               <Button 
                 variant="outline" 
-                className="text-white border-white/30 hover:bg-white/10"
+                className="border-gray-300 text-gray-700 hover:bg-gray-50"
                 onClick={handleLogout}
               >
                 <LogOut className="h-4 w-4 mr-2" />
@@ -497,47 +646,86 @@ const Admin = () => {
       </section>
 
       {/* Stats Cards */}
-      <section className="py-8 bg-white">
+      <section className="py-8 bg-white border-b border-gray-100">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <Card>
-              <CardContent className="p-6">
-                <div className="text-3xl font-bold text-blue-600 mb-2">
-                  {totalPosts}
-                </div>
-                <p className="text-gray-600">Total Posts</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <div className="text-3xl font-bold text-green-600 mb-2">
-                  {posts.filter(p => p.isPublished).length}
-                </div>
-                <p className="text-gray-600">Published</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <div className="text-3xl font-bold text-orange-600 mb-2">
-                  {posts.filter(p => !p.isPublished).length}
-                </div>
-                <p className="text-gray-600">Drafts</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <div className="text-3xl font-bold text-purple-600 mb-2">
-                  {posts.filter(p => p.featured).length}
-                </div>
-                <p className="text-gray-600">Featured</p>
-              </CardContent>
-            </Card>
+            {dashboardType === 'blog' ? (
+              <>
+                <Card className="bg-white border border-gray-100 shadow-sm">
+                  <CardContent className="p-6">
+                    <div className="text-3xl font-bold text-blue-600 mb-2">
+                      {totalPosts}
+                    </div>
+                    <p className="text-gray-600">Total Posts</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white border border-gray-100 shadow-sm">
+                  <CardContent className="p-6">
+                    <div className="text-3xl font-bold text-green-600 mb-2">
+                      {posts.filter(p => p.isPublished).length}
+                    </div>
+                    <p className="text-gray-600">Published</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white border border-gray-100 shadow-sm">
+                  <CardContent className="p-6">
+                    <div className="text-3xl font-bold text-orange-600 mb-2">
+                      {posts.filter(p => !p.isPublished).length}
+                    </div>
+                    <p className="text-gray-600">Drafts</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white border border-gray-100 shadow-sm">
+                  <CardContent className="p-6">
+                    <div className="text-3xl font-bold text-purple-600 mb-2">
+                    {posts.filter(p => p.featured).length}
+                    </div>
+                    <p className="text-gray-600">Featured</p>
+                  </CardContent>
+                </Card>
+              </>
+            ) : (
+              <>
+                <Card className="bg-white border border-gray-100 shadow-sm">
+                  <CardContent className="p-6">
+                    <div className="text-3xl font-bold text-blue-600 mb-2">
+                      {assessments.length}
+                    </div>
+                    <p className="text-gray-600">Total Assessments</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white border border-gray-100 shadow-sm">
+                  <CardContent className="p-6">
+                    <div className="text-3xl font-bold text-green-600 mb-2">
+                      {assessments.filter(a => a.isActive).length}
+                    </div>
+                    <p className="text-gray-600">Active</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white border border-gray-100 shadow-sm">
+                  <CardContent className="p-6">
+                    <div className="text-3xl font-bold text-orange-600 mb-2">
+                      {assessments.filter(a => !a.isActive).length}
+                    </div>
+                    <p className="text-gray-600">Inactive</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white border border-gray-100 shadow-sm">
+                  <CardContent className="p-6">
+                    <div className="text-3xl font-bold text-purple-600 mb-2">
+                    {assessments.filter(a => a.featured).length}
+                    </div>
+                    <p className="text-gray-600">Featured</p>
+                  </CardContent>
+                </Card>
+              </>
+            )}
           </div>
         </div>
       </section>
 
       {/* Filters and Search */}
-      <section className="py-6 bg-gray-50">
+      <section className="py-6 bg-white">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             <div className="flex gap-4 items-center">
@@ -545,168 +733,302 @@ const Admin = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
                   type="text"
-                  placeholder="Search posts..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder={dashboardType === 'blog' ? "Search posts..." : "Search assessments..."}
+                  value={dashboardType === 'blog' ? searchTerm : assessmentSearchTerm}
+                  onChange={(e) => dashboardType === 'blog' ? setSearchTerm(e.target.value) : setAssessmentSearchTerm(e.target.value)}
                   className="pl-10 w-64"
                 />
               </div>
               
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="all">All Status</option>
-                <option value="published">Published</option>
-                <option value="draft">Draft</option>
-              </select>
-              
-              <select
-                value={categoryFilter}
-                onChange={(e) => setCategoryFilter(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="all">All Categories</option>
-                <option value="Career Guidance">Career Guidance</option>
-                <option value="Entrance Exams">Entrance Exams</option>
-                <option value="Psychology">Psychology</option>
-                <option value="Study Tips">Study Tips</option>
-                <option value="Skill Development">Skill Development</option>
-                <option value="Success Stories">Success Stories</option>
-              </select>
+              {dashboardType === 'blog' ? (
+                <>
+                  <select
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="all">All Status</option>
+                    <option value="published">Published</option>
+                    <option value="draft">Draft</option>
+                  </select>
+                  
+                  <select
+                    value={categoryFilter}
+                    onChange={(e) => setCategoryFilter(e.target.value)}
+                    className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="all">All Categories</option>
+                    <option value="Career Guidance">Career Guidance</option>
+                    <option value="Entrance Exams">Entrance Exams</option>
+                    <option value="Psychology">Psychology</option>
+                    <option value="Study Tips">Study Tips</option>
+                    <option value="Skill Development">Skill Development</option>
+                    <option value="Success Stories">Success Stories</option>
+                  </select>
+                </>
+              ) : (
+                <select
+                  value={assessmentCategoryFilter}
+                  onChange={(e) => setAssessmentCategoryFilter(e.target.value)}
+                  className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="all">All Categories</option>
+                  <option value="Programming">Programming</option>
+                  <option value="Design">Design</option>
+                  <option value="Business">Business</option>
+                  <option value="Technology">Technology</option>
+                  <option value="Healthcare">Healthcare</option>
+                  <option value="Education">Education</option>
+                </select>
+              )}
             </div>
             
             <div className="text-sm text-gray-600">
-              Showing {filteredPosts.length} of {totalPosts} posts
+              {dashboardType === 'blog' 
+                ? `Showing ${filteredPosts.length} of ${totalPosts} posts`
+                : `Showing ${filteredAssessments.length} of ${assessments.length} assessments`
+              }
             </div>
           </div>
         </div>
       </section>
 
-      {/* Posts Table */}
+      {/* Content Table */}
       <section className="py-8">
         <div className="container mx-auto px-4">
-          <Card>
+          <Card className="bg-white border border-gray-100 shadow-sm">
             <CardHeader>
-              <CardTitle>Blog Posts</CardTitle>
+              <CardTitle>{dashboardType === 'blog' ? 'Blog Posts' : 'Assessments'}</CardTitle>
             </CardHeader>
             <CardContent>
-              {filteredPosts.length === 0 ? (
-                <div className="text-center py-12">
-                  <div className="text-gray-400 text-6xl mb-4">📝</div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">No posts found</h3>
-                  <p className="text-gray-600 mb-4">
-                    {searchTerm ? `No posts match "${searchTerm}"` : 'No posts in this category yet'}
-                  </p>
-                  <Button onClick={() => navigate('/admin/new-post')}>
-                    <Plus className="h-4 w-4 mr-2" />
-                    Create Your First Post
-                  </Button>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {filteredPosts.map((post) => (
-                    <div key={post._id} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
-                            <h3 className="text-xl font-semibold text-gray-900">{post.title}</h3>
-                            {post.featured && (
-                              <Badge variant="default" className="bg-yellow-500 text-white">
-                                <Star className="h-3 w-3 mr-1" />
-                                Featured
-                              </Badge>
-                            )}
-                            <Badge variant={post.isPublished ? 'default' : 'secondary'}>
-                              {post.isPublished ? 'Published' : 'Draft'}
-                            </Badge>
-                            <Badge variant="outline">{post.category}</Badge>
-                          </div>
-                          
-                          <p className="text-gray-600 mb-3 line-clamp-2">{post.excerpt}</p>
-                          
-                          <div className="flex items-center gap-6 text-sm text-gray-500">
-                            <div className="flex items-center gap-1">
-                              <User className="h-4 w-4" />
-                              <span>{post.author}</span>
+              {dashboardType === 'blog' ? (
+                // Blog Posts Content
+                <>
+                  {filteredPosts.length === 0 ? (
+                    <div className="text-center py-12">
+                      <div className="text-gray-400 text-6xl mb-4">📝</div>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">No posts found</h3>
+                      <p className="text-gray-600 mb-4">
+                        {searchTerm ? `No posts match "${searchTerm}"` : 'No posts in this category yet'}
+                      </p>
+                      <Button onClick={() => navigate('/admin/new-post')} className="bg-blue-600 hover:bg-blue-700 text-white">
+                        <Plus className="h-4 w-4 mr-2" />
+                        Create Your First Post
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {filteredPosts.map((post) => (
+                        <div key={post._id} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-3 mb-2">
+                                <h3 className="text-xl font-semibold text-gray-900">{post.title}</h3>
+                                {post.featured && (
+                                  <Badge variant="default" className="bg-yellow-500 text-white">
+                                    <Star className="h-3 w-3 mr-1" />
+                                    Featured
+                                  </Badge>
+                                )}
+                                <Badge variant={post.isPublished ? 'default' : 'secondary'}>
+                                  {post.isPublished ? 'Published' : 'Draft'}
+                                </Badge>
+                                <Badge variant="outline">{post.category}</Badge>
+                              </div>
+                              
+                              <p className="text-gray-600 mb-3 line-clamp-2">{post.excerpt}</p>
+                              
+                              <div className="flex items-center gap-6 text-sm text-gray-500">
+                                <div className="flex items-center gap-1">
+                                  <User className="h-4 w-4" />
+                                  <span>{post.author}</span>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <Calendar className="h-4 w-4" />
+                                  <span>{new Date(post.date).toLocaleDateString()}</span>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <Eye className="h-4 w-4" />
+                                  <span>{post.analytics.views} views</span>
+                                </div>
+                              </div>
                             </div>
-                            <div className="flex items-center gap-1">
-                              <Calendar className="h-4 w-4" />
-                              <span>{new Date(post.date).toLocaleDateString()}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Eye className="h-4 w-4" />
-                              <span>{post.analytics.views} views</span>
+                            
+                            <div className="flex gap-2 ml-4">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => navigate(`/admin/edit-post/${post._id}`)}
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleTogglePublish(post._id, post.isPublished)}
+                              >
+                                {post.isPublished ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                              </Button>
+                              
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleToggleFeatured(post._id, post.featured)}
+                              >
+                                <Star className={`h-4 w-4 ${post.featured ? 'text-yellow-500' : 'text-gray-400'}`} />
+                              </Button>
+                              
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleDelete(post._id)}
+                                className="text-red-600 hover:text-red-700"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
                             </div>
                           </div>
                         </div>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {/* Pagination */}
+                  {totalPages > 1 && (
+                    <div className="flex justify-center mt-8">
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                          disabled={currentPage === 1}
+                        >
+                          Previous
+                        </Button>
                         
-                        <div className="flex gap-2 ml-4">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => navigate(`/admin/edit-post/${post._id}`)}
-                          >
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleTogglePublish(post._id, post.isPublished)}
-                          >
-                            {post.isPublished ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                          </Button>
-                          
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleToggleFeatured(post._id, post.featured)}
-                          >
-                            <Star className={`h-4 w-4 ${post.featured ? 'text-yellow-500' : 'text-gray-400'}`} />
-                          </Button>
-                          
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleDelete(post._id)}
-                            className="text-red-600 hover:text-red-700"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
+                        <span className="flex items-center px-4 text-sm text-gray-600">
+                          Page {currentPage} of {totalPages}
+                        </span>
+                        
+                        <Button
+                          variant="outline"
+                          onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                          disabled={currentPage === totalPages}
+                        >
+                          Next
+                        </Button>
                       </div>
                     </div>
-                  ))}
-                </div>
-              )}
-              
-              {/* Pagination */}
-              {totalPages > 1 && (
-                <div className="flex justify-center mt-8">
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                      disabled={currentPage === 1}
-                    >
-                      Previous
-                    </Button>
-                    
-                    <span className="flex items-center px-4 text-sm text-gray-600">
-                      Page {currentPage} of {totalPages}
-                    </span>
-                    
-                    <Button
-                      variant="outline"
-                      onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                      disabled={currentPage === totalPages}
-                    >
-                      Next
-                    </Button>
-                  </div>
-                </div>
+                  )}
+                </>
+              ) : (
+                // Assessments Content
+                <>
+                  {assessmentLoading ? (
+                    <div className="text-center py-12">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                      <p className="text-gray-600">Loading assessments...</p>
+                    </div>
+                  ) : assessmentError ? (
+                    <div className="text-center py-12">
+                      <div className="text-red-500 text-6xl mb-4">⚠️</div>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">Error Loading Assessments</h3>
+                      <p className="text-gray-600 mb-4">{assessmentError}</p>
+                      <Button onClick={fetchAssessments} variant="outline">
+                        Try Again
+                      </Button>
+                    </div>
+                  ) : filteredAssessments.length === 0 ? (
+                    <div className="text-center py-12">
+                      <div className="text-gray-400 text-6xl mb-4">🎯</div>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">No assessments found</h3>
+                      <p className="text-gray-600 mb-4">
+                        {assessmentSearchTerm ? `No assessments match "${assessmentSearchTerm}"` : 'No assessments in this category yet'}
+                      </p>
+                      <Button onClick={() => navigate('/admin/new-assessment')} className="bg-green-600 hover:bg-green-700 text-white">
+                        <Plus className="h-4 w-4 mr-2" />
+                        Create Your First Assessment
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {filteredAssessments.map((assessment) => (
+                        <div key={assessment.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-3 mb-2">
+                                <h3 className="text-xl font-semibold text-gray-900">{assessment.title}</h3>
+                                {assessment.featured && (
+                                  <Badge variant="default" className="bg-yellow-500 text-white">
+                                    <Star className="h-3 w-3 mr-1" />
+                                    Featured
+                                  </Badge>
+                                )}
+                                <Badge variant={assessment.isActive ? 'default' : 'secondary'}>
+                                  {assessment.isActive ? 'Active' : 'Inactive'}
+                                </Badge>
+                                <Badge variant="outline">{assessment.category}</Badge>
+                                <Badge variant="outline" className="text-xs">{assessment.difficulty}</Badge>
+                              </div>
+                              
+                              <p className="text-gray-600 mb-3 line-clamp-2">{assessment.description}</p>
+                              
+                              <div className="flex items-center gap-6 text-sm text-gray-500">
+                                <div className="flex items-center gap-1">
+                                  <Target className="h-4 w-4" />
+                                  <span>{assessment.duration}</span>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <User className="h-4 w-4" />
+                                  <span>{assessment.metadata.userCount}</span>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <Settings className="h-4 w-4" />
+                                  <span>{assessment.sections?.length || 0} sections</span>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div className="flex gap-2 ml-4">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => navigate(`/admin/edit-assessment/${assessment.id}`)}
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleAssessmentToggleActive(assessment.id, assessment.isActive)}
+                              >
+                                {assessment.isActive ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                              </Button>
+                              
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleAssessmentToggleFeatured(assessment.id, assessment.featured)}
+                              >
+                                <Star className={`h-4 w-4 ${assessment.featured ? 'text-yellow-500' : 'text-gray-400'}`} />
+                              </Button>
+                              
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleAssessmentDelete(assessment.id)}
+                                className="text-red-600 hover:text-red-700"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </>
               )}
             </CardContent>
           </Card>

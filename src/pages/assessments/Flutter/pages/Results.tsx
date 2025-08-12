@@ -18,7 +18,7 @@ import {
   Star,
   Award
 } from 'lucide-react';
-import { AssessmentScores } from "../types/assessment";
+import { AssessmentScores } from "@/types/assessment";
 
 export default function Results() {
   const location = useLocation();
@@ -125,7 +125,7 @@ export default function Results() {
   ];
 
   return (
-          <div className="min-h-screen bg-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="container mx-auto px-4 py-4">

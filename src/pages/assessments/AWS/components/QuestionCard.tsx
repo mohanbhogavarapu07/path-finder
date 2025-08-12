@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { Question } from "../types/assessment";
+import { Question } from "@/types/assessment";
 
 interface QuestionCardProps {
   question: Question;
@@ -56,13 +56,17 @@ export const QuestionCard = ({
         <RadioGroup 
           value={answer?.toString()} 
           onValueChange={(value) => onAnswer(parseInt(value))}
-          className="flex justify-between"
+          className="space-y-3"
         >
           {scaleValues.map((value) => (
-            <div key={value} className="flex flex-col items-center space-y-2">
+            <div key={value} className="flex items-center space-x-2">
               <RadioGroupItem value={value.toString()} id={`${question.id}-${value}`} />
-              <Label htmlFor={`${question.id}-${value}`} className={`text-sm font-medium ${answer?.toString() === value.toString() ? sectionColor.text : ''}`}>
-                {value}
+              <Label htmlFor={`${question.id}-${value}`} className={`text-sm font-medium cursor-pointer flex-1 ${answer?.toString() === value.toString() ? sectionColor.text : ''}`}>
+                {value === 1 && (question.scaleLabels?.min || 'Strongly Disagree')}
+                {value === 2 && 'Disagree'}
+                {value === 3 && 'Neutral'}
+                {value === 4 && 'Agree'}
+                {value === 5 && (question.scaleLabels?.max || 'Strongly Agree')}
               </Label>
             </div>
           ))}
@@ -127,7 +131,7 @@ export const QuestionCard = ({
             />
           </div>
         </div>
-        <div className={`text-xs font-medium mb-1 ${sectionColor.text}`}>Assessment Question</div>
+        <div className={`text-xs font-medium mb-1 ${sectionColor.text}`}>{question.category || ''}</div>
         <CardTitle className="text-xl leading-relaxed">
           {question.text}
         </CardTitle>

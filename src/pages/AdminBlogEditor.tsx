@@ -38,7 +38,7 @@ interface BlogPost {
   isPublished: boolean;
   featured: boolean;
   date: string;
-  featuredImage?: string;
+
   attachments?: {
     _id: string;
     name: string;
@@ -52,14 +52,7 @@ interface BlogPost {
   };
 }
 
-interface FileUpload {
-  file: File;
-  id: string;
-  progress: number;
-  status: 'uploading' | 'success' | 'error';
-  url?: string;
-  _id?: string;
-}
+
 
 const AdminBlogEditor = () => {
   const navigate = useNavigate();
@@ -88,9 +81,7 @@ const AdminBlogEditor = () => {
   const [newKeyword, setNewKeyword] = useState('');
   
   // File upload states
-  const [coverImage, setCoverImage] = useState<File | null>(null);
-  const [coverImagePreview, setCoverImagePreview] = useState<string>('');
-  const [fileUploads, setFileUploads] = useState<FileUpload[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [uploadingFiles, setUploadingFiles] = useState(false);
 
   const categories = [
@@ -119,7 +110,7 @@ const AdminBlogEditor = () => {
         return;
       }
 
-      const response = await fetch(`http://localhost:5000/api/blog/posts/${postId}`, {
+              const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/blog/posts/${postId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -187,7 +178,7 @@ const AdminBlogEditor = () => {
       let response;
       if (postId) {
         // Update existing post
-        response = await fetch(`http://localhost:5000/api/blog/posts/${postId}`, {
+        response = await fetch(`https://pf-backend-6p4g.onrender.com/api/blog/posts/${postId}`, {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -198,7 +189,7 @@ const AdminBlogEditor = () => {
         });
       } else {
         // Create new post
-        response = await fetch('http://localhost:5000/api/blog/posts', {
+        response = await fetch('https://pf-backend-6p4g.onrender.com/api/blog/posts', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -231,20 +222,12 @@ const AdminBlogEditor = () => {
       console.log('Post saved successfully:', savedPost); // Debug
 
       // Now upload files if we have any
-      if (fileUploads.length > 0 || coverImage) {
+      if (selectedFiles.length > 0) {
         try {
-          // Upload cover image first if selected
-          if (coverImage) {
-            await uploadCoverImage(savedPost._id);
-          }
-
-          // Upload attachments
-          if (fileUploads.length > 0) {
-            await uploadFiles(savedPost._id);
-          }
+          await uploadFiles(savedPost._id);
 
           // Refresh the post data to get the updated attachments
-          const refreshResponse = await fetch(`http://localhost:5000/api/blog/posts/${savedPost._id}`, {
+          const refreshResponse = await fetch(`https://pf-backend-6p4g.onrender.com/api/blog/posts/${savedPost._id}`, {
             headers: {
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json'
@@ -316,193 +299,111 @@ const AdminBlogEditor = () => {
   };
 
   // File handling functions
-  const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) { // 5MB limit
-        toast.error('Cover image must be less than 5MB');
-        return;
-      }
-      
-      if (!file.type.startsWith('image/')) {
-        toast.error('Please select an image file');
-        return;
-      }
-
-      setCoverImage(file);
-      
-      // Create preview
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setCoverImagePreview(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const removeCoverImage = () => {
-    setCoverImage(null);
-    setCoverImagePreview('');
-    setPost(prev => ({ ...prev, featuredImage: undefined }));
-  };
-
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     console.log('Files selected:', files); // Debug log
     
+    const validFiles: File[] = [];
+    const errors: string[] = [];
+    
     files.forEach(file => {
-      if (file.size > 10 * 1024 * 1024) { // 10MB limit
-        toast.error(`${file.name} is too large. Maximum size is 10MB`);
-        return;
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit (matching backend)
+        errors.push(`${file.name} is too large. Maximum size is 5MB`);
+      } else {
+        validFiles.push(file);
       }
-
-      const uploadId = Math.random().toString(36).substr(2, 9);
-      const newUpload: FileUpload = {
-        file,
-        id: uploadId,
-        progress: 0,
-        status: 'uploading'
-      };
-
-      setFileUploads(prev => [...prev, newUpload]);
     });
+
+    if (errors.length > 0) {
+      errors.forEach(error => toast.error(error));
+    }
+
+    if (validFiles.length > 0) {
+      setSelectedFiles(validFiles);
+      toast.success(`${validFiles.length} file(s) selected successfully`);
+    }
   };
 
-  // Function to trigger file input clicks
-  const triggerCoverImageInput = () => {
-    console.log('Triggering cover image input...'); // Debug log
-    toast.info('Opening file dialog for cover image...'); // Visual feedback
-    const input = document.getElementById('cover-image-input') as HTMLInputElement;
-    if (input) {
-      console.log('Cover image input found, clicking...'); // Debug log
-      input.click();
-    } else {
-      console.log('Cover image input not found!'); // Debug log
-      toast.error('File input not found!');
-    }
+  const removeSelectedFile = (index: number) => {
+    setSelectedFiles(prev => prev.filter((_, i) => i !== index));
   };
 
   const triggerFileUploadInput = () => {
-    console.log('Triggering file upload input...'); // Debug log
-    toast.info('Opening file dialog for attachments...'); // Visual feedback
     const input = document.getElementById('file-upload-input') as HTMLInputElement;
     if (input) {
-      console.log('File upload input found, clicking...'); // Debug log
       input.click();
     } else {
-      console.log('File upload input not found!'); // Debug log
       toast.error('File input not found!');
     }
   };
 
-  const removeFileUpload = (uploadId: string) => {
-    setFileUploads(prev => prev.filter(upload => upload.id !== uploadId));
-  };
-
   const uploadFiles = async (postId: string) => {
-    if (fileUploads.length === 0) return;
-
-    console.log('Starting file uploads...', fileUploads.length, 'files'); // Debug
-    setUploadingFiles(true);
-
-    for (const upload of fileUploads) {
-      try {
-        console.log('Uploading file:', upload.file.name); // Debug
-        const formData = new FormData();
-        formData.append('files', upload.file); // Changed from 'file' to 'files'
-        formData.append('postId', postId);
-        
-        console.log('Adding postId to upload:', postId); // Debug
-
-        const response = await fetch('http://localhost:5000/api/blog/upload', {
-          method: 'POST',
-          body: formData,
-          credentials: 'include'
-        });
-
-        console.log('Upload response status:', response.status); // Debug
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log('Upload response data:', data); // Debug
-          
-          // Update upload status
-          setFileUploads(prev => prev.map(u => 
-            u.id === upload.id 
-              ? { ...u, status: 'success', url: data.attachments[0].url, _id: data.attachments[0]._id }
-              : u
-          ));
-
-          // Add to post attachments (for new posts, this will be saved when the post is created)
-          setPost(prev => ({
-            ...prev,
-            attachments: [...(prev.attachments || []), {
-              _id: data.attachments[0]._id,
-              name: upload.file.name,
-              url: data.attachments[0].url,
-              type: upload.file.type
-            }]
-          }));
-
-          toast.success(`${upload.file.name} uploaded successfully`);
-        } else {
-          const errorText = await response.text();
-          console.error('Upload failed:', response.status, errorText); // Debug
-          throw new Error(`Upload failed: ${response.status} - ${errorText}`);
-        }
-      } catch (error) {
-        console.error('Upload error:', error); // Debug
-        setFileUploads(prev => prev.map(u => 
-          u.id === upload.id ? { ...u, status: 'error' } : u
-        ));
-        toast.error(`Failed to upload ${upload.file.name}: ${error}`);
-      }
+    if (selectedFiles.length === 0) {
+      toast.error('No files selected for upload');
+      return;
     }
 
-    setUploadingFiles(false);
-  };
-
-  const uploadCoverImage = async (postId: string) => {
-    if (!coverImage) return;
-
-    console.log('Uploading cover image:', coverImage.name); // Debug
-    const formData = new FormData();
-    formData.append('files', coverImage); // Changed from 'file' to 'files'
-    formData.append('postId', postId);
-    formData.append('isCoverImage', 'true'); // Add flag to identify cover image
-    
-    console.log('Adding postId to cover image upload:', postId); // Debug
+    console.log('Starting file uploads...', selectedFiles.length, 'files'); // Debug
+    setUploadingFiles(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/blog/upload', {
+      const formData = new FormData();
+      selectedFiles.forEach(file => {
+        formData.append('files', file);
+        console.log('Adding file to FormData:', file.name, file.size); // Debug
+      });
+      formData.append('postId', postId);
+
+      console.log('FormData created, sending request...'); // Debug
+
+      const token = localStorage.getItem('adminToken');
+              const response = await fetch('https://pf-backend-6p4g.onrender.com/api/blog/upload', {
         method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
         body: formData,
         credentials: 'include'
       });
 
-      console.log('Cover image upload response status:', response.status); // Debug
+      console.log('Response received:', response.status, response.statusText); // Debug
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Cover image upload response data:', data); // Debug
-        setPost(prev => ({ ...prev, featuredImage: data.featuredImage }));
-        toast.success('Cover image uploaded successfully');
+        console.log('Upload response data:', data); // Debug
+        
+        if (data.attachments && data.attachments.length > 0) {
+          // Add to post attachments
+          setPost(prev => ({
+            ...prev,
+            attachments: [...(prev.attachments || []), ...data.attachments]
+          }));
+
+          toast.success(`${data.attachments.length} file(s) uploaded successfully`);
+          setSelectedFiles([]); // Clear selected files after successful upload
+        } else {
+          throw new Error('No attachments returned from server');
+        }
       } else {
         const errorText = await response.text();
-        console.error('Cover image upload failed:', response.status, errorText); // Debug
+        console.error('Upload failed:', response.status, errorText); // Debug
         throw new Error(`Upload failed: ${response.status} - ${errorText}`);
       }
     } catch (error) {
-      console.error('Cover image upload error:', error); // Debug
-      toast.error(`Failed to upload cover image: ${error}`);
+      console.error('Upload error:', error); // Debug
+      toast.error(`Failed to upload files: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
+      setUploadingFiles(false);
     }
   };
+
+
 
   const removeAttachment = async (attachmentId: string) => {
     const token = localStorage.getItem('adminToken');
     
     try {
-      const response = await fetch(`http://localhost:5000/api/blog/posts/${postId}/attachments/${attachmentId}`, {
+              const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/blog/posts/${postId}/attachments/${attachmentId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -525,7 +426,7 @@ const AdminBlogEditor = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <div className="min-h-screen bg-blue-50">
         <Header />
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
@@ -539,53 +440,53 @@ const AdminBlogEditor = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-blue-50">
       <Header />
       
-      {/* Editor Header */}
-      <section className="py-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button 
-                variant="ghost" 
-                onClick={() => navigate('/admin')}
-                className="text-white hover:text-white/80"
-              >
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Admin
-              </Button>
-              <div>
-                <h1 className="text-2xl font-bold">
-                  {postId ? 'Edit Blog Post' : 'Create New Blog Post'}
-                </h1>
-                <p className="text-blue-100">Write and manage your blog content</p>
-              </div>
-            </div>
-            
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                onClick={() => handleSave(false)}
-                disabled={saving}
-                className="text-white border-white/30 hover:bg-white/10"
-              >
-                <Save className="h-4 w-4 mr-2" />
-                {saving ? 'Saving...' : 'Save Draft'}
-              </Button>
-              
-              <Button
-                onClick={() => handleSave(true)}
-                disabled={saving}
-                className="bg-white text-blue-600 hover:bg-blue-50"
-              >
-                <Eye className="h-4 w-4 mr-2" />
-                {saving ? 'Publishing...' : 'Publish'}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+             {/* Editor Header */}
+       <section className="py-6 bg-white border-b border-gray-100">
+         <div className="container mx-auto px-4">
+           <div className="flex items-center justify-between">
+             <div className="flex items-center gap-4">
+               <Button 
+                 variant="ghost" 
+                 onClick={() => navigate('/admin')}
+                 className="text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+               >
+                 <ArrowLeft className="h-4 w-4 mr-2" />
+                 Back to Admin
+               </Button>
+               <div>
+                 <h1 className="text-2xl font-bold text-gray-900">
+                   {postId ? 'Edit Blog Post' : 'Create New Blog Post'}
+                 </h1>
+                 <p className="text-gray-600">Write and manage your blog content</p>
+               </div>
+             </div>
+             
+             <div className="flex gap-2">
+               <Button
+                 variant="outline"
+                 onClick={() => handleSave(false)}
+                 disabled={saving}
+                 className="border-gray-300 text-gray-700 hover:bg-gray-50"
+               >
+                 <Save className="h-4 w-4 mr-2" />
+                 {saving ? 'Saving...' : 'Save Draft'}
+               </Button>
+               
+               <Button
+                 onClick={() => handleSave(true)}
+                 disabled={saving}
+                 className="bg-blue-600 hover:bg-blue-700 text-white"
+               >
+                 <Eye className="h-4 w-4 mr-2" />
+                 {saving ? 'Publishing...' : 'Publish'}
+               </Button>
+             </div>
+           </div>
+         </div>
+       </section>
 
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mx-4 mt-4">
@@ -600,7 +501,7 @@ const AdminBlogEditor = () => {
             {/* Main Editor */}
             <div className="lg:col-span-2 space-y-6">
               {/* Title */}
-              <Card>
+              <Card className="bg-white border border-gray-100 shadow-sm">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <FileText className="h-5 w-5" />
@@ -618,7 +519,7 @@ const AdminBlogEditor = () => {
               </Card>
 
               {/* Slug */}
-              <Card>
+              <Card className="bg-white border border-gray-100 shadow-sm">
                 <CardHeader>
                   <CardTitle>URL Slug</CardTitle>
                 </CardHeader>
@@ -632,7 +533,7 @@ const AdminBlogEditor = () => {
               </Card>
 
               {/* Excerpt */}
-              <Card>
+              <Card className="bg-white border border-gray-100 shadow-sm">
                 <CardHeader>
                   <CardTitle>Excerpt</CardTitle>
                 </CardHeader>
@@ -647,7 +548,7 @@ const AdminBlogEditor = () => {
               </Card>
 
               {/* Content */}
-              <Card>
+              <Card className="bg-white border border-gray-100 shadow-sm">
                 <CardHeader>
                   <CardTitle>Content</CardTitle>
                 </CardHeader>
@@ -666,7 +567,7 @@ const AdminBlogEditor = () => {
             {/* Sidebar */}
             <div className="space-y-6">
               {/* Publish Settings */}
-              <Card>
+              <Card className="bg-white border border-gray-100 shadow-sm">
                 <CardHeader>
                   <CardTitle>Publish Settings</CardTitle>
                 </CardHeader>
@@ -736,7 +637,7 @@ const AdminBlogEditor = () => {
               </Card>
 
               {/* Tags */}
-              <Card>
+              <Card className="bg-white border border-gray-100 shadow-sm">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Tag className="h-5 w-5" />
@@ -765,7 +666,7 @@ const AdminBlogEditor = () => {
               </Card>
 
               {/* SEO Settings */}
-              <Card>
+              <Card className="bg-white border border-gray-100 shadow-sm">
                 <CardHeader>
                   <CardTitle>SEO Settings</CardTitle>
                 </CardHeader>
@@ -818,65 +719,10 @@ const AdminBlogEditor = () => {
                 </CardContent>
               </Card>
 
-              {/* Cover Image */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Image className="h-5 w-5" />
-                    Cover Image
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {coverImagePreview || post.featuredImage ? (
-                    <div className="relative">
-                      <img 
-                        src={coverImagePreview || post.featuredImage} 
-                        alt="Cover preview" 
-                        className="w-full h-32 object-cover rounded-md"
-                      />
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={removeCoverImage}
-                        className="absolute top-2 right-2"
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="border-2 border-dashed border-gray-300 rounded-md p-4 text-center">
-                      <Upload className="h-8 w-8 mx-auto text-gray-400 mb-2" />
-                      <p className="text-sm text-gray-600 mb-2">Upload cover image</p>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleCoverImageChange}
-                        className="hidden"
-                        id="cover-image-input"
-                        style={{ display: 'none' }}
-                      />
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="cursor-pointer" 
-                        onClick={triggerCoverImageInput}
-                        type="button"
-                      >
-                        Choose Image
-                      </Button>
-                    </div>
-                  )}
-                  
-                  {coverImage && !coverImagePreview && (
-                    <div className="text-sm text-gray-600">
-                      Selected: {coverImage.name}
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+
 
               {/* File Attachments */}
-              <Card>
+              <Card className="bg-white border border-gray-100 shadow-sm">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <File className="h-5 w-5" />
@@ -887,7 +733,7 @@ const AdminBlogEditor = () => {
                   {/* Upload new files */}
                   <div className="border-2 border-dashed border-gray-300 rounded-md p-4 text-center">
                     <Upload className="h-6 w-6 mx-auto text-gray-400 mb-2" />
-                    <p className="text-sm text-gray-600 mb-2">Upload files (max 10MB each)</p>
+                    <p className="text-sm text-gray-600 mb-2">Upload files (max 5MB each)</p>
                     <input
                       type="file"
                       multiple
@@ -907,51 +753,48 @@ const AdminBlogEditor = () => {
                     </Button>
                   </div>
 
-                  {/* Pending uploads */}
-                  {fileUploads.length > 0 && (
+                  {/* Selected files */}
+                  {selectedFiles.length > 0 && (
                     <div className="space-y-2">
-                      <h4 className="text-sm font-medium">Pending Uploads</h4>
-                      {fileUploads.map(upload => (
-                        <div key={upload.id} className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                      <h4 className="text-sm font-medium">Selected Files</h4>
+                      {selectedFiles.map((file, index) => (
+                        <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded">
                           <div className="flex items-center gap-2">
                             <File className="h-4 w-4 text-gray-500" />
-                            <span className="text-sm">{upload.file.name}</span>
+                            <span className="text-sm">{file.name}</span>
+                            <span className="text-xs text-gray-500">
+                              ({(file.size / 1024 / 1024).toFixed(2)} MB)
+                            </span>
                           </div>
-                          <div className="flex items-center gap-2">
-                            {upload.status === 'uploading' && (
-                              <div className="text-xs text-blue-600">Uploading...</div>
-                            )}
-                            {upload.status === 'success' && (
-                              <div className="text-xs text-green-600">✓ Uploaded</div>
-                            )}
-                            {upload.status === 'error' && (
-                              <div className="text-xs text-red-600">✗ Failed</div>
-                            )}
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => removeFileUpload(upload.id)}
-                              className="h-6 w-6 p-0"
-                            >
-                              <X className="h-3 w-3" />
-                            </Button>
-                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeSelectedFile(index)}
+                            className="h-6 w-6 p-0"
+                          >
+                            <X className="h-3 w-3" />
+                          </Button>
                         </div>
                       ))}
-                      <Button
-                        onClick={() => {
-                          if (postId) {
-                            uploadFiles(postId);
-                          } else {
-                            toast.error('Please save the post first before uploading files');
-                          }
-                        }}
-                        disabled={uploadingFiles || !postId}
-                        size="sm"
-                        className="w-full"
-                      >
-                        {uploadingFiles ? 'Uploading...' : 'Upload Files'}
-                      </Button>
+                                             <Button
+                         onClick={() => {
+                           if (postId) {
+                             uploadFiles(postId);
+                           } else {
+                             toast.error('Please save the post first before uploading files');
+                           }
+                         }}
+                         disabled={uploadingFiles || !postId}
+                         size="sm"
+                         className="w-full"
+                       >
+                         {uploadingFiles ? 'Uploading...' : 'Upload Files'}
+                       </Button>
+                       {selectedFiles.length > 0 && (
+                         <div className="text-xs text-gray-500 mt-2">
+                           Ready to upload {selectedFiles.length} file(s)
+                         </div>
+                       )}
                     </div>
                   )}
 
@@ -967,7 +810,7 @@ const AdminBlogEditor = () => {
                           </div>
                           <div className="flex items-center gap-2">
                             <a
-                              href={`http://localhost:5000${attachment.url}`}
+                              href={`https://pf-backend-6p4g.onrender.com${attachment.url}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:text-blue-800"

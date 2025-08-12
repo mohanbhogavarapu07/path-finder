@@ -285,7 +285,7 @@ const ResultsSection: React.FC = () => {
         <CardContent>
           <div className="space-y-4">
             {careerRoles.map((role, index) => (
-                              <div key={index} className="flex items-center justify-between p-4 bg-blue-100 rounded-lg">
+              <div key={index} className="flex items-center justify-between p-4 bg-gradient-card rounded-lg">
                 <div>
                   <h4 className="font-semibold">{role.title}</h4>
                   <p className="text-sm text-muted-foreground">{role.description}</p>
@@ -400,7 +400,7 @@ const ResultsSection: React.FC = () => {
         </Button>
         {/* <Button 
           size="lg"
-                          className="bg-blue-600"
+          className="bg-gradient-primary"
           onClick={() => window.open('https://aws.amazon.com/training/', '_blank')}
         >
           Start Learning

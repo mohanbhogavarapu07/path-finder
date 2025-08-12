@@ -1,0 +1,1 @@
+export { TechnicalSection as default } from './assessment/TechnicalSection'; 

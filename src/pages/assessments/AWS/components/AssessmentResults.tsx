@@ -13,7 +13,7 @@ import {
   Download,
   RotateCcw
 } from "lucide-react";
-import { AssessmentResult } from "../types/assessment";
+import { AssessmentResult } from "@/types/assessment";
 
 interface AssessmentResultsProps {
   results: AssessmentResult;

@@ -85,7 +85,7 @@ const Index = () => {
                 <span>Career Guidance</span>
               </div>
             </div>
-                <Button size="lg" className="bg-blue-600/60 hover:bg-blue-700/70 text-white px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold" onClick={handleStartAssessment}>
+                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3" onClick={handleStartAssessment}>
                 Start Assessment
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>

@@ -1,4 +1,4 @@
-import { Assessment } from '../types/assessment';
+import { Assessment } from '@/types/assessment';
 
 export const dataScienceAssessment: Assessment = {
   id: 'data-science',

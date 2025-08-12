@@ -42,7 +42,6 @@ const BlogPost = () => {
       .replace(/–/g, '–')
       .replace(/-\s+/g, '')
       .replace(/\s+-/g, '')
-      .replace(/\s+/g, ' ')
       .trim();
 
     switch (section.type) {
@@ -70,10 +69,16 @@ const BlogPost = () => {
           </ul>
         );
       case 'paragraph':
+        // Split content by line breaks and render each paragraph separately
+        const paragraphItems = cleanedContent.split('\n').filter(p => p.trim());
         return (
-          <p className="mb-4 leading-relaxed text-gray-700">
-            {cleanedContent}
-          </p>
+          <>
+            {paragraphItems.map((paragraph, index) => (
+              <p key={index} className="mb-4 leading-relaxed text-gray-700">
+                {paragraph}
+              </p>
+            ))}
+          </>
         );
       case 'image':
         return (
@@ -95,17 +100,23 @@ const BlogPost = () => {
           </blockquote>
         );
       default:
+        // Split content by line breaks and render each paragraph separately
+        const defaultParagraphs = cleanedContent.split('\n').filter(p => p.trim());
         return (
-          <p className="mb-4 leading-relaxed text-gray-700">
-            {cleanedContent}
-          </p>
+          <>
+            {defaultParagraphs.map((paragraph, index) => (
+              <p key={index} className="mb-4 leading-relaxed text-gray-700">
+                {paragraph}
+              </p>
+            ))}
+          </>
         );
     }
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <div className="min-h-screen bg-blue-50">
         <Header />
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
@@ -120,7 +131,7 @@ const BlogPost = () => {
 
   if (error || !post) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <div className="min-h-screen bg-blue-50">
         <Header />
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
@@ -140,28 +151,24 @@ const BlogPost = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-blue-50">
       <Header />
       
       {/* Article Header */}
-<<<<<<< HEAD
-      <section className="py-16 bg-gradient-to-br from-blue-600 to-purple-600 text-white">
-=======
-      <section className="py-16 bg-blue-50">
->>>>>>> ce0838f303210210d050824cc351a712a2849313
+      <section className="py-16 bg-white border-b border-gray-100">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <Button 
               variant="ghost" 
               onClick={() => navigate('/blog')} 
-              className="text-white hover:text-white/80 mb-6"
+              className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 mb-6"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Blog
             </Button>
             
             <div className="mb-6">
-              <Badge variant="secondary" className="bg-white/20 text-white border-white/30 mb-4">
+              <Badge variant="secondary" className="bg-blue-100 text-blue-800 border-blue-200 mb-4">
                 {post.category}
               </Badge>
               {post.featured && (
@@ -169,16 +176,16 @@ const BlogPost = () => {
                   Featured
                 </Badge>
               )}
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-gray-900">
                 {post.title}
               </h1>
-              <p className="text-xl text-blue-100 leading-relaxed mb-8">
+              <p className="text-xl text-gray-600 leading-relaxed mb-8">
                 {post.excerpt}
               </p>
             </div>
             
             <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-              <div className="flex items-center gap-6 text-sm text-blue-100">
+              <div className="flex items-center gap-6 text-sm text-gray-600">
                 <div className="flex items-center gap-2">
                   <User className="h-4 w-4" />
                   <span>{post.author}</span>
@@ -197,11 +204,11 @@ const BlogPost = () => {
               </div>
               
               <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" className="text-white border-white/30 hover:bg-white/10">
+                <Button variant="outline" size="sm" className="border-gray-300 text-gray-700 hover:bg-gray-50">
                   <Share2 className="h-4 w-4 mr-2" />
                   Share
                 </Button>
-                <Button variant="outline" size="sm" className="text-white border-white/30 hover:bg-white/10">
+                <Button variant="outline" size="sm" className="border-gray-300 text-gray-700 hover:bg-gray-50">
                   <Bookmark className="h-4 w-4 mr-2" />
                   Save
                 </Button>
@@ -210,9 +217,9 @@ const BlogPost = () => {
             
             {post.tags && post.tags.length > 0 && (
               <div className="flex flex-wrap gap-2">
-                <Tag className="h-4 w-4 text-blue-200" />
+                <Tag className="h-4 w-4 text-gray-500" />
                 {post.tags.map((tag, index) => (
-                  <Badge key={index} variant="outline" className="border-white/30 text-white">
+                  <Badge key={index} variant="outline" className="border-gray-300 text-gray-700">
                     {tag}
                   </Badge>
                 ))}
@@ -226,7 +233,7 @@ const BlogPost = () => {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <Card className="p-8 shadow-lg">
+            <Card className="p-8 bg-white border border-gray-100 shadow-sm">
               <CardContent className="prose prose-lg max-w-none">
                 {post.sections && post.sections.length > 0 ? (
                   post.sections.map((section, index) => (
@@ -245,13 +252,13 @@ const BlogPost = () => {
             
             {/* Attachments */}
             {post.attachments && post.attachments.length > 0 && (
-              <Card className="mt-8 p-6">
+              <Card className="mt-8 p-6 bg-white border border-gray-100 shadow-sm">
                 <CardContent>
                   <h3 className="text-xl font-semibold mb-4">Attachments</h3>
                   <div className="grid grid-cols-1 gap-4">
                     {post.attachments.map((attachment) => {
                       const isImage = attachment.type.startsWith('image/');
-                      const fileUrl = `http://localhost:5000${attachment.url}`;
+                      const fileUrl = `https://pf-backend-6p4g.onrender.com${attachment.url}`;
                       
                       return (
                         <div key={attachment._id} className="border border-gray-200 rounded-lg overflow-hidden">
@@ -299,11 +306,7 @@ const BlogPost = () => {
             )}
             
             {/* Call to Action */}
-<<<<<<< HEAD
-            <Card className="mt-12 p-8 bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
-=======
-            <Card className="mt-12 p-8 bg-blue-50 border-blue-200">
->>>>>>> ce0838f303210210d050824cc351a712a2849313
+            <Card className="mt-12 p-8 bg-white border border-gray-100 shadow-sm">
               <CardContent className="text-center">
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
                   Ready to Find Your Perfect Career Path?
@@ -313,7 +316,7 @@ const BlogPost = () => {
                   aligns best with your interests, skills, and personality.
                 </p>
                 <Link to="/assessments">
-                  <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
+                  <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
                     Start Your Assessment
                   </Button>
                 </Link>

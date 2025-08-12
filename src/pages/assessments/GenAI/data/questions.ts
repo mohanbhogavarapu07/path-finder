@@ -1,4 +1,4 @@
-import { Question } from "../types/assessment";
+import { Question } from "@/types/assessment";
 
 export const psychologicalQuestions: Question[] = [
   // Interest Scale

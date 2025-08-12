@@ -22,7 +22,6 @@ import PsychometricSection from '../components/PsychometricSection';
 import TechnicalSection from '../components/TechnicalSection';
 import WiscarSection from '../components/WiscarSection';
 import ResultsSection from '../components/ResultsSection';
-import AssessmentLayout from '../../../../components/AssessmentLayout';
 
 const Assessment = () => {
   const [currentSection, setCurrentSection] = useState('intro');
@@ -99,7 +98,7 @@ const Assessment = () => {
   };
 
   return (
-    <AssessmentLayout>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="container mx-auto px-4 py-4">
@@ -154,7 +153,7 @@ const Assessment = () => {
       <div className="container mx-auto px-4 py-8">
         {renderCurrentSection()}
       </div>
-    </AssessmentLayout>
+    </div>
   );
 };
 

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { AssessmentQuestion } from "../types/assessment";
+import { AssessmentQuestion } from "@/types/assessment";
 import { cn } from "@/lib/utils";
 
 interface QuestionCardProps {

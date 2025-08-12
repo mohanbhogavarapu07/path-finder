@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { AssessmentResult } from '../types/assessment';
+import { AssessmentResult } from '@/types/assessment';
 import { CheckCircle, AlertCircle, XCircle, BarChart3, Target, User, Briefcase, BookOpen, Star, ExternalLink, Users, TrendingUp, ArrowRight } from 'lucide-react';
 import { AssessmentProgress } from './AssessmentProgress';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
@@ -61,7 +61,7 @@ const AssessmentResults = ({ result, onRestart }: AssessmentResultsProps) => {
   ];
 
   return (
-          <div className="min-h-screen bg-blue-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
       {/* Top Bar: Progress/Navigation */}
       <AssessmentProgress currentSection="results" progress={100} />
       <div className="container mx-auto px-4 max-w-6xl">

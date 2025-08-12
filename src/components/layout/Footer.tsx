@@ -53,7 +53,7 @@ const Footer = () => {
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
                 <Calculator className="h-5 w-5 text-blue-600" />
               </div>
-              <span className="text-xl font-bold text-white">career compass</span>
+              <span className="text-xl font-bold text-white">LAKXA</span>
             </Link>
             <p className="text-blue-100 mb-4 max-w-sm">
               Discover your perfect career path with our comprehensive assessments. 

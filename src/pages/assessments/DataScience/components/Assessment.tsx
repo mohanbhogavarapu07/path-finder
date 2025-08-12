@@ -1,11 +1,10 @@
 import { useState, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Assessment as AssessmentType, AssessmentAnswer, AssessmentResult } from '../types/assessment';
+import { Assessment as AssessmentType, AssessmentAnswer, AssessmentResult } from '@/types/assessment';
 import { AssessmentProgress } from './AssessmentProgress';
 import AssessmentIntroduction from './AssessmentIntroduction';
 import { QuestionCard } from './QuestionCard';
-import AssessmentLayout from '../../../../components/AssessmentLayout';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface AssessmentProps {
@@ -191,7 +190,7 @@ const Assessment = ({ assessment, onBack, onComplete }: AssessmentProps) => {
   };
 
   return (
-    <AssessmentLayout>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <AssessmentProgress 
         currentSection={currentSection}
         progress={calculateProgress()}
@@ -263,7 +262,7 @@ const Assessment = ({ assessment, onBack, onComplete }: AssessmentProps) => {
           </div>
         )}
       </div>
-    </AssessmentLayout>
+    </div>
   );
 };
 

@@ -2,7 +2,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { Question, AssessmentAnswer } from '../types/assessment';
+import { Question, AssessmentAnswer } from '@/types/assessment';
 
 interface QuestionCardProps {
   question: Question;

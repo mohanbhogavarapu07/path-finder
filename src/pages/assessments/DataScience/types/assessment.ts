@@ -2,7 +2,7 @@ export interface Question {
   id: string;
   type: 'multiple-choice' | 'scale' | 'scenario' | 'matrix';
   question: string;
-  options?: (string | { value: string; label: string })[];
+  options?: string[];
   min?: number;
   max?: number;
   category: string;

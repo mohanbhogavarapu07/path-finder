@@ -57,7 +57,7 @@ export const WISCARAnalysis = ({
               {currentQuestion.category}
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              {currentQuestion.text}
+              {currentQuestion.question}
             </h3>
             
             <QuestionCard

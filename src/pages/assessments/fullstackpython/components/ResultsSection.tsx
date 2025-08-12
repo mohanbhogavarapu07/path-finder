@@ -1,0 +1,1 @@
+export { ResultsSection as default } from './assessment/ResultsSection'; 

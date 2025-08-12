@@ -1,0 +1,1 @@
+export { PsychometricSection as default } from './assessment/PsychometricSection'; 

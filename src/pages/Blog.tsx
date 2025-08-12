@@ -85,7 +85,7 @@ const Blog = () => {
 
   if (loading && blogPosts.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <div className="min-h-screen bg-blue-50">
         <Header />
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
@@ -118,136 +118,60 @@ const Blog = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-blue-50">
       <Header />
       
-      {/* Hero Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Career Insights & Guidance
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100">
-              Discover expert insights, career guidance, and industry trends to help you navigate your professional journey
-            </p>
-            
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto">
-              <div className="flex gap-2">
-                <Input
-                  type="text"
-                  placeholder="Search articles..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  className="flex-1 text-gray-900"
-                />
-                <Button onClick={handleSearch} className="px-6">
-                  <Search className="h-4 w-4 mr-2" />
-                  Search
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Posts */}
-      {featuredPosts.length > 0 && (
-        <section className="py-12 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-3xl font-bold text-gray-900">Featured Articles</h2>
-              <Link to="/blog" className="text-primary hover:text-primary/80 font-medium">
-                View All
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredPosts.slice(0, 3).map((post) => (
-                <Card key={post._id} className="group hover:shadow-lg transition-shadow overflow-hidden">
-                  {/* Featured Image */}
-                  {post.featuredImage && (
-                    <div className="aspect-video overflow-hidden">
-                      <img 
-                        src={`http://localhost:5000${post.featuredImage}`}
-                        alt={post.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  )}
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Badge variant="secondary" className="text-xs">
-                        {post.category}
-                      </Badge>
-                      {post.featured && (
-                        <Badge variant="default" className="text-xs">
-                          Featured
-                        </Badge>
-                      )}
-                    </div>
-                    <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                      <Link to={`/blog/${post.slug}`}>
-                        {post.title}
-                      </Link>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                      {post.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between text-xs text-gray-500">
-                      <div className="flex items-center gap-4">
-                        <span className="flex items-center gap-1">
-                          <User className="h-3 w-3" />
-                          {post.author}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          {format(new Date(post.date), 'MMM d, yyyy')}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          {post.readTime}
-                        </span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Main Content */}
       <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-3">
-              {/* Category Filter */}
-              <div className="flex items-center gap-4 mb-8">
-                <Filter className="h-5 w-5 text-gray-500" />
-                <div className="flex flex-wrap gap-2">
-                  <Button
-                    variant={selectedCategory === 'All' ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => handleCategoryChange('All')}
-                  >
-                    All ({totalPosts})
-                  </Button>
-                  {categories.map((category) => (
+              {/* Category Filter and Search */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
+                <div className="flex items-center gap-4 flex-1">
+                  <Filter className="h-5 w-5 text-gray-500" />
+                  <div className="flex flex-wrap gap-2">
                     <Button
-                      key={category._id}
-                      variant={selectedCategory === category._id ? 'default' : 'outline'}
+                      variant={selectedCategory === 'All' ? 'default' : 'outline'}
                       size="sm"
-                      onClick={() => handleCategoryChange(category._id)}
+                      onClick={() => handleCategoryChange('All')}
                     >
-                      {category._id} ({category.count})
+                      All ({totalPosts})
                     </Button>
-                  ))}
+                    {categories.map((category) => (
+                      <Button
+                        key={category._id}
+                        variant={selectedCategory === category._id ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => handleCategoryChange(category._id)}
+                      >
+                        {category._id} ({category.count})
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Search Bar */}
+                <div className="flex items-center gap-2 w-full sm:w-auto">
+                  <div className="relative flex-1 sm:flex-none">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                    <Input
+                      type="text"
+                      placeholder="Search posts..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                      className="pl-10 w-full sm:w-64"
+                    />
+                  </div>
+                  <Button
+                    onClick={handleSearch}
+                    size="sm"
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                  >
+                    Search
+                  </Button>
                 </div>
               </div>
 
@@ -263,12 +187,12 @@ const Blog = () => {
               ) : (
                 <div className="space-y-6">
                   {filteredPosts.map((post) => (
-                    <Card key={post._id} className="group hover:shadow-lg transition-shadow overflow-hidden">
+                    <Card key={post._id} className="group hover:shadow-lg transition-shadow overflow-hidden bg-white border border-gray-100 shadow-sm">
                       {/* Featured Image */}
                       {post.featuredImage && (
                         <div className="aspect-video overflow-hidden">
                           <img 
-                            src={`http://localhost:5000${post.featuredImage}`}
+                            src={`https://pf-backend-6p4g.onrender.com${post.featuredImage}`}
                             alt={post.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
@@ -386,7 +310,7 @@ const Blog = () => {
             <div className="lg:col-span-1">
               <div className="sticky top-8 space-y-6">
                 {/* Categories */}
-                <Card>
+                <Card className="bg-white border border-gray-100 shadow-sm">
                   <CardHeader>
                     <CardTitle className="text-lg">Categories</CardTitle>
                   </CardHeader>
@@ -414,7 +338,7 @@ const Blog = () => {
                 </Card>
 
                 {/* Newsletter Signup */}
-                <Card>
+                <Card className="bg-white border border-gray-100 shadow-sm">
                   <CardHeader>
                     <CardTitle className="text-lg">Stay Updated</CardTitle>
                   </CardHeader>
@@ -428,7 +352,7 @@ const Blog = () => {
                         placeholder="Enter your email"
                         className="text-sm"
                       />
-                      <Button className="w-full" size="sm">
+                      <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" size="sm">
                         Subscribe
                       </Button>
                     </div>

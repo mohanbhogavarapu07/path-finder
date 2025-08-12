@@ -1,4 +1,4 @@
-import { AssessmentSection } from "../types/assessment";
+import { AssessmentSection } from "@/types/assessment";
 
 export const assessmentSections: AssessmentSection[] = [
   {

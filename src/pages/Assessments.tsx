@@ -1,184 +1,54 @@
 
-import React from 'react';
-import { Brain, Code, Cloud, Smartphone, Shield, BarChart3, Palette, Briefcase, Award } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { Brain, Code, Cloud, Smartphone, Shield, BarChart3, Palette, Briefcase, Award, Heart, Wrench, Cog, Monitor, TrendingUp, Users } from 'lucide-react';
 import AssessmentCard from '@/components/AssessmentCard';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import { assessments, assessmentCategories } from '@/data/assessments';
 
 const Assessments = () => {
-  const assessmentCategories = [
-    {
-      title: "Cloud & Infrastructure",
-      icon: Cloud,
-      color: "bg-purple-100 text-purple-700",
-      assessments: [
-        {
-          id: "aws",
-          title: "AWS Assessment",
-        },
-        {
-          id: "google-cloud-platform",
-          title: "Google Cloud Platform Assessment",
-        },
-        {
-          id: "snowflake",
-          title: "Snowflake Assessment",
-        },
-        {
-          id: "oracle-cloud",
-          title: "Oracle Cloud Assessment",
-        },
-        {
-          id: "multi-cloud-engineer",
-          title: "Multi Cloud Engineer Assessment",
-        }
-      ]
-    },
-    {
-      title: "Technology & Programming",
-      icon: Code,
-      color: "bg-thinkera-blue/10 text-thinkera-blue border-thinkera-blue/20",
-      assessments: [
-        {
-          id: "full-stack-python",
-          title: "Full Stack Python Assessment",
-        },
-        {
-          id: "full-stack-java",
-          title: "Full Stack JAVA Assessment",
-        },
-        {
-          id: "full-stack-dotnet",
-          title: "Full Stack Dot Net Assessment",
-        },
-        {
-          id: "mern-stack",
-          title: "MERN Stack Assessment",
-        },
-        {
-          id: "react-js",
-          title: "React JS Assessment",
-        },
-        {
-          id: "mean-stack",
-          title: "Mean Stack Assessment",
-        },
-        {
-          id: "flutter",
-          title: "Flutter Assessment",
-        }
-      ]
-    },
-    {
-      title: "Data Science & AI",
-      icon: Brain,
-      color: "bg-blue-100 text-blue-700",
-      assessments: [
-        {
-          id: "data-science",
-          title: "Data Science Assessment",
-        },
-        {
-          id: "ai-ml",
-          title: "AI/ML Assessment",
-        },
-        {
-          id: "gen-ai",
-          title: "Gen AI Assessment",
-        },
-        {
-          id: "python-data-analytics",
-          title: "Python with Data Analytics Assessment",
-        },
-        {
-          id: "power-bi-tableau",
-          title: "Power BI & Tableau Assessment",
-        }
-      ]
-    },
-    {
-      title: "DevOps & Engineering",
-      icon: Shield,
-      color: "bg-green-100 text-green-700",
-      assessments: [
-        {
-          id: "devops",
-          title: "DevOps Assessment",
-        },
-        {
-          id: "scrum-master",
-          title: "Scrum Master Assessment",
-        }
-      ]
-    },
-    {
-      title: "Security & Ethics",
-      icon: Shield,
-      color: "bg-red-100 text-red-700",
-      assessments: [
-        {
-          id: "cyber-security",
-          title: "Cyber Security Assessment",
-        },
-        {
-          id: "ethical-hacking",
-          title: "Ethical Hacking Assessment",
-        }
-      ]
-    },
-    {
-      title: "Business & Analytics",
-      icon: BarChart3,
-      color: "bg-orange-100 text-orange-700",
-      assessments: [
-        {
-          id: "business-analyst",
-          title: "Business Analyst Assessment",
-        },
-        {
-          id: "salesforce",
-          title: "Salesforce Assessment",
-        },
-        {
-          id: "microsoft-dynamics-365",
-          title: "Microsoft Dynamics 365 Assessment",
-        }
-      ]
-    },
-    {
-      title: "Blockchain & Emerging Tech",
-      icon: Code,
-      color: "bg-indigo-100 text-indigo-700",
-      assessments: [
-        {
-          id: "blockchain",
-          title: "Block Chain Assessment",
-        }
-      ]
-    },
-    {
-      title: "Healthcare & Medical",
-      icon: Award,
-      color: "bg-pink-100 text-pink-700",
-      assessments: [
-        {
-          id: "medical-coding",
-          title: "Medical Coding Assessment",
-        }
-      ]
-    },
-    {
-      title: "Marketing & Digital",
-      icon: Palette,
-      color: "bg-yellow-100 text-yellow-700",
-      assessments: [
-        {
-          id: "digital-marketing",
-          title: "Digital Marketing Assessment",
-        }
-      ]
+  // Simple scroll handling for initial page load with hash
+  useEffect(() => {
+    if (window.location.hash) {
+      const element = document.querySelector(window.location.hash);
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
     }
-  ];
+  }, []);
+
+  // Group assessments by category
+  const groupedAssessments = assessmentCategories.reduce((acc, category) => {
+    acc[category] = assessments.filter(assessment => assessment.category === category);
+    return acc;
+  }, {} as Record<string, typeof assessments>);
+
+  // Category icons mapping
+  const categoryIcons = {
+    'Cloud': Cloud,
+    'Data': BarChart3,
+    'Technology': Code,
+    'Programming': Brain,
+    'Management': Users,
+    'Business': Briefcase,
+    'Medical': Heart,
+    'Platform': Cog
+  };
+
+  // Category colors mapping
+  const categoryColors = {
+    'Cloud': 'bg-purple-100 text-purple-700',
+    'Data': 'bg-orange-100 text-orange-700',
+    'Technology': 'bg-indigo-100 text-indigo-700',
+    'Programming': 'bg-blue-100 text-blue-700',
+    'Management': 'bg-green-100 text-green-700',
+    'Business': 'bg-yellow-100 text-yellow-700',
+    'Medical': 'bg-red-100 text-red-700',
+    'Platform': 'bg-teal-100 text-teal-700'
+  };
 
   return (
     <div className="min-h-screen bg-blue-50">
@@ -202,32 +72,34 @@ const Assessments = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="space-y-16">
             {assessmentCategories.map((category, categoryIndex) => {
-              const Icon = category.icon;
-              // Create anchor ID from category title
-              const anchorId = category.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+              const Icon = categoryIcons[category as keyof typeof categoryIcons] || Code;
+              const color = categoryColors[category as keyof typeof categoryColors] || 'bg-gray-100 text-gray-700';
+              const anchorId = category.toLowerCase();
+              const categoryAssessments = groupedAssessments[category] || [];
+              
               return (
-                <div key={categoryIndex} id={anchorId}>
+                <div key={categoryIndex} id={anchorId} className="scroll-mt-24">
                   {/* Category Header */}
                   <div className="flex items-center gap-3 mb-6">
-                    <div className={`p-3 rounded-lg ${category.color}`}>
+                    <div className={`p-3 rounded-lg ${color}`}>
                       <Icon className="h-6 w-6" />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900">{category.title}</h3>
+                    <h3 className="text-2xl font-bold text-gray-900">{category}</h3>
                   </div>
                   
                   {/* Two Column Layout for Assessments */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
                     {/* Left Column */}
                     <div className="space-y-3">
-                      {category.assessments.slice(0, Math.ceil(category.assessments.length / 2)).map((assessment, index) => (
-                        <AssessmentCard key={index} {...assessment} />
+                      {categoryAssessments.slice(0, Math.ceil(categoryAssessments.length / 2)).map((assessment, index) => (
+                        <AssessmentCard key={assessment.id} {...assessment} />
                       ))}
                     </div>
                     
                     {/* Right Column */}
                     <div className="space-y-3">
-                      {category.assessments.slice(Math.ceil(category.assessments.length / 2)).map((assessment, index) => (
-                        <AssessmentCard key={index + Math.ceil(category.assessments.length / 2)} {...assessment} />
+                      {categoryAssessments.slice(Math.ceil(categoryAssessments.length / 2)).map((assessment, index) => (
+                        <AssessmentCard key={assessment.id} {...assessment} />
                       ))}
                     </div>
                   </div>

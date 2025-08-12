@@ -1,0 +1,249 @@
+{
+  "id": "sample-assessment",
+  "title": "Sample Assessment",
+  "description": "This is a sample assessment template",
+  "category": "Technology",
+  "duration": "10-15 mins",
+  "difficulty": "Intermediate",
+  "isActive": true,
+  "featured": false,
+  "metadata": {
+    "icon": "code",
+    "gradient": "from-blue-500 to-blue-700",
+    "userCount": "1K+",
+    "tags": ["sample", "template", "technology"]
+  },
+  "whatIsDescription": "This assessment helps evaluate your skills and compatibility with technology careers.",
+  "typicalCareers": [
+    {
+      "title": "Software Developer",
+      "description": "Develop applications and software solutions"
+    },
+    {
+      "title": "Data Analyst",
+      "description": "Analyze data to provide insights"
+    }
+  ],
+  "whoShouldConsider": [
+    "Students",
+    "Professionals",
+    "Career Changers"
+  ],
+  "idealTraits": [
+    "Analytical",
+    "Problem-solving",
+    "Creative"
+  ],
+  "assessmentOverview": {
+    "modules": [
+      "Introduction",
+      "Technical Skills",
+      "Personality Assessment",
+      "Career Goals"
+    ],
+    "resultsInclude": [
+      "Skill Score",
+      "Career Recommendations",
+      "Development Plan"
+    ]
+  },
+  "sections": {
+    "introduction": {
+      "title": "Introduction",
+      "description": "Welcome to your career readiness assessment",
+      "type": "introduction",
+      "weight": 0,
+      "orderIndex": 1,
+      "questions": [
+        {
+          "id": "intro-1",
+          "text": "What is your current experience level?",
+          "type": "multiple-choice",
+          "category": "background",
+          "required": true,
+          "weight": 1,
+          "orderIndex": 1,
+          "options": [
+            {
+              "id": "beginner",
+              "text": "Beginner (0-1 years)",
+              "value": "beginner",
+              "score": 1
+            },
+            {
+              "id": "intermediate",
+              "text": "Intermediate (2-5 years)",
+              "value": "intermediate",
+              "score": 2
+            },
+            {
+              "id": "advanced",
+              "text": "Advanced (5+ years)",
+              "value": "advanced",
+              "score": 3
+            }
+          ]
+        }
+      ]
+    },
+    "psychometric": {
+      "title": "Psychological Fit",
+      "description": "Assess your personality compatibility with technology careers",
+      "type": "psychometric",
+      "weight": 25,
+      "orderIndex": 2,
+      "questions": [
+        {
+          "id": "psych-1",
+          "text": "How do you prefer to work?",
+          "type": "multiple-choice",
+          "category": "work-style",
+          "required": true,
+          "weight": 1,
+          "orderIndex": 1,
+          "options": [
+            {
+              "id": "team",
+              "text": "In a team environment",
+              "value": "team",
+              "score": 2
+            },
+            {
+              "id": "individual",
+              "text": "Independently",
+              "value": "individual",
+              "score": 1
+            },
+            {
+              "id": "both",
+              "text": "Both team and individual work",
+              "value": "both",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "id": "psych-2",
+          "text": "How do you handle stress?",
+          "type": "slider",
+          "category": "stress-management",
+          "required": true,
+          "weight": 1,
+          "orderIndex": 2,
+          "scale": {
+            "min": 1,
+            "max": 10,
+            "labels": {
+              "min": "Poorly",
+              "max": "Very Well"
+            }
+          }
+        }
+      ]
+    },
+    "technical": {
+      "title": "Technical Aptitude",
+      "description": "Evaluate your coding, math, and technical knowledge",
+      "type": "technical",
+      "weight": 30,
+      "orderIndex": 3,
+      "questions": [
+        {
+          "id": "tech-1",
+          "text": "What programming languages are you familiar with?",
+          "type": "multiple-choice",
+          "category": "programming",
+          "required": true,
+          "weight": 2,
+          "orderIndex": 1,
+          "options": [
+            {
+              "id": "python",
+              "text": "Python",
+              "value": "python",
+              "score": 3
+            },
+            {
+              "id": "javascript",
+              "text": "JavaScript",
+              "value": "javascript",
+              "score": 2
+            },
+            {
+              "id": "java",
+              "text": "Java",
+              "value": "java",
+              "score": 2
+            },
+            {
+              "id": "none",
+              "text": "None",
+              "value": "none",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": "tech-2",
+          "text": "Rate your problem-solving skills",
+          "type": "slider",
+          "category": "problem-solving",
+          "required": true,
+          "weight": 1,
+          "orderIndex": 2,
+          "scale": {
+            "min": 1,
+            "max": 10,
+            "labels": {
+              "min": "Beginner",
+              "max": "Expert"
+            }
+          }
+        }
+      ]
+    },
+    "wiscar": {
+      "title": "WISCAR Analysis",
+      "description": "Comprehensive evaluation across 6 key dimensions",
+      "type": "wiscar",
+      "weight": 25,
+      "orderIndex": 4,
+      "questions": [
+        {
+          "id": "wiscar-1",
+          "text": "How important is work-life balance to you?",
+          "type": "slider",
+          "category": "work-life-balance",
+          "required": true,
+          "weight": 1,
+          "orderIndex": 1,
+          "scale": {
+            "min": 1,
+            "max": 10,
+            "labels": {
+              "min": "Not Important",
+              "max": "Very Important"
+            }
+          }
+        },
+        {
+          "id": "wiscar-2",
+          "text": "Do you prefer remote work?",
+          "type": "boolean",
+          "category": "work-preference",
+          "required": true,
+          "weight": 1,
+          "orderIndex": 2
+        }
+      ]
+    },
+    "results": {
+      "title": "Your Results",
+      "description": "Review your assessment results and recommendations",
+      "type": "results",
+      "weight": 10,
+      "orderIndex": 5,
+      "questions": []
+    }
+  }
+}

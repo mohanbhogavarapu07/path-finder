@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { AssessmentCard } from "@/components/ui/assessment-card";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { Search, ArrowRight, BookOpen, Users, Award, TrendingUp, Brain, Code, Shield, Cloud, Palette, BarChart, Target, Lightbulb, Compass, Star, BarChart3 } from "lucide-react";
+import { Search, ArrowRight, BookOpen, Users, Award, TrendingUp, Brain, Code, Shield, Cloud, Palette, BarChart, Target, Lightbulb, Compass, Star, BarChart3, Briefcase, Cog, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -15,80 +15,82 @@ const Index = () => {
 
   const featuredAssessments = [
     {
-      id: "data-science",
-      title: "Data Science Career Assessment",
-      description: "Discover if data science is the right career path for you with our comprehensive evaluation covering statistics, programming, and analytical thinking.",
-      duration: "15-20 mins",
-      participants: "50K+",
+      id: "aws",
+      title: "AWS Assessment",
+      description: "Assess your readiness and skills for Amazon Web Services cloud roles.",
+      duration: "10-15 mins",
+      participants: "5K+",
       rating: 4.8,
-      category: "Technology",
+      category: "Cloud",
+      icon: <Cloud className="h-6 w-6" />,
+      tags: ["Cloud", "AWS", "DevOps"]
+    },
+    {
+      id: "data-science",
+      title: "Data Science Assessment",
+      description: "Assess your readiness for data science roles and projects.",
+      duration: "12-15 mins",
+      participants: "8K+",
+      rating: 4.8,
+      category: "Data",
       icon: <BarChart className="h-6 w-6" />,
-      tags: ["Python", "Statistics", "Machine Learning"]
+      tags: ["Data Science", "Analytics", "ML"]
     },
     {
       id: "cyber-security",
       title: "Cyber Security Assessment",
-      description: "Evaluate your cybersecurity aptitude and learn if this high-demand field matches your skills and interests.",
-      duration: "25-30 mins", 
-      participants: "35K+",
+      description: "Evaluate your knowledge of cybersecurity principles and practices.",
+      duration: "12-15 mins",
+      participants: "6K+",
       rating: 4.9,
-      category: "Security",
+      category: "Technology",
       icon: <Shield className="h-6 w-6" />,
-      tags: ["Security", "Networking", "Ethical Hacking"]
+      tags: ["Cyber Security", "IT Security", "Technology"]
     },
     {
-      id: "full-stack",
-      title: "Full Stack Development",
-      description: "Test your full-stack development potential across frontend, backend, and database technologies.",
-      duration: "20-25 mins",
-      participants: "75K+", 
+      id: "full-stack-python",
+      title: "Full Stack Python Assessment",
+      description: "Evaluate your skills in full stack Python development.",
+      duration: "12-15 mins",
+      participants: "5K+",
       rating: 4.7,
-      category: "Development",
+      category: "Programming",
       icon: <Code className="h-6 w-6" />,
-      tags: ["JavaScript", "React", "Node.js"]
-    },
-    {
-      id: "aws-cloud",
-      title: "Cloud Computing (AWS)",
-      description: "Assess your cloud computing skills and readiness for AWS certification and cloud architecture roles.",
-      duration: "18-22 mins",
-      participants: "40K+",
-      rating: 4.8,
-      category: "Cloud",
-      icon: <Cloud className="h-6 w-6" />,
-      tags: ["AWS", "Cloud Architecture", "DevOps"]
-    },
-    {
-      id: "ux-design",
-      title: "UI/UX Design Assessment",
-      description: "Discover your design thinking abilities and potential in user experience and interface design.",
-      duration: "15-18 mins",
-      participants: "25K+",
-      rating: 4.6,
-      category: "Design",
-      icon: <Palette className="h-6 w-6" />,
-      tags: ["Design Thinking", "Prototyping", "User Research"]
+      tags: ["Python", "Full Stack", "Web Development"]
     },
     {
       id: "ai-ml",
-      title: "AI/ML Engineering",
-      description: "Evaluate your artificial intelligence and machine learning capabilities for the future of technology.",
-      duration: "22-28 mins",
-      participants: "30K+",
+      title: "AI/ML Assessment",
+      description: "Test your knowledge in artificial intelligence and machine learning.",
+      duration: "12-15 mins",
+      participants: "7K+",
       rating: 4.9,
-      category: "AI/ML",
+      category: "Technology",
       icon: <Brain className="h-6 w-6" />,
-      tags: ["AI", "Machine Learning", "Deep Learning"]
+      tags: ["AI", "ML", "Technology"]
+    },
+    {
+      id: "business-analyst",
+      title: "Business Analyst Assessment",
+      description: "Test your skills in business analysis and requirements gathering.",
+      duration: "10-15 mins",
+      participants: "5K+",
+      rating: 4.6,
+      category: "Business",
+      icon: <Briefcase className="h-6 w-6" />,
+      tags: ["Business Analysis", "Requirements", "Strategy"]
     }
   ];
 
   const categories = [
-    { name: "Technology", count: "5 assessments", icon: <Cloud className="h-6 w-6" /> },
-    { name: "Bussiness", count: "7 assessments", icon: <Code className="h-6 w-6" /> },
-    { name: "Design", count: "5 assessments", icon: <Brain className="h-6 w-6" /> },
-    { name: "HealthCare", count: "2 assessments", icon: <Shield className="h-6 w-6" /> },
-    { name: "Engineering", count: "2 assessments", icon: <Shield className="h-6 w-6" /> },
-    { name: "Security", count: "3 assessments", icon: <BarChart3 className="h-6 w-6" /> }
+    { name: "Cloud", count: "7 assessments", icon: <Cloud className="h-6 w-6" /> },
+    { name: "Data", count: "3 assessments", icon: <BarChart3 className="h-6 w-6" /> },
+    { name: "Technology", count: "5 assessments", icon: <Code className="h-6 w-6" /> },
+    { name: "Programming", count: "8 assessments", icon: <Brain className="h-6 w-6" /> },
+    { name: "Management", count: "1 assessment", icon: <Users className="h-6 w-6" /> },
+    { name: "Business", count: "2 assessments", icon: <Briefcase className="h-6 w-6" /> },
+    { name: "Medical", count: "1 assessment", icon: <Heart className="h-6 w-6" /> },
+    { name: "Platform", count: "1 assessment", icon: <Cog className="h-6 w-6" /> }
   ];
 
   const stats = [
@@ -103,8 +105,8 @@ const Index = () => {
       <Header />
 
       {/* Main Content */}
-      <div className="pt-20 px-4">
-        <div className="container mx-auto max-w-6xl">
+      <div className="pt-8 px-4">
+        <div className="w-full">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
             {/* Left Side - Text and Icon */}
             <div className="flex-1 text-center lg:text-left">
@@ -149,8 +151,8 @@ const Index = () => {
       </div>
 
       {/* Categories Grid */}
-      <div className="px-4 py-16">
-        <div className="container mx-auto max-w-7xl">
+      <div className="py-8 px-4">
+        <div className="w-full">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {categories.map((category, index) => (
               <Link
@@ -174,8 +176,8 @@ const Index = () => {
       </div>
 
       {/* Featured Assessments */}
-      <div className="px-4 py-16">
-        <div className="container mx-auto max-w-6xl">
+      <div className="py-8 px-4">
+        <div className="w-full">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Popular Assessments
@@ -203,8 +205,8 @@ const Index = () => {
           
 
      
-      <div className="px-4 py-16">
-        <div className="container mx-auto max-w-6xl">
+      <div className="py-8 px-4">
+        <div className="w-full">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Complete Coverage for Every Stage of Life
@@ -332,8 +334,8 @@ const Index = () => {
       </div>
 
       {/* Social Proof & Testimonials */}
-      <div className="px-4 py-16">
-        <div className="container mx-auto max-w-4xl">
+      <div className="py-8 px-4">
+        <div className="w-full">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">What Students Say</h2>
             <p className="text-lg text-muted-foreground">Real feedback from students who found their path</p>
@@ -394,8 +396,8 @@ const Index = () => {
       </div>
 
       {/* CTA Section */}
-      {/* <div className="px-4 py-20">
-        <div className="container mx-auto text-center">
+      {/* <div className="py-8 px-4">
+        <div className="w-full text-center">
           <div className="max-w-3xl mx-auto bg-card rounded-3xl p-12 shadow-lg-custom border-2 border-border">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Ready to discover your perfect career?

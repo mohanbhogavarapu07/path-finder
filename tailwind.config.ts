@@ -82,8 +82,8 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			fontFamily: {
-				poppins: ['Poppins', 'sans-serif'],
-				inter: ['Inter', 'sans-serif']
+				poppins: ['Poppins', 'system-ui', 'sans-serif'],
+				inter: ['Inter', 'system-ui', 'sans-serif']
 			},
 			keyframes: {
 				'accordion-down': {

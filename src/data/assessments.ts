@@ -44,7 +44,7 @@ import {
   }
   
   export const assessments: Assessment[] = [
-    // Cloud
+    // Cloud (7 assessments)
     {
       id: 'aws',
       title: 'AWS',
@@ -107,31 +107,19 @@ import {
       gradient: 'from-accent to-primary'
     },
     {
-      id: 'salesforce',
-      title: 'Salesforce',
-      description: 'Test your knowledge of Salesforce CRM and cloud solutions.',
-      icon: Cloud,
-      duration: '10-15 mins',
-      difficulty: 'Intermediate',
-      userCount: '4K+',
-      tags: ['Salesforce', 'CRM', 'Cloud'],
-      category: 'Cloud',
-      gradient: 'from-primary to-coral'
-    },
-    {
-      id: 'microsoft-dynamics-365',
-      title: 'Microsoft Dynamics 365',
-      description: 'Assess your skills in Microsoft Dynamics 365 CRM and ERP.',
+      id: 'microsoft-365',
+      title: 'Microsoft 365',
+      description: 'Assess your skills in Microsoft 365 applications and administration.',
       icon: Cloud,
       duration: '10-15 mins',
       difficulty: 'Intermediate',
       userCount: '2K+',
-      tags: ['Dynamics 365', 'CRM', 'ERP'],
+      tags: ['Microsoft 365', 'Office 365', 'Productivity'],
       category: 'Cloud',
       gradient: 'from-accent to-primary'
     },
-  
-    // Data
+
+    // Data (3 assessments)
     {
       id: 'snowflake',
       title: 'Snowflake',
@@ -169,11 +157,11 @@ import {
       category: 'Data',
       gradient: 'from-primary to-accent'
     },
-  
-    // Technology
+
+    // Technology (5 assessments)
     {
-      id: 'block-chain',
-      title: 'Block Chain',
+      id: 'blockchain',
+      title: 'Blockchain',
       description: 'Evaluate your understanding of blockchain technology and applications.',
       icon: Cog,
       duration: '10-15 mins',
@@ -231,8 +219,8 @@ import {
       category: 'Technology',
       gradient: 'from-accent to-primary'
     },
-  
-    // Programming
+
+    // Programming (8 assessments)
     {
       id: 'python-data-analytics',
       title: 'Python with Data Analytics',
@@ -306,18 +294,6 @@ import {
       gradient: 'from-coral to-primary'
     },
     {
-      id: 'mean-stack',
-      title: 'Mean Stack',
-      description: 'Test your knowledge of MongoDB, Express, Angular, and Node.js.',
-      icon: Code,
-      duration: '12-15 mins',
-      difficulty: 'Advanced',
-      userCount: '3K+',
-      tags: ['MEAN', 'Full Stack', 'Web Development'],
-      category: 'Programming',
-      gradient: 'from-primary to-accent'
-    },
-    {
       id: 'flutter',
       title: 'Flutter',
       description: 'Assess your skills in Flutter mobile app development.',
@@ -329,8 +305,8 @@ import {
       category: 'Programming',
       gradient: 'from-accent to-primary'
     },
-  
-    // Management
+
+    // Management (1 assessment)
     {
       id: 'scrum-master',
       title: 'Scrum Master',
@@ -343,8 +319,8 @@ import {
       category: 'Management',
       gradient: 'from-primary to-coral'
     },
-  
-    // Business
+
+    // Business (2 assessments)
     {
       id: 'business-analyst',
       title: 'Business Analyst',
@@ -369,8 +345,8 @@ import {
       category: 'Business',
       gradient: 'from-coral to-primary'
     },
-  
-    // Medical
+
+    // Medical (1 assessment)
     {
       id: 'medical-coding',
       title: 'Medical Coding',
@@ -383,6 +359,8 @@ import {
       category: 'Medical',
       gradient: 'from-primary to-coral'
     },
+
+    // Platform (1 assessment)
     {
       id: 'servicenow',
       title: 'ServiceNow',

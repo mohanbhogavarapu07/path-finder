@@ -61,7 +61,6 @@
     "eslint": "^8.53.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
-    "lovable-tagger": "^0.0.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.0"
   }

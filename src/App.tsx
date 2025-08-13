@@ -2,6 +2,7 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ThemeProvider } from "@/components/theme-provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
@@ -51,62 +52,64 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/assessments" element={<Assessments />} />
-          <Route path="/contact" element={<Contact />} />
-          
-          {/* Dynamic Assessment Routes */}
-          <Route path="/dynamic-assessments" element={<DynamicAssessments />} />
-          <Route path="/dynamic-assessments/:assessmentId/*" element={<DynamicAssessment />} />
-          
-          {/* Assessment Routes - using clarity-hub method with wildcards */}
-          <Route path="/assessments/aws/*" element={<AWSAssessment />} />
-          <Route path="/assessments/google-cloud-platform/*" element={<GoogleCloudPlatformAssessment />} />
-          <Route path="/assessments/oracle-cloud/*" element={<OracleCloudAssessment />} />
-          <Route path="/assessments/devops/*" element={<DevOpsAssessment />} />
-          <Route path="/assessments/multi-cloud-engineer/*" element={<MultiCloudEngineerAssessment />} />
-          <Route path="/assessments/microsoft-365/*" element={<Microsoft365Assessment />} />
-          <Route path="/assessments/snowflake/*" element={<SnowflakeAssessment />} />
-          <Route path="/assessments/data-science/*" element={<DataScienceAssessment />} />
-          <Route path="/assessments/powerbi-tableau/*" element={<PowerBITableauAssessment />} />
-          <Route path="/assessments/blockchain/*" element={<BlockchainAssessment />} />
-          <Route path="/assessments/ai-ml/*" element={<AIMLAssessment />} />
-          <Route path="/assessments/gen-ai/*" element={<GenAIAssessment />} />
-          <Route path="/assessments/cyber-security/*" element={<CyberSecurityAssessment />} />
-          <Route path="/assessments/ethical-hacking/*" element={<EthicalHackingAssessment />} />
-          <Route path="/assessments/python-data-analytics/*" element={<PythonDataAnalyticsAssessment />} />
-          <Route path="/assessments/full-stack-python/*" element={<FullStackPythonAssessment />} />
-          <Route path="/assessments/full-stack-java/*" element={<FullStackJAVAAssessment />} />
-          <Route path="/assessments/full-stack-dotnet/*" element={<FullStackDotNetAssessment />} />
-          <Route path="/assessments/mern-stack/*" element={<MERNStackAssessment />} />
-          <Route path="/assessments/react-js/*" element={<ReactJSAssessment />} />
-          <Route path="/assessments/flutter/*" element={<FlutterAssessment />} />
-          <Route path="/assessments/scrum-master/*" element={<ScrumMasterAssessment />} />
-          <Route path="/assessments/business-analyst/*" element={<BusinessAnalystAssessment />} />
-          <Route path="/assessments/digital-marketing/*" element={<DigitalMarketingAssessment />} />
-          <Route path="/assessments/medical-coding/*" element={<MedicalCodingAssessment />} />
-          <Route path="/assessments/servicenow/*" element={<ServiceNowAssessment />} />
-          
-          {/* Admin Routes */}
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/admin/new-post" element={<AdminBlogEditor />} />
-          <Route path="/admin/edit-post/:postId" element={<AdminBlogEditor />} />
-          <Route path="/admin/new-assessment" element={<AdminAssessmentEditor />} />
-          <Route path="/admin/edit-assessment/:assessmentId" element={<AdminAssessmentEditor />} />
-          
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <ThemeProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/assessments" element={<Assessments />} />
+            <Route path="/contact" element={<Contact />} />
+            
+            {/* Dynamic Assessment Routes */}
+            <Route path="/dynamic-assessments" element={<DynamicAssessments />} />
+            <Route path="/dynamic-assessments/:assessmentId/*" element={<DynamicAssessment />} />
+            
+            {/* Assessment Routes - using clarity-hub method with wildcards */}
+            <Route path="/assessments/aws/*" element={<AWSAssessment />} />
+            <Route path="/assessments/google-cloud-platform/*" element={<GoogleCloudPlatformAssessment />} />
+            <Route path="/assessments/oracle-cloud/*" element={<OracleCloudAssessment />} />
+            <Route path="/assessments/devops/*" element={<DevOpsAssessment />} />
+            <Route path="/assessments/multi-cloud-engineer/*" element={<MultiCloudEngineerAssessment />} />
+            <Route path="/assessments/microsoft-365/*" element={<Microsoft365Assessment />} />
+            <Route path="/assessments/snowflake/*" element={<SnowflakeAssessment />} />
+            <Route path="/assessments/data-science/*" element={<DataScienceAssessment />} />
+            <Route path="/assessments/powerbi-tableau/*" element={<PowerBITableauAssessment />} />
+            <Route path="/assessments/blockchain/*" element={<BlockchainAssessment />} />
+            <Route path="/assessments/ai-ml/*" element={<AIMLAssessment />} />
+            <Route path="/assessments/gen-ai/*" element={<GenAIAssessment />} />
+            <Route path="/assessments/cyber-security/*" element={<CyberSecurityAssessment />} />
+            <Route path="/assessments/ethical-hacking/*" element={<EthicalHackingAssessment />} />
+            <Route path="/assessments/python-data-analytics/*" element={<PythonDataAnalyticsAssessment />} />
+            <Route path="/assessments/full-stack-python/*" element={<FullStackPythonAssessment />} />
+            <Route path="/assessments/full-stack-java/*" element={<FullStackJAVAAssessment />} />
+            <Route path="/assessments/full-stack-dotnet/*" element={<FullStackDotNetAssessment />} />
+            <Route path="/assessments/mern-stack/*" element={<MERNStackAssessment />} />
+            <Route path="/assessments/react-js/*" element={<ReactJSAssessment />} />
+            <Route path="/assessments/flutter/*" element={<FlutterAssessment />} />
+            <Route path="/assessments/scrum-master/*" element={<ScrumMasterAssessment />} />
+            <Route path="/assessments/business-analyst/*" element={<BusinessAnalystAssessment />} />
+            <Route path="/assessments/digital-marketing/*" element={<DigitalMarketingAssessment />} />
+            <Route path="/assessments/medical-coding/*" element={<MedicalCodingAssessment />} />
+            <Route path="/assessments/servicenow/*" element={<ServiceNowAssessment />} />
+            
+            {/* Admin Routes */}
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/new-post" element={<AdminBlogEditor />} />
+            <Route path="/admin/edit-post/:postId" element={<AdminBlogEditor />} />
+            <Route path="/admin/new-assessment" element={<AdminAssessmentEditor />} />
+            <Route path="/admin/edit-assessment/:assessmentId" element={<AdminAssessmentEditor />} />
+            
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

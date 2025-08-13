@@ -9,7 +9,7 @@ import {
   Brain, 
   Code, 
   Target, 
-  ChartBar,
+  BarChart3,
   CheckCircle,
   Clock,
   Users,
@@ -55,7 +55,7 @@ const AssessmentLayout: React.FC<AssessmentLayoutProps> = ({ children }) => {
     {
       id: 'results',
       title: 'Your Results',
-      icon: ChartBar,
+      icon: BarChart3,
       color: 'bg-red-500',
       completed: false,
     },

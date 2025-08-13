@@ -5,7 +5,7 @@ import { Progress } from '@/components/ui/progress';
 import { AssessmentResult } from '@/types/assessment';
 import { CheckCircle, AlertCircle, XCircle, BarChart3, Target, User, Briefcase, BookOpen, Star, ExternalLink, Users, TrendingUp, ArrowRight } from 'lucide-react';
 import { AssessmentProgress } from './AssessmentProgress';
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
+// import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 
 interface AssessmentResultsProps {
   result: AssessmentResult;
@@ -168,29 +168,17 @@ const AssessmentResults = ({ result, onRestart }: AssessmentResultsProps) => {
             <p className="text-gray-600">Detailed breakdown of your readiness across six key dimensions</p>
           </CardHeader>
           <CardContent>
-            {/* Radar Chart */}
-            <div className="h-96 w-full flex flex-col items-center justify-center">
-              <ResponsiveContainer width="100%" height="100%">
-                <RadarChart data={[
-                  { subject: 'Will', score: result.wiscar_scores.W, fullMark: 100 },
-                  { subject: 'Interest', score: result.wiscar_scores.I, fullMark: 100 },
-                  { subject: 'Skill', score: result.wiscar_scores.S, fullMark: 100 },
-                  { subject: 'Cognitive', score: result.wiscar_scores.C, fullMark: 100 },
-                  { subject: 'Ability', score: result.wiscar_scores.A, fullMark: 100 },
-                  { subject: 'Real-World', score: result.wiscar_scores.R, fullMark: 100 },
-                ]}>
-                  <PolarGrid stroke="#e5e7eb" />
-                  <PolarAngleAxis dataKey="subject" tick={{ fontSize: 12, fill: '#334155' }} />
-                  <PolarRadiusAxis angle={90} domain={[0, 100]} tick={{ fontSize: 10, fill: '#64748b' }} />
-                  <Radar name="Score" dataKey="score" stroke="#2563eb" fill="#2563eb" fillOpacity={0.2} strokeWidth={2} />
-                </RadarChart>
-              </ResponsiveContainer>
-              {/* Overall Score */}
-              <div className="text-center mt-6">
+            {/* Radar Chart - Temporarily disabled due to missing recharts dependency */}
+            <div className="h-96 w-full flex flex-col items-center justify-center bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+              <div className="text-center">
+                <TrendingUp className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-600 mb-2">WISCAR Framework Analysis</h3>
+                <p className="text-gray-500 mb-4">Chart visualization temporarily unavailable</p>
+                {/* Overall Score */}
                 <div className="inline-flex items-center gap-2 bg-blue-100 px-4 py-2 rounded-full">
                   <span className="text-sm font-medium">Overall Confidence Score:</span>
                   <span className="text-lg font-bold text-blue-700">{result.confidence_score}/100</span>
-                    </div>
+                </div>
               </div>
             </div>
             {/* Dimension Breakdown */}

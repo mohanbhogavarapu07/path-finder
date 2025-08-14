@@ -134,7 +134,7 @@ const Assessment = () => {
   const canProceed = answers[currentQuestion] !== undefined;
 
   return (
-          <div className="min-h-screen bg-blue-50">
+          <div className="min-h-screen bg-background">
       <Header logoType="brain" navLinks={[
         { to: "/", label: "Home" },
         { to: "/assessments", label: "Assessments" },
@@ -245,7 +245,7 @@ const Assessment = () => {
 
         {/* Encouragement Message */}
         <div className="text-center mt-8 max-w-2xl mx-auto">
-          <Card className="bg-blue-50 border-blue-200">
+          <Card className="bg-[hsl(var(--thinkera-blue))]/5 border-[hsl(var(--thinkera-blue))]/20">
             <CardContent className="p-6">
               <div className="flex items-center justify-center space-x-2 mb-3">
                 <Users className="h-5 w-5 text-thinkera-blue" />

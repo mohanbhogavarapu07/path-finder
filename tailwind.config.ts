@@ -65,16 +65,16 @@ export default {
 				},
 				// Thinkera custom colors
 				'thinkera-purple': {
-					light: '#9b87f5',
-					DEFAULT: '#7E69AB',
-					dark: '#6E59A5'
+					light: '#A57CFF',
+					DEFAULT: '#8E44FF',
+					dark: '#6F2BFF'
 				},
 				'thinkera-blue': {
-					light: '#33C3F0',
-					DEFAULT: '#1EAEDB',
-					dark: '#0FA0CE'
+					light: '#33D6C6',
+					DEFAULT: '#00BFA6',
+					dark: '#009E8A'
 				},
-				'thinkera-dark': '#1A1F2C'
+				'thinkera-dark': '#2E2E2E'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -107,11 +107,11 @@ export default {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out'
 			},
-			backgroundImage: {
-				'gradient-hero': 'linear-gradient(to right, #0FA0CE, #1EAEDB)',
-				'gradient-card': 'linear-gradient(135deg, #1EAEDB 0%, #33C3F0 100%)',
-				'gradient-cta': 'linear-gradient(90deg, #1EAEDB 0%, #0FA0CE 100%)'
-			}
+				backgroundImage: {
+					'gradient-hero': 'linear-gradient(to right, #8E44FF, #00BFA6)',
+					'gradient-card': 'linear-gradient(135deg, #00BFA6 0%, #8E44FF 100%)',
+					'gradient-cta': 'linear-gradient(90deg, #8E44FF 0%, #00BFA6 100%)'
+				}
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

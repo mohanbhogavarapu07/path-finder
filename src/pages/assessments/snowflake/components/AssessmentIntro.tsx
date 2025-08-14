@@ -40,7 +40,7 @@ export const AssessmentIntro = ({ onStartAssessment }: AssessmentIntroProps) => 
           <Button 
             onClick={onStartAssessment} 
             size="lg" 
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3"
+            className="bg-[hsl(var(--cta))] hover:bg-[hsl(var(--cta-hover))] text-white px-8 py-3"
           >
             Start Assessment
           </Button>

@@ -41,7 +41,7 @@ const Header = () => {
   };
 
      return (
-           <header className="sticky top-0 z-50 w-full border-b bg-blue-600/50 text-white border-blue-700/40">
+           <header className="sticky top-0 z-50 w-full border-b bg-[hsl(var(--thinkera-blue))]/90 text-white border-[hsl(var(--thinkera-blue))]/50">
        {/* Main Header - Show only on non-assessment pages */}
        {!location.pathname.startsWith("/assessment/") && (
          <div className="container mx-auto px-4">
@@ -51,7 +51,7 @@ const Header = () => {
                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
                  <Calculator className="h-5 w-5 text-primary-foreground" />
                </div>
-               <span className="text-xl font-bold text-white">LAKXA</span>
+                <span className="text-xl font-bold text-white">LAKXA</span>
              </Link>
 
              {/* Search Bar - Center */}
@@ -62,13 +62,13 @@ const Header = () => {
                    placeholder="Search assessment..."
                    value={searchQuery}
                    onChange={(e) => setSearchQuery(e.target.value)}
-                   className="w-full pl-4 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-thinkera-purple focus:border-transparent"
+                    className="w-full pl-4 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[hsl(var(--thinkera-purple))] focus:border-transparent"
                  />
                  <Button
                    type="submit"
                    variant="ghost"
                    size="icon"
-                   className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 text-gray-500 hover:text-thinkera-purple"
+                    className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 text-gray-500 hover:text-[hsl(var(--thinkera-purple))]"
                  >
                    <Search className="h-4 w-4" />
                  </Button>
@@ -82,9 +82,9 @@ const Header = () => {
                    key={item.name}
                    to={item.href}
                    className={`text-sm font-medium transition-colors hover:text-white ${
-                     isActive(item.href)
-                       ? "text-white"
-                       : "text-blue-100"
+                      isActive(item.href)
+                        ? "text-white"
+                        : "text-white/80"
                    }`}
                  >
                    {item.name}
@@ -108,20 +108,20 @@ const Header = () => {
            </div>
 
            {/* Mobile Search Bar */}
-           <div className="md:hidden py-3 border-t border-border/40">
+            <div className="md:hidden py-3 border-t border-border/40">
              <form onSubmit={handleSearch} className="relative">
                <Input
                  type="text"
                  placeholder="Search assessment..."
                  value={searchQuery}
                  onChange={(e) => setSearchQuery(e.target.value)}
-                 className="w-full pl-4 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-thinkera-purple focus:border-transparent"
+                  className="w-full pl-4 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[hsl(var(--thinkera-purple))] focus:border-transparent"
                />
                <Button
                  type="submit"
                  variant="ghost"
                  size="icon"
-                 className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 text-gray-500 hover:text-thinkera-purple"
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 text-gray-500 hover:text-[hsl(var(--thinkera-purple))]"
                >
                  <Search className="h-4 w-4" />
                </Button>
@@ -138,8 +138,8 @@ const Header = () => {
                      to={item.href}
                      className={`block px-3 py-2 text-base font-medium rounded-md transition-colors ${
                        isActive(item.href)
-                         ? "bg-blue-700 text-white"
-                         : "text-blue-100 hover:bg-blue-700 hover:text-white"
+                          ? "bg-[hsl(var(--thinkera-blue-dark))] text-white"
+                          : "text-white/80 hover:bg-[hsl(var(--thinkera-blue-dark))] hover:text-white"
                      }`}
                      onClick={() => setIsMenuOpen(false)}
                    >
@@ -161,7 +161,7 @@ const Header = () => {
                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
                  <Calculator className="h-5 w-5 text-primary-foreground" />
                </div>
-               <span className="text-xl font-bold text-gradient">LAKXA</span>
+                <span className="text-xl font-bold text-white">LAKXA</span>
              </Link>
 
              {/* Assessment Categories Navigation */}
@@ -171,9 +171,9 @@ const Header = () => {
                    key={category.name}
                    href={category.href}
                    className={`text-sm font-medium whitespace-nowrap transition-colors hover:text-white px-2 py-1 cursor-pointer ${
-                     location.hash === category.href.split("#")[1]
-                       ? "text-white border-b-2 border-white"
-                       : "text-blue-100"
+                      location.hash === category.href.split("#")[1]
+                        ? "text-white border-b-2 border-white"
+                        : "text-white/80"
                    }`}
                  >
                    {category.name}
@@ -206,8 +206,8 @@ const Header = () => {
                      href={category.href}
                      className={`block px-3 py-2 text-base font-medium rounded-md transition-colors cursor-pointer ${
                        location.hash === category.href.split("#")[1]
-                         ? "bg-blue-700 text-white"
-                         : "text-blue-100 hover:bg-blue-700 hover:text-white"
+                          ? "bg-[hsl(var(--thinkera-blue-dark))] text-white"
+                          : "text-white/80 hover:bg-[hsl(var(--thinkera-blue-dark))] hover:text-white"
                      }`}
                      onClick={() => setIsMenuOpen(false)}
                    >
@@ -222,7 +222,7 @@ const Header = () => {
 
        {/* Secondary Navigation - Assessment Categories (Only on Assessments page) */}
        {location.pathname === "/assessments" && (
-                   <div className="border-t border-blue-700/40 bg-blue-600/10">
+                   <div className="border-t border-[hsl(var(--thinkera-blue))]/40 bg-[hsl(var(--thinkera-blue))]/10">
            <div className="container mx-auto px-4">
              <nav className="flex items-center space-x-8 overflow-x-auto py-4">
                {assessmentCategories.map((category) => (
@@ -230,9 +230,9 @@ const Header = () => {
                    key={category.name}
                    href={category.href}
                    className={`text-base font-medium whitespace-nowrap transition-colors hover:text-white px-2 py-1 cursor-pointer ${
-                     location.hash === category.href.split("#")[1]
-                       ? "text-white border-b-2 border-white"
-                       : "text-blue-100"
+                      location.hash === category.href.split("#")[1]
+                        ? "text-white border-b-2 border-white"
+                        : "text-white/80"
                    }`}
                  >
                    {category.name}

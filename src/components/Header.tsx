@@ -25,7 +25,7 @@ const Header: React.FC<HeaderProps> = ({
   className = "",
 }) => {
   return (
-         <header className={`bg-blue-600/50 text-white border-b border-blue-700/40 sticky top-0 z-50 ${className}`}>
+     <header className={`bg-[hsl(var(--thinkera-blue))]/90 text-white border-b border-[hsl(var(--thinkera-blue))]/50 sticky top-0 z-50 ${className}`}>
       <div className={showContainer ? "container mx-auto px-4 py-4 flex justify-between items-center" : "px-4 py-4 flex justify-between items-center"}>
         <Link to="/" className="flex items-center space-x-2">
           <div className="flex items-center space-x-2">
@@ -42,7 +42,7 @@ const Header: React.FC<HeaderProps> = ({
             <Link
               key={link.to}
               to={link.to}
-              className={`text-blue-100 hover:text-white transition-colors font-medium ${link.active ? "text-white font-semibold" : ""}`}
+              className={`text-white/80 hover:text-white transition-colors font-medium ${link.active ? "text-white font-semibold" : ""}`}
             >
               {link.label}
             </Link>

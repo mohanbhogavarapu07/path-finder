@@ -4,8 +4,9 @@
 
 @layer base {
   :root {
-    --background: 199 88% 95%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core palette per guidelines */
+    --background: 210 20% 98%; /* Soft Off-White (#F9FAFB) */
+    --foreground: 0 0% 18%;   /* Charcoal Gray (#2E2E2E) */
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -13,68 +14,73 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 199 88% 49%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 173 100% 37%; /* Digital Teal */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 199 88% 90%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 210 20% 96%;
+    --secondary-foreground: 0 0% 20%;
 
-    --muted: 199 88% 90%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 20% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    --accent: 199 88% 49%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 266 100% 63%; /* Electric Purple */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 199 88% 85%;
-    --input: 199 88% 85%;
-    --ring: 222.2 84% 4.9%;
+    --border: 210 16% 90%;
+    --input: 210 16% 90%;
+    --ring: 173 100% 37%;
 
     --radius: 0.75rem;
 
-    /* Thinkera custom colors - updated to blue only */
-    --thinkera-purple: 199 88% 49%;
-    --thinkera-purple-light: 199 88% 70%;
-    --thinkera-purple-dark: 199 88% 35%;
-    --thinkera-blue: 199 88% 49%;
-    --thinkera-blue-light: 199 88% 70%;
-    --thinkera-blue-dark: 199 88% 35%;
-    --thinkera-dark: 228 24% 15%;
-    --gradient-hero: linear-gradient(to right, hsl(199 88% 35%), hsl(199 88% 49%));
-    --gradient-card: linear-gradient(135deg, #1EAEDB 0%, #33C3F0 100%);
-    --gradient-cta: linear-gradient(90deg, #1EAEDB 0%, #0FA0CE 100%);
+    /* Named helpers mapped to palette */
+    --thinkera-purple: 266 100% 63%; /* Electric Purple */
+    --thinkera-purple-light: 266 100% 75%;
+    --thinkera-purple-dark: 266 100% 50%;
+    --thinkera-blue: 173 100% 37%;   /* Digital Teal */
+    --thinkera-blue-light: 173 72% 52%;
+    --thinkera-blue-dark: 173 100% 28%;
+    --thinkera-dark: 0 0% 18%;       /* Charcoal Gray */
+    --gradient-hero: linear-gradient(to right, hsl(266 100% 63%), hsl(173 100% 37%));
+    --gradient-card: linear-gradient(135deg, hsl(173 100% 37%) 0%, hsl(266 100% 63%) 100%);
+    --gradient-cta: linear-gradient(90deg, hsl(266 100% 63%) 0%, hsl(173 100% 37%) 100%);
+
+    /* CTAs and progress */
+    --cta: 0 100% 70%;            /* Coral Punch */
+    --cta-hover: 0 85% 60%;
+    --progress: 0 100% 70%;
   }
 
   .dark {
-    --background: 199 88% 10%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 8%;
+    --foreground: 0 0% 100%;
 
-    --card: 228 24% 15%;
+    --card: 0 0% 12%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 228 24% 15%;
+    --popover: 0 0% 12%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 199 88% 70%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 173 72% 52%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 199 88% 20%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 199 88% 20%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 70%;
 
-    --accent: 199 88% 55%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 266 100% 63%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 199 88% 20%;
-    --input: 199 88% 20%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 173 72% 52%;
   }
 }
 
@@ -95,6 +101,19 @@
 }
 
 @layer utilities {
+  /* Global remaps to meet the new palette without touching every class usage */
+  .bg-blue-600 { background-color: #FF6B6B !important; }
+  .hover\:bg-blue-700:hover { background-color: #e65a5a !important; }
+  .bg-blue-600\/50 { background-color: rgba(255, 107, 107, 0.5) !important; }
+  .bg-blue-600\/10 { background-color: rgba(255, 107, 107, 0.1) !important; }
+  .border-blue-700 { border-color: #009E8A !important; }
+  .border-blue-700\/40 { border-color: rgba(0, 158, 138, 0.4) !important; }
+  .text-blue-100 { color: rgba(255,255,255,0.85) !important; }
+  .text-blue-600 { color: #00BFA6 !important; }
+  .bg-indigo-50 { background-color: #F9FAFB !important; }
+  .from-blue-50 { --tw-gradient-from: #F9FAFB var(--tw-gradient-from-position); --tw-gradient-to: rgb(249 250 251 / 0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+  .to-indigo-50 { --tw-gradient-to: #F9FAFB var(--tw-gradient-to-position); }
+
   .bg-gradient-hero {
     background: var(--gradient-hero);
   }

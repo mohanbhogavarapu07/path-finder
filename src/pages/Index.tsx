@@ -160,9 +160,9 @@ const Index = () => {
                 to="/assessments"
                 className="group"
               >
-                <div className="bg-white rounded-2xl border border-gray-100 hover:border-[hsl(var(--thinkera-blue))]/30 p-8 text-center transition-all duration-300 hover:shadow-md shadow-sm min-h-[200px] flex flex-col justify-center">
+                <div className="bg-white rounded-2xl border border-gray-100 hover:border-primary/30 p-8 text-center transition-all duration-300 hover:shadow-md shadow-sm min-h-[200px] flex flex-col justify-center">
                   <div className="flex justify-center mb-6">
-                    <div className="h-16 w-16 rounded-xl bg-[hsl(var(--thinkera-blue))]/10 text-[hsl(var(--thinkera-blue))] group-hover:bg-[hsl(var(--thinkera-blue))] group-hover:text-white transition-colors flex items-center justify-center">
+                    <div className="h-16 w-16 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors flex items-center justify-center">
                       {category.icon}
                     </div>
                   </div>
@@ -194,7 +194,7 @@ const Index = () => {
           </div>
           <div className="text-center">
             <Link to="/assessments">
-                              <Button size="lg" className="bg-[hsl(var(--cta))] hover:bg-[hsl(var(--cta-hover))] text-white px-8 border-0 shadow-lg hover:shadow-xl transition-all">
+                              <Button size="lg" variant="accent" className="px-8 border-0 shadow-lg hover:shadow-xl transition-all">
                 Explore All Assessments
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
@@ -216,9 +216,9 @@ const Index = () => {
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="group hover:shadow-xl transition-all duration-300 border-[hsl(var(--thinkera-blue))]/20 hover:border-[hsl(var(--thinkera-blue))]/40 bg-gradient-to-br from-white to-[hsl(var(--thinkera-blue))]/5">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-[hsl(var(--thinkera-blue))] rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Target className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">High School Students</CardTitle>
@@ -235,9 +235,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-[hsl(var(--thinkera-blue))]/20 hover:border-[hsl(var(--thinkera-blue))]/40 bg-gradient-to-br from-white to-[hsl(var(--thinkera-blue))]/5">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-[hsl(var(--thinkera-blue))] rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Lightbulb className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">College Students</CardTitle>
@@ -254,9 +254,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-[hsl(var(--thinkera-blue))]/20 hover:border-[hsl(var(--thinkera-blue))]/40 bg-gradient-to-br from-white to-[hsl(var(--thinkera-blue))]/5">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-[hsl(var(--thinkera-blue))] rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Brain className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">Graduates & Professionals</CardTitle>
@@ -273,9 +273,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-[hsl(var(--thinkera-blue))]/20 hover:border-[hsl(var(--thinkera-blue))]/40 bg-gradient-to-br from-white to-[hsl(var(--thinkera-blue))]/5">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-[hsl(var(--thinkera-blue))] rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Compass className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">Creative & Arts</CardTitle>
@@ -292,9 +292,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-[hsl(var(--thinkera-blue))]/20 hover:border-[hsl(var(--thinkera-blue))]/40 bg-gradient-to-br from-white to-[hsl(var(--thinkera-blue))]/5">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-[hsl(var(--thinkera-blue))] rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Users className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">Business & Commerce</CardTitle>
@@ -311,9 +311,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-[hsl(var(--thinkera-blue))]/20 hover:border-[hsl(var(--thinkera-blue))]/40 bg-gradient-to-br from-white to-[hsl(var(--thinkera-blue))]/5">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-[hsl(var(--thinkera-blue))] rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Award className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">International Opportunities</CardTitle>
@@ -341,7 +341,7 @@ const Index = () => {
             <p className="text-lg text-muted-foreground">Real feedback from students who found their path</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            <Card className="bg-gradient-to-br from-[hsl(var(--thinkera-blue))]/5 to-white border-[hsl(var(--thinkera-blue))]/20 hover:shadow-lg transition-all">
+            <Card className="bg-gradient-to-br from-primary/5 to-white border-primary/20 hover:shadow-lg transition-all">
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -358,7 +358,7 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-[hsl(var(--thinkera-blue))]/5 to-white border-[hsl(var(--thinkera-blue))]/20 hover:shadow-lg transition-all">
+            <Card className="bg-gradient-to-br from-primary/5 to-white border-primary/20 hover:shadow-lg transition-all">
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -375,7 +375,7 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-[hsl(var(--thinkera-blue))]/5 to-white border-[hsl(var(--thinkera-blue))]/20 hover:shadow-lg transition-all">
+            <Card className="bg-gradient-to-br from-primary/5 to-white border-primary/20 hover:shadow-lg transition-all">
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (

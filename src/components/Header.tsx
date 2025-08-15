@@ -25,7 +25,7 @@ const Header: React.FC<HeaderProps> = ({
   className = "",
 }) => {
   return (
-     <header className={`bg-[hsl(var(--thinkera-blue))]/90 text-white border-b border-[hsl(var(--thinkera-blue))]/50 sticky top-0 z-50 ${className}`}>
+     <header className={`bg-primary/90 text-primary-foreground border-b border-primary/50 sticky top-0 z-50 ${className}`}>
       <div className={showContainer ? "container mx-auto px-4 py-4 flex justify-between items-center" : "px-4 py-4 flex justify-between items-center"}>
         <Link to="/" className="flex items-center space-x-2">
           <div className="flex items-center space-x-2">

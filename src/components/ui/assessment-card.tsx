@@ -37,27 +37,27 @@ export function AssessmentCard({
   return (
     <Card 
       className={cn(
-        "group hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer border-0 shadow-lg bg-white relative overflow-hidden h-full flex flex-col hover:border-thinkera-purple/20 hover:border",
+        "group hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer border-0 shadow-lg bg-white relative overflow-hidden h-full flex flex-col hover:border-primary/20 hover:border",
         className
       )}
       onClick={onClick}
     >
       {/* Hover overlay effect */}
-              <div className="absolute inset-0 bg-[hsl(var(--thinkera-blue))]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       
       <CardContent className="p-6 relative flex flex-col h-full z-10">
         {/* Header with Title, Duration, and Participants */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex-1">
-            <h3 className="text-xl font-bold text-foreground mb-2 leading-tight group-hover:text-thinkera-purple transition-colors duration-300">
+            <h3 className="text-xl font-bold text-foreground mb-2 leading-tight group-hover:text-primary transition-colors duration-300">
               {title}
             </h3>
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <div className="flex items-center gap-1 group-hover:text-thinkera-purple transition-colors duration-300">
+              <div className="flex items-center gap-1 group-hover:text-primary transition-colors duration-300">
                 <Clock className="h-4 w-4" />
                 <span>{duration}</span>
               </div>
-              <div className="flex items-center gap-1 group-hover:text-thinkera-blue transition-colors duration-300">
+              <div className="flex items-center gap-1 group-hover:text-secondary transition-colors duration-300">
                 <Users className="h-4 w-4" />
                 <span>{participants}</span>
               </div>
@@ -73,7 +73,7 @@ export function AssessmentCard({
         {/* Tags/Badges */}
         <div className="flex flex-wrap gap-2 mb-6">
           {tags.slice(0, 3).map((tag, index) => (
-            <Badge key={index} variant="outline" className="text-xs border-thinkera-purple/20 text-thinkera-purple hover:bg-thinkera-purple/5 group-hover:border-thinkera-purple group-hover:bg-thinkera-purple/10 transition-all duration-300">
+            <Badge key={index} variant="outline" className="text-xs border-primary/20 text-primary hover:bg-primary/5 group-hover:border-primary group-hover:bg-primary/10 transition-all duration-300">
               {tag}
             </Badge>
           ))}
@@ -84,7 +84,8 @@ export function AssessmentCard({
           {id ? (
                             <Link to={`/assessments/${id}`}>
                   <Button 
-                    className="w-full bg-[hsl(var(--cta))] hover:bg-[hsl(var(--cta-hover))] text-white shadow-lg hover:shadow-xl transition-all border-0 group-hover:shadow-2xl group-hover:scale-105 duration-300 font-semibold"
+                    variant="accent"
+                    className="w-full shadow-lg hover:shadow-xl transition-all border-0 group-hover:shadow-2xl group-hover:scale-105 duration-300 font-semibold"
                   >
                     Start Assessment
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
@@ -92,7 +93,8 @@ export function AssessmentCard({
                 </Link>
           ) : (
             <Button 
-              className="w-full bg-[hsl(var(--thinkera-blue))] hover:bg-[hsl(var(--thinkera-blue-dark))] text-white shadow-lg hover:shadow-xl transition-all border-0 group-hover:shadow-2xl group-hover:scale-105 duration-300 font-semibold"
+              variant="default"
+              className="w-full shadow-lg hover:shadow-xl transition-all border-0 group-hover:shadow-2xl group-hover:scale-105 duration-300 font-semibold"
             >
               Start Assessment
               <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />

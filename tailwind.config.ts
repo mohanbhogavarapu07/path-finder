@@ -63,18 +63,27 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Thinkera custom colors
-				'thinkera-purple': {
-					light: '#A57CFF',
-					DEFAULT: '#8E44FF',
-					dark: '#6F2BFF'
+				// Calm & Focused custom colors
+				'pathfinder-blue': {
+					light: '#6BA0E8',
+					DEFAULT: '#4A90E2',
+					dark: '#3A80D2'
 				},
-				'thinkera-blue': {
-					light: '#33D6C6',
-					DEFAULT: '#00BFA6',
-					dark: '#009E8A'
+				'pathfinder-green': {
+					light: '#66BB6A',
+					DEFAULT: '#4CAF50',
+					dark: '#388E3C'
 				},
-				'thinkera-dark': '#2E2E2E'
+				'pathfinder-yellow': {
+					light: '#F7B84A',
+					DEFAULT: '#F5A623',
+					dark: '#E0941A'
+				},
+				'pathfinder-gray': {
+					light: '#F4F4F4',
+					DEFAULT: '#4A4A4A',
+					dark: '#2E2E2E'
+				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -108,9 +117,9 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out'
 			},
 				backgroundImage: {
-					'gradient-hero': 'linear-gradient(to right, #8E44FF, #00BFA6)',
-					'gradient-card': 'linear-gradient(135deg, #00BFA6 0%, #8E44FF 100%)',
-					'gradient-cta': 'linear-gradient(90deg, #8E44FF 0%, #00BFA6 100%)'
+					'gradient-hero': 'linear-gradient(to right, #4A90E2, #4CAF50)',
+					'gradient-card': 'linear-gradient(135deg, #4CAF50 0%, #4A90E2 100%)',
+					'gradient-cta': 'linear-gradient(90deg, #4A90E2 0%, #4CAF50 100%)'
 				}
 		}
 	},

@@ -117,25 +117,25 @@ const Assessments = () => {
           
           <div className="grid md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="bg-thinkera-blue text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
+                              <div className="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
               <h3 className="text-lg font-semibold mb-2 text-foreground">Choose Assessment</h3>
               <p className="text-muted-foreground text-sm">Select the career path you're interested in exploring</p>
             </div>
             
             <div className="text-center">
-              <div className="bg-thinkera-blue text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
+                              <div className="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
               <h3 className="text-lg font-semibold mb-2 text-foreground">Complete Evaluation</h3>
               <p className="text-muted-foreground text-sm">Answer questions about your skills, interests, and preferences</p>
             </div>
             
             <div className="text-center">
-              <div className="bg-thinkera-blue text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
+                              <div className="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
               <h3 className="text-lg font-semibold mb-2 text-foreground">Get Analysis</h3>
               <p className="text-muted-foreground text-sm">Receive detailed insights based on scientific assessment methods</p>
             </div>
             
             <div className="text-center">
-              <div className="bg-thinkera-blue text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">4</div>
+                              <div className="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">4</div>
               <h3 className="text-lg font-semibold mb-2 text-foreground">Plan Your Path</h3>
               <p className="text-muted-foreground text-sm">Use personalized recommendations to guide your career journey</p>
             </div>

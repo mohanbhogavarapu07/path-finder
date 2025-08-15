@@ -4,53 +4,63 @@
 
 @layer base {
   :root {
-    /* Core palette per guidelines */
-    --background: 210 20% 98%; /* Soft Off-White (#F9FAFB) */
-    --foreground: 0 0% 18%;   /* Charcoal Gray (#2E2E2E) */
+    /* Calm & Focused Color Palette */
+    --background: 0 0% 100%; /* White (#FFFFFF) */
+    --foreground: 0 0% 29%; /* Dark Gray (#4A4A4A) */
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 29%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 29%;
 
-    --primary: 173 100% 37%; /* Digital Teal */
+    /* Primary: Soft Blue (#4A90E2) - 60% usage */
+    --primary: 210 100% 66%; /* Soft Blue */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 20% 96%;
-    --secondary-foreground: 0 0% 20%;
+    /* Secondary: Muted Green (#4CAF50) - 30% usage */
+    --secondary: 120 61% 50%; /* Muted Green */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 20% 96%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 0 0% 96%; /* Light Gray (#F4F4F4) */
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 266 100% 63%; /* Electric Purple */
-    --accent-foreground: 0 0% 100%;
+    /* Accent: Bright Yellow (#F5A623) - 10% usage */
+    --accent: 42 91% 55%; /* Bright Yellow */
+    --accent-foreground: 0 0% 29%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 16% 90%;
-    --input: 210 16% 90%;
-    --ring: 173 100% 37%;
+    --border: 0 0% 96%; /* Light Gray */
+    --input: 0 0% 96%; /* Light Gray */
+    --ring: 210 100% 66%; /* Soft Blue */
 
     --radius: 0.75rem;
 
-    /* Named helpers mapped to palette */
-    --thinkera-purple: 266 100% 63%; /* Electric Purple */
-    --thinkera-purple-light: 266 100% 75%;
-    --thinkera-purple-dark: 266 100% 50%;
-    --thinkera-blue: 173 100% 37%;   /* Digital Teal */
-    --thinkera-blue-light: 173 72% 52%;
-    --thinkera-blue-dark: 173 100% 28%;
-    --thinkera-dark: 0 0% 18%;       /* Charcoal Gray */
-    --gradient-hero: linear-gradient(to right, hsl(266 100% 63%), hsl(173 100% 37%));
-    --gradient-card: linear-gradient(135deg, hsl(173 100% 37%) 0%, hsl(266 100% 63%) 100%);
-    --gradient-cta: linear-gradient(90deg, hsl(266 100% 63%) 0%, hsl(173 100% 37%) 100%);
+    /* Hover states - darker shades */
+    --primary-hover: 210 100% 56%; /* Darker Soft Blue */
+    --secondary-hover: 120 61% 40%; /* Darker Muted Green */
+    --accent-hover: 42 91% 45%; /* Darker Bright Yellow */
 
-    /* CTAs and progress */
-    --cta: 0 100% 70%;            /* Coral Punch */
-    --cta-hover: 0 85% 60%;
-    --progress: 0 100% 70%;
+    /* Updated named helpers for the new palette */
+    --thinkera-purple: 210 100% 66%; /* Soft Blue (replacing purple) */
+    --thinkera-purple-light: 210 100% 76%;
+    --thinkera-purple-dark: 210 100% 56%;
+    --thinkera-blue: 120 61% 50%;   /* Muted Green (replacing blue) */
+    --thinkera-blue-light: 120 61% 60%;
+    --thinkera-blue-dark: 120 61% 40%;
+    --thinkera-dark: 0 0% 29%;       /* Dark Gray */
+    
+    /* Updated gradients */
+    --gradient-hero: linear-gradient(to right, hsl(210 100% 66%), hsl(120 61% 50%));
+    --gradient-card: linear-gradient(135deg, hsl(120 61% 50%) 0%, hsl(210 100% 66%) 100%);
+    --gradient-cta: linear-gradient(90deg, hsl(210 100% 66%) 0%, hsl(120 61% 50%) 100%);
+
+    /* CTAs and progress - using accent color */
+    --cta: 42 91% 55%;            /* Bright Yellow */
+    --cta-hover: 42 91% 45%;
+    --progress: 42 91% 55%;
   }
 
   .dark {
@@ -63,24 +73,24 @@
     --popover: 0 0% 12%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 173 72% 52%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 210 100% 66%; /* Soft Blue */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 14%;
+    --secondary: 120 61% 50%; /* Muted Green */
     --secondary-foreground: 0 0% 100%;
 
     --muted: 0 0% 14%;
     --muted-foreground: 0 0% 70%;
 
-    --accent: 266 100% 63%;
-    --accent-foreground: 0 0% 0%;
+    --accent: 42 91% 55%; /* Bright Yellow */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 0 0% 18%;
     --input: 0 0% 18%;
-    --ring: 173 72% 52%;
+    --ring: 210 100% 66%;
   }
 }
 
@@ -102,17 +112,17 @@
 
 @layer utilities {
   /* Global remaps to meet the new palette without touching every class usage */
-  .bg-blue-600 { background-color: #FF6B6B !important; }
-  .hover\:bg-blue-700:hover { background-color: #e65a5a !important; }
-  .bg-blue-600\/50 { background-color: rgba(255, 107, 107, 0.5) !important; }
-  .bg-blue-600\/10 { background-color: rgba(255, 107, 107, 0.1) !important; }
-  .border-blue-700 { border-color: #009E8A !important; }
-  .border-blue-700\/40 { border-color: rgba(0, 158, 138, 0.4) !important; }
+  .bg-blue-600 { background-color: #4A90E2 !important; }
+  .hover\:bg-blue-700:hover { background-color: #3A80D2 !important; }
+  .bg-blue-600\/50 { background-color: rgba(74, 144, 226, 0.5) !important; }
+  .bg-blue-600\/10 { background-color: rgba(74, 144, 226, 0.1) !important; }
+  .border-blue-700 { border-color: #3A80D2 !important; }
+  .border-blue-700\/40 { border-color: rgba(58, 128, 210, 0.4) !important; }
   .text-blue-100 { color: rgba(255,255,255,0.85) !important; }
-  .text-blue-600 { color: #00BFA6 !important; }
-  .bg-indigo-50 { background-color: #F9FAFB !important; }
-  .from-blue-50 { --tw-gradient-from: #F9FAFB var(--tw-gradient-from-position); --tw-gradient-to: rgb(249 250 251 / 0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
-  .to-indigo-50 { --tw-gradient-to: #F9FAFB var(--tw-gradient-to-position); }
+  .text-blue-600 { color: #4A90E2 !important; }
+  .bg-indigo-50 { background-color: #F4F4F4 !important; }
+  .from-blue-50 { --tw-gradient-from: #F4F4F4 var(--tw-gradient-from-position); --tw-gradient-to: rgb(244 244 244 / 0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+  .to-indigo-50 { --tw-gradient-to: #F4F4F4 var(--tw-gradient-to-position); }
 
   .bg-gradient-hero {
     background: var(--gradient-hero);

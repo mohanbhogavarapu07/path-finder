@@ -550,7 +550,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button onClick={() => navigate('/dynamic-assessments')}>
+            <Button onClick={() => navigate('/assessments')}>
               Back to Assessments
             </Button>
           </CardContent>
@@ -579,7 +579,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button onClick={() => navigate('/dynamic-assessments')}>
+            <Button onClick={() => navigate('/assessments')}>
               Back to Assessments
             </Button>
           </CardContent>
@@ -630,7 +630,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
       return wiscarSection.percentage;
     }
     
-    return 0;
+      return 0;
   })();
 
   // Check if we have any WISCAR data at all
@@ -705,14 +705,14 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
         <div className="print-logo">Path Finder</div>
         <div className="print-subtitle">Career Assessment & Guidance Platform</div>
         <div className="print-date">Generated on: {new Date().toLocaleDateString()}</div>
-      </div>
+        </div>
 
       <div className="container mx-auto px-4 max-w-6xl">
         {/* Header */}
         <div className="text-center mb-8 no-print">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Assessment Complete! 🎉</h1>
           <p className="text-xl text-gray-600">Here are your personalized results for {assessment.title}</p>
-        </div>
+          </div>
 
         {/* Print Assessment Title */}
         <div className="hidden print:block print-assessment-title">
@@ -769,8 +769,8 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                 </div>
                 <span>Psychological Fit</span>
               </CardTitle>
-          </CardHeader>
-          <CardContent>
+            </CardHeader>
+            <CardContent>
               <div className="space-y-4">
                 <div>
                   <div className="flex justify-between items-center mb-3">
@@ -796,10 +796,10 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                      getSectionPercentage('psychometric') >= 60 ? 'Good psychological alignment' : 
                      'Room for improvement in psychological fit'}
                   </div>
-               </div>
-            </div>
-          </CardContent>
-        </Card>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
           <Card className="bg-white shadow-lg border-l-4 border-l-green-500 hover:shadow-xl transition-shadow print-score-card">
             <CardHeader className="pb-3">
@@ -808,9 +808,9 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                   <Code className="w-5 h-5 text-green-600" />
                 </div>
                 <span>Technical Readiness</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
               <div className="space-y-4">
                 <div>
                   <div className="flex justify-between items-center mb-3">
@@ -821,7 +821,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                     }`}>
                       {getSectionPercentage('technical') >= 75 ? 'Strong' : getSectionPercentage('technical') >= 60 ? 'Moderate' : 'Developing'}
                     </Badge>
-                      </div>
+                  </div>
                   <div className="print-progress-container">
                     <div className="print-progress-bar">
                       <div 
@@ -837,9 +837,9 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                      'Technical skills need development'}
                   </div>
                 </div>
-            </div>
-          </CardContent>
-        </Card>
+              </div>
+            </CardContent>
+          </Card>
 
           <Card className="bg-white shadow-lg border-l-4 border-l-orange-500 hover:shadow-xl transition-shadow print-score-card">
             <CardHeader className="pb-3">
@@ -856,7 +856,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                   <div className="flex justify-between items-center mb-3">
                     <span className="text-4xl font-bold text-orange-600 print-score-value">{wiscarOverall}%</span>
                     <Badge variant="outline" className="bg-orange-50 text-orange-700 text-xs px-3 py-1 print-score-badge">Overall</Badge>
-                    </div>
+                  </div>
                   <div className="print-progress-container">
                     <div className="print-progress-bar">
                       <div 
@@ -890,14 +890,14 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
         </div>
 
         {/* Career Paths */}
-          <Card className="mb-8 print-career-section">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 print-career-title">
-                <TrendingUp className="h-6 w-6 text-green-600 no-print" />
-                Recommended Career Paths
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+        <Card className="mb-8 print-career-section">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 print-career-title">
+              <TrendingUp className="h-6 w-6 text-green-600 no-print" />
+              Recommended Career Paths
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
             {results.careerPaths && results.careerPaths.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 print-career-grid">
                 {results.careerPaths.map((career, index) => (
@@ -928,7 +928,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                             </li>
                           ))}
                         </ul>
-                      </div>
+                  </div>
                     )}
                   </div>
                 ))}
@@ -984,15 +984,15 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0 no-print" />
                     <span>Strong psychometric skills</span>
-                  </div>
+            </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0 no-print" />
                     <span>Strong wiscar skills</span>
                   </div>
                 </div>
               )}
-              </CardContent>
-            </Card>
+          </CardContent>
+        </Card>
 
           {/* Areas for Improvement */}
             <Card className="print-analysis-card">
@@ -1029,14 +1029,14 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
         </div>
 
         {/* Next Steps */}
-          <Card className="mb-8 print-next-steps">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 print-next-steps-title">
+        <Card className="mb-8 print-next-steps">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 print-next-steps-title">
                 <BookOpen className="h-6 w-6 text-indigo-600 no-print" />
                 Next Steps
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
             {results.nextSteps && results.nextSteps.length > 0 ? (
               <div className="space-y-3 print-step-list">
                 {results.nextSteps.map((step, index) => (
@@ -1076,8 +1076,8 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                 </div>
               </div>
             )}
-            </CardContent>
-          </Card>
+          </CardContent>
+        </Card>
 
         {/* Print Footer */}
         <div className="hidden print:block print-footer">
@@ -1104,7 +1104,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center no-print">
           <Button 
-            onClick={() => navigate('/dynamic-assessments')}
+            onClick={() => navigate('/assessments')}
             className="flex items-center gap-2"
           >
             <ArrowRight className="h-4 w-4" />

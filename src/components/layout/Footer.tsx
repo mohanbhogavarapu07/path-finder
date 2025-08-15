@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { Calculator, Mail, Phone, MapPin } from "lucide-react";
+import { useAssessmentCategories } from "@/hooks/useAssessments";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { categories } = useAssessmentCategories();
 
   const footerSections = [
     {
@@ -15,12 +17,12 @@ const Footer = () => {
       ],
     },
     {
-      title: "Popular Assessments",
+      title: "Assessments",
       links: [
-        { name: "Data Science", href: "/assessments" },
-        { name: "Full Stack Development", href: "/assessments" },
-        { name: "Cyber Security", href: "/assessments" },
-        { name: "Cloud Computing", href: "/assessments" },
+        ...categories.slice(0, 4).map(category => ({
+          name: category,
+          href: `/assessments?category=${category}`
+        }))
       ],
     },
     {

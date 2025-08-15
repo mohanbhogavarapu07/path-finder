@@ -4,8 +4,8 @@ import { useLocation, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Home, ArrowLeft, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 
 const NotFound = () => {
   const location = useLocation();
@@ -22,6 +22,7 @@ const NotFound = () => {
     { name: 'Assessments', path: '/assessments', description: 'Browse career assessments' },
     { name: 'About Us', path: '/about', description: 'Learn more about PathFinder' },
     { name: 'Blog', path: '/blog', description: 'Read career guidance articles' },
+    { name: 'Contact', path: '/contact', description: 'Get in touch with us' },
   ];
 
   return (

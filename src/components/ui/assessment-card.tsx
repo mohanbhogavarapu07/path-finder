@@ -4,20 +4,28 @@ import { Button } from "@/components/ui/button";
 import { Clock, Users, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { DynamicAssessment } from "@/lib/api";
 
-interface AssessmentCardProps {
+interface AssessmentCardProps extends Partial<DynamicAssessment> {
   id?: string;
   title: string;
   description: string;
   duration: string;
-  participants: string;
+  participants?: string;
   rating?: number;
   icon?: React.ReactNode;
   category?: string;
   className?: string;
   onClick?: () => void;
   tags?: string[];
-  difficulty?: string;
+  difficulty?: 'Beginner' | 'Intermediate' | 'Advanced';
+  isActive?: boolean;
+  metadata?: {
+    icon: string;
+    gradient: string;
+    userCount: string;
+    tags: string[];
+  };
 }
 
 export function AssessmentCard({
@@ -32,8 +40,15 @@ export function AssessmentCard({
   className,
   onClick,
   tags = [],
-  difficulty
+  difficulty,
+  isActive = true,
+  metadata,
+  ...assessment
 }: AssessmentCardProps) {
+  // Use metadata if available, otherwise fall back to props
+  const userCount = metadata?.userCount || participants || "1K+";
+  const assessmentTags = metadata?.tags || tags;
+
   return (
     <Card 
       className={cn(
@@ -43,7 +58,7 @@ export function AssessmentCard({
       onClick={onClick}
     >
       {/* Hover overlay effect */}
-              <div className="absolute inset-0 bg-[hsl(var(--thinkera-blue))]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute inset-0 bg-[hsl(var(--thinkera-blue))]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       
       <CardContent className="p-6 relative flex flex-col h-full z-10">
         {/* Header with Title, Duration, and Participants */}
@@ -59,7 +74,7 @@ export function AssessmentCard({
               </div>
               <div className="flex items-center gap-1 group-hover:text-thinkera-blue transition-colors duration-300">
                 <Users className="h-4 w-4" />
-                <span>{participants}</span>
+                <span>{userCount}</span>
               </div>
             </div>
           </div>
@@ -72,7 +87,7 @@ export function AssessmentCard({
         
         {/* Tags/Badges */}
         <div className="flex flex-wrap gap-2 mb-6">
-          {tags.slice(0, 3).map((tag, index) => (
+          {assessmentTags.slice(0, 3).map((tag, index) => (
             <Badge key={index} variant="outline" className="text-xs border-thinkera-purple/20 text-thinkera-purple hover:bg-thinkera-purple/5 group-hover:border-thinkera-purple group-hover:bg-thinkera-purple/10 transition-all duration-300">
               {tag}
             </Badge>
@@ -81,21 +96,21 @@ export function AssessmentCard({
 
         {/* Button */}
         <div className="mt-auto">
-          {id ? (
-                            <Link to={`/assessments/${id}`}>
-                  <Button 
-                    className="w-full bg-[hsl(var(--cta))] hover:bg-[hsl(var(--cta-hover))] text-white shadow-lg hover:shadow-xl transition-all border-0 group-hover:shadow-2xl group-hover:scale-105 duration-300 font-semibold"
-                  >
-                    Start Assessment
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-                  </Button>
-                </Link>
+          {id && isActive ? (
+            <Link to={`/assessments/${id}`}>
+              <Button 
+                className="w-full bg-[hsl(var(--cta))] hover:bg-[hsl(var(--cta-hover))] text-white shadow-lg hover:shadow-xl transition-all border-0 group-hover:shadow-2xl group-hover:scale-105 duration-300 font-semibold"
+              >
+                Start Assessment
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+              </Button>
+            </Link>
           ) : (
             <Button 
-              className="w-full bg-[hsl(var(--thinkera-blue))] hover:bg-[hsl(var(--thinkera-blue-dark))] text-white shadow-lg hover:shadow-xl transition-all border-0 group-hover:shadow-2xl group-hover:scale-105 duration-300 font-semibold"
+              className="w-full bg-gray-400 text-white shadow-lg transition-all border-0 font-semibold cursor-not-allowed"
+              disabled
             >
-              Start Assessment
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+              {!isActive ? 'Inactive' : 'Coming Soon'}
             </Button>
           )}
         </div>

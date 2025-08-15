@@ -1,13 +1,16 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Search, Menu, X, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAssessmentCategories } from "@/hooks/useAssessments";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation();
+  const navigate = useNavigate();
+  const { categories } = useAssessmentCategories();
 
   const navigation = [
     // { name: "Home", href: "/" },
@@ -17,19 +20,15 @@ const Header = () => {
     // { name: "Security", href: "/security" },
     // { name: "About", href: "/about" },
     { name: "Blog", href: "/blog" },
-    { name: "Dynamic Assessments", href: "/dynamic-assessments" },
   ];
 
-  // Assessment categories for secondary navigation
+  // Assessment categories for secondary navigation - now dynamic
   const assessmentCategories = [
-    { name: "Cloud", href: "/assessments#cloud" },
-    { name: "Data", href: "/assessments#data" },
-    { name: "Technology", href: "/assessments#technology" },
-    { name: "Programming", href: "/assessments#programming" },
-    { name: "Management", href: "/assessments#management" },
-    { name: "Business", href: "/assessments#business" },
-    { name: "Medical", href: "/assessments#medical" },
-    { name: "Platform", href: "/assessments#platform" },
+    { name: "View All", href: "/assessments" },
+    ...categories.map(category => ({
+      name: category,
+      href: `/assessments?category=${category}`
+    }))
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -38,6 +37,11 @@ const Header = () => {
     e.preventDefault();
     // TODO: Implement search functionality
     console.log("Searching for:", searchQuery);
+  };
+
+  const handleCategoryClick = (href: string) => {
+    navigate(href);
+    setIsMenuOpen(false);
   };
 
      return (
@@ -167,17 +171,18 @@ const Header = () => {
              {/* Assessment Categories Navigation */}
              <nav className="hidden md:flex items-center space-x-8">
                {assessmentCategories.map((category) => (
-                 <a
+                 <button
                    key={category.name}
-                   href={category.href}
+                   onClick={() => handleCategoryClick(category.href)}
                    className={`text-sm font-medium whitespace-nowrap transition-colors hover:text-white px-2 py-1 cursor-pointer ${
-                      location.hash === category.href.split("#")[1]
+                      (category.name === "View All" && location.pathname === "/assessments" && !location.search.includes("category=")) ||
+                      (category.name !== "View All" && location.search.includes(`category=${category.name}`))
                         ? "text-white border-b-2 border-white"
                         : "text-white/80"
                    }`}
                  >
                    {category.name}
-                 </a>
+                 </button>
                ))}
              </nav>
 
@@ -201,18 +206,18 @@ const Header = () => {
              <div className="md:hidden">
                <div className="px-2 pt-2 pb-4 space-y-1 border-t">
                  {assessmentCategories.map((category) => (
-                   <a
+                   <button
                      key={category.name}
-                     href={category.href}
-                     className={`block px-3 py-2 text-base font-medium rounded-md transition-colors cursor-pointer ${
-                       location.hash === category.href.split("#")[1]
+                     onClick={() => handleCategoryClick(category.href)}
+                     className={`block w-full text-left px-3 py-2 text-base font-medium rounded-md transition-colors cursor-pointer ${
+                       (category.name === "View All" && location.pathname === "/assessments" && !location.search.includes("category=")) ||
+                       (category.name !== "View All" && location.search.includes(`category=${category.name}`))
                           ? "bg-[hsl(var(--thinkera-blue-dark))] text-white"
                           : "text-white/80 hover:bg-[hsl(var(--thinkera-blue-dark))] hover:text-white"
                      }`}
-                     onClick={() => setIsMenuOpen(false)}
                    >
                      {category.name}
-                   </a>
+                   </button>
                  ))}
                </div>
              </div>
@@ -226,17 +231,18 @@ const Header = () => {
            <div className="container mx-auto px-4">
              <nav className="flex items-center space-x-8 overflow-x-auto py-4">
                {assessmentCategories.map((category) => (
-                 <a
+                 <button
                    key={category.name}
-                   href={category.href}
+                   onClick={() => handleCategoryClick(category.href)}
                    className={`text-base font-medium whitespace-nowrap transition-colors hover:text-white px-2 py-1 cursor-pointer ${
-                      location.hash === category.href.split("#")[1]
+                      (category.name === "View All" && location.pathname === "/assessments" && !location.search.includes("category=")) ||
+                      (category.name !== "View All" && location.search.includes(`category=${category.name}`))
                         ? "text-white border-b-2 border-white"
                         : "text-white/80"
                    }`}
                  >
                    {category.name}
-                 </a>
+                 </button>
                ))}
              </nav>
            </div>

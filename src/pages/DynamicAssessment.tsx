@@ -83,7 +83,7 @@ const DynamicAssessment = () => {
           <div className="text-center">
             <p className="text-lg text-gray-600">Assessment not found</p>
             <button
-              onClick={() => navigate('/dynamic-assessments')}
+              onClick={() => navigate('/assessments')}
               className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
             >
               Back to Assessments
@@ -276,7 +276,7 @@ const DynamicAssessment = () => {
           <div className="text-center">
             <p className="text-lg text-gray-600">Assessment data not available</p>
             <button
-              onClick={() => navigate('/dynamic-assessments')}
+              onClick={() => navigate('/assessments')}
               className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
             >
               Back to Assessments
@@ -294,7 +294,7 @@ const DynamicAssessment = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button
-                onClick={() => navigate('/dynamic-assessments')}
+                onClick={() => navigate('/assessments')}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 <ArrowLeft className="h-5 w-5 text-gray-600" />

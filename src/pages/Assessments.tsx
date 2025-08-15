@@ -51,15 +51,15 @@ const Assessments = () => {
   };
 
   return (
-    <div className="min-h-screen bg-blue-50">
+    <div className="min-h-screen bg-background">
       <Header />
       
       {/* Hero Section */}
       <div className="pt-40 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-left mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-gray-900">Choose Your Assessment</h2>
-            <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
+            <h2 className="text-4xl font-bold mb-4 text-foreground">Choose Your Assessment</h2>
+            <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
               Explore our comprehensive range of career assessments, each designed with cutting-edge psychometric research 
               to provide you with accurate, actionable insights about your ideal career path.
             </p>
@@ -84,7 +84,7 @@ const Assessments = () => {
                     <div className={`p-3 rounded-lg ${color}`}>
                       <Icon className="h-6 w-6" />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900">{category}</h3>
+                    <h3 className="text-2xl font-bold text-foreground">{category}</h3>
                   </div>
                   
                   {/* Two Column Layout for Assessments */}

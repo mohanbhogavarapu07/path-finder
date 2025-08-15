@@ -55,13 +55,13 @@ const DynamicAssessments = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-blue-50">
+      <div className="min-h-screen bg-background">
         <Header />
         <div className="pt-40 px-4">
           <div className="container mx-auto max-w-6xl">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="mt-4 text-lg text-gray-600">Loading assessments...</p>
+              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[hsl(var(--thinkera-blue))] mx-auto"></div>
+              <p className="mt-4 text-lg text-muted-foreground">Loading assessments...</p>
             </div>
           </div>
         </div>
@@ -72,7 +72,7 @@ const DynamicAssessments = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-blue-50">
+      <div className="min-h-screen bg-background">
         <Header />
         <div className="pt-40 px-4">
           <div className="container mx-auto max-w-6xl">
@@ -90,15 +90,15 @@ const DynamicAssessments = () => {
   }
 
   return (
-    <div className="min-h-screen bg-blue-50">
+    <div className="min-h-screen bg-background">
       <Header />
       
       {/* Hero Section */}
       <div className="pt-40 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-left mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-gray-900">Dynamic Assessments</h2>
-            <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
+            <h2 className="text-4xl font-bold mb-4 text-foreground">Dynamic Assessments</h2>
+            <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
               Explore our comprehensive range of career assessments powered by our dynamic system. 
               Each assessment is designed with cutting-edge psychometric research to provide you with 
               accurate, actionable insights about your ideal career path.
@@ -124,7 +124,7 @@ const DynamicAssessments = () => {
                     <div className={`p-3 rounded-lg ${color}`}>
                       <Icon className="h-6 w-6" />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900">{category}</h3>
+                    <h3 className="text-2xl font-bold text-foreground">{category}</h3>
                   </div>
                   
                   {/* Two Column Layout for Assessments */}
@@ -157,25 +157,25 @@ const DynamicAssessments = () => {
           
           <div className="grid md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="bg-thinkera-blue text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
+              <div className="bg-[hsl(var(--thinkera-blue))] text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
               <h3 className="text-lg font-semibold mb-2 text-foreground">Choose Assessment</h3>
               <p className="text-muted-foreground text-sm">Select the career path you're interested in exploring</p>
             </div>
             
             <div className="text-center">
-              <div className="bg-thinkera-blue text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
+              <div className="bg-[hsl(var(--thinkera-blue))] text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
               <h3 className="text-lg font-semibold mb-2 text-foreground">Complete Evaluation</h3>
               <p className="text-muted-foreground text-sm">Answer questions about your skills, interests, and preferences</p>
             </div>
             
             <div className="text-center">
-              <div className="bg-thinkera-blue text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
+              <div className="bg-[hsl(var(--thinkera-blue))] text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
               <h3 className="text-lg font-semibold mb-2 text-foreground">Get Analysis</h3>
               <p className="text-muted-foreground text-sm">Receive detailed insights based on scientific assessment methods</p>
             </div>
             
             <div className="text-center">
-              <div className="bg-thinkera-blue text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">4</div>
+              <div className="bg-[hsl(var(--thinkera-blue))] text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">4</div>
               <h3 className="text-lg font-semibold mb-2 text-foreground">Plan Your Path</h3>
               <p className="text-muted-foreground text-sm">Use personalized recommendations to guide your career journey</p>
             </div>

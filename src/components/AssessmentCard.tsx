@@ -21,9 +21,9 @@ const AssessmentCard: React.FC<AssessmentCardProps> = ({
             to={`/assessments/${id}`}
             className="block w-full"
           >
-            <div className="bg-blue-600/60 hover:bg-blue-700/70 text-white px-6 py-4 rounded-xl border-0 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-between group font-semibold">
+            <div className="bg-[hsl(var(--cta))] hover:bg-[hsl(var(--cta-hover))] text-white px-6 py-4 rounded-xl border-0 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-between group font-semibold">
               <span className="font-semibold text-lg drop-shadow">{title}</span>
-                <ArrowRight className="h-5 w-5 text-white group-hover:text-blue-200 group-hover:translate-x-1 transition-all duration-200 drop-shadow" />
+                <ArrowRight className="h-5 w-5 text-white group-hover:text-white/80 group-hover:translate-x-1 transition-all duration-200 drop-shadow" />
             </div>
           </Link>
       ) : (

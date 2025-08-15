@@ -21,7 +21,7 @@ const DynamicAssessmentIntro: React.FC<DynamicAssessmentIntroProps> = ({
   if (!assessment || typeof assessment !== 'object') {
     return (
       <div className="text-center py-8">
-        <p className="text-gray-600">Assessment data not available</p>
+        <p className="text-muted-foreground">Assessment data not available</p>
       </div>
     );
   }
@@ -70,22 +70,22 @@ const DynamicAssessmentIntro: React.FC<DynamicAssessmentIntroProps> = ({
           <div className="flex justify-center mb-4">
             <CategoryIcon className="h-16 w-16 text-blue-600" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl font-bold text-foreground mb-4">
             Discover Your {title} Career Potential
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
             {description}
           </p>
           <div className="flex justify-center items-center space-x-6 mb-6">
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
+            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
               <Clock className="w-4 h-4" />
               <span>{duration}</span>
             </div>
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
+            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
               <Target className="w-4 h-4" />
               <span>Personalized Results</span>
             </div>
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
+            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
               <TrendingUp className="w-4 h-4" />
               <span>Career Guidance</span>
             </div>
@@ -113,7 +113,7 @@ const DynamicAssessmentIntro: React.FC<DynamicAssessmentIntroProps> = ({
             {whatIsDescription || `${title} is a powerful and evolving path that combines practical skills, problem solving, and real-world application.`}
           </p>
           <div className="grid md:grid-cols-3 gap-4 mt-6">
-            <div className="bg-blue-50 p-4 rounded-lg">
+            <div className="bg-[hsl(var(--thinkera-blue))]/5 p-4 rounded-lg">
               <h4 className="font-semibold text-blue-900 mb-2">Foundation</h4>
               <p className="text-sm text-blue-700">Solid fundamentals and core concepts</p>
             </div>
@@ -141,9 +141,9 @@ const DynamicAssessmentIntro: React.FC<DynamicAssessmentIntroProps> = ({
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {careers.map((career: any, index: number) => (
               <div key={index} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
-                <h4 className="font-semibold text-gray-900 mb-2">{career.title}</h4>
+                <h4 className="font-semibold text-foreground mb-2">{career.title}</h4>
                 {career.description && (
-                  <p className="text-sm text-gray-600">{career.description}</p>
+                  <p className="text-sm text-muted-foreground">{career.description}</p>
                 )}
               </div>
             ))}
@@ -181,7 +181,7 @@ const DynamicAssessmentIntro: React.FC<DynamicAssessmentIntroProps> = ({
         <CardContent>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <h4 className="font-semibold text-gray-900 mb-3">Assessment Modules:</h4>
+              <h4 className="font-semibold text-foreground mb-3">Assessment Modules:</h4>
               <ul className="space-y-2">
                 <li className="flex items-center space-x-2">
                   <Badge variant="outline" className="bg-purple-50 text-purple-700">1</Badge>
@@ -198,8 +198,8 @@ const DynamicAssessmentIntro: React.FC<DynamicAssessmentIntroProps> = ({
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 mb-3">Your Results Include:</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
+              <h4 className="font-semibold text-foreground mb-3">Your Results Include:</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
                 {(assessment.assessmentOverview?.resultsInclude?.length
                   ? assessment.assessmentOverview.resultsInclude
                   : ['Personalized fit score (0-100)', 'Detailed trait analysis', 'Technical readiness assessment', 'Career pathway recommendations', 'Next steps and learning resources']

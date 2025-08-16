@@ -1,0 +1,625 @@
+export class PDFGenerator {
+
+  /**
+   * Print the element with custom styles
+   */
+  static printElement(element: HTMLElement): void {
+    // Create a new window for printing
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      console.error('Failed to open print window');
+      return;
+    }
+
+    // Get the element's HTML and add print styles
+    const printContent = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Assessment Results - Print</title>
+          <style>
+            @page {
+              margin: 0.5in;
+              size: A4;
+            }
+            
+            * {
+              -webkit-print-color-adjust: exact !important;
+              color-adjust: exact !important;
+              print-color-adjust: exact !important;
+            }
+            
+            body {
+              background: white !important;
+              color: #1e293b !important;
+              font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+              font-size: 12pt;
+              line-height: 1.5;
+              margin: 0;
+              padding: 0;
+            }
+            
+            /* Import the PDF layout styles */
+            .pdf-layout-container {
+              width: 100% !important;
+              max-width: none !important;
+              margin: 0 !important;
+              padding: 0 !important;
+              background: white !important;
+              color: #1e293b !important;
+              font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+              line-height: 1.5 !important;
+              font-size: 12pt !important;
+              display: block !important;
+              visibility: visible !important;
+              opacity: 1 !important;
+              position: static !important;
+              left: auto !important;
+              top: auto !important;
+              z-index: auto !important;
+            }
+            
+            /* Ensure all PDF layout elements are visible */
+            .pdf-layout-container * {
+              visibility: visible !important;
+              opacity: 1 !important;
+              display: block !important;
+            }
+            
+            /* Hide any elements that might interfere */
+            .hidden, [style*="display: none"], [style*="visibility: hidden"] {
+              display: block !important;
+              visibility: visible !important;
+              opacity: 1 !important;
+            }
+            
+            /* Header styles */
+            .pdf-header {
+              background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%) !important;
+              color: white !important;
+              padding: 2rem 0 !important;
+              margin-bottom: 2rem !important;
+              text-align: center !important;
+              position: relative !important;
+              overflow: hidden !important;
+            }
+           
+           .pdf-header-content {
+             display: flex !important;
+             justify-content: space-between !important;
+             align-items: center !important;
+             max-width: 700px !important;
+             margin: 0 auto !important;
+             padding: 0 1.5rem !important;
+           }
+           
+           .pdf-logo-section {
+             display: flex !important;
+             align-items: center !important;
+             gap: 0.75rem !important;
+           }
+           
+           .pdf-logo-icon {
+             background: rgba(255, 255, 255, 0.2) !important;
+             border-radius: 50% !important;
+             padding: 0.5rem !important;
+             display: flex !important;
+             align-items: center !important;
+             justify-content: center !important;
+           }
+           
+           .pdf-logo-title {
+             font-size: 1.5rem !important;
+             font-weight: 700 !important;
+             margin: 0 !important;
+             color: white !important;
+           }
+           
+           .pdf-logo-subtitle {
+             font-size: 0.9rem !important;
+             opacity: 0.9 !important;
+             margin: 0 !important;
+             color: white !important;
+           }
+           
+           .pdf-header-info {
+             text-align: right !important;
+           }
+           
+           .pdf-date {
+             font-size: 0.8rem !important;
+             opacity: 0.8 !important;
+             margin: 0 0 0.25rem 0 !important;
+           }
+           
+           .pdf-assessment-name {
+             font-size: 1rem !important;
+             font-weight: 600 !important;
+             margin: 0 !important;
+           }
+           
+           /* Title section */
+           .pdf-title-section {
+             text-align: center !important;
+             margin-bottom: 1.5rem !important;
+             padding: 1.25rem !important;
+             background: #f8fafc !important;
+             border: 2px solid #e2e8f0 !important;
+             border-radius: 10px !important;
+           }
+           
+           .pdf-main-title {
+             font-size: 1.4rem !important;
+             font-weight: 700 !important;
+             color: #1e293b !important;
+             margin: 0 0 0.4rem 0 !important;
+           }
+           
+           .pdf-assessment-title {
+             font-size: 1.1rem !important;
+             color: #64748b !important;
+             font-weight: 600 !important;
+             margin: 0 0 0.6rem 0 !important;
+           }
+           
+           .pdf-assessment-description {
+             font-size: 0.9rem !important;
+             color: #64748b !important;
+             margin: 0 !important;
+             max-width: 550px !important;
+             margin: 0 auto !important;
+           }
+           
+           /* Recommendation section */
+           .pdf-recommendation {
+             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%) !important;
+             border: 3px solid #1e40af !important;
+             border-radius: 16px !important;
+             padding: 2rem !important;
+             margin-bottom: 2rem !important;
+             text-align: center !important;
+             position: relative !important;
+             overflow: hidden !important;
+             box-shadow: 0 4px 16px rgba(30, 64, 175, 0.1) !important;
+           }
+           
+           .pdf-recommendation.green {
+             background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%) !important;
+             border-color: #22c55e !important;
+             box-shadow: 0 4px 16px rgba(34, 197, 94, 0.1) !important;
+           }
+           
+           .pdf-recommendation.orange {
+             background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%) !important;
+             border-color: #f97316 !important;
+             box-shadow: 0 4px 16px rgba(249, 115, 22, 0.1) !important;
+           }
+           
+           .pdf-recommendation.red {
+             background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%) !important;
+             border-color: #ef4444 !important;
+             box-shadow: 0 4px 16px rgba(239, 68, 68, 0.1) !important;
+           }
+           
+           .pdf-recommendation-content {
+             display: flex !important;
+             align-items: center !important;
+             justify-content: center !important;
+             gap: 0.75rem !important;
+             margin-bottom: 0.75rem !important;
+           }
+           
+           .pdf-recommendation-icon {
+             background: rgba(30, 174, 219, 0.1) !important;
+             border-radius: 50% !important;
+             padding: 0.4rem !important;
+             display: flex !important;
+             align-items: center !important;
+             justify-content: center !important;
+           }
+           
+           .pdf-recommendation.green .pdf-recommendation-icon {
+             background: rgba(34, 197, 94, 0.1) !important;
+           }
+           
+           .pdf-recommendation.orange .pdf-recommendation-icon {
+             background: rgba(249, 115, 22, 0.1) !important;
+           }
+           
+           .pdf-recommendation.red .pdf-recommendation-icon {
+             background: rgba(239, 68, 68, 0.1) !important;
+           }
+           
+           .pdf-recommendation-text {
+             flex: 1 !important;
+             text-align: left !important;
+           }
+           
+           .pdf-recommendation-title {
+             font-size: 1rem !important;
+             font-weight: 700 !important;
+             color: #1e293b !important;
+             margin: 0 0 0.2rem 0 !important;
+           }
+           
+           .pdf-recommendation-description {
+             font-size: 0.8rem !important;
+             color: #64748b !important;
+             margin: 0 !important;
+           }
+           
+           .pdf-recommendation-score {
+             display: flex !important;
+             flex-direction: column !important;
+             align-items: center !important;
+             text-align: center !important;
+           }
+           
+           .pdf-score-value {
+             font-size: 1.2rem !important;
+             font-weight: 800 !important;
+             color: #1EAEDB !important;
+           }
+           
+           .pdf-score-label {
+             font-size: 0.6rem !important;
+             color: #64748b !important;
+             font-weight: 500 !important;
+           }
+           
+           .pdf-recommendation-badge {
+             text-align: center !important;
+           }
+           
+           .pdf-badge {
+             background: #1EAEDB !important;
+             color: white !important;
+             border: none !important;
+             padding: 0.2rem 0.6rem !important;
+             border-radius: 10px !important;
+             font-weight: 600 !important;
+             font-size: 0.6rem !important;
+           }
+           
+           .pdf-recommendation.green .pdf-badge {
+             background: #22c55e !important;
+           }
+           
+           .pdf-recommendation.orange .pdf-badge {
+             background: #f97316 !important;
+           }
+           
+           .pdf-recommendation.red .pdf-badge {
+             background: #ef4444 !important;
+           }
+           
+           /* Section titles */
+           .pdf-section-title {
+             font-size: 0.9rem !important;
+             font-weight: 700 !important;
+             color: #1e293b !important;
+             margin: 0 0 0.75rem 0 !important;
+             text-align: center !important;
+             border-bottom: 1px solid #e2e8f0 !important;
+             padding-bottom: 0.4rem !important;
+           }
+           
+           /* Score cards */
+           .pdf-scores-grid {
+             display: grid !important;
+             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+             gap: 0.75rem !important;
+             margin-bottom: 1rem !important;
+           }
+           
+           .pdf-score-card {
+             background: white !important;
+             border: 1px solid #e2e8f0 !important;
+             border-radius: 6px !important;
+             padding: 0.75rem !important;
+             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+           }
+           
+           .pdf-score-header {
+             display: flex !important;
+             align-items: center !important;
+             gap: 0.4rem !important;
+             margin-bottom: 0.5rem !important;
+             color: #64748b !important;
+           }
+           
+           .pdf-score-header h4 {
+             font-size: 0.8rem !important;
+             font-weight: 600 !important;
+             color: #1e293b !important;
+             margin: 0 !important;
+           }
+           
+           .pdf-score-content {
+             text-align: center !important;
+           }
+           
+           .pdf-score-value {
+             font-size: 1.4rem !important;
+             font-weight: 800 !important;
+             color: #1EAEDB !important;
+             margin-bottom: 0.2rem !important;
+           }
+           
+           .pdf-score-progress {
+             background: #e2e8f0 !important;
+             border-radius: 4px !important;
+             height: 4px !important;
+             margin: 0.2rem 0 !important;
+             overflow: hidden !important;
+           }
+           
+           .pdf-progress-fill {
+             background: linear-gradient(90deg, #1EAEDB 0%, #33C3F0 100%) !important;
+             height: 100% !important;
+             border-radius: 4px !important;
+           }
+           
+           .pdf-score-badge {
+             background: #1EAEDB !important;
+             color: white !important;
+             border: none !important;
+             padding: 0.15rem 0.4rem !important;
+             border-radius: 6px !important;
+             font-size: 0.5rem !important;
+             font-weight: 600 !important;
+             margin-top: 0.2rem !important;
+           }
+           
+           .pdf-score-badge.excellent {
+             background: #22c55e !important;
+           }
+           
+           .pdf-score-badge.good {
+             background: #f59e0b !important;
+           }
+           
+           .pdf-score-badge.needs-work {
+             background: #ef4444 !important;
+           }
+           
+           /* Career cards */
+           .pdf-career-grid {
+             display: grid !important;
+             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+             gap: 1rem !important;
+             margin-bottom: 1rem !important;
+           }
+           
+           .pdf-career-card {
+             background: white !important;
+             border: 1px solid #e2e8f0 !important;
+             border-radius: 8px !important;
+             padding: 1rem !important;
+             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+           }
+           
+           .pdf-career-title {
+             font-size: 0.9rem !important;
+             font-weight: 600 !important;
+             color: #1e293b !important;
+             margin: 0 0 0.5rem 0 !important;
+           }
+           
+           .pdf-career-description {
+             font-size: 0.7rem !important;
+             color: #64748b !important;
+             margin: 0 0 0.75rem 0 !important;
+             line-height: 1.4 !important;
+           }
+           
+           .pdf-career-footer {
+             display: flex !important;
+             justify-content: space-between !important;
+             align-items: center !important;
+           }
+           
+           .pdf-career-badge {
+             background: #1EAEDB !important;
+             color: white !important;
+             border: none !important;
+             padding: 0.1rem 0.4rem !important;
+             border-radius: 4px !important;
+             font-size: 0.5rem !important;
+             font-weight: 600 !important;
+           }
+           
+           .pdf-career-match {
+             font-size: 0.6rem !important;
+             color: #64748b !important;
+             font-weight: 500 !important;
+           }
+           
+           /* Skills section */
+           .pdf-skills-content {
+             display: grid !important;
+             grid-template-columns: 1fr 1fr !important;
+             gap: 1.5rem !important;
+             margin-bottom: 1rem !important;
+           }
+           
+           .pdf-skills-strengths,
+           .pdf-skills-gaps {
+             background: white !important;
+             border: 1px solid #e2e8f0 !important;
+             border-radius: 8px !important;
+             padding: 1rem !important;
+           }
+           
+           .pdf-skills-subtitle {
+             display: flex !important;
+             align-items: center !important;
+             gap: 0.4rem !important;
+             font-size: 0.8rem !important;
+             font-weight: 600 !important;
+             color: #1e293b !important;
+             margin: 0 0 0.75rem 0 !important;
+           }
+           
+           .pdf-skills-list {
+             list-style: none !important;
+             padding: 0 !important;
+             margin: 0 !important;
+           }
+           
+           .pdf-skill-item {
+             font-size: 0.7rem !important;
+             color: #64748b !important;
+             margin-bottom: 0.4rem !important;
+             padding: 0.3rem 0.5rem !important;
+             border-radius: 4px !important;
+             background: #f8fafc !important;
+           }
+           
+           .pdf-skill-item.strength {
+             background: #f0fdf4 !important;
+             color: #166534 !important;
+           }
+           
+           .pdf-skill-item.gap {
+             background: #fef2f2 !important;
+             color: #991b1b !important;
+           }
+           
+           /* Next steps */
+           .pdf-next-steps-list {
+             display: flex !important;
+             flex-direction: column !important;
+             gap: 0.75rem !important;
+             margin-bottom: 1rem !important;
+           }
+           
+           .pdf-next-step-item {
+             display: flex !important;
+             align-items: center !important;
+             gap: 0.75rem !important;
+             background: white !important;
+             border: 1px solid #e2e8f0 !important;
+             border-radius: 8px !important;
+             padding: 0.75rem !important;
+           }
+           
+           .pdf-step-number {
+             background: #1EAEDB !important;
+             color: white !important;
+             border-radius: 50% !important;
+             width: 1.5rem !important;
+             height: 1.5rem !important;
+             display: flex !important;
+             align-items: center !important;
+             justify-content: center !important;
+             font-size: 0.6rem !important;
+             font-weight: 600 !important;
+             flex-shrink: 0 !important;
+           }
+           
+           .pdf-step-text {
+             font-size: 0.7rem !important;
+             color: #1e293b !important;
+             line-height: 1.4 !important;
+           }
+           
+           /* Footer */
+           .pdf-footer {
+             background: #f8fafc !important;
+             border-top: 2px solid #e2e8f0 !important;
+             padding: 1.5rem !important;
+             margin-top: 2rem !important;
+           }
+           
+           .pdf-footer-content {
+             text-align: center !important;
+           }
+           
+           .pdf-footer-brand {
+             display: flex !important;
+             align-items: center !important;
+             justify-content: center !important;
+             gap: 0.5rem !important;
+             font-size: 1rem !important;
+             font-weight: 700 !important;
+             color: #1e293b !important;
+             margin-bottom: 0.75rem !important;
+           }
+           
+           .pdf-footer-description {
+             font-size: 0.7rem !important;
+             color: #64748b !important;
+             line-height: 1.6 !important;
+             margin-bottom: 1.5rem !important;
+           }
+           
+           .pdf-footer-contact {
+             display: flex !important;
+             justify-content: center !important;
+             gap: 2rem !important;
+             flex-wrap: wrap !important;
+           }
+           
+           .pdf-footer-contact-item {
+             display: flex !important;
+             align-items: center !important;
+             gap: 0.5rem !important;
+             font-size: 0.8rem !important;
+             color: #64748b !important;
+             font-weight: 500 !important;
+           }
+           
+           /* Hide interactive elements */
+           button, .btn, .button, .interactive-element {
+             display: none !important;
+           }
+         </style>
+       </head>
+       <body>
+         ${element.outerHTML}
+       </body>
+     </html>
+   `;
+
+   printWindow.document.write(printContent);
+   printWindow.document.close();
+
+   // Wait for content to load then print
+   printWindow.onload = () => {
+     // Add a longer delay to ensure all styles and content are properly rendered
+     setTimeout(() => {
+       // Force a reflow to ensure content is visible
+       printWindow.document.body.offsetHeight;
+       printWindow.print();
+       printWindow.close();
+     }, 1000);
+   };
+ }
+
+ /**
+  * Clean up temporary elements
+  */
+ static cleanup(): void {
+   const tempElements = document.querySelectorAll('.pdf-temp-container');
+   tempElements.forEach(element => {
+     if (element.parentNode) {
+       element.parentNode.removeChild(element);
+     }
+   });
+ }
+}
+
+/**
+ * Hook for print functionality
+ */
+export const usePDFGenerator = () => {
+ const printElement = (element: HTMLElement): void => {
+   PDFGenerator.printElement(element);
+ };
+
+ return {
+   printElement,
+   cleanup: PDFGenerator.cleanup
+ };
+};

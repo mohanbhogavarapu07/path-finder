@@ -23,6 +23,9 @@ import {
 } from 'lucide-react';
 import { DynamicAssessment } from '@/lib/api';
 import { useAssessmentResults } from '@/hooks/useAssessments';
+import { usePDFResults } from '@/hooks/usePDFResults';
+import PDFLayout from './PDFLayout';
+import './PDFLayout.css';
 
 interface DynamicResultsSectionProps {
   assessment: DynamicAssessment;
@@ -37,6 +40,13 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
 }) => {
   const navigate = useNavigate();
   const { data: resultsData, isLoading, error } = useAssessmentResults(assessment.id, sessionId || '');
+  
+  // Print functionality
+  const { pdfContainerRef, printResults, saveAsPDF, isPrinting, isSavingPDF } = usePDFResults({
+    assessmentTitle: assessment.title,
+    onSuccess: () => console.log('Print operation completed successfully'),
+    onError: (error) => console.error('Print operation failed:', error)
+  });
 
   useEffect(() => {
     if (error) {
@@ -44,488 +54,9 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
     }
   }, [error]);
 
-  // Print function with proper formatting
+  // Print function using the new PDF system
   const handlePrint = () => {
-    // Add print-specific styles before printing
-    const style = document.createElement('style');
-    style.id = 'print-styles';
-    style.innerHTML = `
-      @media print {
-        @page {
-          margin: 0.5in;
-          size: A4;
-        }
-        
-        * {
-          -webkit-print-color-adjust: exact !important;
-          color-adjust: exact !important;
-          print-color-adjust: exact !important;
-        }
-        
-        body {
-          background: white !important;
-          color: #1e293b !important;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          font-size: 11pt;
-          line-height: 1.5;
-          margin: 0;
-          padding: 0;
-        }
-        
-        .no-print {
-          display: none !important;
-        }
-        
-        .print-only {
-          display: block !important;
-        }
-        
-        /* Professional Header */
-        .print-header {
-          display: block !important;
-          background: linear-gradient(135deg, #1EAEDB 0%, #33C3F0 100%);
-          color: white;
-          padding: 2rem 0;
-          margin-bottom: 2rem;
-          text-align: center;
-          border-radius: 0;
-        }
-        
-        .print-logo {
-          font-size: 2.5rem;
-          font-weight: 800;
-          margin-bottom: 0.5rem;
-          color: white;
-          font-family: 'Poppins', sans-serif;
-        }
-        
-        .print-subtitle {
-          font-size: 1.1rem;
-          opacity: 0.9;
-          margin-bottom: 1rem;
-        }
-        
-        .print-date {
-          font-size: 0.9rem;
-          opacity: 0.8;
-          border-top: 1px solid rgba(255,255,255,0.3);
-          padding-top: 1rem;
-          margin-top: 1rem;
-        }
-        
-        /* Assessment Title Section */
-        .print-assessment-title {
-          text-align: center;
-          margin-bottom: 2rem;
-          padding: 1.5rem;
-          background: #f8fafc;
-          border: 2px solid #e2e8f0;
-          border-radius: 12px;
-        }
-        
-        .print-assessment-title h1 {
-          font-size: 2rem;
-          font-weight: 700;
-          color: #1e293b;
-          margin-bottom: 0.5rem;
-        }
-        
-        .print-assessment-title h2 {
-          font-size: 1.2rem;
-          color: #64748b;
-          font-weight: 500;
-        }
-        
-        /* Recommendation Section */
-        .print-recommendation {
-          background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-          border: 3px solid #1EAEDB;
-          border-radius: 16px;
-          padding: 2rem;
-          margin-bottom: 2rem;
-          text-align: center;
-          position: relative;
-        }
-        
-        .print-recommendation::before {
-          content: '';
-          position: absolute;
-          top: -2px;
-          left: -2px;
-          right: -2px;
-          bottom: -2px;
-          background: linear-gradient(135deg, #1EAEDB, #33C3F0);
-          border-radius: 16px;
-          z-index: -1;
-        }
-        
-        .print-recommendation-title {
-          font-size: 1.8rem;
-          font-weight: 700;
-          color: #1e293b;
-          margin-bottom: 1rem;
-        }
-        
-        .print-recommendation-description {
-          font-size: 1.1rem;
-          color: #475569;
-          margin-bottom: 1.5rem;
-          max-width: 600px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-        
-        .print-recommendation-badge {
-          display: inline-block;
-          background: #1EAEDB;
-          color: white;
-          padding: 0.5rem 1rem;
-          border-radius: 8px;
-          font-weight: 600;
-          font-size: 0.9rem;
-          margin-right: 1rem;
-        }
-        
-        .print-overall-score {
-          display: inline-block;
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: #1EAEDB;
-        }
-        
-        /* Score Cards */
-        .print-score-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 1.5rem;
-          margin-bottom: 2rem;
-        }
-        
-        .print-score-card {
-          background: white;
-          border: 2px solid #e2e8f0;
-          border-radius: 12px;
-          padding: 1.5rem;
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .print-score-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 4px;
-          background: linear-gradient(90deg, #1EAEDB, #33C3F0);
-        }
-        
-        .print-score-card-title {
-          font-size: 1.1rem;
-          font-weight: 600;
-          color: #1e293b;
-          margin-bottom: 1rem;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-        
-        .print-score-value {
-          font-size: 3rem;
-          font-weight: 800;
-          color: #1EAEDB;
-          margin-bottom: 0.5rem;
-          display: block;
-        }
-        
-        .print-score-badge {
-          display: inline-block;
-          padding: 0.25rem 0.75rem;
-          border-radius: 6px;
-          font-size: 0.8rem;
-          font-weight: 600;
-          margin-bottom: 1rem;
-        }
-        
-        .print-score-badge.excellent {
-          background: #dcfce7;
-          color: #166534;
-          border: 1px solid #22c55e;
-        }
-        
-        .print-score-badge.good {
-          background: #fef3c7;
-          color: #92400e;
-          border: 1px solid #f59e0b;
-        }
-        
-        .print-score-badge.needs-work {
-          background: #fee2e2;
-          color: #991b1b;
-          border: 1px solid #ef4444;
-        }
-        
-        .print-progress-container {
-          margin: 1rem 0;
-        }
-        
-        .print-progress-bar {
-          height: 12px;
-          background: #f1f5f9;
-          border-radius: 6px;
-          overflow: hidden;
-          position: relative;
-        }
-        
-        .print-progress-fill {
-          height: 100%;
-          background: linear-gradient(90deg, #1EAEDB, #33C3F0);
-          border-radius: 6px;
-          transition: width 0.3s ease;
-        }
-        
-        .print-score-description {
-          font-size: 0.9rem;
-          color: #64748b;
-          margin-top: 0.5rem;
-        }
-        
-        /* Career Paths */
-        .print-career-section {
-          background: white;
-          border: 2px solid #e2e8f0;
-          border-radius: 12px;
-          padding: 1.5rem;
-          margin-bottom: 2rem;
-        }
-        
-        .print-career-title {
-          font-size: 1.3rem;
-          font-weight: 700;
-          color: #1e293b;
-          margin-bottom: 1rem;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-        
-        .print-career-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 1rem;
-        }
-        
-        .print-career-card {
-          background: #f8fafc;
-          border: 1px solid #e2e8f0;
-          border-radius: 8px;
-          padding: 1rem;
-        }
-        
-        .print-career-card-title {
-          font-size: 1rem;
-          font-weight: 600;
-          color: #1e293b;
-          margin-bottom: 0.5rem;
-        }
-        
-        .print-career-card-description {
-          font-size: 0.85rem;
-          color: #64748b;
-          margin-bottom: 0.75rem;
-        }
-        
-        .print-career-card-footer {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-        
-        .print-career-badge {
-          background: #1EAEDB;
-          color: white;
-          padding: 0.25rem 0.5rem;
-          border-radius: 4px;
-          font-size: 0.75rem;
-          font-weight: 500;
-        }
-        
-        .print-career-alignment {
-          font-size: 0.85rem;
-          color: #1EAEDB;
-          font-weight: 600;
-        }
-        
-        /* Analysis Sections */
-        .print-analysis-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 1.5rem;
-          margin-bottom: 2rem;
-        }
-        
-        .print-analysis-card {
-          background: white;
-          border: 2px solid #e2e8f0;
-          border-radius: 12px;
-          padding: 1.5rem;
-        }
-        
-        .print-analysis-title {
-          font-size: 1.2rem;
-          font-weight: 600;
-          color: #1e293b;
-          margin-bottom: 1rem;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-        
-        .print-analysis-list {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-        }
-        
-        .print-analysis-list li {
-          padding: 0.5rem 0;
-          border-bottom: 1px solid #f1f5f9;
-          color: #374151;
-          font-size: 0.9rem;
-        }
-        
-        .print-analysis-list li:last-child {
-          border-bottom: none;
-        }
-        
-        /* Next Steps */
-        .print-next-steps {
-          background: white;
-          border: 2px solid #e2e8f0;
-          border-radius: 12px;
-          padding: 1.5rem;
-          margin-bottom: 2rem;
-        }
-        
-        .print-next-steps-title {
-          font-size: 1.3rem;
-          font-weight: 700;
-          color: #1e293b;
-          margin-bottom: 1rem;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-        
-        .print-step-list {
-          counter-reset: step-counter;
-        }
-        
-        .print-step-item {
-          counter-increment: step-counter;
-          background: #f8fafc;
-          border: 1px solid #e2e8f0;
-          border-radius: 8px;
-          padding: 1rem;
-          margin-bottom: 0.75rem;
-          position: relative;
-        }
-        
-        .print-step-item::before {
-          content: counter(step-counter);
-          position: absolute;
-          left: 1rem;
-          top: 50%;
-          transform: translateY(-50%);
-          background: #1EAEDB;
-          color: white;
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: 700;
-          font-size: 0.8rem;
-        }
-        
-        .print-step-text {
-          margin-left: 2.5rem;
-          color: #374151;
-          font-size: 0.9rem;
-        }
-        
-        /* Professional Footer */
-        .print-footer {
-          background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-          color: white;
-          padding: 2rem;
-          margin-top: 3rem;
-          border-radius: 12px;
-          text-align: center;
-        }
-        
-        .print-footer-brand {
-          font-size: 1.5rem;
-          font-weight: 700;
-          margin-bottom: 0.5rem;
-          color: white;
-        }
-        
-        .print-footer-description {
-          font-size: 0.9rem;
-          opacity: 0.8;
-          margin-bottom: 1rem;
-          max-width: 500px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-        
-        .print-footer-contact {
-          display: flex;
-          justify-content: center;
-          gap: 2rem;
-          flex-wrap: wrap;
-          font-size: 0.8rem;
-          opacity: 0.7;
-        }
-        
-        .print-footer-contact-item {
-          display: flex;
-          align-items: center;
-          gap: 0.25rem;
-        }
-        
-        /* Page breaks */
-        .page-break-before {
-          page-break-before: always;
-        }
-        
-        .page-break-after {
-          page-break-after: always;
-        }
-        
-        .avoid-break {
-          page-break-inside: avoid;
-        }
-        
-        /* Hide interactive elements */
-        button, .btn, .button, .interactive-element {
-          display: none !important;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-    
-    window.print();
-    
-    // Remove print styles after printing
-    setTimeout(() => {
-      const printStyle = document.getElementById('print-styles');
-      if (printStyle) {
-        printStyle.remove();
-      }
-    }, 1000);
+    printResults();
   };
 
   if (isLoading) {
@@ -699,6 +230,27 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
   })();
 
   return (
+    <>
+              {/* Print Layout Container - Hidden but accessible for printing */}
+      <div 
+        ref={pdfContainerRef} 
+        className="absolute -left-[9999px] top-0 w-[800px] opacity-0 pointer-events-none"
+        style={{ visibility: 'hidden' }}
+      >
+        <PDFLayout
+          assessment={assessment}
+          results={results}
+          overallScore={overallScore}
+          recommendation={recommendation}
+          getSectionPercentage={getSectionPercentage}
+          badgeVariantForScore={badgeVariantForScore}
+          formatSubsectionName={formatSubsectionName}
+          hasWiscarData={hasWiscarData}
+          wiscarOverall={wiscarOverall}
+        />
+      </div>
+
+      {/* Main Display */}
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 assessment-print-container">
       {/* Print Header - Hidden on screen, visible in print */}
       <div className="hidden print:block print-header">
@@ -1120,18 +672,26 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
           </Button>
           <Button 
             variant="outline"
-            onClick={() => {
-              // Generate PDF download
-              handlePrint();
-            }}
+            onClick={saveAsPDF}
+            disabled={isSavingPDF}
             className="flex items-center gap-2"
           >
-            <Download className="h-4 w-4" />
-            Download PDF
+            {isSavingPDF ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                Opening Print Dialog...
+              </>
+            ) : (
+              <>
+                <Download className="h-4 w-4" />
+                Save as PDF
+              </>
+            )}
           </Button>
         </div>
       </div>
     </div>
+    </>
   );
 };
 

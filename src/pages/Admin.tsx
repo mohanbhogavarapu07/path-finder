@@ -46,11 +46,14 @@ const Admin = () => {
   const navigate = useNavigate();
   
   // Dashboard type state
-  const [dashboardType, setDashboardType] = useState<'blog' | 'assessment'>('blog');
+  const [dashboardType, setDashboardType] = useState<'blog' | 'assessment'>(() => {
+    // Get the saved dashboard type from localStorage, default to 'blog'
+    return (localStorage.getItem('adminDashboardType') as 'blog' | 'assessment') || 'blog';
+  });
   
   // Blog states
   const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -84,9 +87,13 @@ const Admin = () => {
     if (token) {
       setIsAuthenticated(true);
       setShowAuthModal(false);
-      // Only fetch posts after authentication is confirmed
+      // Fetch data based on current dashboard type after authentication
       setTimeout(() => {
-        fetchPosts();
+        if (dashboardType === 'blog') {
+          fetchPosts();
+        } else {
+          fetchAssessments();
+        }
       }, 100);
     } else {
       // If no token, ensure we show the auth modal
@@ -95,7 +102,7 @@ const Admin = () => {
     }
   }, []);
 
-  // Add effect to refetch posts when filters change (only if authenticated)
+  // Add effect to refetch data when filters change (only if authenticated)
   useEffect(() => {
     if (isAuthenticated && !showAuthModal) {
       if (dashboardType === 'blog') {
@@ -104,7 +111,18 @@ const Admin = () => {
         fetchAssessments();
       }
     }
-  }, [currentPage, statusFilter, categoryFilter, assessmentCategoryFilter, dashboardType, isAuthenticated, showAuthModal]);
+  }, [currentPage, statusFilter, categoryFilter, assessmentCategoryFilter, isAuthenticated, showAuthModal]);
+
+  // Handle dashboard type changes
+  useEffect(() => {
+    if (isAuthenticated && !showAuthModal) {
+      if (dashboardType === 'blog') {
+        fetchPosts();
+      } else {
+        fetchAssessments();
+      }
+    }
+  }, [dashboardType]);
 
   // Request OTP
   const requestOTP = async () => {
@@ -535,19 +553,21 @@ const Admin = () => {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-blue-50">
+      <div className="min-h-screen bg-blue-50 flex flex-col">
         <Header />
-        <AuthModal />
+        <div className="flex-1 flex items-center justify-center">
+          <AuthModal />
+        </div>
         <Footer />
       </div>
     );
   }
 
-  if (loading) {
+  if (loading || assessmentLoading) {
     return (
-      <div className="min-h-screen bg-blue-50">
+      <div className="min-h-screen bg-blue-50 flex flex-col">
         <Header />
-        <div className="container mx-auto px-4 py-16">
+        <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
             <p className="mt-4 text-gray-600">Loading admin dashboard...</p>
@@ -560,9 +580,9 @@ const Admin = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-blue-50">
+      <div className="min-h-screen bg-blue-50 flex flex-col">
         <Header />
-        <div className="container mx-auto px-4 py-16">
+        <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <div className="text-red-500 text-xl mb-4">⚠️</div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Error Loading Dashboard</h2>
@@ -578,7 +598,7 @@ const Admin = () => {
   }
 
   return (
-    <div className="min-h-screen bg-blue-50">
+    <div className="min-h-screen bg-blue-50 flex flex-col">
       <Header />
       
       {/* Admin Header */}
@@ -592,27 +612,31 @@ const Admin = () => {
               </p>
             </div>
             <div className="flex gap-4">
-              {/* Dashboard Toggle */}
-              <div className="flex bg-gray-100 rounded-lg p-1">
-                <Button
-                  variant={dashboardType === 'blog' ? 'default' : 'ghost'}
-                  size="sm"
-                  onClick={() => setDashboardType('blog')}
-                  className="flex items-center gap-2"
-                >
-                  <FileText className="h-4 w-4" />
-                  Blog
-                </Button>
-                <Button
-                  variant={dashboardType === 'assessment' ? 'default' : 'ghost'}
-                  size="sm"
-                  onClick={() => setDashboardType('assessment')}
-                  className="flex items-center gap-2"
-                >
-                  <Target className="h-4 w-4" />
-                  Assessments
-                </Button>
-              </div>
+              {/* Dashboard Buttons */}
+              <Button
+                variant={dashboardType === 'blog' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => {
+                  setDashboardType('blog');
+                  localStorage.setItem('adminDashboardType', 'blog');
+                }}
+                className="flex items-center gap-2"
+              >
+                <FileText className="h-4 w-4" />
+                Blog
+              </Button>
+              <Button
+                variant={dashboardType === 'assessment' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => {
+                  setDashboardType('assessment');
+                  localStorage.setItem('adminDashboardType', 'assessment');
+                }}
+                className="flex items-center gap-2"
+              >
+                <Target className="h-4 w-4" />
+                Assessments
+              </Button>
               
               {dashboardType === 'blog' ? (
                 <Button 

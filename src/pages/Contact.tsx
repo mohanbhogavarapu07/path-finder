@@ -78,13 +78,13 @@ const Contact = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+              				<section className="py-16 bg-gradient-to-r from-[#285C52] to-[#4CAF50] text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               Get in Touch
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100">
+            <p className="text-xl md:text-2xl mb-8 text-white/90">
               Have questions about our assessments or need career guidance? We're here to help!
             </p>
           </div>
@@ -164,7 +164,7 @@ const Contact = () => {
                       
                       <Button 
                         type="submit" 
-                        className="w-full bg-blue-600 hover:bg-blue-700"
+                                                 className="w-full bg-[#4CAF50] hover:bg-[#43A047]"
                         disabled={loading}
                       >
                         {loading ? (
@@ -198,8 +198,8 @@ const Contact = () => {
                   <Card>
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
-                        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <Mail className="h-5 w-5 text-blue-600" />
+                                                                         <div className="w-10 h-10 bg-[#4CAF50]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                           <Mail className="h-5 w-5 text-[#4CAF50]" />
                         </div>
                         <div>
                           <h3 className="font-semibold text-gray-900 mb-1">Email Support</h3>

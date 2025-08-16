@@ -26,12 +26,14 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					DEFAULT: '#1D63FF',
+					dark: '#2563EB',
+					foreground: '#FFFFFF'
 				},
 				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
+					DEFAULT: '#28C76F',
+					dark: '#22C55E',
+					foreground: '#FFFFFF'
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
@@ -42,8 +44,9 @@ export default {
 					foreground: 'hsl(var(--muted-foreground))'
 				},
 				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
+					DEFAULT: '#FFCE32',
+					dark: '#FEE440',
+					foreground: '#FFFFFF'
 				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
@@ -63,18 +66,37 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Thinkera custom colors
-				'thinkera-purple': {
-					light: '#A57CFF',
-					DEFAULT: '#8E44FF',
-					dark: '#6F2BFF'
+				// FactorBeam Color Palette
+				factorbeam: {
+					bg: '#FFFFFF',
+					'bg-alt': '#F5F6FA',
+					primary: '#1D63FF',
+					'primary-alt': '#2563EB',
+					green: '#28C76F',
+					'green-alt': '#22C55E',
+					yellow: '#FFCE32',
+					'yellow-alt': '#FEE440',
+					heading: '#18213A',
+					'heading-alt': '#232B35',
+					text: '#44494D',
+					'text-alt': '#3C4251'
 				},
-				'thinkera-blue': {
-					light: '#33D6C6',
-					DEFAULT: '#00BFA6',
-					dark: '#009E8A'
+				// Legacy compatibility
+				'pathfinder-green': {
+					light: '#28C76F',
+					DEFAULT: '#1D63FF',
+					dark: '#2563EB'
 				},
-				'thinkera-dark': '#2E2E2E'
+				'pathfinder-yellow': {
+					light: '#FFCE32',
+					DEFAULT: '#28C76F',
+					dark: '#22C55E'
+				},
+				'pathfinder-gray': {
+					light: '#F5F6FA',
+					DEFAULT: '#44494D',
+					dark: '#18213A'
+				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -107,11 +129,11 @@ export default {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out'
 			},
-				backgroundImage: {
-					'gradient-hero': 'linear-gradient(to right, #8E44FF, #00BFA6)',
-					'gradient-card': 'linear-gradient(135deg, #00BFA6 0%, #8E44FF 100%)',
-					'gradient-cta': 'linear-gradient(90deg, #8E44FF 0%, #00BFA6 100%)'
-				}
+			backgroundImage: {
+				'gradient-hero': 'linear-gradient(to right, #1D63FF, #28C76F)',
+				'gradient-card': 'linear-gradient(135deg, #1D63FF 0%, #28C76F 100%)',
+				'gradient-cta': 'linear-gradient(90deg, #1D63FF 0%, #28C76F 100%)'
+			}
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

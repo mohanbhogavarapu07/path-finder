@@ -68,7 +68,7 @@ const DynamicAssessment = () => {
       <AssessmentLayout>
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
+                         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#4CAF50] mx-auto"></div>
             <p className="mt-4 text-lg text-gray-600">Loading assessment...</p>
           </div>
         </div>
@@ -84,7 +84,7 @@ const DynamicAssessment = () => {
             <p className="text-lg text-gray-600">Assessment not found</p>
             <button
               onClick={() => navigate('/assessments')}
-              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              className="mt-4 px-4 py-2 bg-[#4CAF50] text-white rounded-lg hover:bg-[#43A047]"
             >
               Back to Assessments
             </button>
@@ -99,22 +99,22 @@ const DynamicAssessment = () => {
 
   // Define sections based on dynamic data
   const sectionConfig = [
-    { id: 'intro', title: 'Introduction', icon: BookOpen, color: 'bg-blue-500' },
+    { id: 'intro', title: 'Introduction', icon: BookOpen, color: 'bg-[#4CAF50]' },
     ...(sections.length > 0 ? sections.map((section, index) => ({
       id: section.type,
       title: section.title,
       icon: section.type === 'psychometric' ? Brain : 
             section.type === 'technical' ? Code : 
             section.type === 'wiscar' ? Target : BookOpen,
-      color: section.type === 'psychometric' ? 'bg-purple-500' :
-             section.type === 'technical' ? 'bg-green-500' :
-             section.type === 'wiscar' ? 'bg-orange-500' : 'bg-blue-500'
+      color: section.type === 'psychometric' ? 'bg-[#4CAF50]' :
+             section.type === 'technical' ? 'bg-[#4CAF50]' :
+             section.type === 'wiscar' ? 'bg-[#4CAF50]' : 'bg-[#4CAF50]'
     })) : [
-      { id: 'psychometric', title: 'Psychological Fit', icon: Brain, color: 'bg-purple-500' },
-      { id: 'technical', title: 'Technical Aptitude', icon: Code, color: 'bg-green-500' },
-      { id: 'wiscar', title: 'WISCAR Analysis', icon: Target, color: 'bg-orange-500' }
+      { id: 'psychometric', title: 'Psychological Fit', icon: Brain, color: 'bg-[#4CAF50]' },
+      { id: 'technical', title: 'Technical Aptitude', icon: Code, color: 'bg-[#4CAF50]' },
+      { id: 'wiscar', title: 'WISCAR Analysis', icon: Target, color: 'bg-[#4CAF50]' }
     ]),
-    { id: 'results', title: 'Your Results', icon: TrendingUp, color: 'bg-red-500' }
+    { id: 'results', title: 'Your Results', icon: TrendingUp, color: 'bg-[#4CAF50]' }
   ];
 
   const getCurrentSectionIndex = () => {
@@ -193,7 +193,7 @@ const DynamicAssessment = () => {
           return (
             <div className="text-center py-8">
               <p className="text-gray-600">Psychometric section not available</p>
-              <button onClick={goToNextSection} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg">
+              <button onClick={goToNextSection} className="mt-4 px-4 py-2 bg-factorbeam-primary text-white rounded-lg">
                 Continue
               </button>
             </div>
@@ -214,7 +214,7 @@ const DynamicAssessment = () => {
           return (
             <div className="text-center py-8">
               <p className="text-gray-600">Technical section not available</p>
-              <button onClick={goToNextSection} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg">
+              <button onClick={goToNextSection} className="mt-4 px-4 py-2 bg-factorbeam-primary text-white rounded-lg">
                 Continue
               </button>
             </div>
@@ -235,7 +235,7 @@ const DynamicAssessment = () => {
           return (
             <div className="text-center py-8">
               <p className="text-gray-600">WISCAR section not available</p>
-              <button onClick={goToNextSection} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg">
+              <button onClick={goToNextSection} className="mt-4 px-4 py-2 bg-factorbeam-primary text-white rounded-lg">
                 Continue
               </button>
             </div>
@@ -277,7 +277,7 @@ const DynamicAssessment = () => {
             <p className="text-lg text-gray-600">Assessment data not available</p>
             <button
               onClick={() => navigate('/assessments')}
-              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              className="mt-4 px-4 py-2 bg-[#4CAF50] text-white rounded-lg hover:bg-[#43A047]"
             >
               Back to Assessments
             </button>
@@ -330,9 +330,9 @@ const DynamicAssessment = () => {
                   key={section.id}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg min-w-fit ${
                     isActive
-                      ? 'bg-blue-100 text-blue-700 border-2 border-blue-300'
+                      ? 'bg-[#4CAF50]/10 text-[#4CAF50] border-2 border-[#4CAF50]/30'
                       : isCompleted
-                      ? 'bg-green-100 text-green-700'
+                      ? 'bg-[#4CAF50]/10 text-[#4CAF50]'
                       : 'bg-gray-100 text-gray-500'
                   }`}
                 >

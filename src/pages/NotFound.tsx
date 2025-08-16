@@ -33,7 +33,7 @@ const NotFound = () => {
         <div className="text-center max-w-2xl mx-auto px-4">
           {/* Large 404 */}
           <div className="mb-8">
-            <h1 className="text-9xl font-bold text-thinkera-purple opacity-20">404</h1>
+            <h1 className="text-9xl font-bold text-factorbeam-yellow opacity-20">404</h1>
             <div className="-mt-8">
               <h2 className="text-4xl font-bold text-foreground mb-4">Page Not Found</h2>
               <p className="text-xl text-muted-foreground mb-8">
@@ -69,7 +69,7 @@ const NotFound = () => {
                 <Link
                   key={page.path}
                   to={page.path}
-                  className="block p-4 border border-border rounded-lg hover:border-thinkera-purple/30 hover:bg-thinkera-purple/5 transition-colors text-left"
+                  className="block p-4 border border-border rounded-lg hover:border-factorbeam-yellow/30 hover:bg-factorbeam-yellow/5 transition-colors text-left"
                 >
                                       <h4 className="font-semibold text-foreground mb-1">{page.name}</h4>
                     <p className="text-sm text-muted-foreground">{page.description}</p>
@@ -82,7 +82,7 @@ const NotFound = () => {
           <div className="mt-8 text-sm text-muted-foreground">
             <p>
               If you believe this is an error, please{' '}
-              <a href="mailto:support@pathfinder.com" className="text-thinkera-purple hover:underline">
+                              <a href="mailto:support@pathfinder.com" className="text-factorbeam-yellow hover:underline">
                 contact our support team
               </a>
               .

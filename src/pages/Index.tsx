@@ -67,7 +67,7 @@ const Index = () => {
                 <div className="text-4xl lg:text-6xl font-bold text-gray-900">
                   {/* <div>Your career in</div>
                   <div className="flex items-center gap-3">
-                    <span className="text-blue-600">50+</span>
+                                         <span className="text-[#4CAF50]">50+</span>
                     <span className="text-gray-900">free</span>
                   </div>
                   <div>assessments</div> */}
@@ -92,9 +92,9 @@ const Index = () => {
                 <input
                   type="text"
                   placeholder="Search assessments..."
-                  className="w-full h-14 pl-6 pr-14 text-lg border border-gray-200 rounded-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                                     className="w-full h-14 pl-6 pr-14 text-lg border border-gray-200 rounded-full shadow-sm focus:ring-2 focus:ring-[#4CAF50] focus:border-transparent outline-none"
                 />
-                <button className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                                                                     <button className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-[#4CAF50] text-white rounded-full flex items-center justify-center hover:bg-[#43A047] transition-colors">
                   <Search className="h-5 w-5" />
                 </button>
               </div>
@@ -108,25 +108,25 @@ const Index = () => {
         <div className="w-full">
           {isLoading ? (
             <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[hsl(var(--thinkera-blue))] mx-auto"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-factorbeam-primary mx-auto"></div>
               <p className="mt-4 text-muted-foreground">Loading categories...</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {categories.map((category, index) => (
                 <Link
                   key={index}
                   to={`/assessments?category=${category.name}`}
                   className="group"
                 >
-                  <div className="bg-white rounded-2xl border border-gray-100 hover:border-[hsl(var(--thinkera-blue))]/30 p-8 text-center transition-all duration-300 hover:shadow-md shadow-sm min-h-[200px] flex flex-col justify-center">
-                    <div className="flex justify-center mb-6">
-                      <div className="h-16 w-16 rounded-xl bg-[hsl(var(--thinkera-blue))]/10 text-[hsl(var(--thinkera-blue))] group-hover:bg-[hsl(var(--thinkera-blue))] group-hover:text-white transition-colors flex items-center justify-center">
-                        {category.icon}
-                      </div>
+                  <div className="bg-white rounded-xl border border-factorbeam-primary/20 hover:border-factorbeam-primary/40 p-6 transition-all duration-300 hover:shadow-lg flex items-center space-x-4 min-h-[120px]">
+                    <div className="h-16 w-16 rounded-xl bg-factorbeam-primary/10 text-factorbeam-primary group-hover:bg-factorbeam-primary group-hover:text-white transition-colors flex items-center justify-center flex-shrink-0">
+                      {category.icon}
                     </div>
-                    <h3 className="font-semibold text-foreground mb-2 text-lg">{category.name}</h3>
-                    <p className="text-sm text-muted-foreground">{category.count}</p>
+                    <div className="flex flex-col flex-1">
+                      <h3 className="font-bold text-lg text-factorbeam-primary leading-tight">{category.name}</h3>
+                      <p className="text-base text-factorbeam-text-alt leading-tight mt-1">{category.count}</p>
+                    </div>
                   </div>
                 </Link>
               ))}
@@ -149,19 +149,19 @@ const Index = () => {
           
           {isLoading ? (
             <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[hsl(var(--thinkera-blue))] mx-auto"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-factorbeam-primary mx-auto"></div>
               <p className="mt-4 text-muted-foreground">Loading assessments...</p>
             </div>
           ) : (
             <>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                 {featuredAssessments.map((assessment) => (
                   <AssessmentCard key={assessment.id} {...assessment} />
                 ))}
               </div>
               <div className="text-center">
                 <Link to="/assessments">
-                  <Button size="lg" className="bg-[hsl(var(--cta))] hover:bg-[hsl(var(--cta-hover))] text-white px-8 border-0 shadow-lg hover:shadow-xl transition-all">
+                  <Button size="lg" className="bg-factorbeam-primary hover:bg-factorbeam-primary-alt text-white px-8 border-0 shadow-lg hover:shadow-xl transition-all">
                     Explore All Assessments
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
@@ -185,9 +185,9 @@ const Index = () => {
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="group hover:shadow-xl transition-all duration-300 border-[hsl(var(--thinkera-blue))]/20 hover:border-[hsl(var(--thinkera-blue))]/40 bg-gradient-to-br from-white to-[hsl(var(--thinkera-blue))]/5">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-[hsl(var(--thinkera-blue))] rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Target className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">High School Students</CardTitle>
@@ -204,9 +204,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-[hsl(var(--thinkera-blue))]/20 hover:border-[hsl(var(--thinkera-blue))]/40 bg-gradient-to-br from-white to-[hsl(var(--thinkera-blue))]/5">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-[hsl(var(--thinkera-blue))] rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Lightbulb className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">College Students</CardTitle>
@@ -223,9 +223,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-[hsl(var(--thinkera-blue))]/20 hover:border-[hsl(var(--thinkera-blue))]/40 bg-gradient-to-br from-white to-[hsl(var(--thinkera-blue))]/5">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-[hsl(var(--thinkera-blue))] rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Brain className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">Graduates & Professionals</CardTitle>
@@ -242,9 +242,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-[hsl(var(--thinkera-blue))]/20 hover:border-[hsl(var(--thinkera-blue))]/40 bg-gradient-to-br from-white to-[hsl(var(--thinkera-blue))]/5">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-[hsl(var(--thinkera-blue))] rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Compass className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">Creative & Arts</CardTitle>
@@ -261,9 +261,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-[hsl(var(--thinkera-blue))]/20 hover:border-[hsl(var(--thinkera-blue))]/40 bg-gradient-to-br from-white to-[hsl(var(--thinkera-blue))]/5">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-[hsl(var(--thinkera-blue))] rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Users className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">Business & Commerce</CardTitle>
@@ -280,9 +280,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-[hsl(var(--thinkera-blue))]/20 hover:border-[hsl(var(--thinkera-blue))]/40 bg-gradient-to-br from-white to-[hsl(var(--thinkera-blue))]/5">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-[hsl(var(--thinkera-blue))] rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
                   <Award className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">International Opportunities</CardTitle>
@@ -310,7 +310,7 @@ const Index = () => {
             <p className="text-lg text-muted-foreground">Real feedback from students who found their path</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            <Card className="bg-gradient-to-br from-[hsl(var(--thinkera-blue))]/5 to-white border-[hsl(var(--thinkera-blue))]/20 hover:shadow-lg transition-all">
+            <Card className="bg-gradient-to-br from-primary/5 to-white border-primary/20 hover:shadow-lg transition-all">
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -327,7 +327,7 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-[hsl(var(--thinkera-blue))]/5 to-white border-[hsl(var(--thinkera-blue))]/20 hover:shadow-lg transition-all">
+            <Card className="bg-gradient-to-br from-primary/5 to-white border-primary/20 hover:shadow-lg transition-all">
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -344,7 +344,7 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-[hsl(var(--thinkera-blue))]/5 to-white border-[hsl(var(--thinkera-blue))]/20 hover:shadow-lg transition-all">
+            <Card className="bg-gradient-to-br from-primary/5 to-white border-primary/20 hover:shadow-lg transition-all">
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (

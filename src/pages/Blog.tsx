@@ -100,7 +100,7 @@ const Blog = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+              				<div className="min-h-screen bg-gradient-to-br from-[#285C52]/5 via-white to-[#4CAF50]/5">
         <Header />
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
@@ -168,7 +168,7 @@ const Blog = () => {
                   <Button
                     onClick={handleSearch}
                     size="sm"
-                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                                         className="bg-[#4CAF50] hover:bg-[#43A047] text-white"
                   >
                     Search
                   </Button>
@@ -352,7 +352,7 @@ const Blog = () => {
                         placeholder="Enter your email"
                         className="text-sm"
                       />
-                      <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" size="sm">
+                                              <Button className="w-full bg-[#4CAF50] hover:bg-[#43A047] text-white" size="sm">
                         Subscribe
                       </Button>
                     </div>

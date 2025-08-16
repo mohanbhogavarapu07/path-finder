@@ -4,83 +4,99 @@
 
 @layer base {
   :root {
-    /* Core palette per guidelines */
-    --background: 210 20% 98%; /* Soft Off-White (#F9FAFB) */
-    --foreground: 0 0% 18%;   /* Charcoal Gray (#2E2E2E) */
+    /* FactorBeam Color Palette */
+    --color-bg: #FFFFFF;         /* Main Background */
+    --color-bg-alt: #F5F6FA;     /* Alternate Background */
+    --color-primary: #1D63FF;    /* Primary Accent */
+    --color-primary-alt: #2563EB;/* Alternative Accent */
+    --color-green: #28C76F;      /* Secondary Accent */
+    --color-green-alt: #22C55E;  /* Alternative Green */
+    --color-yellow: #FFCE32;     /* Highlight/Action */
+    --color-yellow-alt: #FEE440; /* Alternative Highlight */
+    --color-heading: #18213A;    /* Heading Text */
+    --color-heading-alt: #232B35;/* Alternative Heading */
+    --color-text: #44494D;       /* Body Text */
+    --color-text-alt: #3C4251;   /* Alternative Body */
 
+    /* Tailwind CSS Variables for compatibility */
+    --background: 0 0% 100%; /* White (#FFFFFF) */
+    --foreground: 0 0% 27%; /* Dark Gray (#44494D) */
+    
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
+    --card-foreground: 0 0% 27%;
+    
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 27%;
 
-    --primary: 173 100% 37%; /* Digital Teal */
+    /* Primary: FactorBeam Blue (#1D63FF) */
+    --primary: 217 100% 56%; /* FactorBeam Blue */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 20% 96%;
-    --secondary-foreground: 0 0% 20%;
+    /* Secondary: FactorBeam Green (#28C76F) */
+    --secondary: 142 76% 56%; /* FactorBeam Green */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 20% 96%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 0 0% 96%; /* Light Gray (#F5F6FA) */
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 266 100% 63%; /* Electric Purple */
+    /* Accent: FactorBeam Yellow (#FFCE32) */
+    --accent: 45 100% 60%; /* FactorBeam Yellow */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 210 16% 90%;
-    --input: 210 16% 90%;
-    --ring: 173 100% 37%;
+    --border: 0 0% 96%; /* Light Gray */
+    --input: 0 0% 96%; /* Light Gray */
+    --ring: 217 100% 56%; /* FactorBeam Blue */
 
     --radius: 0.75rem;
 
-    /* Named helpers mapped to palette */
-    --thinkera-purple: 266 100% 63%; /* Electric Purple */
-    --thinkera-purple-light: 266 100% 75%;
-    --thinkera-purple-dark: 266 100% 50%;
-    --thinkera-blue: 173 100% 37%;   /* Digital Teal */
-    --thinkera-blue-light: 173 72% 52%;
-    --thinkera-blue-dark: 173 100% 28%;
-    --thinkera-dark: 0 0% 18%;       /* Charcoal Gray */
-    --gradient-hero: linear-gradient(to right, hsl(266 100% 63%), hsl(173 100% 37%));
-    --gradient-card: linear-gradient(135deg, hsl(173 100% 37%) 0%, hsl(266 100% 63%) 100%);
-    --gradient-cta: linear-gradient(90deg, hsl(266 100% 63%) 0%, hsl(173 100% 37%) 100%);
+    /* Hover states - alternative shades */
+    --primary-hover: 217 100% 50%; /* Alternative Blue (#2563EB) */
+    --secondary-hover: 142 76% 50%; /* Alternative Green (#22C55E) */
+    --accent-hover: 45 100% 55%; /* Alternative Yellow (#FEE440) */
 
-    /* CTAs and progress */
-    --cta: 0 100% 70%;            /* Coral Punch */
-    --cta-hover: 0 85% 60%;
-    --progress: 0 100% 70%;
+    /* Updated gradients - FactorBeam palette */
+    --gradient-hero: linear-gradient(to right, #1D63FF, #28C76F);
+    --gradient-card: linear-gradient(135deg, #1D63FF 0%, #28C76F 100%);
+    --gradient-cta: linear-gradient(90deg, #1D63FF 0%, #28C76F 100%);
+
+    /* CTAs and progress - using FactorBeam colors */
+    --cta: 142 76% 56%;            /* FactorBeam Green */
+    --cta-hover: 142 76% 50%;
+    --progress: 217 100% 56%;      /* FactorBeam Blue */
+    --progress-bg: 0 0% 96%;      /* Light Gray */
   }
 
   .dark {
-    --background: 0 0% 8%;
-    --foreground: 0 0% 100%;
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
 
-    --card: 0 0% 12%;
-    --card-foreground: 210 40% 98%;
+    --primary: 217 100% 56%; /* FactorBeam Blue */
+    --primary-foreground: 0 0% 100%;
 
-    --popover: 0 0% 12%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 173 72% 52%;
-    --primary-foreground: 0 0% 0%;
-
-    --secondary: 0 0% 14%;
+    --secondary: 142 76% 56%; /* FactorBeam Green */
     --secondary-foreground: 0 0% 100%;
 
     --muted: 0 0% 14%;
     --muted-foreground: 0 0% 70%;
 
-    --accent: 266 100% 63%;
-    --accent-foreground: 0 0% 0%;
+    --accent: 45 100% 60%; /* FactorBeam Yellow */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive-foreground: 0 0% 98%;
 
     --border: 0 0% 18%;
     --input: 0 0% 18%;
-    --ring: 173 72% 52%;
+    --ring: 217 100% 56%;
   }
 }
 
@@ -101,19 +117,56 @@
 }
 
 @layer utilities {
-  /* Global remaps to meet the new palette without touching every class usage */
-  .bg-blue-600 { background-color: #FF6B6B !important; }
-  .hover\:bg-blue-700:hover { background-color: #e65a5a !important; }
-  .bg-blue-600\/50 { background-color: rgba(255, 107, 107, 0.5) !important; }
-  .bg-blue-600\/10 { background-color: rgba(255, 107, 107, 0.1) !important; }
-  .border-blue-700 { border-color: #009E8A !important; }
-  .border-blue-700\/40 { border-color: rgba(0, 158, 138, 0.4) !important; }
-  .text-blue-100 { color: rgba(255,255,255,0.85) !important; }
-  .text-blue-600 { color: #00BFA6 !important; }
-  .bg-indigo-50 { background-color: #F9FAFB !important; }
-  .from-blue-50 { --tw-gradient-from: #F9FAFB var(--tw-gradient-from-position); --tw-gradient-to: rgb(249 250 251 / 0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
-  .to-indigo-50 { --tw-gradient-to: #F9FAFB var(--tw-gradient-to-position); }
+  /* FactorBeam Color Palette Utility Classes */
+  .bg-factorbeam-primary { background-color: var(--color-primary) !important; }
+  .bg-factorbeam-primary-alt { background-color: var(--color-primary-alt) !important; }
+  .bg-factorbeam-green { background-color: var(--color-green) !important; }
+  .bg-factorbeam-green-alt { background-color: var(--color-green-alt) !important; }
+  .bg-factorbeam-yellow { background-color: var(--color-yellow) !important; }
+  .bg-factorbeam-yellow-alt { background-color: var(--color-yellow-alt) !important; }
+  .bg-factorbeam-bg { background-color: var(--color-bg) !important; }
+  .bg-factorbeam-bg-alt { background-color: var(--color-bg-alt) !important; }
+  
+  .text-factorbeam-primary { color: var(--color-primary) !important; }
+  .text-factorbeam-primary-alt { color: var(--color-primary-alt) !important; }
+  .text-factorbeam-green { color: var(--color-green) !important; }
+  .text-factorbeam-green-alt { color: var(--color-green-alt) !important; }
+  .text-factorbeam-yellow { color: var(--color-yellow) !important; }
+  .text-factorbeam-yellow-alt { color: var(--color-yellow-alt) !important; }
+  .text-factorbeam-heading { color: var(--color-heading) !important; }
+  .text-factorbeam-heading-alt { color: var(--color-heading-alt) !important; }
+  .text-factorbeam-text { color: var(--color-text) !important; }
+  .text-factorbeam-text-alt { color: var(--color-text-alt) !important; }
+  
+  .border-factorbeam-primary { border-color: var(--color-primary) !important; }
+  .border-factorbeam-primary-alt { border-color: var(--color-primary-alt) !important; }
+  .border-factorbeam-green { border-color: var(--color-green) !important; }
+  .border-factorbeam-green-alt { border-color: var(--color-green-alt) !important; }
+  .border-factorbeam-yellow { border-color: var(--color-yellow) !important; }
+  .border-factorbeam-yellow-alt { border-color: var(--color-yellow-alt) !important; }
 
+  /* Hover states */
+  .hover\:bg-factorbeam-primary-alt:hover { background-color: var(--color-primary-alt) !important; }
+  .hover\:bg-factorbeam-green-alt:hover { background-color: var(--color-green-alt) !important; }
+  .hover\:bg-factorbeam-yellow-alt:hover { background-color: var(--color-yellow-alt) !important; }
+  .hover\:text-factorbeam-primary-alt:hover { color: var(--color-primary-alt) !important; }
+  .hover\:text-factorbeam-green-alt:hover { color: var(--color-green-alt) !important; }
+  .hover\:text-factorbeam-yellow-alt:hover { color: var(--color-yellow-alt) !important; }
+
+  /* Legacy compatibility - remap old classes to new colors */
+  .bg-blue-600 { background-color: var(--color-primary) !important; }
+  .hover\:bg-blue-700:hover { background-color: var(--color-primary-alt) !important; }
+  .bg-blue-600\/50 { background-color: rgba(29, 99, 255, 0.5) !important; }
+  .bg-blue-600\/10 { background-color: rgba(29, 99, 255, 0.1) !important; }
+  .border-blue-700 { border-color: var(--color-primary-alt) !important; }
+  .border-blue-700\/40 { border-color: rgba(37, 99, 235, 0.4) !important; }
+  .text-blue-100 { color: rgba(255,255,255,0.85) !important; }
+  .text-blue-600 { color: var(--color-primary) !important; }
+  .bg-indigo-50 { background-color: var(--color-bg-alt) !important; }
+  .from-blue-50 { --tw-gradient-from: var(--color-bg-alt) var(--tw-gradient-from-position); --tw-gradient-to: rgb(245 246 250 / 0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+  .to-indigo-50 { --tw-gradient-to: var(--color-bg-alt) var(--tw-gradient-to-position); }
+
+  /* Updated gradients */
   .bg-gradient-hero {
     background: var(--gradient-hero);
   }
@@ -123,26 +176,37 @@
   .bg-gradient-cta {
     background: var(--gradient-cta);
   }
-  .text-thinkera-purple {
-    color: hsl(var(--thinkera-purple));
+
+  /* FactorBeam specific utility classes */
+  .text-factorbeam-heading {
+    color: var(--color-heading);
   }
-  .text-thinkera-blue {
-    color: hsl(var(--thinkera-blue));
+  .text-factorbeam-text {
+    color: var(--color-text);
   }
-  .bg-thinkera-purple {
-    background-color: hsl(var(--thinkera-purple));
+  .bg-factorbeam-primary {
+    background-color: var(--color-primary);
   }
-  .bg-thinkera-blue {
-    background-color: hsl(var(--thinkera-blue));
+  .bg-factorbeam-green {
+    background-color: var(--color-green);
   }
-  .bg-thinkera-dark {
-    background-color: hsl(var(--thinkera-dark));
+  .bg-factorbeam-yellow {
+    background-color: var(--color-yellow);
   }
-  .border-thinkera-purple {
-    border-color: hsl(var(--thinkera-purple));
+  .bg-factorbeam-bg {
+    background-color: var(--color-bg);
   }
-  .border-thinkera-blue {
-    border-color: hsl(var(--thinkera-blue));
+  .bg-factorbeam-bg-alt {
+    background-color: var(--color-bg-alt);
+  }
+  .border-factorbeam-primary {
+    border-color: var(--color-primary);
+  }
+  .border-factorbeam-green {
+    border-color: var(--color-green);
+  }
+  .border-factorbeam-yellow {
+    border-color: var(--color-yellow);
   }
 }
 
@@ -191,7 +255,7 @@
   .print-logo {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #1EAEDB;
+    color: var(--color-primary);
     margin-bottom: 0.5rem;
     font-family: 'Poppins', sans-serif;
   }
@@ -225,7 +289,7 @@
   .print-score {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #1EAEDB;
+    color: var(--color-primary);
     display: block;
     margin-bottom: 0.5rem;
   }
@@ -240,7 +304,7 @@
   
   .print-progress-fill {
     height: 100%;
-    background: #1EAEDB;
+    background: var(--color-primary);
     border-radius: 6px;
   }
   
@@ -302,7 +366,7 @@
   }
   
   .print-recommendation {
-    border: 3px solid #1EAEDB;
+    border: 3px solid var(--color-primary);
     background: #f8fafc;
     padding: 1.5rem;
     border-radius: 12px;
@@ -378,7 +442,7 @@
     left: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    background: #1EAEDB;
+    background: var(--color-primary);
     color: white;
     width: 24px;
     height: 24px;

@@ -57,7 +57,7 @@ const Assessments = () => {
     'Cloud': 'bg-purple-100 text-purple-700',
     'Data': 'bg-orange-100 text-orange-700',
     'Technology': 'bg-indigo-100 text-indigo-700',
-    'Programming': 'bg-blue-100 text-blue-700',
+         'Programming': 'bg-[#4CAF50]/10 text-[#4CAF50]',
     'Management': 'bg-green-100 text-green-700',
     'Business': 'bg-yellow-100 text-yellow-700',
     'Medical': 'bg-red-100 text-red-700',
@@ -83,7 +83,7 @@ const Assessments = () => {
         <div className="pt-40 px-4">
           <div className="container mx-auto max-w-6xl">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[hsl(var(--thinkera-blue))] mx-auto"></div>
+              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-factorbeam-primary mx-auto"></div>
               <p className="mt-4 text-lg text-muted-foreground">Loading assessments...</p>
             </div>
           </div>
@@ -117,8 +117,8 @@ const Assessments = () => {
       <Header />
       
       {/* Hero Section */}
-      <div className="pt-40 px-4">
-        <div className="container mx-auto max-w-6xl">
+      <div className="pt-40 px-8 md:px-12 lg:px-16">
+        <div className="w-full">
           <div className="text-left mb-12">
             <h2 className="text-4xl font-bold mb-4 text-foreground">
               {selectedCategory ? `${selectedCategory} Assessments` : 'Choose Your Assessment'}
@@ -132,10 +132,12 @@ const Assessments = () => {
           </div>
         </div>
       </div>
+
+
       
       {/* Assessment Categories Section */}
-      <div className="px-4 pb-20">
-        <div className="container mx-auto max-w-6xl">
+      <div className="px-8 md:px-12 lg:px-16 pb-20">
+        <div className="w-full">
           {selectedCategory ? (
             // Show assessments for specific category
             <div className="space-y-8">
@@ -146,7 +148,7 @@ const Assessments = () => {
                 <h3 className="text-2xl font-bold text-foreground">{selectedCategory}</h3>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredAssessments.map((assessment) => (
                   <AssessmentCard key={assessment.id} {...assessment} />
                 ))}
@@ -176,21 +178,11 @@ const Assessments = () => {
                       <h3 className="text-2xl font-bold text-foreground">{category}</h3>
                     </div>
                     
-                    {/* Two Column Layout for Assessments */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
-                      {/* Left Column */}
-                      <div className="space-y-3">
-                        {categoryAssessments.slice(0, Math.ceil(categoryAssessments.length / 2)).map((assessment, index) => (
-                          <AssessmentCard key={assessment.id} {...assessment} />
-                        ))}
-                      </div>
-                      
-                      {/* Right Column */}
-                      <div className="space-y-3">
-                        {categoryAssessments.slice(Math.ceil(categoryAssessments.length / 2)).map((assessment, index) => (
-                          <AssessmentCard key={assessment.id} {...assessment} />
-                        ))}
-                      </div>
+                    {/* Assessment Cards Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {categoryAssessments.map((assessment, index) => (
+                        <AssessmentCard key={assessment.id} {...assessment} />
+                      ))}
                     </div>
                   </div>
                 );
@@ -201,31 +193,31 @@ const Assessments = () => {
       </div>
 
       {/* How It Works */}
-      <div className="px-4 py-16">
+      <div className="px-8 md:px-12 lg:px-16 py-16">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 text-foreground">How Our Assessments Work</h2>
           
           <div className="grid md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="bg-thinkera-blue text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
+                              <div className="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
               <h3 className="text-lg font-semibold mb-2 text-foreground">Choose Assessment</h3>
               <p className="text-muted-foreground text-sm">Select the career path you're interested in exploring</p>
             </div>
             
             <div className="text-center">
-              <div className="bg-thinkera-blue text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
+                              <div className="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
               <h3 className="text-lg font-semibold mb-2 text-foreground">Complete Evaluation</h3>
               <p className="text-muted-foreground text-sm">Answer questions about your skills, interests, and preferences</p>
             </div>
             
             <div className="text-center">
-              <div className="bg-thinkera-blue text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
+                              <div className="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
               <h3 className="text-lg font-semibold mb-2 text-foreground">Get Analysis</h3>
               <p className="text-muted-foreground text-sm">Receive detailed insights based on scientific assessment methods</p>
             </div>
             
             <div className="text-center">
-              <div className="bg-thinkera-blue text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">4</div>
+                              <div className="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">4</div>
               <h3 className="text-lg font-semibold mb-2 text-foreground">Plan Your Path</h3>
               <p className="text-muted-foreground text-sm">Use personalized recommendations to guide your career journey</p>
             </div>

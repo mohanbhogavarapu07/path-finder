@@ -74,7 +74,7 @@ const About = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative py-24 bg-blue-600 overflow-hidden">
+      <section className="relative py-24 bg-primary overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
         <div className="relative container mx-auto px-4">
           <div className="max-w-5xl mx-auto text-center text-white">
@@ -84,7 +84,7 @@ const About = () => {
             
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
               About
-              <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent"> PathFinder </span>
+              <span className="bg-gradient-to-r from-accent to-accent/80 bg-clip-text text-transparent"> PathFinder </span>
             </h1>
             
             <p className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed">
@@ -139,7 +139,7 @@ const About = () => {
       </section>
 
       {/* Achievements */}
-      <section className="bg-thinkera-blue/5 py-16">
+      <section className="bg-primary/5 py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12 text-foreground">Our Impact</h2>
           <div className="grid md:grid-cols-4 gap-8">
@@ -148,7 +148,7 @@ const About = () => {
               return (
                 <div key={index} className="text-center">
                   <div className="bg-white p-6 rounded-lg shadow-sm">
-                                    <Icon className="h-8 w-8 text-thinkera-blue mx-auto mb-4" />
+                                    <Icon className="h-8 w-8 text-primary mx-auto mb-4" />
                 <div className="text-3xl font-bold text-foreground mb-2">{achievement.number}</div>
                 <div className="text-muted-foreground">{achievement.label}</div>
                   </div>
@@ -224,8 +224,8 @@ const About = () => {
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center">
-                <div className="bg-thinkera-blue/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-thinkera-blue">1</span>
+                <div className="bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-primary">1</span>
                 </div>
                 <h3 className="text-xl font-semibold mb-3 text-foreground">Research & Development</h3>
                 <p className="text-muted-foreground">
@@ -258,7 +258,7 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-blue-600 text-white py-16">
+                             <section className="bg-[#4CAF50] text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Discover Your Path?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">

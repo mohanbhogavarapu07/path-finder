@@ -617,7 +617,7 @@ const Admin = () => {
               {dashboardType === 'blog' ? (
                 <Button 
                   onClick={() => navigate('/admin/new-post')}
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                                     className="bg-[#4CAF50] hover:bg-[#1E4A42] text-white"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   New Post
@@ -653,7 +653,7 @@ const Admin = () => {
               <>
                 <Card className="bg-white border border-gray-100 shadow-sm">
                   <CardContent className="p-6">
-                    <div className="text-3xl font-bold text-blue-600 mb-2">
+                    <div className="text-3xl font-bold text-[#4CAF50] mb-2">
                       {totalPosts}
                     </div>
                     <p className="text-gray-600">Total Posts</p>
@@ -688,7 +688,7 @@ const Admin = () => {
               <>
                 <Card className="bg-white border border-gray-100 shadow-sm">
                   <CardContent className="p-6">
-                    <div className="text-3xl font-bold text-blue-600 mb-2">
+                    <div className="text-3xl font-bold text-[#4CAF50] mb-2">
                       {assessments.length}
                     </div>
                     <p className="text-gray-600">Total Assessments</p>
@@ -745,7 +745,7 @@ const Admin = () => {
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4CAF50]"
                   >
                     <option value="all">All Status</option>
                     <option value="published">Published</option>
@@ -811,7 +811,7 @@ const Admin = () => {
                       <p className="text-gray-600 mb-4">
                         {searchTerm ? `No posts match "${searchTerm}"` : 'No posts in this category yet'}
                       </p>
-                      <Button onClick={() => navigate('/admin/new-post')} className="bg-blue-600 hover:bg-blue-700 text-white">
+                      <Button onClick={() => navigate('/admin/new-post')} className="bg-factorbeam-primary hover:bg-factorbeam-primary-alt text-white">
                         <Plus className="h-4 w-4 mr-2" />
                         Create Your First Post
                       </Button>

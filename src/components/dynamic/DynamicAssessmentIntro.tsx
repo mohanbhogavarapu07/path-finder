@@ -93,7 +93,7 @@ const DynamicAssessmentIntro: React.FC<DynamicAssessmentIntroProps> = ({
           <Button 
             onClick={onNext} 
             size="lg" 
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3"
+            className="bg-factorbeam-primary hover:bg-factorbeam-primary-alt text-white px-8 py-3"
           >
             Start Assessment
           </Button>
@@ -113,7 +113,7 @@ const DynamicAssessmentIntro: React.FC<DynamicAssessmentIntroProps> = ({
             {whatIsDescription || `${title} is a powerful and evolving path that combines practical skills, problem solving, and real-world application.`}
           </p>
           <div className="grid md:grid-cols-3 gap-4 mt-6">
-            <div className="bg-[hsl(var(--thinkera-blue))]/5 p-4 rounded-lg">
+                            <div className="bg-factorbeam-primary/5 p-4 rounded-lg">
               <h4 className="font-semibold text-blue-900 mb-2">Foundation</h4>
               <p className="text-sm text-blue-700">Solid fundamentals and core concepts</p>
             </div>

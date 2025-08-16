@@ -168,7 +168,7 @@ const BlogPost = () => {
             </Button>
             
             <div className="mb-6">
-              <Badge variant="secondary" className="bg-blue-100 text-blue-800 border-blue-200 mb-4">
+                                                             <Badge variant="secondary" className="bg-[#4CAF50]/10 text-[#4CAF50] border-[#4CAF50]/20 mb-4">
                 {post.category}
               </Badge>
               {post.featured && (
@@ -316,7 +316,7 @@ const BlogPost = () => {
                   aligns best with your interests, skills, and personality.
                 </p>
                 <Link to="/assessments">
-                  <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+                                     <Button size="lg" className="bg-[#4CAF50] hover:bg-[#43A047] text-white">
                     Start Your Assessment
                   </Button>
                 </Link>

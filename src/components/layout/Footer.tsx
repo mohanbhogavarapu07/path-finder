@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { Calculator, Mail, Phone, MapPin } from "lucide-react";
+import { useAssessmentCategories } from "@/hooks/useAssessments";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { categories } = useAssessmentCategories();
 
   const footerSections = [
     {
@@ -15,12 +17,12 @@ const Footer = () => {
       ],
     },
     {
-      title: "Popular Assessments",
+      title: "Assessments",
       links: [
-        { name: "Data Science", href: "/assessments" },
-        { name: "Full Stack Development", href: "/assessments" },
-        { name: "Cyber Security", href: "/assessments" },
-        { name: "Cloud Computing", href: "/assessments" },
+        ...categories.slice(0, 4).map(category => ({
+          name: category,
+          href: `/assessments?category=${category}`
+        }))
       ],
     },
     {
@@ -44,22 +46,22 @@ const Footer = () => {
   ];
 
      return (
-            <footer className="bg-primary/90 text-primary-foreground border-t border-primary/50 mt-auto">
+            <footer className="bg-gray-900 text-white border-t border-gray-700 mt-auto">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center space-x-2 mb-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent">
-                <Calculator className="h-5 w-5 text-accent-foreground" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-factorbeam-primary">
+                <Calculator className="h-5 w-5 text-white" />
               </div>
               <span className="text-xl font-bold text-white">PathFinder</span>
             </Link>
-            <p className="text-white/80 mb-4 max-w-sm">
+            <p className="text-gray-300 mb-4 max-w-sm">
               Discover your perfect career path with our comprehensive assessments. 
               Make informed decisions about your future with data-driven insights.
             </p>
-            <div className="space-y-2 text-sm text-white/80">
+            <div className="space-y-2 text-sm text-gray-300">
               <div className="flex items-center space-x-2">
                 <Mail className="h-4 w-4" />
                 <span>hello@pathfinder.com</span>
@@ -84,7 +86,7 @@ const Footer = () => {
                   <li key={link.name}>
                     <Link
                       to={link.href}
-                      className="text-sm text-white/80 hover:text-white transition-colors"
+                      className="text-sm text-gray-300 hover:text-factorbeam-primary transition-colors"
                     >
                       {link.name}
                     </Link>

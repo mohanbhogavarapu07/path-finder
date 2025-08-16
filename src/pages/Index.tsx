@@ -9,89 +9,42 @@ import Footer from "@/components/layout/Footer";
 import { Search, ArrowRight, BookOpen, Users, Award, TrendingUp, Brain, Code, Shield, Cloud, Palette, BarChart, Target, Lightbulb, Compass, Star, BarChart3, Briefcase, Cog, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useAssessments } from "@/hooks/useAssessments";
+import React from "react";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const { data: assessments, isLoading } = useAssessments();
 
-  const featuredAssessments = [
-    {
-      id: "aws",
-      title: "AWS Assessment",
-      description: "Assess your readiness and skills for Amazon Web Services cloud roles.",
-      duration: "10-15 mins",
-      participants: "5K+",
-      rating: 4.8,
-      category: "Cloud",
-      icon: <Cloud className="h-6 w-6" />,
-      tags: ["Cloud", "AWS", "DevOps"]
-    },
-    {
-      id: "data-science",
-      title: "Data Science Assessment",
-      description: "Assess your readiness for data science roles and projects.",
-      duration: "12-15 mins",
-      participants: "8K+",
-      rating: 4.8,
-      category: "Data",
-      icon: <BarChart className="h-6 w-6" />,
-      tags: ["Data Science", "Analytics", "ML"]
-    },
-    {
-      id: "cyber-security",
-      title: "Cyber Security Assessment",
-      description: "Evaluate your knowledge of cybersecurity principles and practices.",
-      duration: "12-15 mins",
-      participants: "6K+",
-      rating: 4.9,
-      category: "Technology",
-      icon: <Shield className="h-6 w-6" />,
-      tags: ["Cyber Security", "IT Security", "Technology"]
-    },
-    {
-      id: "full-stack-python",
-      title: "Full Stack Python Assessment",
-      description: "Evaluate your skills in full stack Python development.",
-      duration: "12-15 mins",
-      participants: "5K+",
-      rating: 4.7,
-      category: "Programming",
-      icon: <Code className="h-6 w-6" />,
-      tags: ["Python", "Full Stack", "Web Development"]
-    },
-    {
-      id: "ai-ml",
-      title: "AI/ML Assessment",
-      description: "Test your knowledge in artificial intelligence and machine learning.",
-      duration: "12-15 mins",
-      participants: "7K+",
-      rating: 4.9,
-      category: "Technology",
-      icon: <Brain className="h-6 w-6" />,
-      tags: ["AI", "ML", "Technology"]
-    },
-    {
-      id: "business-analyst",
-      title: "Business Analyst Assessment",
-      description: "Test your skills in business analysis and requirements gathering.",
-      duration: "10-15 mins",
-      participants: "5K+",
-      rating: 4.6,
-      category: "Business",
-      icon: <Briefcase className="h-6 w-6" />,
-      tags: ["Business Analysis", "Requirements", "Strategy"]
-    }
-  ];
+  // Get featured assessments from dynamic data
+  const featuredAssessments = assessments?.filter(assessment => assessment.isActive).slice(0, 6) || [];
 
-  const categories = [
-    { name: "Cloud", count: "7 assessments", icon: <Cloud className="h-6 w-6" /> },
-    { name: "Data", count: "3 assessments", icon: <BarChart3 className="h-6 w-6" /> },
-    { name: "Technology", count: "5 assessments", icon: <Code className="h-6 w-6" /> },
-    { name: "Programming", count: "8 assessments", icon: <Brain className="h-6 w-6" /> },
-    { name: "Management", count: "1 assessment", icon: <Users className="h-6 w-6" /> },
-    { name: "Business", count: "2 assessments", icon: <Briefcase className="h-6 w-6" /> },
-    { name: "Medical", count: "1 assessment", icon: <Heart className="h-6 w-6" /> },
-    { name: "Platform", count: "1 assessment", icon: <Cog className="h-6 w-6" /> }
-  ];
+  // Get categories dynamically from assessment data
+  const categories = React.useMemo(() => {
+    if (!assessments) return [];
+    
+    const categoryCounts = assessments.reduce((acc, assessment) => {
+      acc[assessment.category] = (acc[assessment.category] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    const categoryIcons = {
+      'Cloud': <Cloud className="h-6 w-6" />,
+      'Data': <BarChart3 className="h-6 w-6" />,
+      'Technology': <Code className="h-6 w-6" />,
+      'Programming': <Brain className="h-6 w-6" />,
+      'Management': <Users className="h-6 w-6" />,
+      'Business': <Briefcase className="h-6 w-6" />,
+      'Medical': <Heart className="h-6 w-6" />,
+      'Platform': <Cog className="h-6 w-6" />
+    };
+
+    return Object.entries(categoryCounts).map(([category, count]) => ({
+      name: category,
+      count: `${count} assessment${count > 1 ? 's' : ''}`,
+      icon: categoryIcons[category as keyof typeof categoryIcons] || <Code className="h-6 w-6" />
+    }));
+  }, [assessments]);
 
   const stats = [
     { label: "Free Assessments", value: "50+", icon: BookOpen },
@@ -114,7 +67,7 @@ const Index = () => {
                 <div className="text-4xl lg:text-6xl font-bold text-gray-900">
                   {/* <div>Your career in</div>
                   <div className="flex items-center gap-3">
-                    <span className="text-blue-600">50+</span>
+                                         <span className="text-[#4CAF50]">50+</span>
                     <span className="text-gray-900">free</span>
                   </div>
                   <div>assessments</div> */}
@@ -139,9 +92,9 @@ const Index = () => {
                 <input
                   type="text"
                   placeholder="Search assessments..."
-                  className="w-full h-14 pl-6 pr-14 text-lg border border-gray-200 rounded-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                                     className="w-full h-14 pl-6 pr-14 text-lg border border-gray-200 rounded-full shadow-sm focus:ring-2 focus:ring-[#4CAF50] focus:border-transparent outline-none"
                 />
-                <button className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                                                                     <button className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-[#4CAF50] text-white rounded-full flex items-center justify-center hover:bg-[#43A047] transition-colors">
                   <Search className="h-5 w-5" />
                 </button>
               </div>
@@ -153,25 +106,32 @@ const Index = () => {
       {/* Categories Grid */}
       <div className="py-8 px-4">
         <div className="w-full">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {categories.map((category, index) => (
-              <Link
-                key={index}
-                to="/assessments"
-                className="group"
-              >
-                <div className="bg-white rounded-2xl border border-gray-100 hover:border-primary/30 p-8 text-center transition-all duration-300 hover:shadow-md shadow-sm min-h-[200px] flex flex-col justify-center">
-                  <div className="flex justify-center mb-6">
-                    <div className="h-16 w-16 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors flex items-center justify-center">
+          {isLoading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-factorbeam-primary mx-auto"></div>
+              <p className="mt-4 text-muted-foreground">Loading categories...</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {categories.map((category, index) => (
+                <Link
+                  key={index}
+                  to={`/assessments?category=${category.name}`}
+                  className="group"
+                >
+                  <div className="bg-white rounded-xl border border-factorbeam-primary/20 hover:border-factorbeam-primary/40 p-6 transition-all duration-300 hover:shadow-lg flex items-center space-x-4 min-h-[120px]">
+                    <div className="h-16 w-16 rounded-xl bg-factorbeam-primary/10 text-factorbeam-primary group-hover:bg-factorbeam-primary group-hover:text-white transition-colors flex items-center justify-center flex-shrink-0">
                       {category.icon}
                     </div>
+                    <div className="flex flex-col flex-1">
+                      <h3 className="font-bold text-lg text-factorbeam-primary leading-tight">{category.name}</h3>
+                      <p className="text-base text-factorbeam-text-alt leading-tight mt-1">{category.count}</p>
+                    </div>
                   </div>
-                  <h3 className="font-semibold text-foreground mb-2 text-lg">{category.name}</h3>
-                  <p className="text-sm text-muted-foreground">{category.count}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -187,19 +147,28 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {featuredAssessments.map((assessment) => (
-              <AssessmentCard key={assessment.id} {...assessment} />
-            ))}
-          </div>
-          <div className="text-center">
-            <Link to="/assessments">
-                              <Button size="lg" variant="accent" className="px-8 border-0 shadow-lg hover:shadow-xl transition-all">
-                Explore All Assessments
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-          </div>
+          {isLoading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-factorbeam-primary mx-auto"></div>
+              <p className="mt-4 text-muted-foreground">Loading assessments...</p>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                {featuredAssessments.map((assessment) => (
+                  <AssessmentCard key={assessment.id} {...assessment} />
+                ))}
+              </div>
+              <div className="text-center">
+                <Link to="/assessments">
+                  <Button size="lg" className="bg-factorbeam-primary hover:bg-factorbeam-primary-alt text-white px-8 border-0 shadow-lg hover:shadow-xl transition-all">
+                    Explore All Assessments
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       </div>
           

@@ -61,7 +61,7 @@ interface Assessment {
   id: string;
   title: string;
   description: string;
-  category: 'Cloud' | 'Data' | 'Technology' | 'Programming' | 'Management' | 'Business' | 'Medical' | 'Platform';
+  category: 'Technology' | 'Business & Strategy' | 'Design & Experience' | 'Healthcare & Life Sciences' | 'Engineering & Manufacturing' | 'Security & Risk' | 'Data & Analytics' | 'Digital Marketing & Content' | 'Product & Innovation' | 'Cloud & Infrastructure' | 'Emerging Technologies' | 'Customer Success & Support' | 'Education & Training' | 'Green & Sustainability' | 'Legal, Compliance & Governance';
   duration: string;
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
   isActive: boolean;
@@ -213,7 +213,23 @@ const AdminAssessmentEditor = () => {
   const [jsonError, setJsonError] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<'psychometric' | 'technical' | 'wiscar'>('psychometric');
 
-  const categories = ['Cloud', 'Data', 'Technology', 'Programming', 'Management', 'Business', 'Medical', 'Platform'];
+  const categories = [
+  'Technology',
+  'Business & Strategy', 
+  'Design & Experience',
+  'Healthcare & Life Sciences',
+  'Engineering & Manufacturing',
+  'Security & Risk',
+  'Data & Analytics',
+  'Digital Marketing & Content',
+  'Product & Innovation',
+  'Cloud & Infrastructure',
+  'Emerging Technologies',
+  'Customer Success & Support',
+  'Education & Training',
+  'Green & Sustainability',
+  'Legal, Compliance & Governance'
+];
   const difficulties = ['Beginner', 'Intermediate', 'Advanced'];
 
   useEffect(() => {

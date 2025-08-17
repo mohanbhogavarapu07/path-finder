@@ -38,12 +38,30 @@ export interface BlogCategory {
   count: number;
 }
 
+// Assessment category types
+export type AssessmentCategory = 
+  | 'Technology'
+  | 'Business & Strategy'
+  | 'Design & Experience'
+  | 'Healthcare & Life Sciences'
+  | 'Engineering & Manufacturing'
+  | 'Security & Risk'
+  | 'Data & Analytics'
+  | 'Digital Marketing & Content'
+  | 'Product & Innovation'
+  | 'Cloud & Infrastructure'
+  | 'Emerging Technologies'
+  | 'Customer Success & Support'
+  | 'Education & Training'
+  | 'Green & Sustainability'
+  | 'Legal, Compliance & Governance';
+
 // Types for the dynamic assessment system
 export interface DynamicAssessment {
   id: string;
   title: string;
   description: string;
-  category: string;
+  category: AssessmentCategory;
   duration: string;
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
   isActive: boolean;

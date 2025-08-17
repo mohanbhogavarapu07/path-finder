@@ -797,12 +797,21 @@ const Admin = () => {
                   className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="all">All Categories</option>
-                  <option value="Programming">Programming</option>
-                  <option value="Design">Design</option>
-                  <option value="Business">Business</option>
                   <option value="Technology">Technology</option>
-                  <option value="Healthcare">Healthcare</option>
-                  <option value="Education">Education</option>
+                  <option value="Business & Strategy">Business & Strategy</option>
+                  <option value="Design & Experience">Design & Experience</option>
+                  <option value="Healthcare & Life Sciences">Healthcare & Life Sciences</option>
+                  <option value="Engineering & Manufacturing">Engineering & Manufacturing</option>
+                  <option value="Security & Risk">Security & Risk</option>
+                  <option value="Data & Analytics">Data & Analytics</option>
+                  <option value="Digital Marketing & Content">Digital Marketing & Content</option>
+                  <option value="Product & Innovation">Product & Innovation</option>
+                  <option value="Cloud & Infrastructure">Cloud & Infrastructure</option>
+                  <option value="Emerging Technologies">Emerging Technologies</option>
+                  <option value="Customer Success & Support">Customer Success & Support</option>
+                  <option value="Education & Training">Education & Training</option>
+                  <option value="Green & Sustainability">Green & Sustainability</option>
+                  <option value="Legal, Compliance & Governance">Legal, Compliance & Governance</option>
                 </select>
               )}
             </div>

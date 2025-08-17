@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Clock, Users, ArrowRight, Star, Bookmark, Share2 } from "lucide-react";
+import { Clock, ArrowRight, Bookmark, Share2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { DynamicAssessment } from "@/lib/api";
@@ -11,9 +11,6 @@ interface AssessmentCardProps extends Partial<DynamicAssessment> {
   title: string;
   description: string;
   duration: string;
-  participants?: string;
-  rating?: number;
-  reviewCount?: number;
   icon?: React.ReactNode;
   category?: string;
   className?: string;
@@ -24,7 +21,6 @@ interface AssessmentCardProps extends Partial<DynamicAssessment> {
   metadata?: {
     icon: string;
     gradient: string;
-    userCount: string;
     tags: string[];
   };
 }
@@ -34,9 +30,6 @@ export function AssessmentCard({
   title,
   description,
   duration,
-  participants,
-  rating = 4.6,
-  reviewCount = 1234,
   icon,
   category = "Technology",
   className,
@@ -48,7 +41,6 @@ export function AssessmentCard({
   ...assessment
 }: AssessmentCardProps) {
   // Use metadata if available, otherwise fall back to props
-  const userCount = metadata?.userCount || participants || "1K+";
   const assessmentTags = metadata?.tags || tags;
 
   const getDifficultyColor = (diff: string) => {
@@ -100,21 +92,13 @@ export function AssessmentCard({
             <Clock className="h-4 w-4" />
             <span>{duration}</span>
           </div>
-          <div className="flex items-center gap-1">
-            <Users className="h-4 w-4" />
-            <span>{userCount}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Star className="h-4 w-4 text-factorbeam-yellow fill-current" />
-            <span>{rating} ({reviewCount})</span>
-          </div>
-        </div>
-        
-        {/* Tags/Badges */}
-        <div className="flex flex-wrap gap-2 mb-6">
           <Badge className={`text-xs px-2 py-1 ${getDifficultyColor(difficulty)}`}>
             {difficulty}
           </Badge>
+        </div>
+        
+        {/* Tags/Badges */}
+        <div className="flex flex-wrap gap-2 mb-4">
           {assessmentTags.slice(0, 2).map((tag, index) => (
             <Badge key={index} variant="outline" className="text-xs border-gray-200 text-factorbeam-text-alt">
               {tag}

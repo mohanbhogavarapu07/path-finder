@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from "react-router-dom";
-import { ArrowRight, Clock, Users, Star, Bookmark, Share2 } from "lucide-react";
+import { ArrowRight, Clock, Bookmark, Share2 } from "lucide-react";
 import { DynamicAssessment } from '@/lib/api';
 import { Badge } from "@/components/ui/badge";
 
@@ -10,9 +10,6 @@ export interface AssessmentCardProps extends Partial<DynamicAssessment> {
   title: string;
   description?: string;
   duration?: string;
-  participants?: string;
-  rating?: number;
-  reviewCount?: number;
   category?: string;
   difficulty?: 'Beginner' | 'Intermediate' | 'Advanced';
   tags?: string[];
@@ -25,9 +22,6 @@ const AssessmentCard: React.FC<AssessmentCardProps> = ({
   title,
   description = "Discover if this assessment aligns with your learning style and career goals",
   duration = "15-20 mins",
-  participants = "1K+",
-  rating = 4.6,
-  reviewCount = 1234,
   category = "Technology",
   difficulty = "Beginner",
   tags = ["#assessment", "#career"],
@@ -77,21 +71,13 @@ const AssessmentCard: React.FC<AssessmentCardProps> = ({
           <Clock className="h-4 w-4" />
           <span>{duration}</span>
         </div>
-        <div className="flex items-center gap-1">
-          <Users className="h-4 w-4" />
-          <span>{participants}</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <Star className="h-4 w-4 text-factorbeam-yellow fill-current" />
-          <span>{rating} ({reviewCount})</span>
-        </div>
-      </div>
-      
-      {/* Tags */}
-      <div className="flex flex-wrap gap-2 mb-6">
         <Badge className={`text-xs px-2 py-1 ${getDifficultyColor(difficulty)}`}>
           {difficulty}
         </Badge>
+      </div>
+      
+      {/* Tags */}
+      <div className="flex flex-wrap gap-2 mb-4">
         {tags.slice(0, 2).map((tag, index) => (
           <Badge key={index} variant="outline" className="text-xs border-gray-200 text-factorbeam-text-alt">
             {tag}

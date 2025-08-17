@@ -116,7 +116,7 @@ const Index = () => {
               {categories.map((category, index) => (
                 <Link
                   key={index}
-                  to={`/assessments?category=${category.name}`}
+                  to={`/assessments?category=${encodeURIComponent(category.name)}`}
                   className="group"
                 >
                   <div className="bg-white rounded-xl border border-factorbeam-primary/20 hover:border-factorbeam-primary/40 p-6 transition-all duration-300 hover:shadow-lg flex items-center space-x-4 min-h-[120px]">

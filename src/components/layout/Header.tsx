@@ -27,7 +27,7 @@ const Header = () => {
     { name: "View All", href: "/assessments" },
     ...categories.map(category => ({
       name: category,
-      href: `/assessments?category=${category}`
+      href: `/assessments?category=${encodeURIComponent(category)}`
     }))
   ];
 
@@ -236,7 +236,7 @@ const Header = () => {
                      onClick={() => handleCategoryClick(category.href)}
                      className={`text-base font-medium whitespace-nowrap transition-colors hover:text-factorbeam-primary px-2 py-1 cursor-pointer ${
                         (category.name === "View All" && location.pathname === "/assessments" && !location.search.includes("category=")) ||
-                        (category.name !== "View All" && location.search.includes(`category=${category.name}`))
+                        (category.name !== "View All" && location.search.includes(`category=${encodeURIComponent(category.name)}`))
                           ? "text-factorbeam-primary border-b-2 border-factorbeam-primary"
                           : "text-gray-600"
                      }`}

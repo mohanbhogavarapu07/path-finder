@@ -1,9 +1,9 @@
 
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
 import { ArrowRight, Clock, Bookmark, Share2 } from "lucide-react";
 import { DynamicAssessment } from '@/lib/api';
 import { Badge } from "@/components/ui/badge";
+import AssessmentStartDialog from './AssessmentStartDialog';
 
 export interface AssessmentCardProps extends Partial<DynamicAssessment> {
   id: string;
@@ -29,6 +29,7 @@ const AssessmentCard: React.FC<AssessmentCardProps> = ({
   isActive = true,
   ...assessment
 }) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const getDifficultyColor = (diff: string) => {
     switch (diff) {
       case 'Beginner': return 'bg-factorbeam-green text-white';
@@ -91,21 +92,27 @@ const AssessmentCard: React.FC<AssessmentCardProps> = ({
       {/* Button */}
       <div className="mt-auto">
         {!comingSoon && isActive ? (
-          <Link
-            to={`/assessments/${id}`}
-            className="block w-full"
+          <button 
+            onClick={() => setIsDialogOpen(true)}
+            className="w-full bg-factorbeam-primary hover:bg-factorbeam-primary-alt text-white font-semibold py-3 px-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center gap-2"
           >
-            <button className="w-full bg-factorbeam-primary hover:bg-factorbeam-primary-alt text-white font-semibold py-3 px-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center gap-2">
-              Start Assessment
-              <ArrowRight className="h-4 w-4" />
-            </button>
-          </Link>
+            Start Assessment
+            <ArrowRight className="h-4 w-4" />
+          </button>
         ) : (
           <button className="w-full bg-gray-400 text-white font-semibold py-3 px-4 rounded-lg shadow-sm cursor-not-allowed">
             {!isActive ? 'Inactive' : 'Coming Soon'}
           </button>
         )}
       </div>
+      
+      {/* Assessment Start Dialog */}
+      <AssessmentStartDialog
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        assessmentId={id}
+        assessmentTitle={title}
+      />
     </div>
   );
 };

@@ -49,34 +49,61 @@
 .pdf-logo-section {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1.5rem;
+  height: 100%;
 }
 
 .pdf-logo-icon {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 4rem;
+  height: 4rem;
+  flex-shrink: 0;
+}
+
+.pdf-logo-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  width: 100%;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 .pdf-logo-title {
-  font-size: 2rem;
+  font-size: 2.4rem;
   font-weight: 800;
   margin: 0;
+  padding: 0;
   color: white;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  line-height: 1.1;
+  text-align: left;
+  width: 100%;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 .pdf-logo-subtitle {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   opacity: 0.9;
-  margin: 0;
+  margin: 0.5rem 0 0 0;
+  padding: 0;
   color: white;
   font-weight: 500;
+  line-height: 1.2;
+  text-align: left;
+  width: 100%;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 .pdf-header-info {

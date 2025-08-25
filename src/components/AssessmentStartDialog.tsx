@@ -72,9 +72,42 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
       // Store user data in localStorage or sessionStorage
       localStorage.setItem('assessmentUserData', JSON.stringify(formData));
       
+      // Map sample assessment IDs to actual assessment routes
+      const assessmentRouteMap: Record<string, string> = {
+        '1': 'AWS', // Personality Assessment -> AWS
+        '2': 'ReactJS', // Emotional Intelligence -> ReactJS
+        '3': 'ScrumMaster', // Leadership Style -> ScrumMaster
+        '4': 'DataScience', // Learning Style -> DataScience
+        '5': 'CyberSecurity', // Stress and Burnout -> CyberSecurity
+        '6': 'DevOps', // Career Aptitude -> DevOps
+        '7': 'bussinessanalyst', // Team Dynamics -> Business Analyst
+        '8': 'MedicalCoding', // Nutrition and Lifestyle -> Medical Coding
+        '9': 'DigitalMarketing', // Creative Problem Solving -> Digital Marketing
+        '10': 'Flutter', // Communication Skills -> Flutter
+        '11': 'PowerBI', // Time Management -> PowerBI
+        '12': 'Servicenow', // Conflict Resolution -> ServiceNow
+        '13': 'Blockchain', // Decision Making -> Blockchain
+        '14': 'MultiCloudEngineer', // Adaptability -> MultiCloud Engineer
+        '15': 'GenAI', // Innovation Mindset -> GenAI
+        '16': 'FullStackJAVA', // Entrepreneurship Readiness -> FullStack Java
+        '17': 'Microsoft365', // Sales Aptitude -> Microsoft 365
+        '18': 'OracleCloud', // Customer Service -> Oracle Cloud
+        '19': 'MERNStack', // Project Management -> MERN Stack
+        '20': 'PythonwithDataAnalytics', // Data Analysis -> Python with Data Analytics
+        '21': 'AIML', // Design Thinking -> AI/ML
+        '22': 'FullStackDotNet', // Writing Skills -> FullStack .NET
+        '23': 'GoogleCloudPlatform', // Language Learning -> Google Cloud Platform
+        '24': 'EthicalHacking', // Music Aptitude -> Ethical Hacking
+        '25': 'snowflake', // Artistic Abilities -> Snowflake
+        '26': 'fullstackpython' // Sports Performance -> FullStack Python
+      };
+      
+      // Use mapped route if available, otherwise use the original ID
+      const routeId = assessmentRouteMap[assessmentId] || assessmentId;
+      
       // Close dialog and navigate to assessment
       onClose();
-      navigate(`/assessments/${assessmentId}`);
+      navigate(`/assessments/${routeId}`);
     }
   };
 

@@ -1,5 +1,10 @@
 // API base URL - should match your backend URL
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://pf-backend-6p4g.onrender.com/api';
+console.log('🔧 API Base URL:', API_BASE_URL);
+console.log('🔧 Environment variables:', {
+  VITE_API_URL: import.meta.env.VITE_API_URL,
+  VITE_API_BASE_URL: import.meta.env.VITE_API_BASE_URL,
+});
 
 // Types for the blog system
 export interface BlogPost {
@@ -199,6 +204,7 @@ class AssessmentAPI {
     options: RequestInit = {}
   ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
+    console.log('🌐 Making API request to:', url);
     
     const config: RequestInit = {
       headers: {
@@ -210,21 +216,35 @@ class AssessmentAPI {
 
     try {
       const response = await fetch(url, config);
+      console.log('📡 Response status:', response.status, response.statusText);
       
       if (!response.ok) {
+        console.error('❌ HTTP error:', response.status, response.statusText);
+        const errorText = await response.text();
+        console.error('❌ Error response body:', errorText);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.json();
+      const data = await response.json();
+      console.log('📦 Response data:', data);
+      return data;
     } catch (error) {
-      console.error('API request failed:', error);
+      console.error('❌ API request failed:', error);
       throw error;
     }
   }
 
   // Get all assessments
   async getAllAssessments(): Promise<DynamicAssessment[]> {
-    return this.request<DynamicAssessment[]>('/assessments');
+    console.log('🔍 Fetching assessments from:', `${this.baseURL}/assessments`);
+    try {
+      const result = await this.request<DynamicAssessment[]>('/assessments');
+      console.log('✅ Assessments fetched successfully:', result);
+      return result;
+    } catch (error) {
+      console.error('❌ Error fetching assessments:', error);
+      throw error;
+    }
   }
 
   // Get assessments by category

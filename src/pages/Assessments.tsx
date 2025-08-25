@@ -3,16 +3,20 @@ import React, { useEffect } from 'react';
 import { Brain, Code, Cloud, Smartphone, Shield, BarChart3, Palette, Briefcase, Award, Heart, Wrench, Cog, Monitor, TrendingUp, Users } from 'lucide-react';
 import AssessmentCard from '@/components/AssessmentCard';
 import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
+import Footer from '@/components/Footer';
 import { useAssessments, useAssessmentCategories } from '@/hooks/useAssessments';
 import { DynamicAssessment } from '@/lib/api';
 import { useSearchParams } from 'react-router-dom';
+import { sampleAssessments } from '@/data/assessments';
 
 const Assessments = () => {
-  const { data: assessments, isLoading, error } = useAssessments();
+  const { data: apiAssessments, isLoading, error } = useAssessments();
   const { categories } = useAssessmentCategories();
   const [searchParams] = useSearchParams();
   const selectedCategory = searchParams.get('category');
+
+  // Use API data if available, otherwise fallback to sample data
+  const assessments = apiAssessments && apiAssessments.length > 0 ? apiAssessments : sampleAssessments;
 
   // Simple scroll handling for initial page load with hash
   useEffect(() => {
@@ -93,7 +97,7 @@ const Assessments = () => {
     );
   }
 
-  if (error) {
+  if (error && (!assessments || assessments.length === 0)) {
     return (
       <div className="min-h-screen bg-background">
         <Header />
@@ -137,6 +141,13 @@ const Assessments = () => {
       
       {/* Assessment Categories Section */}
       <div className="px-8 md:px-12 lg:px-16 pb-20">
+        {error && (
+          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <p className="text-yellow-800 text-sm">
+              ⚠️ Using sample data. Some features may be limited.
+            </p>
+          </div>
+        )}
         <div className="w-full">
           {selectedCategory ? (
             // Show assessments for specific category

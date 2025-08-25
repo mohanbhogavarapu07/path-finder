@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
+import Footer from '@/components/Footer';
 import { getBlogPosts, getBlogCategories, searchBlogPosts, getBlogPostsByCategory, BlogPost, BlogPostList } from '@/lib/api';
 import { format } from 'date-fns';
 

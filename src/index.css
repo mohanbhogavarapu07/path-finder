@@ -4,69 +4,114 @@
 
 @layer base {
   :root {
-    /* FactorBeam Color Palette */
-    --color-bg: #FFFFFF;         /* Main Background */
-    --color-bg-alt: #F5F6FA;     /* Alternate Background */
-    --color-primary: #1D63FF;    /* Primary Accent */
-    --color-primary-alt: #2563EB;/* Alternative Accent */
-    --color-green: #28C76F;      /* Secondary Accent */
-    --color-green-alt: #22C55E;  /* Alternative Green */
-    --color-yellow: #FFCE32;     /* Highlight/Action */
-    --color-yellow-alt: #FEE440; /* Alternative Highlight */
-    --color-heading: #18213A;    /* Heading Text */
-    --color-heading-alt: #232B35;/* Alternative Heading */
-    --color-text: #44494D;       /* Body Text */
-    --color-text-alt: #3C4251;   /* Alternative Body */
+    /* Premium Assessment Platform Design System - FactorBeam Branded
+       Sophisticated color palette optimized for trust, clarity, and engagement.
+       All colors MUST be HSL for consistency and accessibility.
+    */
 
-    /* Tailwind CSS Variables for compatibility */
-    --background: 0 0% 100%; /* White (#FFFFFF) */
-    --foreground: 0 0% 27%; /* Dark Gray (#44494D) */
-    
+    /* Core Brand Colors - FactorBeam Assessment Platform */
+    --background: 0 0% 99%;
+    --background-soft: 210 25% 98%;
+    --foreground: 215 25% 27%;
+    --foreground-soft: 215 15% 45%;
+
+    /* Cards & Surfaces */
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 27%;
+    --card-foreground: 215 25% 27%;
+    --card-hover: 210 15% 97%;
     
+    /* Popover & Overlays */
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 27%;
+    --popover-foreground: 215 25% 27%;
 
-    /* Primary: FactorBeam Blue (#1D63FF) */
-    --primary: 217 100% 56%; /* FactorBeam Blue */
+    /* Primary Brand - FactorBeam Blue (Trust & Professional) */
+    --primary: 217 100% 56%; /* FactorBeam Blue #1D63FF */
+    --primary-hover: 217 100% 50%; /* #2563EB */
+    --primary-soft: 217 100% 96%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary: FactorBeam Green (#28C76F) */
-    --secondary: 142 76% 56%; /* FactorBeam Green */
+    /* Secondary - FactorBeam Green (Positive Growth) */
+    --secondary: 142 76% 56%; /* FactorBeam Green #28C76F */
+    --secondary-hover: 142 76% 50%; /* #22C55E */
+    --secondary-soft: 142 76% 96%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 96%; /* Light Gray (#F5F6FA) */
-    --muted-foreground: 0 0% 45%;
+    /* Highlight - FactorBeam Yellow (Warm Attention) */
+    --highlight: 45 100% 60%; /* FactorBeam Yellow #FFCE32 */
+    --highlight-hover: 45 100% 55%; /* #FEE440 */
+    --highlight-soft: 45 100% 96%;
+    --highlight-foreground: 0 0% 100%;
 
-    /* Accent: FactorBeam Yellow (#FFCE32) */
-    --accent: 45 100% 60%; /* FactorBeam Yellow */
-    --accent-foreground: 0 0% 100%;
+    /* Neutral System */
+    --muted: 210 15% 96%;
+    --muted-hover: 210 15% 92%;
+    --muted-foreground: 215 15% 45%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --accent: 210 15% 96%;
+    --accent-foreground: 215 25% 27%;
 
-    --border: 0 0% 96%; /* Light Gray */
-    --input: 0 0% 96%; /* Light Gray */
+    /* Status Colors */
+    --success: 142 76% 56%; /* FactorBeam Green */
+    --success-foreground: 0 0% 100%;
+    --warning: 45 100% 60%; /* FactorBeam Yellow */
+    --warning-foreground: 215 25% 27%;
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Interactive Elements */
+    --border: 210 15% 88%;
+    --border-hover: 210 15% 80%;
+    --input: 210 15% 96%;
+    --input-border: 210 15% 88%;
     --ring: 217 100% 56%; /* FactorBeam Blue */
 
+    /* Typography Hierarchy */
+    --heading: 215 35% 20%;
+    --heading-soft: 215 25% 35%;
+
+    /* Radius System */
     --radius: 0.75rem;
+    --radius-sm: 0.5rem;
+    --radius-lg: 1rem;
 
-    /* Hover states - alternative shades */
-    --primary-hover: 217 100% 50%; /* Alternative Blue (#2563EB) */
-    --secondary-hover: 142 76% 50%; /* Alternative Green (#22C55E) */
-    --accent-hover: 45 100% 55%; /* Alternative Yellow (#FEE440) */
+    /* Shadows & Depth */
+    --shadow-sm: 0 1px 2px 0 hsl(215 25% 27% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(215 25% 27% / 0.1), 0 2px 4px -1px hsl(215 25% 27% / 0.06);
+    --shadow-lg: 0 10px 15px -3px hsl(215 25% 27% / 0.1), 0 4px 6px -2px hsl(215 25% 27% / 0.05);
+    --shadow-xl: 0 20px 25px -5px hsl(215 25% 27% / 0.1), 0 10px 10px -5px hsl(215 25% 27% / 0.04);
 
-    /* Updated gradients - FactorBeam palette */
-    --gradient-hero: linear-gradient(to right, #1D63FF, #28C76F);
-    --gradient-card: linear-gradient(135deg, #1D63FF 0%, #28C76F 100%);
-    --gradient-cta: linear-gradient(90deg, #1D63FF 0%, #28C76F 100%);
+    /* Gradients - FactorBeam Branded */
+    --gradient-primary: linear-gradient(135deg, hsl(217 100% 56%), hsl(217 100% 66%));
+    --gradient-secondary: linear-gradient(135deg, hsl(142 76% 56%), hsl(142 76% 66%));
+    --gradient-highlight: linear-gradient(135deg, hsl(45 100% 60%), hsl(45 100% 70%));
+    --gradient-hero: linear-gradient(135deg, hsl(217 100% 96%), hsl(210 25% 98%));
 
-    /* CTAs and progress - using FactorBeam colors */
-    --cta: 142 76% 56%;            /* FactorBeam Green */
-    --cta-hover: 142 76% 50%;
-    --progress: 217 100% 56%;      /* FactorBeam Blue */
-    --progress-bg: 0 0% 96%;      /* Light Gray */
+    /* Transitions */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Sidebar System */
+    --sidebar-background: 210 25% 98%;
+    --sidebar-foreground: 215 25% 27%;
+    --sidebar-primary: 217 100% 56%; /* FactorBeam Blue */
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 15% 96%;
+    --sidebar-accent-foreground: 215 25% 27%;
+
+    /* Legacy FactorBeam Variables for Backward Compatibility */
+    --color-bg: #FFFFFF;
+    --color-bg-alt: #F5F6FA;
+    --color-primary: #1D63FF;
+    --color-primary-alt: #2563EB;
+    --color-green: #28C76F;
+    --color-green-alt: #22C55E;
+    --color-yellow: #FFCE32;
+    --color-yellow-alt: #FEE440;
+    --color-heading: #18213A;
+    --color-heading-alt: #232B35;
+    --color-text: #44494D;
+    --color-text-alt: #3C4251;
   }
 
   .dark {
@@ -489,4 +534,74 @@
   .avoid-break {
     page-break-inside: avoid;
   }
+}
+
+/* Assessment Platform Specific Components */
+@layer components {
+  .assessment-card {
+    @apply bg-card border border-border rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer;
+  }
+
+  .assessment-card:hover {
+    @apply transform translate-y-[-2px];
+    background-color: hsl(var(--card-hover));
+    border-color: hsl(var(--border-hover));
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground font-medium px-6 py-3 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md;
+  }
+  .btn-primary:hover {
+    background-color: hsl(var(--primary-hover));
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground font-medium px-6 py-3 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md;
+  }
+  .btn-secondary:hover {
+    background-color: hsl(var(--secondary-hover));
+  }
+
+  .btn-highlight {
+    @apply bg-highlight text-highlight-foreground font-medium px-6 py-3 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md;
+  }
+  .btn-highlight:hover {
+    background-color: hsl(var(--highlight-hover));
+  }
+
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .search-glow {
+    box-shadow: 0 0 0 1px hsl(var(--ring) / 0.1), 0 4px 6px -1px hsl(var(--ring) / 0.1);
+  }
+
+  .search-glow:focus-within {
+    box-shadow: 0 0 0 2px hsl(var(--ring) / 0.2), 0 8px 12px -2px hsl(var(--ring) / 0.15);
+  }
+}
+
+@layer utilities {
+  .text-heading { color: hsl(var(--heading)); }
+  .text-heading-soft { color: hsl(var(--heading-soft)); }
+  .text-foreground-soft { color: hsl(var(--foreground-soft)); }
+  
+  .bg-gradient-primary { background: var(--gradient-primary); }
+  .bg-gradient-secondary { background: var(--gradient-secondary); }
+  .bg-gradient-highlight { background: var(--gradient-highlight); }
+  .bg-gradient-hero { background: var(--gradient-hero); }
+  
+  .shadow-custom-sm { box-shadow: var(--shadow-sm); }
+  .shadow-custom-md { box-shadow: var(--shadow-md); }
+  .shadow-custom-lg { box-shadow: var(--shadow-lg); }
+  .shadow-custom-xl { box-shadow: var(--shadow-xl); }
+  
+  .transition-fast { transition: var(--transition-fast); }
+  .transition-normal { transition: var(--transition-normal); }
+  .transition-slow { transition: var(--transition-slow); }
 }

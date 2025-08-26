@@ -34,7 +34,7 @@ const Header: React.FC<HeaderProps> = ({
             ) : (
               <Brain className="h-8 w-8 text-white" />
             )}
-            <span className="text-2xl font-bold text-white">PathFinder</span>
+            <span className="text-2xl font-bold text-white">FactorBeam</span>
           </div>
         </Link>
         <nav className="hidden md:flex space-x-6">

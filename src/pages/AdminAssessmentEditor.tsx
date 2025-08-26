@@ -22,7 +22,7 @@ import {
   Trash2
 } from 'lucide-react';
 import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
+import Footer from '@/components/Footer';
 import { toast } from 'sonner';
 
 // Simple interface for any JSON input

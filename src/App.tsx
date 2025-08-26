@@ -10,6 +10,9 @@ import About from "./pages/About";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Assessments from "./pages/Assessments";
+import Categories from "./pages/Categories";
+import Popular from "./pages/Popular";
+import New from "./pages/New";
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import AdminBlogEditor from "./pages/AdminBlogEditor";
@@ -34,6 +37,9 @@ const App = () => (
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/assessments" element={<Assessments />} />
+            <Route path="/categories" element={<Categories />} />
+            <Route path="/popular" element={<Popular />} />
+            <Route path="/new" element={<New />} />
             <Route path="/contact" element={<Contact />} />
             
             {/* Dynamic Assessment Routes */}

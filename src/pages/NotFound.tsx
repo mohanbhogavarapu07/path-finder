@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { Home, ArrowLeft, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
+import Footer from '@/components/Footer';
 
 const NotFound = () => {
   const location = useLocation();

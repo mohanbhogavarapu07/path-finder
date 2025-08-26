@@ -16,6 +16,23 @@ import {
 } from 'lucide-react';
 import { DynamicAssessment } from '@/lib/api';
 
+// FactorBeam Logo Component
+const FactorBeamLogo: React.FC<{ className?: string }> = ({ className = "h-6 w-6" }) => (
+  <img 
+    src="/logo.png" 
+    alt="FactorBeam Logo"
+    className={className}
+    style={{ 
+      objectFit: 'contain',
+      width: '100%',
+      height: '100%',
+      maxWidth: '50px',
+      maxHeight: '50px',
+      filter: 'brightness(1.2) contrast(1.1)'
+    }}
+  />
+);
+
 interface PDFLayoutProps {
   assessment: DynamicAssessment;
   results: any;
@@ -52,10 +69,10 @@ const PDFLayout: React.FC<PDFLayoutProps> = ({
         <div className="pdf-header-content">
           <div className="pdf-logo-section">
             <div className="pdf-logo-icon">
-              <Calculator className="h-6 w-6 text-white" />
+              <FactorBeamLogo className="h-6 w-6 text-white" />
             </div>
             <div className="pdf-logo-text">
-              <h1 className="pdf-logo-title">LAKXA</h1>
+              <h1 className="pdf-logo-title">Factor Beam</h1>
               <p className="pdf-logo-subtitle">Career Assessment & Guidance Platform</p>
             </div>
           </div>
@@ -252,34 +269,6 @@ const PDFLayout: React.FC<PDFLayoutProps> = ({
               <span className="pdf-step-text">{typeof step === 'string' ? step : 'Next step'}</span>
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div className="pdf-footer">
-        <div className="pdf-footer-content">
-          <div className="pdf-footer-brand">
-            <Calculator className="h-5 w-5" />
-            <span>LAKXA</span>
-          </div>
-          <div className="pdf-footer-description">
-            Discover your perfect career path with our comprehensive assessments. 
-            Make informed decisions about your future with data-driven insights.
-          </div>
-          <div className="pdf-footer-contact">
-            <div className="pdf-footer-contact-item">
-              <span>📧</span>
-              <span>hello@careercompass.com</span>
-            </div>
-            <div className="pdf-footer-contact-item">
-              <span>📞</span>
-              <span>+1 (555) 123-4567</span>
-            </div>
-            <div className="pdf-footer-contact-item">
-              <span>📍</span>
-              <span>San Francisco, CA</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>

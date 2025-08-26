@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
+import Footer from '@/components/Footer';
 import { assessmentAPI, DynamicAssessment } from '@/lib/api';
 
 interface BlogPost {

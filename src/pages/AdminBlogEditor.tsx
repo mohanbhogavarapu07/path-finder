@@ -22,7 +22,7 @@ import {
   Download
 } from 'lucide-react';
 import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
+import Footer from '@/components/Footer';
 import { apiClient } from '@/lib/api';
 import { toast } from 'sonner';
 

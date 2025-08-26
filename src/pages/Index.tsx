@@ -1,176 +1,142 @@
 
+import Navigation from "@/components/Navigation";
+import SearchSection from "@/components/SearchSection";
+import FeaturedSection from "@/components/FeaturedSection";
+import AssessmentCard from "@/components/AssessmentCard";
+import Footer from "@/components/Footer";
+import { useAssessments } from "@/hooks/useAssessments";
+import { sampleAssessments } from "@/data/assessments";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Grid, List, SlidersHorizontal } from "lucide-react";
+import { Shield, Users, Award, Globe, Clock, Star, Target, Lightbulb, Brain, Compass } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AssessmentCard } from "@/components/ui/assessment-card";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import { Search, ArrowRight, BookOpen, Users, Award, TrendingUp, Brain, Code, Shield, Cloud, Palette, BarChart, Target, Lightbulb, Compass, Star, BarChart3, Briefcase, Cog, Heart } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { useAssessments } from "@/hooks/useAssessments";
-import React from "react";
 
 const Index = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const { data: assessments, isLoading } = useAssessments();
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [sortBy, setSortBy] = useState<"featured" | "popular" | "newest" | "rating">("featured");
 
-  // Get featured assessments from dynamic data
-  const featuredAssessments = assessments?.filter(assessment => assessment.isActive).slice(0, 6) || [];
+  // Fetch assessments from backend
+  const { data: apiAssessments, isLoading, error } = useAssessments();
 
-  // Get categories dynamically from assessment data
-  const categories = React.useMemo(() => {
-    if (!assessments) return [];
+  // Use API data if available, otherwise fallback to sample data
+  const assessments = apiAssessments && apiAssessments.length > 0 ? apiAssessments : sampleAssessments;
+
+  // Sort assessments based on selected criteria
+  const sortedAssessments = useMemo(() => {
+    let sorted = [...assessments];
     
-    const categoryCounts = assessments.reduce((acc, assessment) => {
-      acc[assessment.category] = (acc[assessment.category] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-
-    const categoryIcons = {
-      'Cloud': <Cloud className="h-6 w-6" />,
-      'Data': <BarChart3 className="h-6 w-6" />,
-      'Technology': <Code className="h-6 w-6" />,
-      'Programming': <Brain className="h-6 w-6" />,
-      'Management': <Users className="h-6 w-6" />,
-      'Business': <Briefcase className="h-6 w-6" />,
-      'Medical': <Heart className="h-6 w-6" />,
-      'Platform': <Cog className="h-6 w-6" />
-    };
-
-    return Object.entries(categoryCounts).map(([category, count]) => ({
-      name: category,
-      count: `${count} assessment${count > 1 ? 's' : ''}`,
-      icon: categoryIcons[category as keyof typeof categoryIcons] || <Code className="h-6 w-6" />
-    }));
-  }, [assessments]);
-
-  const stats = [
-    { label: "Free Assessments", value: "50+", icon: BookOpen },
-    { label: "Students Helped", value: "100K+", icon: Users },
-    { label: "Success Rate", value: "95%", icon: Award },
-    { label: "Career Growth", value: "85%", icon: TrendingUp }
-  ];
+    switch (sortBy) {
+      case "featured":
+        return sorted.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+      case "popular":
+        return sorted.sort((a, b) => {
+          // Handle both sample data (completions) and API data (metadata.userCount)
+          const aCompletions = 'completions' in a ? a.completions : parseInt(a.metadata?.userCount?.replace(/[^0-9]/g, '') || '0');
+          const bCompletions = 'completions' in b ? b.completions : parseInt(b.metadata?.userCount?.replace(/[^0-9]/g, '') || '0');
+          return bCompletions - aCompletions;
+        });
+      case "rating":
+        return sorted.sort((a, b) => {
+          // Handle both sample data (rating) and API data (default to 0 if no rating)
+          const aRating = 'rating' in a ? a.rating : 0;
+          const bRating = 'rating' in b ? b.rating : 0;
+          return bRating - aRating;
+        });
+      case "newest":
+        return sorted; // In a real app, this would sort by creation date
+      default:
+        return sorted;
+    }
+  }, [sortBy, assessments]);
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Navigation />
 
-      {/* Main Content */}
-      <div className="pt-8 px-4">
-        <div className="w-full">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-            {/* Left Side - Text and Icon */}
-            <div className="flex-1 text-center lg:text-left">
-              <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
-                <div className="text-4xl lg:text-6xl font-bold text-gray-900">
-                  {/* <div>Your career in</div>
-                  <div className="flex items-center gap-3">
-                                         <span className="text-[#4CAF50]">50+</span>
-                    <span className="text-gray-900">free</span>
-                  </div>
-                  <div>assessments</div> */}
-                </div>
-                {/* Calculator Icon */}
-                {/* <div className="hidden lg:block w-16 h-16 bg-gradient-to-br from-red-400 via-yellow-400 to-blue-500 rounded-lg p-3 shadow-lg">
-                  <div className="grid grid-cols-3 gap-1 text-white text-sm font-bold">
-                    <div className="bg-red-500 rounded p-1 text-center">+</div>
-                    <div className="bg-blue-500 rounded p-1 text-center">-</div>
-                    <div className="bg-yellow-500 rounded p-1 text-center">=</div>
-                    <div className="bg-blue-500 rounded p-1 text-center">/</div>
-                    <div className="bg-gray-600 rounded p-1 text-center">•</div>
-                    <div className="bg-gray-600 rounded p-1 text-center"></div>
-                  </div>
-                </div> */}
-              </div>
-        </div>
+      <SearchSection />
+      <FeaturedSection />
 
-            {/* Right Side - Search Bar */}
-            {/* <div className="flex-1 w-full max-w-md">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search assessments..."
-                                     className="w-full h-14 pl-6 pr-14 text-lg border border-gray-200 rounded-full shadow-sm focus:ring-2 focus:ring-[#4CAF50] focus:border-transparent outline-none"
-                />
-                                                                     <button className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-[#4CAF50] text-white rounded-full flex items-center justify-center hover:bg-[#43A047] transition-colors">
-                  <Search className="h-5 w-5" />
-                </button>
-              </div>
-            </div> */}
-          </div>
-        </div>
-      </div>
-
-      {/* Categories Grid */}
-      <div className="py-8 px-4">
-        <div className="w-full">
-          {isLoading ? (
-            <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-factorbeam-primary mx-auto"></div>
-              <p className="mt-4 text-muted-foreground">Loading categories...</p>
+      {/* Assessment Grid Section */}
+      <section className="py-16 bg-background-soft">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-3xl font-bold text-heading mb-2">
+                Featured Assessments
+              </h2>
+              <p className="text-foreground-soft">
+                Start with our most popular and scientifically-validated assessments
+              </p>
             </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {categories.map((category, index) => (
-                <Link
-                  key={index}
-                  to={`/assessments?category=${encodeURIComponent(category.name)}`}
-                  className="group"
+            
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <Button
+                  variant={viewMode === "grid" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setViewMode("grid")}
                 >
-                  <div className="bg-white rounded-xl border border-factorbeam-primary/20 hover:border-factorbeam-primary/40 p-6 transition-all duration-300 hover:shadow-lg flex items-center space-x-4 min-h-[120px]">
-                    <div className="h-16 w-16 rounded-xl bg-factorbeam-primary/10 text-factorbeam-primary group-hover:bg-factorbeam-primary group-hover:text-white transition-colors flex items-center justify-center flex-shrink-0">
-                      {category.icon}
+                  <Grid className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={viewMode === "list" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setViewMode("list")}
+                >
+                  <List className="w-4 h-4" />
+                </Button>
                     </div>
-                    <div className="flex flex-col flex-1">
-                      <h3 className="font-bold text-lg text-factorbeam-primary leading-tight">{category.name}</h3>
-                      <p className="text-base text-factorbeam-text-alt leading-tight mt-1">{category.count}</p>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
+              
+              <Button variant="outline" size="sm">
+                <SlidersHorizontal className="w-4 h-4 mr-2" />
+                Sort by: {sortBy}
+              </Button>
         </div>
       </div>
 
-      {/* Featured Assessments */}
-      <div className="py-8 px-4">
-        <div className="w-full">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Popular Assessments
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Start with our most trusted career assessments, used by thousands of students and professionals.
-            </p>
-          </div>
-          
           {isLoading ? (
             <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-factorbeam-primary mx-auto"></div>
-              <p className="mt-4 text-muted-foreground">Loading assessments...</p>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+              <p className="text-foreground-soft">Loading assessments...</p>
             </div>
-          ) : (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                {featuredAssessments.map((assessment) => (
+          ) : error ? (
+            <div className="text-center py-12">
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                <p className="text-yellow-800 text-sm">
+                  ⚠️ Using sample data. Some features may be limited.
+                </p>
+              </div>
+              <div className={`grid gap-6 ${
+                viewMode === "grid" 
+                  ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" 
+                  : "grid-cols-1"
+              }`}>
+                {sortedAssessments.slice(0, 6).map((assessment) => (
                   <AssessmentCard key={assessment.id} {...assessment} />
                 ))}
               </div>
-              <div className="text-center">
-                <Link to="/assessments">
-                  <Button size="lg" className="bg-factorbeam-primary hover:bg-factorbeam-primary-alt text-white px-8 border-0 shadow-lg hover:shadow-xl transition-all">
-                    Explore All Assessments
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-              </div>
-            </>
+            </div>
+          ) : (
+            <div className={`grid gap-6 ${
+              viewMode === "grid" 
+                ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" 
+                : "grid-cols-1"
+            }`}>
+              {sortedAssessments.slice(0, 6).map((assessment) => (
+                <AssessmentCard key={assessment.id} {...assessment} />
+              ))}
+            </div>
           )}
+          
+          <div className="text-center mt-12">
+            <Button size="lg" className="px-8">
+              View All Assessments
+                  </Button>
         </div>
       </div>
+      </section>
           
 
      

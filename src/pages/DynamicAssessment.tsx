@@ -34,11 +34,25 @@ const DynamicAssessment = () => {
   // Submit assessment mutation
   const submitAssessmentMutation = useSubmitAssessment();
 
+  // Get user data from localStorage
+  const getUserData = () => {
+    try {
+      const userData = localStorage.getItem('assessmentUserData');
+      return userData ? JSON.parse(userData) : null;
+    } catch (error) {
+      console.error('Error reading user data from localStorage:', error);
+      return null;
+    }
+  };
+
   // Initialize session when assessment data is loaded
   useEffect(() => {
     if (assessmentDataResponse && !sessionId) {
+      const userData = getUserData();
+      const userId = userData?.userId;
+      
       startSessionMutation.mutate(
-        { assessmentId: assessmentId! },
+        { assessmentId: assessmentId!, userId },
         {
           onSuccess: (data) => {
             setSessionId(data.sessionId);
@@ -165,10 +179,14 @@ const DynamicAssessment = () => {
     pushSectionAnswers('wiscar', mergedWiscar);
 
     try {
+      const userData = getUserData();
+      const userId = userData?.userId;
+      
       await submitAssessmentMutation.mutateAsync({
         assessmentId,
         sessionId,
-        answers: answerEntries
+        answers: answerEntries,
+        userId
       });
       
       setAssessmentData(prev => ({ ...prev, completed: true }));

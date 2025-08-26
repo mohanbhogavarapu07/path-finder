@@ -262,11 +262,12 @@ class AssessmentAPI {
   async submitAssessment(
     assessmentId: string,
     sessionId: string,
-    answers: Array<{ questionId: string; sectionId: string; value: any }>
+    answers: Array<{ questionId: string; sectionId: string; value: any }>,
+    userId?: string
   ): Promise<{ sessionId: string; results: AssessmentResults; duration: number }> {
     return this.request<AssessmentResults>(`/assessments/${assessmentId}/submit`, {
       method: 'POST',
-      body: JSON.stringify({ sessionId, answers }),
+      body: JSON.stringify({ sessionId, answers, userId }),
     });
   }
 

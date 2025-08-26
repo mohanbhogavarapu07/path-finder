@@ -63,8 +63,8 @@ export const useSubmitAssessment = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: ({ assessmentId, sessionId, answers }: { assessmentId: string; sessionId: string; answers: Array<{ questionId: string; sectionId: string; value: any }> }) =>
-      assessmentAPI.submitAssessment(assessmentId, sessionId, answers),
+    mutationFn: ({ assessmentId, sessionId, answers, userId }: { assessmentId: string; sessionId: string; answers: Array<{ questionId: string; sectionId: string; value: any }>; userId?: string }) =>
+      assessmentAPI.submitAssessment(assessmentId, sessionId, answers, userId),
     onSuccess: (data, variables) => {
       // Invalidate session data
       queryClient.invalidateQueries({

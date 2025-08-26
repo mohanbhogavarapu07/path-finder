@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface AssessmentStartDialogProps {
   isOpen: boolean;
@@ -29,7 +30,7 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    age: '',
+    ageRange: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -54,27 +55,48 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
       newErrors.email = 'Please enter a valid email address';
     }
 
-    if (!formData.age.trim()) {
-      newErrors.age = 'Age is required';
-    } else {
-      const ageNum = parseInt(formData.age);
-      if (isNaN(ageNum) || ageNum < 1 || ageNum > 120) {
-        newErrors.age = 'Please enter a valid age (1-120)';
-      }
+    if (!formData.ageRange.trim()) {
+      newErrors.ageRange = 'Age range is required';
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleStartAssessment = () => {
+  const handleStartAssessment = async () => {
     if (validateForm()) {
-      // Store user data in localStorage or sessionStorage
-      localStorage.setItem('assessmentUserData', JSON.stringify(formData));
-      
-      // Close dialog and navigate to assessment
-      onClose();
-      navigate(`/assessments/${assessmentId}`);
+      try {
+        // Send user data to backend
+        const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://pf-backend-6p4g.onrender.com/api';
+        const response = await fetch(`${API_BASE_URL}/users`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to save user data');
+        }
+
+        const result = await response.json();
+        
+        // Store user data in localStorage with backend user ID
+        const userDataWithId = {
+          ...formData,
+          userId: result.user.id
+        };
+        localStorage.setItem('assessmentUserData', JSON.stringify(userDataWithId));
+        
+        // Close dialog and navigate to assessment
+        onClose();
+        navigate(`/assessments/${assessmentId}`);
+      } catch (error) {
+        console.error('Error saving user data:', error);
+        setErrors({ submit: error.message });
+      }
     }
   };
 
@@ -126,25 +148,38 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="age" className="text-sm font-medium text-factorbeam-heading">
-              Age *
+            <Label htmlFor="ageRange" className="text-sm font-medium text-factorbeam-heading">
+              Age Range *
             </Label>
-            <Input
-              id="age"
-              type="number"
-              placeholder="Enter your age"
-              value={formData.age}
-              onChange={(e) => handleInputChange('age', e.target.value)}
-              className={errors.age ? 'border-red-500 focus:border-red-500' : ''}
-              min="1"
-              max="120"
-            />
-            {errors.age && (
-              <p className="text-sm text-red-500">{errors.age}</p>
+            <Select
+              value={formData.ageRange}
+              onValueChange={(value) => handleInputChange('ageRange', value)}
+            >
+              <SelectTrigger className={errors.ageRange ? 'border-red-500 focus:border-red-500' : ''}>
+                <SelectValue placeholder="Select your age range" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="11-20">11-20 years</SelectItem>
+                <SelectItem value="21-30">21-30 years</SelectItem>
+                <SelectItem value="31-40">31-40 years</SelectItem>
+                <SelectItem value="41-50">41-50 years</SelectItem>
+                <SelectItem value="51-60">51-60 years</SelectItem>
+                <SelectItem value="61-70">61-70 years</SelectItem>
+                <SelectItem value="71-80">71-80 years</SelectItem>
+              </SelectContent>
+            </Select>
+            {errors.ageRange && (
+              <p className="text-sm text-red-500">{errors.ageRange}</p>
             )}
           </div>
         </div>
 
+        {errors.submit && (
+          <div className="text-sm text-red-500 text-center mb-4">
+            {errors.submit}
+          </div>
+        )}
+        
         <DialogFooter className="flex gap-2">
           <Button
             variant="outline"

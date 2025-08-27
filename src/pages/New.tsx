@@ -305,27 +305,7 @@ const New = () => {
               )}
             </div>
 
-            {/* CTA Section */}
-            <div className="bg-gradient-primary rounded-2xl p-8 lg:p-12 text-center text-white">
-              <h3 className="text-2xl lg:text-3xl font-bold mb-4">
-                Stay Ahead with Latest Assessments
-              </h3>
-              <p className="text-lg opacity-90 mb-6 max-w-2xl mx-auto">
-                Be among the first to try our cutting-edge assessments and discover innovative approaches to personal and professional development.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Link to="/assessments">
-                  <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90">
-                    Explore All Assessments
-                  </Button>
-                </Link>
-                <Link to="/popular">
-                  <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                    Popular Assessments
-                  </Button>
-                </Link>
-              </div>
-            </div>
+
           </div>
         </div>
       </main>

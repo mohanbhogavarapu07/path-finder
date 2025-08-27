@@ -250,28 +250,7 @@ const FeaturedSection = () => {
           )}
         </div>
 
-        {/* CTA Section */}
-        <div className="bg-gradient-primary rounded-2xl p-8 lg:p-12 text-center text-white">
-          <h3 className="text-2xl lg:text-3xl font-bold mb-4">
-            Ready to Discover Your Potential?
-          </h3>
-          <p className="text-lg opacity-90 mb-6 max-w-2xl mx-auto">
-            Start with our most popular assessments or create a personalized learning path
-            tailored to your goals and interests.
-          </p>
-                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-             <Link to="/popular">
-               <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90">
-                 Popular Assessments
-               </Button>
-             </Link>
-             <Link to="/categories">
-               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                 Browse All Categories
-               </Button>
-             </Link>
-           </div>
-        </div>
+
       </div>
     </div>
   );

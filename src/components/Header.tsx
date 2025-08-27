@@ -27,13 +27,13 @@ const Header: React.FC<HeaderProps> = ({
   return (
      <header className={`bg-primary/90 text-primary-foreground border-b border-primary/50 sticky top-0 z-50 ${className}`}>
       <div className={showContainer ? "container mx-auto px-4 py-4 flex justify-between items-center" : "px-4 py-4 flex justify-between items-center"}>
-        <Link to="/" className="flex items-center space-x-2">
-          <div className="flex items-center space-x-2">
-            {logoType === "sparkles" ? (
-              <Sparkles className="h-8 w-8 text-white" />
-            ) : (
-              <Brain className="h-8 w-8 text-white" />
-            )}
+        <Link to="/" className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3">
+            <img 
+              src="/logo.png" 
+              alt="FactorBeam Logo" 
+              className="h-8 w-auto object-contain"
+            />
             <span className="text-2xl font-bold text-white">FactorBeam</span>
           </div>
         </Link>

@@ -51,11 +51,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
           {/* Brand Section */}
           <div className="lg:col-span-2">
-            <Link to="/" className="flex items-center space-x-2 mb-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-factorbeam-primary">
-                <Calculator className="h-5 w-5 text-white" />
-              </div>
-              <span className="text-xl font-bold text-white">PathFinder</span>
+            <Link to="/" className="flex items-center space-x-3 mb-4">
+              <img 
+                src="/logo.png" 
+                alt="FactorBeam Logo" 
+                className="h-8 w-auto object-contain"
+              />
+              <span className="text-xl font-bold text-white">FactorBeam</span>
             </Link>
             <p className="text-gray-300 mb-4 max-w-sm">
               Discover your perfect career path with our comprehensive assessments. 

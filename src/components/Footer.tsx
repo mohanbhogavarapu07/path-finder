@@ -82,10 +82,12 @@ const Footer = () => {
             
             {/* Brand Section */}
             <div className="lg:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-                  <BookOpen className="w-5 h-5 text-white" />
-              </div>
+            <div className="flex items-center space-x-3 mb-4">
+                <img 
+                  src="/logo.png" 
+                  alt="FactorBeam Logo" 
+                  className="h-8 w-auto object-contain"
+                />
                 <h3 className="text-xl font-bold text-heading">FactorBeam</h3>
             </div>
               <p className="text-foreground-soft mb-6 max-w-sm">

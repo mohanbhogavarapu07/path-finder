@@ -51,11 +51,13 @@ const Header = () => {
          <div className="container mx-auto px-4">
            <div className="flex h-16 items-center justify-between">
               {/* Logo */}
-               <Link to="/" className="flex items-center space-x-2">
-                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-factorbeam-primary">
-                   <Calculator className="h-5 w-5 text-white" />
-                 </div>
-                  <span className="text-xl font-bold text-gray-900">FactorBeam</span>
+               <Link to="/" className="flex items-center space-x-3">
+                 <img 
+                   src="/logo.png" 
+                   alt="FactorBeam Logo" 
+                   className="h-10 w-auto object-contain"
+                 />
+                 <span className="text-xl font-bold text-gray-900">FactorBeam</span>
                </Link>
 
                            {/* Search Bar - Center */}
@@ -161,11 +163,13 @@ const Header = () => {
          <div className="container mx-auto px-4">
            <div className="flex h-16 items-center justify-between">
                            {/* Logo */}
-              <Link to="/" className="flex items-center space-x-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-factorbeam-primary">
-                  <Calculator className="h-5 w-5 text-white" />
-                </div>
-                 <span className="text-xl font-bold text-gray-900">PathFinder</span>
+              <Link to="/" className="flex items-center space-x-3">
+                <img 
+                  src="/logo.png" 
+                  alt="FactorBeam Logo" 
+                  className="h-8 w-auto object-contain"
+                />
+                 <span className="text-xl font-bold text-gray-900">FactorBeam</span>
               </Link>
 
              {/* Assessment Categories Navigation */}

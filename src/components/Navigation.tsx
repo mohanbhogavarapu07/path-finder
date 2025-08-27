@@ -9,10 +9,12 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <BookOpen className="w-5 h-5 text-white" />
-              </div>
+            <div className="flex items-center space-x-3">
+              <img 
+                src="/logo.png" 
+                alt="FactorBeam Logo" 
+                className="h-8 w-auto object-contain"
+              />
               <h1 className="text-xl font-bold text-heading">FactorBeam</h1>
             </div>
           </div>

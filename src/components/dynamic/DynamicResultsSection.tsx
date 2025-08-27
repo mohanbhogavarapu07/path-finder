@@ -1,27 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import {
-  TrendingUp,
-  Target,
-  CheckCircle,
-  ArrowRight,
-  Star,
-  Lightbulb,
-  BookOpen,
-  Users,
-  Brain,
-  Code,
-  Award,
-  AlertTriangle,
+import { 
+  TrendingUp, 
+  Brain, 
+  Code, 
+  Target, 
+  ChevronRight, 
+  CheckCircle, 
+  AlertTriangle, 
   XCircle,
+  Users,
+  BookOpen,
+  ExternalLink,
+  Star,
+  Award,
   Download,
-  Printer
+  Share2,
+  BarChart3,
+  Zap,
+  Lightbulb,
+  Clock,
+  MapPin,
+  DollarSign,
+  ArrowUpRight,
+  ArrowRight,
+  Info,
+  HelpCircle,
+  PlayCircle
 } from 'lucide-react';
-import { DynamicAssessment } from '@/lib/api';
+import { DynamicAssessment, AssessmentResults } from '@/lib/api';
 import { useAssessmentResults } from '@/hooks/useAssessments';
 import { usePDFResults } from '@/hooks/usePDFResults';
 import PDFLayout from './PDFLayout';
@@ -39,6 +50,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
   sessionId
 }) => {
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState('overview');
   const { data: resultsData, isLoading, error } = useAssessmentResults(assessment.id, sessionId || '');
   
   // Print functionality
@@ -47,17 +59,6 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
     onSuccess: () => console.log('Print operation completed successfully'),
     onError: (error) => console.error('Print operation failed:', error)
   });
-
-  useEffect(() => {
-    if (error) {
-      console.error('Error fetching results:', error);
-    }
-  }, [error]);
-
-  // Print function using the new PDF system
-  const handlePrint = () => {
-    printResults();
-  };
 
   if (isLoading) {
     return (
@@ -90,13 +91,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
     );
   }
 
-  const { results } = resultsData || {};
-
-  // Debug logging to see what data we're getting
-  console.log('DynamicResultsSection - Full resultsData:', resultsData);
-  console.log('DynamicResultsSection - Results object:', results);
-  console.log('DynamicResultsSection - WISCAR scores:', results?.wiscarScores);
-  console.log('DynamicResultsSection - Assessment data:', assessmentData);
+  const results: AssessmentResults = resultsData.results;
 
   // Safety check to ensure results exists
   if (!results) {
@@ -119,119 +114,59 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
     );
   }
 
-  // Helpers to shape data like AWS results layout
-  const getSectionPercentage = (sectionId: string): number => {
-    const s = results?.sectionScores?.find((x: any) => x.sectionId === sectionId);
-    return s ? (typeof s.percentage === 'number' ? s.percentage : 0) : 0;
+  const getRecommendationConfig = (recommendation: string) => {
+    switch (recommendation) {
+      case 'YES':
+        return {
+          color: 'green',
+          icon: CheckCircle,
+          bgColor: 'bg-green-50',
+          borderColor: 'border-green-200',
+          textColor: 'text-green-800'
+        };
+      case 'MAYBE':
+        return {
+          color: 'orange',
+          icon: AlertTriangle,
+          bgColor: 'bg-orange-50',
+          borderColor: 'border-orange-200',
+          textColor: 'text-orange-800'
+        };
+      case 'NO':
+        return {
+          color: 'red',
+          icon: XCircle,
+          bgColor: 'bg-red-50',
+          borderColor: 'border-red-200',
+          textColor: 'text-red-800'
+        };
+      default:
+        return {
+          color: 'gray',
+          icon: HelpCircle,
+          bgColor: 'bg-gray-50',
+          borderColor: 'border-gray-200',
+          textColor: 'text-gray-800'
+        };
+    }
   };
 
-  const badgeVariantForScore = (score: number): 'default' | 'secondary' | 'destructive' | 'outline' => {
-    if (score >= 75) return 'default';
-    if (score >= 60) return 'secondary';
-    return 'destructive';
-  };
+  const config = getRecommendationConfig(results.recommendation);
+  const RecommendationIcon = config.icon;
 
-  // Enhanced WISCAR calculation with better data validation
-  const wiscarOverall: number = (() => {
-    // First check if overall is directly provided
-    if (results?.wiscarScores?.overall && typeof results.wiscarScores.overall === 'number') {
-      return results.wiscarScores.overall;
-    }
-    
-    // If no overall, calculate from individual dimensions
-    if (results?.wiscarScores && typeof results.wiscarScores === 'object') {
-      const validScores = Object.entries(results.wiscarScores)
-        .filter(([key, value]) => 
-          key !== 'overall' && 
-          key !== '_id' && 
-          typeof value === 'number' && 
-          value >= 0 && 
-          value <= 100
-        )
-        .map(([, value]) => value as number);
-      
-      if (validScores.length > 0) {
-        return Math.round(validScores.reduce((sum, score) => sum + score, 0) / validScores.length);
-      }
-    }
-    
-    // Fallback: try to calculate from section scores if WISCAR section exists
-    const wiscarSection = results?.sectionScores?.find((s: any) => s.sectionId === 'wiscar');
-    if (wiscarSection && typeof wiscarSection.percentage === 'number') {
-      return wiscarSection.percentage;
-    }
-    
-      return 0;
-  })();
-
-  // Check if we have any WISCAR data at all
-  const hasWiscarData = wiscarOverall > 0;
-
-  // Helper function to format subsection names
-  const formatSubsectionName = (key: string): string => {
-    // Handle common patterns in question IDs
-    if (key.includes('_')) {
-      // Split by underscore and format each part
-      const parts = key.split('_');
-      if (parts.length >= 2) {
-        const category = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
-        const number = parts[1];
-        return `${category} ${number}`;
-      }
-    }
-    
-    // Handle camelCase
-    if (/[a-z][A-Z]/.test(key)) {
-      return key
-        .replace(/([A-Z])/g, ' $1') // Add space before capital letters
-        .replace(/^./, str => str.toUpperCase()) // Capitalize first letter
-        .replace(/_/g, ' ') // Replace underscores with spaces
-        .trim();
-    }
-    
-    // Handle simple names
-    return key
-      .replace(/_/g, ' ') // Replace underscores with spaces
-      .replace(/^./, str => str.toUpperCase()) // Capitalize first letter
-      .trim();
-  };
-
-  // Recommendation like AWS
-  const overallScore = typeof results.overallScore === 'number' ? results.overallScore : 0;
-  const recommendation = (() => {
-    if (overallScore >= 75) {
-      return {
-        key: 'YES',
-        title: `${assessment.title} is an Excellent Fit for You!`,
-        color: 'green' as const,
-        icon: CheckCircle,
-        description: 'Strong alignment across sections. You are well-positioned to proceed.',
-        score: overallScore,
-      };
-    }
-    if (overallScore >= 60) {
-      return {
-        key: 'MAYBE',
-        title: `${assessment.title} Could Be Right with Preparation`,
-        color: 'orange' as const,
-        icon: AlertTriangle,
-        description: 'You have potential. Strengthen a few areas to increase your readiness.',
-        score: overallScore,
-      };
-    }
-    return {
-      key: 'NO',
-      title: `Consider Alternative Paths`,
-      color: 'red' as const,
-      icon: XCircle,
-      description: 'Based on current results, adjacent paths may be a better fit right now.',
-      score: overallScore,
-    };
-  })();
+  const tabs = [
+    { id: 'overview', label: 'Overview', icon: BarChart3 },
+    { id: 'psychometric', label: 'Psychometric', icon: Brain },
+    { id: 'technical', label: 'Technical', icon: Code },
+    { id: 'wiscar', label: 'WISCAR', icon: Target },
+    { id: 'careers', label: 'Careers', icon: Users },
+    { id: 'learning', label: 'Learning', icon: BookOpen },
+    { id: 'improvement', label: 'Improvement', icon: TrendingUp }
+  ];
 
   return (
     <>
-              {/* Print Layout Container - Hidden but accessible for printing */}
+      {/* Print Layout Container - Hidden but accessible for printing */}
       <div 
         ref={pdfContainerRef} 
         className="absolute -left-[9999px] top-0 w-[800px] opacity-0 pointer-events-none"
@@ -240,457 +175,514 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
         <PDFLayout
           assessment={assessment}
           results={results}
-          overallScore={overallScore}
-          recommendation={recommendation}
-          getSectionPercentage={getSectionPercentage}
-          badgeVariantForScore={badgeVariantForScore}
-          formatSubsectionName={formatSubsectionName}
-          hasWiscarData={hasWiscarData}
-          wiscarOverall={wiscarOverall}
+          overallScore={results.overallScore}
+          recommendation={{
+            key: results.recommendation,
+            title: results.recommendation === 'YES' ? 'Excellent Fit!' :
+                   results.recommendation === 'MAYBE' ? 'Good Potential with Preparation' :
+                   'Consider Alternative Paths',
+            color: results.recommendation === 'YES' ? 'green' : 
+                   results.recommendation === 'MAYBE' ? 'orange' : 'red',
+            icon: results.recommendation === 'YES' ? CheckCircle : 
+                  results.recommendation === 'MAYBE' ? AlertTriangle : XCircle,
+            description: results.recommendationReason
+          }}
+          getSectionPercentage={(sectionId: string) => {
+            switch (sectionId) {
+              case 'psychometric': return results.psychometric.overall;
+              case 'technical': return results.technical.overall;
+              case 'wiscar': return results.wiscar.overall;
+              default: return 0;
+            }
+          }}
+          badgeVariantForScore={(score: number) => {
+            if (score >= 75) return 'default';
+            if (score >= 60) return 'secondary';
+            return 'destructive';
+          }}
+          formatSubsectionName={(name: string) => name}
+          hasWiscarData={results.wiscar.overall > 0}
+          wiscarOverall={results.wiscar.overall}
         />
       </div>
 
       {/* Main Display */}
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 assessment-print-container">
-      {/* Print Header - Hidden on screen, visible in print */}
-      <div className="hidden print:block print-header">
-        <div className="print-logo">Path Finder</div>
-        <div className="print-subtitle">Career Assessment & Guidance Platform</div>
-        <div className="print-date">Generated on: {new Date().toLocaleDateString()}</div>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 assessment-print-container">
+        {/* Print Header - Hidden on screen, visible in print */}
+        <div className="hidden print:block print-header">
+          <div className="print-logo">Path Finder</div>
+          <div className="print-subtitle">Career Assessment & Guidance Platform</div>
+          <div className="print-date">Generated on: {new Date().toLocaleDateString()}</div>
         </div>
 
-      <div className="container mx-auto px-4 max-w-6xl">
-        {/* Header */}
-        <div className="text-center mb-8 no-print">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Assessment Complete! 🎉</h1>
-          <p className="text-xl text-gray-600">Here are your personalized results for {assessment.title}</p>
+        <div className="container mx-auto px-4 max-w-6xl">
+          {/* Header */}
+          <div className="text-center mb-8 no-print">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">Assessment Complete! 🎉</h1>
+            <p className="text-xl text-gray-600">Here are your personalized results for {assessment.title}</p>
           </div>
 
-        {/* Print Assessment Title */}
-        <div className="hidden print:block print-assessment-title">
-          <h1>Assessment Results</h1>
-          <h2>{assessment.title}</h2>
-        </div>
+          {/* Print Assessment Title */}
+          <div className="hidden print:block print-assessment-title">
+            <h1>Assessment Results</h1>
+            <h2>{assessment.title}</h2>
+          </div>
 
-        {/* Recommendation (AWS style) */}
-        <Card className={`mb-8 border-2 print-card print-recommendation ${
-          recommendation.color === 'green' ? 'border-green-200 bg-green-50' :
-          recommendation.color === 'orange' ? 'border-orange-200 bg-orange-50' :
-          'border-red-200 bg-red-50'
-        }`}>
-          <CardHeader className="text-center">
-            <div className="flex justify-center mb-4 no-print">
-              <div className={`p-4 rounded-full ${
-                recommendation.color === 'green' ? 'bg-green-100' :
-                recommendation.color === 'orange' ? 'bg-orange-100' :
-                'bg-red-100'
-              }`}>
-                {(() => {
-                  const Icon = recommendation.icon;
-                  return <Icon className={`w-12 h-12 ${
-                    recommendation.color === 'green' ? 'text-green-600' :
-                    recommendation.color === 'orange' ? 'text-orange-600' :
-                    'text-red-600'
-                  }`} />
-                })()}
-              </div>
+          {/* Tab Navigation */}
+          <div className="bg-white rounded-lg shadow-sm border mb-8">
+            <div className="flex overflow-x-auto">
+              {tabs.map((tab) => {
+                const TabIcon = tab.icon;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`flex items-center space-x-2 px-6 py-4 whitespace-nowrap border-b-2 transition-colors ${
+                      activeTab === tab.id
+                        ? 'border-blue-500 text-blue-600 bg-blue-50'
+                        : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                    }`}
+                  >
+                    <TabIcon className="w-4 h-4" />
+                    <span className="font-medium">{tab.label}</span>
+                  </button>
+                );
+              })}
             </div>
-            <CardTitle className="text-3xl font-bold text-gray-900 mb-2 print-recommendation-title">{recommendation.title}</CardTitle>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto print-recommendation-description">{recommendation.description}</p>
-            <div className="mt-4 flex items-center justify-center gap-3">
-              <Badge variant="outline" className={`print-recommendation-badge ${
-                recommendation.color === 'green' ? 'bg-green-100 text-green-800 border-green-300' :
-                recommendation.color === 'orange' ? 'bg-orange-100 text-orange-800 border-orange-300' :
-                'bg-red-100 text-red-800 border-red-300'
-              }`}>Recommendation: {recommendation.key}</Badge>
-              <div className="text-2xl font-bold text-blue-700 flex items-center gap-2">
-                <Award className="w-5 h-5 text-blue-600 no-print" /> 
-                <span className="print-overall-score">{overallScore}% overall</span>
-              </div>
-            </div>
-          </CardHeader>
-        </Card>
+          </div>
 
-        {/* Score Breakdown (3 cards) */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8 print-score-grid">
-          <Card className="bg-white shadow-lg border-l-4 border-l-purple-500 hover:shadow-xl transition-shadow print-score-card">
-            <CardHeader className="pb-3">
-              <CardTitle className="flex items-center space-x-2 text-lg text-gray-800 print-score-card-title">
-                <div className="p-2 bg-purple-100 rounded-lg no-print">
-                  <Brain className="w-5 h-5 text-purple-600" />
-                </div>
-                <span>Psychological Fit</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <div className="flex justify-between items-center mb-3">
-                    <span className="text-4xl font-bold text-purple-600 print-score-value">{getSectionPercentage('psychometric')}%</span>
-                    <Badge variant={badgeVariantForScore(getSectionPercentage('psychometric'))} className={`text-xs px-3 py-1 print-score-badge ${
-                      getSectionPercentage('psychometric') >= 75 ? 'excellent' : 
-                      getSectionPercentage('psychometric') >= 60 ? 'good' : 'needs-work'
-                    }`}>
-                      {getSectionPercentage('psychometric') >= 75 ? 'Excellent' : getSectionPercentage('psychometric') >= 60 ? 'Good' : 'Needs Work'}
-                    </Badge>
-                  </div>
-                  <div className="print-progress-container">
-                    <div className="print-progress-bar">
-                      <div 
-                        className="print-progress-fill" 
-                        style={{ width: `${getSectionPercentage('psychometric')}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                  <Progress value={getSectionPercentage('psychometric')} className="h-3 bg-gray-200 no-print" />
-                  <div className="mt-2 text-sm text-gray-600 print-score-description">
-                    {getSectionPercentage('psychometric') >= 75 ? 'Outstanding performance in psychological assessment' : 
-                     getSectionPercentage('psychometric') >= 60 ? 'Good psychological alignment' : 
-                     'Room for improvement in psychological fit'}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white shadow-lg border-l-4 border-l-green-500 hover:shadow-xl transition-shadow print-score-card">
-            <CardHeader className="pb-3">
-              <CardTitle className="flex items-center space-x-2 text-lg text-gray-800 print-score-card-title">
-                <div className="p-2 bg-green-100 rounded-lg no-print">
-                  <Code className="w-5 h-5 text-green-600" />
-                </div>
-                <span>Technical Readiness</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <div className="flex justify-between items-center mb-3">
-                    <span className="text-4xl font-bold text-green-600 print-score-value">{getSectionPercentage('technical')}%</span>
-                    <Badge variant={badgeVariantForScore(getSectionPercentage('technical'))} className={`text-xs px-3 py-1 print-score-badge ${
-                      getSectionPercentage('technical') >= 75 ? 'excellent' : 
-                      getSectionPercentage('technical') >= 60 ? 'good' : 'needs-work'
-                    }`}>
-                      {getSectionPercentage('technical') >= 75 ? 'Strong' : getSectionPercentage('technical') >= 60 ? 'Moderate' : 'Developing'}
-                    </Badge>
-                  </div>
-                  <div className="print-progress-container">
-                    <div className="print-progress-bar">
-                      <div 
-                        className="print-progress-fill" 
-                        style={{ width: `${getSectionPercentage('technical')}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                  <Progress value={getSectionPercentage('technical')} className="h-3 bg-gray-200 no-print" />
-                  <div className="mt-2 text-sm text-gray-600 print-score-description">
-                    {getSectionPercentage('technical') >= 75 ? 'Strong technical foundation demonstrated' : 
-                     getSectionPercentage('technical') >= 60 ? 'Moderate technical skills' : 
-                     'Technical skills need development'}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white shadow-lg border-l-4 border-l-orange-500 hover:shadow-xl transition-shadow print-score-card">
-            <CardHeader className="pb-3">
-              <CardTitle className="flex items-center space-x-2 text-lg text-gray-800 print-score-card-title">
-                <div className="p-2 bg-orange-100 rounded-lg no-print">
-                  <Target className="w-5 h-5 text-orange-600" />
-                </div>
-                <span>WISCAR Analysis</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <div className="flex justify-between items-center mb-3">
-                    <span className="text-4xl font-bold text-orange-600 print-score-value">{wiscarOverall}%</span>
-                    <Badge variant="outline" className="bg-orange-50 text-orange-700 text-xs px-3 py-1 print-score-badge">Overall</Badge>
-                  </div>
-                  <div className="print-progress-container">
-                    <div className="print-progress-bar">
-                      <div 
-                        className="print-progress-fill" 
-                        style={{ width: `${wiscarOverall}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                  <Progress value={wiscarOverall} className="h-3 bg-gray-200 no-print" />
-                  <div className="mt-2 text-sm text-gray-600 print-score-description">
-                    {hasWiscarData ? (
-                      wiscarOverall >= 75 ? 'Excellent holistic assessment score' : 
-                      wiscarOverall >= 60 ? 'Good overall alignment' : 
-                      'Overall assessment needs improvement'
-                    ) : 'WISCAR data not available'}
-                  </div>
-                </div>
-                
-
-                
-                {!hasWiscarData && (
-                  <div className="pt-3 border-t border-gray-100">
-                    <div className="text-xs text-gray-500 text-center py-2">
-                      WISCAR assessment data not available
-                    </div>
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Career Paths */}
-        <Card className="mb-8 print-career-section">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 print-career-title">
-              <TrendingUp className="h-6 w-6 text-green-600 no-print" />
-              Recommended Career Paths
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {results.careerPaths && results.careerPaths.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 print-career-grid">
-                {results.careerPaths.map((career, index) => (
-                  <div key={index} className="p-4 rounded-lg bg-green-50 border border-green-200 print-career-card">
-                    <div className="flex items-start gap-3 mb-2">
-                      <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0 no-print" />
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-green-800 print-career-card-title">{career.title}</h4>
-                        <p className="text-sm text-green-700 mt-1 print-career-card-description">{career.description}</p>
+          {/* Tab Content */}
+          <div className="min-h-[600px]">
+            {/* Overview Tab */}
+            {activeTab === 'overview' && (
+              <div className="space-y-6">
+                {/* Summary Overview */}
+                <Card className={`${config.bgColor} ${config.borderColor} border-2`}>
+                  <CardHeader className="text-center">
+                    <div className="flex justify-center mb-4">
+                      <div className={`p-4 rounded-full ${config.bgColor.replace('50', '100')}`}>
+                        <RecommendationIcon className={`w-12 h-12 ${config.textColor}`} />
                       </div>
                     </div>
-                    <div className="flex items-center justify-between mt-3 print-career-card-footer">
-                      <Badge variant="outline" className="text-xs print-career-badge">
-                        {career.matchLevel} match
+                    <CardTitle className="text-3xl font-bold text-gray-900 mb-2">
+                      {results.recommendation === 'YES' ? 'Excellent Fit!' :
+                       results.recommendation === 'MAYBE' ? 'Good Potential with Preparation' :
+                       'Consider Alternative Paths'}
+                    </CardTitle>
+                    <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-4">
+                      {results.recommendationReason}
+                    </p>
+                    <div className="flex justify-center items-center gap-4 flex-wrap">
+                      <Badge variant="outline" className={`text-lg px-4 py-2 ${config.bgColor} ${config.textColor} ${config.borderColor}`}>
+                        Recommendation: {results.recommendation}
                       </Badge>
-                      <span className="text-sm text-green-600 font-medium print-career-alignment">
-                        {career.alignmentScore}% alignment
-                      </span>
+                      <Badge variant="outline" className="text-lg px-4 py-2">
+                        Confidence: {results.confidenceScore}%
+                      </Badge>
+                      <Badge variant="outline" className="text-lg px-4 py-2">
+                        Overall Score: {results.overallScore}%
+                      </Badge>
                     </div>
-                    {career.requirements && career.requirements.length > 0 && (
-                      <div className="mt-3">
-                        <p className="text-xs font-medium text-green-700 mb-1">Requirements:</p>
-                        <ul className="text-xs text-green-600 space-y-1">
-                          {career.requirements.map((req, reqIndex) => (
-                            <li key={reqIndex} className="flex items-center gap-1">
-                              <div className="w-1 h-1 bg-green-500 rounded-full no-print"></div>
-                              {req}
-                            </li>
-                          ))}
-                        </ul>
-                  </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-8">
-                <p className="text-gray-600 mb-4">Based on your assessment results, here are some recommended paths:</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 print-career-grid">
-                  <div className="p-4 rounded-lg bg-blue-50 border border-blue-200 print-career-card">
-                    <h4 className="font-semibold text-blue-800 print-career-card-title">Primary Career Path</h4>
-                    <p className="text-sm text-blue-700 mb-3 print-career-card-description">Based on your assessment results</p>
-                    <div className="flex items-center justify-between print-career-card-footer">
-                      <Badge variant="outline" className="text-xs print-career-badge">Good match</Badge>
-                      <span className="text-sm text-blue-600 font-medium print-career-alignment">{overallScore}% alignment</span>
-                    </div>
-                  </div>
-                  <div className="p-4 rounded-lg bg-green-50 border border-green-200 print-career-card">
-                    <h4 className="font-semibold text-green-800 print-career-card-title">Alternative Path</h4>
-                    <p className="text-sm text-green-700 mb-3 print-career-card-description">Consider exploring related fields</p>
-                    <div className="flex items-center justify-between print-career-card-footer">
-                      <Badge variant="outline" className="text-xs print-career-badge">Moderate match</Badge>
-                      <span className="text-sm text-green-600 font-medium print-career-alignment">65% alignment</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            </CardContent>
-          </Card>
+                  </CardHeader>
+                </Card>
 
-        {/* Strengths and Improvements */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 print-analysis-grid">
-          {/* Strengths */}
-            <Card className="print-analysis-card">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 print-analysis-title">
-                  <Star className="h-6 w-6 text-yellow-600 no-print" />
-                  Your Strengths
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-              {results.strengths && results.strengths.length > 0 ? (
-                <ul className="space-y-2 print-analysis-list">
-                  {results.strengths.map((strength, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0 no-print" />
-                      <span>{typeof strength === 'string' ? strength : 'Strength'}</span>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <div className="space-y-2 print-analysis-list">
-                  <div className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0 no-print" />
-                    <span>Strong psychometric skills</span>
-            </div>
-                  <div className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0 no-print" />
-                    <span>Strong wiscar skills</span>
-                  </div>
-                </div>
-              )}
-          </CardContent>
-        </Card>
+                {/* Score Overview */}
+                <div className="grid md:grid-cols-3 gap-6">
+                  <Card className="border-purple-200">
+                    <CardHeader>
+                      <CardTitle className="flex items-center space-x-2">
+                        <Brain className="w-5 h-5 text-purple-600" />
+                        <span>Psychological Fit</span>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div>
+                          <div className="flex justify-between mb-2">
+                            <span className="text-2xl font-bold text-purple-600">
+                              {results.psychometric.overall}%
+                            </span>
+                            <Badge variant={results.psychometric.overall >= 75 ? 'default' : results.psychometric.overall >= 60 ? 'secondary' : 'destructive'}>
+                              {results.psychometric.overall >= 75 ? 'Excellent' : results.psychometric.overall >= 60 ? 'Good' : 'Needs Work'}
+                            </Badge>
+                          </div>
+                          <Progress value={results.psychometric.overall} className="h-3" />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
 
-          {/* Areas for Improvement */}
-            <Card className="print-analysis-card">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 print-analysis-title">
-                  <Lightbulb className="h-6 w-6 text-blue-600 no-print" />
-                  Areas for Improvement
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-              {results.improvements && results.improvements.length > 0 ? (
-                <ul className="space-y-2 print-analysis-list">
-                  {results.improvements.map((improvement, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <ArrowRight className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0 no-print" />
-                      <span>{typeof improvement === 'string' ? improvement : 'Improvement'}</span>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <div className="space-y-2 print-analysis-list">
-                  <div className="flex items-start gap-2">
-                    <ArrowRight className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0 no-print" />
-                    <span>Develop technical skills</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <ArrowRight className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0 no-print" />
-                    <span>Gain practical experience</span>
-                  </div>
-                </div>
-              )}
-              </CardContent>
-            </Card>
-        </div>
+                  <Card className="border-green-200">
+                    <CardHeader>
+                      <CardTitle className="flex items-center space-x-2">
+                        <Code className="w-5 h-5 text-green-600" />
+                        <span>Technical Readiness</span>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div>
+                          <div className="flex justify-between mb-2">
+                            <span className="text-2xl font-bold text-green-600">
+                              {results.technical.overall}%
+                            </span>
+                            <Badge variant={results.technical.overall >= 75 ? 'default' : results.technical.overall >= 60 ? 'secondary' : 'destructive'}>
+                              {results.technical.overall >= 75 ? 'Strong' : results.technical.overall >= 60 ? 'Moderate' : 'Developing'}
+                            </Badge>
+                          </div>
+                          <Progress value={results.technical.overall} className="h-3" />
+                        </div>
+                        <div className="text-sm text-gray-600">
+                          Correct: {results.technical.correctAnswers} / {results.technical.totalQuestions}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
 
-        {/* Next Steps */}
-        <Card className="mb-8 print-next-steps">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 print-next-steps-title">
-                <BookOpen className="h-6 w-6 text-indigo-600 no-print" />
-                Next Steps
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {results.nextSteps && results.nextSteps.length > 0 ? (
-              <div className="space-y-3 print-step-list">
-                {results.nextSteps.map((step, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-indigo-50 print-step-item">
-                    <div className="flex-shrink-0 w-6 h-6 bg-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold no-print">
-                      {index + 1}
+                  <Card className="border-orange-200">
+                    <CardHeader>
+                      <CardTitle className="flex items-center space-x-2">
+                        <Target className="w-5 h-5 text-orange-600" />
+                        <span>WISCAR Analysis</span>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div>
+                          <div className="flex justify-between mb-2">
+                            <span className="text-2xl font-bold text-orange-600">
+                              {results.wiscar.overall}%
+                            </span>
+                            <Badge variant="outline" className="bg-orange-50 text-orange-700">
+                              {results.wiscar.overall >= 75 ? 'High Readiness' : results.wiscar.overall >= 60 ? 'Moderate Readiness' : 'Needs Development'}
+                            </Badge>
+                          </div>
+                          <Progress value={results.wiscar.overall} className="h-3" />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Quick Actions */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center space-x-2">
+                      <Zap className="w-6 h-6 text-blue-600" />
+                      <span>Quick Actions</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid md:grid-cols-3 gap-4">
+                      <Button variant="outline" className="h-auto p-4 flex flex-col items-center space-y-2" onClick={printResults}>
+                        <Download className="w-6 h-6" />
+                        <span>Download PDF Report</span>
+                      </Button>
+                      <Button variant="outline" className="h-auto p-4 flex flex-col items-center space-y-2">
+                        <Share2 className="w-6 h-6" />
+                        <span>Share Results</span>
+                      </Button>
+                      <Button variant="outline" className="h-auto p-4 flex flex-col items-center space-y-2" onClick={() => setActiveTab('learning')}>
+                        <BookOpen className="w-6 h-6" />
+                        <span>View Learning Path</span>
+                      </Button>
                     </div>
-                    <span className="print-step-text">{typeof step === 'string' ? step : 'Next step'}</span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="space-y-3 print-step-list">
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-indigo-50 print-step-item">
-                  <div className="flex-shrink-0 w-6 h-6 bg-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold no-print">
-                    1
-                  </div>
-                  <span className="print-step-text">Focus on skill development</span>
-                </div>
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-indigo-50 print-step-item">
-                  <div className="flex-shrink-0 w-6 h-6 bg-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold no-print">
-                    2
-                  </div>
-                  <span className="print-step-text">Take relevant courses</span>
-                </div>
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-indigo-50 print-step-item">
-                  <div className="flex-shrink-0 w-6 h-6 bg-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold no-print">
-                    3
-                  </div>
-                  <span className="print-step-text">Gain practical experience</span>
-                </div>
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-indigo-50 print-step-item">
-                  <div className="flex-shrink-0 w-6 h-6 bg-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold no-print">
-                    4
-                  </div>
-                  <span className="print-step-text">Seek mentorship</span>
-                </div>
+                  </CardContent>
+                </Card>
               </div>
             )}
-          </CardContent>
-        </Card>
 
-        {/* Print Footer */}
-        <div className="hidden print:block print-footer">
-          <div className="print-footer-brand">Path Finder</div>
-          <div className="print-footer-description">
-            Discover your perfect career path with our comprehensive assessments. Make informed decisions about your future with data-driven insights.
+            {/* Psychometric Tab */}
+            {activeTab === 'psychometric' && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2">
+                    <Brain className="w-6 h-6 text-purple-600" />
+                    <span>Psychological Fit Analysis</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      {Object.entries(results.psychometric.categories).map(([category, score]) => (
+                        <div key={category} className="space-y-2">
+                          <div className="flex justify-between items-center">
+                            <h4 className="font-semibold text-gray-900 capitalize">{category}</h4>
+                            <Badge variant={score >= 75 ? 'default' : score >= 60 ? 'secondary' : 'destructive'}>
+                              {score}%
+                            </Badge>
+                          </div>
+                          <Progress value={score} className="h-2" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Technical Tab */}
+            {activeTab === 'technical' && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2">
+                    <Code className="w-6 h-6 text-green-600" />
+                    <span>Technical Readiness Analysis</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      {Object.entries(results.technical.categories).map(([category, score]) => (
+                        <div key={category} className="space-y-2">
+                          <div className="flex justify-between items-center">
+                            <h4 className="font-semibold text-gray-900 capitalize">{category}</h4>
+                            <Badge variant={score >= 75 ? 'default' : score >= 60 ? 'secondary' : 'destructive'}>
+                              {score}%
+                            </Badge>
+                          </div>
+                          <Progress value={score} className="h-2" />
+                        </div>
+                      ))}
+                    </div>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-semibold text-gray-900 mb-2">Performance Summary</h4>
+                      <p className="text-gray-600">
+                        You answered {results.technical.correctAnswers} out of {results.technical.totalQuestions} questions correctly.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* WISCAR Tab */}
+            {activeTab === 'wiscar' && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2">
+                    <Target className="w-6 h-6 text-orange-600" />
+                    <span>WISCAR Career Readiness Analysis</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      {Object.entries(results.wiscar.dimensions).map(([dimension, score]) => (
+                        <div key={dimension} className="space-y-2">
+                          <div className="flex justify-between items-center">
+                            <h4 className="font-semibold text-gray-900 capitalize">{dimension}</h4>
+                            <Badge variant={score >= 75 ? 'default' : score >= 60 ? 'secondary' : 'destructive'}>
+                              {score}%
+                            </Badge>
+                          </div>
+                          <Progress value={score} className="h-2" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Careers Tab */}
+            {activeTab === 'careers' && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2">
+                    <Users className="w-6 h-6 text-blue-600" />
+                    <span>Career Path Analysis</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div className="grid md:grid-cols-1 gap-4">
+                      {results.careerMatches.map((career, index) => (
+                        <div key={index} className="border rounded-lg p-6 hover:shadow-md transition-shadow">
+                          <div className="flex justify-between items-start mb-4">
+                            <div className="flex-1">
+                              <h4 className="text-xl font-semibold text-gray-900 mb-2">{career.title}</h4>
+                              <p className="text-gray-600 mb-3">{career.description}</p>
+                            </div>
+                            <div className="text-right ml-4">
+                              <Badge 
+                                variant={career.matchScore >= 75 ? 'default' : career.matchScore >= 60 ? 'secondary' : 'outline'} 
+                                className="mb-2"
+                              >
+                                {career.matchScore}% Match
+                              </Badge>
+                              <div className="text-sm text-gray-600 space-y-1">
+                                <div className="flex items-center gap-1">
+                                  <DollarSign className="w-4 h-4" />
+                                  {career.salary}
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <span>{career.demand === 'high' ? '📈' : career.demand === 'medium' ? '📊' : '📉'}</span>
+                                  <span className="capitalize">{career.demand} demand</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <Progress value={career.matchScore} className="h-2 mb-4" />
+                          
+                          <div className="flex justify-between items-end">
+                            <div>
+                              <div className="text-sm text-gray-500 mb-2">Key Requirements:</div>
+                              <div className="flex flex-wrap gap-2">
+                                {career.requirements.map((req, reqIndex) => (
+                                  <Badge key={reqIndex} variant="secondary" className="text-xs">
+                                    {req}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+                            <Button variant="outline" size="sm" className="flex items-center gap-2">
+                              Learn More
+                              <ArrowUpRight className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Learning Path Tab */}
+            {activeTab === 'learning' && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2">
+                    <BookOpen className="w-6 h-6 text-green-600" />
+                    <span>Your Learning Journey</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div className="space-y-4">
+                      {results.learningPath.map((stage, index) => (
+                        <div key={index} className="flex items-start space-x-4 p-4 border rounded-lg hover:shadow-md transition-shadow">
+                          <div className="flex-shrink-0">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                              stage.effort === 'high' ? 'bg-red-100 text-red-700' :
+                              stage.effort === 'medium' ? 'bg-orange-100 text-orange-700' :
+                              'bg-green-100 text-green-700'
+                            }`}>
+                              {stage.completed ? (
+                                <CheckCircle className="w-5 h-5" />
+                              ) : (
+                                <span className="font-semibold text-sm">{index + 1}</span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex justify-between items-start mb-2">
+                              <h4 className="font-semibold text-gray-900">{stage.stage}</h4>
+                              <div className="flex items-center gap-2">
+                                <Badge variant="outline" className="flex items-center gap-1">
+                                  <Clock className="w-3 h-3" />
+                                  {stage.duration}
+                                </Badge>
+                                <Badge variant="outline" className={
+                                  stage.effort === 'high' ? 'bg-red-100 text-red-700' :
+                                  stage.effort === 'medium' ? 'bg-orange-100 text-orange-700' :
+                                  'bg-green-100 text-green-700'
+                                }>
+                                  <span className="mr-1">
+                                    {stage.effort === 'high' ? '🔥' : stage.effort === 'medium' ? '⚡' : '🌱'}
+                                  </span>
+                                  {stage.effort} effort
+                                </Badge>
+                              </div>
+                            </div>
+                            <div className="space-y-1 mb-3">
+                              {stage.modules.map((module, moduleIndex) => (
+                                <div key={moduleIndex} className="text-sm text-gray-600 flex items-center gap-2">
+                                  <PlayCircle className="w-3 h-3 text-gray-400" />
+                                  {module}
+                                </div>
+                              ))}
+                            </div>
+                            <Button variant="outline" size="sm" className="flex items-center gap-2">
+                              Start Learning
+                              <ArrowRight className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Improvement Tab */}
+            {activeTab === 'improvement' && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2">
+                    <TrendingUp className="w-6 h-6 text-blue-600" />
+                    <span>Improvement Areas</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    {results.improvementAreas.map((area, index) => (
+                      <div key={index} className="border rounded-lg p-6">
+                        <div className="flex justify-between items-start mb-4">
+                          <div>
+                            <h4 className="text-xl font-semibold text-gray-900 mb-2">{area.area}</h4>
+                            <div className="flex items-center gap-4">
+                              <div className="text-sm text-gray-600">
+                                Current: {area.currentScore}%
+                              </div>
+                              <div className="text-sm text-gray-600">
+                                Target: {area.targetScore}%
+                              </div>
+                            </div>
+                          </div>
+                          <Badge variant={area.currentScore >= area.targetScore ? 'default' : 'destructive'}>
+                            {area.currentScore >= area.targetScore ? 'On Track' : 'Needs Work'}
+                          </Badge>
+                        </div>
+                        
+                        <Progress value={area.currentScore} className="h-2 mb-4" />
+                        
+                        <div className="grid md:grid-cols-2 gap-6">
+                          <div>
+                            <h5 className="font-semibold text-gray-900 mb-2">Tips for Improvement:</h5>
+                            <ul className="space-y-1">
+                              {area.tips.map((tip, tipIndex) => (
+                                <li key={tipIndex} className="text-sm text-gray-600 flex items-start gap-2">
+                                  <Lightbulb className="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
+                                  {tip}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div>
+                            <h5 className="font-semibold text-gray-900 mb-2">Recommended Resources:</h5>
+                            <ul className="space-y-1">
+                              {area.resources.map((resource, resourceIndex) => (
+                                <li key={resourceIndex} className="text-sm text-gray-600 flex items-start gap-2">
+                                  <ExternalLink className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                                  {resource}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
-          <div className="print-footer-contact">
-            <div className="print-footer-contact-item">
-              <span>📧</span>
-              <span>hello@careercompass.com</span>
-            </div>
-            <div className="print-footer-contact-item">
-              <span>📞</span>
-              <span>+1 (555) 123-4567</span>
-            </div>
-            <div className="print-footer-contact-item">
-              <span>📍</span>
-              <span>San Francisco, CA</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center no-print">
-          <Button 
-            onClick={() => navigate('/assessments')}
-            className="flex items-center gap-2"
-          >
-            <ArrowRight className="h-4 w-4" />
-            Take Another Assessment
-          </Button>
-          <Button 
-            variant="outline"
-            onClick={handlePrint}
-            className="flex items-center gap-2"
-          >
-            <Printer className="h-4 w-4" />
-            Print Results
-          </Button>
-          <Button 
-            variant="outline"
-            onClick={saveAsPDF}
-            disabled={isSavingPDF}
-            className="flex items-center gap-2"
-          >
-            {isSavingPDF ? (
-              <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-                Opening Print Dialog...
-              </>
-            ) : (
-              <>
-                <Download className="h-4 w-4" />
-                Save as PDF
-              </>
-            )}
-          </Button>
         </div>
       </div>
-    </div>
     </>
   );
 };

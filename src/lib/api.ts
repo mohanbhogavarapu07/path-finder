@@ -133,62 +133,85 @@ export interface AssessmentSession {
   sessionId: string;
   assessmentId: string;
   userId?: string;
-  status: 'in-progress' | 'completed';
-  answers: Record<string, any>;
-  results?: AssessmentResults;
+  status: 'in-progress' | 'completed' | 'abandoned';
+  currentSection: 'introduction' | 'psychometric' | 'technical' | 'wiscar' | 'results';
   startedAt: string;
   completedAt?: string;
   duration?: number;
 }
 
-export interface SectionScore {
-  sectionId: 'introduction' | 'psychometric' | 'technical' | 'wiscar' | 'results';
-  score: number;
-  maxScore: number;
-  percentage: number;
-  performance: 'excellent' | 'good' | 'needsImprovement';
-}
-
-export interface WISCARScores {
-  will: number;
-  interest: number;
-  skill: number;
-  cognitive: number;
-  ability: number;
-  realWorld: number;
-  overall: number;
-}
-
-export interface CareerPath {
-  title: string;
-  description: string;
-  alignmentScore: number;
-  matchLevel: 'excellent' | 'good' | 'moderate' | 'poor';
-  requirements: string[];
-  recommendations: string[];
-}
-
-export interface RecommendationItem {
-  type: 'overall' | 'section' | 'career' | 'learning';
-  title: string;
-  description: string;
-  confidence: number;
-  nextSteps: string[];
-}
-
 export interface AssessmentResults {
+  assessmentTitle: string;
   overallScore: number;
-  recommendation: 'yes' | 'maybe' | 'no';
-  confidence: number;
-  reason?: string;
-  sectionScores: SectionScore[];
-  wiscarScores: WISCARScores;
-  detailedSubsections?: Record<string, Record<string, number>>;
-  careerPaths: CareerPath[];
-  recommendations: RecommendationItem[];
-  strengths: string[];
-  improvements: string[];
-  nextSteps: string[];
+  confidenceScore: number;
+  recommendation: 'YES' | 'MAYBE' | 'NO';
+  recommendationReason: string;
+  psychometric: {
+    overall: number;
+    categories: {
+      interest: number;
+      motivation: number;
+      personality: number;
+      cognitive: number;
+      growth: number;
+    };
+  };
+  technical: {
+    overall: number;
+    categories: {
+      logicalReasoning: number;
+      numeracy: number;
+      domainKnowledge: number;
+      problemSolving: number;
+    };
+    correctAnswers: number;
+    totalQuestions: number;
+  };
+  wiscar: {
+    overall: number;
+    dimensions: {
+      will: number;
+      interest: number;
+      skill: number;
+      cognitive: number;
+      ability: number;
+      realWorld: number;
+    };
+  };
+  skillGaps: Array<{
+    skill: string;
+    currentLevel: number;
+    requiredLevel: number;
+    priority: 'high' | 'medium' | 'low';
+  }>;
+  careerMatches: Array<{
+    title: string;
+    description: string;
+    matchScore: number;
+    salary: string;
+    demand: 'high' | 'medium' | 'low';
+    requirements: string[];
+  }>;
+  learningPath: Array<{
+    stage: string;
+    duration: string;
+    modules: string[];
+    effort: 'low' | 'medium' | 'high';
+    completed: boolean;
+  }>;
+  improvementAreas: Array<{
+    area: string;
+    currentScore: number;
+    targetScore: number;
+    tips: string[];
+    resources: string[];
+  }>;
+  metadata: {
+    userId?: string;
+    timestamp: string;
+    sessionId?: string;
+    assessmentId: string;
+  };
 }
 
 // API service class

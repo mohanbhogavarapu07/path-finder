@@ -337,27 +337,7 @@ const Blog = () => {
                   </CardContent>
                 </Card>
 
-                {/* Newsletter Signup */}
-                <Card className="bg-white border border-gray-100 shadow-sm">
-                  <CardHeader>
-                    <CardTitle className="text-lg">Stay Updated</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-gray-600 mb-4">
-                      Get the latest career insights and assessment tips delivered to your inbox.
-                    </p>
-                    <div className="space-y-2">
-                      <Input
-                        type="email"
-                        placeholder="Enter your email"
-                        className="text-sm"
-                      />
-                                              <Button className="w-full bg-[#4CAF50] hover:bg-[#43A047] text-white" size="sm">
-                        Subscribe
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+
               </div>
             </div>
           </div>

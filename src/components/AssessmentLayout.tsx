@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./layout/Header";
-import Footer from "./layout/Footer";
+import Footer from "@/components/Footer";
 
 const AssessmentLayout = ({ children }: { children: React.ReactNode }) => (
       <div className="min-h-screen flex flex-col bg-background">

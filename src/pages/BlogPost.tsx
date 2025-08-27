@@ -306,22 +306,7 @@ const BlogPost = () => {
             )}
             
             {/* Call to Action */}
-            <Card className="mt-12 p-8 bg-white border border-gray-100 shadow-sm">
-              <CardContent className="text-center">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Ready to Find Your Perfect Career Path?
-                </h3>
-                <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-                  Take our comprehensive career assessment to discover which career path 
-                  aligns best with your interests, skills, and personality.
-                </p>
-                <Link to="/assessments">
-                                     <Button size="lg" className="bg-[#4CAF50] hover:bg-[#43A047] text-white">
-                    Start Your Assessment
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
+
           </div>
         </div>
       </section>

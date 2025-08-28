@@ -21,7 +21,7 @@ import {
   X,
   Download
 } from 'lucide-react';
-import Header from '@/components/layout/Header';
+import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { apiClient } from '@/lib/api';
 import { toast } from 'sonner';
@@ -427,7 +427,7 @@ const AdminBlogEditor = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-blue-50">
-        <Header />
+        <Navigation />
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
@@ -441,7 +441,7 @@ const AdminBlogEditor = () => {
 
   return (
     <div className="min-h-screen bg-blue-50">
-      <Header />
+      <Navigation />
       
              {/* Editor Header */}
        <section className="py-6 bg-white border-b border-gray-100">

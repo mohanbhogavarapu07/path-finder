@@ -4,7 +4,7 @@ import { Users, Target, Award, Heart, CheckCircle, Star } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import Header from '@/components/layout/Header';
+import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 
 const About = () => {
@@ -71,7 +71,7 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Navigation />
       
       {/* Hero Section */}
       <section className="relative py-24 bg-primary overflow-hidden">

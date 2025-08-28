@@ -4,7 +4,7 @@ import { Calendar, Clock, User, ArrowLeft, Share2, Bookmark, Tag } from 'lucide-
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import Header from '@/components/layout/Header';
+import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { getBlogPost, type BlogPost } from '@/lib/api';
 import { format } from 'date-fns';
@@ -152,7 +152,7 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen bg-blue-50">
-      <Header />
+      <Navigation />
       
       {/* Article Header */}
       <section className="py-16 bg-white border-b border-gray-100">

@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { Brain, Code, Cloud, Smartphone, Shield, BarChart3, Palette, Briefcase, Award, Heart, Wrench, Cog, Monitor, TrendingUp, Users } from 'lucide-react';
 import AssessmentCard from '@/components/AssessmentCard';
-import Header from '@/components/layout/Header';
+import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { useAssessments, useAssessmentCategories } from '@/hooks/useAssessments';
 import { DynamicAssessment } from '@/lib/api';
@@ -118,7 +118,7 @@ const Assessments = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Navigation />
       
       {/* Hero Section */}
       <div className="pt-40 px-8 md:px-12 lg:px-16">

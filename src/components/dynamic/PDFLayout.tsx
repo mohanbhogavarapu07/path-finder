@@ -69,10 +69,9 @@ const PDFLayout: React.FC<PDFLayoutProps> = ({
         <div className="pdf-header-content">
           <div className="pdf-logo-section">
             <div className="pdf-logo-icon">
-              <FactorBeamLogo className="h-6 w-6 text-white" />
+                             <FactorBeamLogo className="h-16 w-24 text-white" />
             </div>
             <div className="pdf-logo-text">
-              <h1 className="pdf-logo-title">Factor Beam</h1>
               <p className="pdf-logo-subtitle">Career Assessment & Guidance Platform</p>
             </div>
           </div>

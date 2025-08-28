@@ -4,7 +4,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Home, ArrowLeft, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import Header from '@/components/layout/Header';
+import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 
 const NotFound = () => {
@@ -27,7 +27,7 @@ const NotFound = () => {
 
   return (
     <div className="min-h-screen bg-muted/30 flex flex-col">
-      <Header />
+      <Navigation />
       
       <div className="flex-1 flex items-center justify-center py-16">
         <div className="text-center max-w-2xl mx-auto px-4">

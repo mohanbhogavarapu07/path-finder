@@ -92,9 +92,8 @@ const getCategoryIcon = (category: string) => {
 
 const FeaturedSection = () => {
   const stats = [
-    { label: "Active Assessments", value: "300+", icon: Award },
-    { label: "Monthly Users", value: "250K+", icon: Users },
-    { label: "Success Rate", value: "94%", icon: TrendingUp },
+    { label: "Assessments", value: "100+", icon: Award },
+    { label: "Users", value: "5K+", icon: Users },
   ];
 
   // Fetch assessments from backend to get categories
@@ -179,7 +178,7 @@ const FeaturedSection = () => {
             to unlock potential, drive growth, and achieve measurable results.
           </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-soft rounded-lg mb-3">

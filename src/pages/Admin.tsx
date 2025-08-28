@@ -21,7 +21,7 @@ import {
   Settings
 } from 'lucide-react';
 import { toast } from 'sonner';
-import Header from '@/components/layout/Header';
+import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { assessmentAPI, DynamicAssessment } from '@/lib/api';
 
@@ -554,7 +554,7 @@ const Admin = () => {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-blue-50 flex flex-col">
-        <Header />
+        <Navigation />
         <div className="flex-1 flex items-center justify-center">
           <AuthModal />
         </div>
@@ -566,7 +566,7 @@ const Admin = () => {
   if (loading || assessmentLoading) {
     return (
       <div className="min-h-screen bg-blue-50 flex flex-col">
-        <Header />
+        <Navigation />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
@@ -581,7 +581,7 @@ const Admin = () => {
   if (error) {
     return (
       <div className="min-h-screen bg-blue-50 flex flex-col">
-        <Header />
+        <Navigation />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <div className="text-red-500 text-xl mb-4">⚠️</div>
@@ -599,7 +599,7 @@ const Admin = () => {
 
   return (
     <div className="min-h-screen bg-blue-50 flex flex-col">
-      <Header />
+      <Navigation />
       
       {/* Admin Header */}
       <section className="py-8 bg-white border-b border-gray-100">

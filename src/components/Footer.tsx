@@ -1,4 +1,5 @@
-import { BookOpen, Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram, Youtube } from "lucide-react";
+import { BookOpen, Mail, Phone, MapPin, Linkedin } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/whatsapp-icon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
@@ -18,11 +19,7 @@ const Footer = () => {
 
   const support = [
     { name: "Help Center", href: "/help" },
-    { name: "Contact Us", href: "/contact" },
-    { name: "FAQ", href: "/faq" },
-    { name: "User Guide", href: "/guide" },
-    { name: "System Status", href: "/status" },
-    { name: "Feedback", href: "/feedback" }
+    { name: "Contact Us", href: "/contact" }
   ];
 
   const company = [
@@ -36,19 +33,12 @@ const Footer = () => {
 
   const legal = [
     { name: "Privacy Policy", href: "/privacy" },
-    { name: "Terms of Service", href: "/terms" },
-    { name: "Cookie Policy", href: "/cookies" },
-    { name: "Data Protection", href: "/data-protection" },
-    { name: "Accessibility", href: "/accessibility" },
-    { name: "Compliance", href: "/compliance" }
+    { name: "Terms of Service", href: "/terms" }
   ];
 
   const socialLinks = [
-    { name: "Facebook", icon: Facebook, href: "https://facebook.com" },
-    { name: "Twitter", icon: Twitter, href: "https://twitter.com" },
     { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
-    { name: "Instagram", icon: Instagram, href: "https://instagram.com" },
-    { name: "YouTube", icon: Youtube, href: "https://youtube.com" }
+    { name: "WhatsApp", icon: WhatsAppIcon, href: "https://whatsapp.com/channel/0029VbBDp9i7DAWpPbckVq1n" }
   ];
 
   return (
@@ -60,34 +50,21 @@ const Footer = () => {
             
             {/* Brand Section */}
             <div className="lg:col-span-2">
-            <div className="flex items-center space-x-3 mb-4">
-                <img 
-                  src="/logo.png" 
-                  alt="FactorBeam Logo" 
-                  className="h-8 w-auto object-contain"
-                />
-                <h3 className="text-xl font-bold text-heading">FactorBeam</h3>
+            <div className="mb-2">
+                <Link to="/">
+                  <img 
+                    src="/logo.png" 
+                    alt="FactorBeam Logo" 
+                    className="h-24 w-32 object-contain cursor-pointer hover:opacity-80 transition-opacity"
+                  />
+                </Link>
             </div>
               <p className="text-foreground-soft mb-6 max-w-sm">
                 The world's most comprehensive platform for personal and professional assessments. 
                 Trusted by millions worldwide to unlock potential and drive growth.
               </p>
               
-              {/* Contact Info */}
-              <div className="space-y-2">
-                <div className="flex items-center text-foreground-soft">
-                  <Mail className="w-4 h-4 mr-2" />
-                  <span className="text-sm">hello@factorbeam.com</span>
-                </div>
-                <div className="flex items-center text-foreground-soft">
-                  <Phone className="w-4 h-4 mr-2" />
-                  <span className="text-sm">+1 (555) 123-4567</span>
-                </div>
-                <div className="flex items-center text-foreground-soft">
-                  <MapPin className="w-4 h-4 mr-2" />
-                  <span className="text-sm">San Francisco, CA</span>
-                </div>
-              </div>
+              
             </div>
 
             {/* Quick Links */}
@@ -164,7 +141,7 @@ const Footer = () => {
           {/* Bottom Section */}
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm text-foreground-soft">
-              © {currentYear} FactorBeam. All rights reserved.
+              © {currentYear} FactorBeam. All rights reserved. All the assessments are educational purposes only.
             </p>
             
             {/* Social Links */}

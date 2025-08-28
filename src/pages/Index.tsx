@@ -1,6 +1,5 @@
 
 import Navigation from "@/components/Navigation";
-import SearchSection from "@/components/SearchSection";
 import FeaturedSection from "@/components/FeaturedSection";
 import AssessmentCard from "@/components/AssessmentCard";
 import Footer from "@/components/Footer";
@@ -55,7 +54,6 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      <SearchSection />
       <FeaturedSection />
 
       {/* Assessment Grid Section */}

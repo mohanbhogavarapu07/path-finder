@@ -6,16 +6,17 @@ const Navigation = () => {
   return (
     <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+                 <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-3">
-              <img 
-                src="/logo.png" 
-                alt="FactorBeam Logo" 
-                className="h-8 w-auto object-contain"
-              />
-              <h1 className="text-xl font-bold text-heading">FactorBeam</h1>
+              <Link to="/">
+                <img 
+                  src="/logo.png" 
+                  alt="FactorBeam Logo" 
+                  className="h-24 w-32 object-contain cursor-pointer hover:opacity-80 transition-opacity"
+                />
+              </Link>
             </div>
           </div>
 
@@ -39,17 +40,17 @@ const Navigation = () => {
                 New
               </Link>
             </Button>
+            {/* <Button variant="ghost" size="sm" asChild>
+              <Link to="/blog" className="flex items-center gap-2">
+                <BookOpen className="w-4 h-4" />
+                Blog
+              </Link>
+            </Button> */}
           </div>
 
           {/* Right Actions */}
           <div className="flex items-center space-x-4">
-            {/* <Button variant="ghost" size="sm" className="hidden md:flex" asChild>
-              <Link to="/assessments">
-                <TrendingUp className="w-4 h-4 mr-2" />
-                Assessments
-              </Link>
-            </Button> */}
-            <Button variant="ghost" size="sm" asChild>
+            {/* <Button variant="ghost" size="sm" asChild>
               <Link to="/about">
                 <User className="w-4 h-4" />
               </Link>
@@ -58,7 +59,7 @@ const Navigation = () => {
               <Link to="/contact">
                 <Settings className="w-4 h-4" />
               </Link>
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>

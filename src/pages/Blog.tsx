@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import Header from '@/components/layout/Header';
+import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { getBlogPosts, getBlogCategories, searchBlogPosts, getBlogPostsByCategory, BlogPost, BlogPostList } from '@/lib/api';
 import { format } from 'date-fns';
@@ -86,7 +86,7 @@ const Blog = () => {
   if (loading && blogPosts.length === 0) {
     return (
       <div className="min-h-screen bg-blue-50">
-        <Header />
+        <Navigation />
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
@@ -101,7 +101,7 @@ const Blog = () => {
   if (error) {
     return (
               				<div className="min-h-screen bg-gradient-to-br from-[#285C52]/5 via-white to-[#4CAF50]/5">
-        <Header />
+        <Navigation />
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
             <div className="text-red-500 text-xl mb-4">⚠️</div>
@@ -119,7 +119,7 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-blue-50">
-      <Header />
+      <Navigation />
       
       {/* Main Content */}
       <section className="py-12">

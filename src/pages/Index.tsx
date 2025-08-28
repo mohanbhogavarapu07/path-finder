@@ -11,6 +11,7 @@ import { Grid, List, SlidersHorizontal } from "lucide-react";
 import { Shield, Users, Award, Globe, Clock, Star, Target, Lightbulb, Brain, Compass } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -129,10 +130,12 @@ const Index = () => {
           )}
           
           <div className="text-center mt-12">
-            <Button size="lg" className="px-8">
-              View All Assessments
-                  </Button>
-        </div>
+            <Button size="lg" className="px-8" asChild>
+              <Link to="/assessments">
+                View All Assessments
+              </Link>
+            </Button>
+          </div>
       </div>
       </section>
           
@@ -149,9 +152,9 @@ const Index = () => {
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
+            <Card className="border-primary/20 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit">
                   <Target className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">High School Students</CardTitle>
@@ -168,9 +171,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
+            <Card className="border-primary/20 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit">
                   <Lightbulb className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">College Students</CardTitle>
@@ -187,9 +190,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
+            <Card className="border-primary/20 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit">
                   <Brain className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">Graduates & Professionals</CardTitle>
@@ -206,9 +209,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
+            <Card className="border-primary/20 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit">
                   <Compass className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">Creative & Arts</CardTitle>
@@ -225,9 +228,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
+            <Card className="border-primary/20 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit">
                   <Users className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">Business & Commerce</CardTitle>
@@ -244,9 +247,9 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
+            <Card className="border-primary/20 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit">
                   <Award className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-lg font-semibold text-foreground">International Opportunities</CardTitle>
@@ -278,7 +281,7 @@ const Index = () => {
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-accent-400 text-accent-400" />
+                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
                 <p className="text-foreground mb-4">
@@ -295,7 +298,7 @@ const Index = () => {
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-accent-400 text-accent-400" />
+                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
                 <p className="text-foreground mb-4">
@@ -312,7 +315,7 @@ const Index = () => {
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-accent-400 text-accent-400" />
+                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
                 <p className="text-foreground mb-4">

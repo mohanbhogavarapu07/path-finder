@@ -277,8 +277,7 @@ const Categories = () => {
                         key={index}
                         className={`p-6 rounded-lg border-2 ${category.color} hover:shadow-custom-md transition-all duration-300 group cursor-pointer relative`}
                       >
-                        {/* Arrow icon in top right */}
-                        <ArrowRight className="absolute top-4 right-4 w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+
                         
                         <div className="flex items-center gap-3 mb-4">
                           <div className={`p-3 rounded-lg ${category.color.replace('border-', 'bg-').replace('/200', '/100')}`}>

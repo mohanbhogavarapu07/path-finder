@@ -175,14 +175,9 @@ const AssessmentCard = ({
           </div>
         </div>
         
-        <div className="flex space-x-2">
-          <Button variant="outline" size="sm" className="text-xs">
-            Preview
-          </Button>
-          <Button size="sm" className="btn-primary text-xs" onClick={handleStartAssessment}>
-            Start Assessment
-          </Button>
-        </div>
+        <Button size="sm" className="btn-primary text-xs h-8 px-4" onClick={handleStartAssessment}>
+          Start Assessment
+        </Button>
       </div>
       
       {/* Assessment Start Dialog */}

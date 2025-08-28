@@ -166,7 +166,7 @@ const FeaturedSection = () => {
       <div className="max-w-7xl mx-auto">
         {/* Stats Section */}
         <div className="text-center mb-16">
-          <Badge className="mb-4 bg-primary-soft text-primary border-primary/20 px-4 py-2">
+          <Badge className="mb-4 bg-primary-soft text-primary border-primary/20 px-4 py-2 hover:bg-primary-soft hover:text-primary">
             <TrendingUp className="w-4 h-4 mr-2" />
             Trusted by Professionals Worldwide
           </Badge>

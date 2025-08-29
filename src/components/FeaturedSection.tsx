@@ -92,8 +92,9 @@ const getCategoryIcon = (category: string) => {
 
 const FeaturedSection = () => {
   const stats = [
-    { label: "Assessments", value: "100+", icon: Award },
-    { label: "Users", value: "5K+", icon: Users },
+    { label: "Active Assessments", value: "300+", icon: Award },
+    { label: "Monthly Users", value: "250K+", icon: Users },
+    { label: "Success Rate", value: "94%", icon: TrendingUp },
   ];
 
   // Fetch assessments from backend to get categories
@@ -166,7 +167,7 @@ const FeaturedSection = () => {
       <div className="max-w-7xl mx-auto">
         {/* Stats Section */}
         <div className="text-center mb-16">
-          <Badge className="mb-4 bg-primary-soft text-primary border-primary/20 px-4 py-2 hover:bg-primary-soft hover:text-primary">
+          <Badge className="mb-4 bg-primary-soft text-primary border-primary/20 px-4 py-2">
             <TrendingUp className="w-4 h-4 mr-2" />
             Trusted by Professionals Worldwide
           </Badge>
@@ -178,17 +179,7 @@ const FeaturedSection = () => {
             to unlock potential, drive growth, and achieve measurable results.
           </p>
           
-                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-soft rounded-lg mb-3">
-                  <stat.icon className="w-6 h-6 text-primary" />
-                </div>
-                <div className="text-2xl font-bold text-heading">{stat.value}</div>
-                <div className="text-sm text-foreground-soft">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+     
         </div>
 
         {/* Categories Grid */}

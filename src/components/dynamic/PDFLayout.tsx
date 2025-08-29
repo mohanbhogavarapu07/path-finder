@@ -17,7 +17,7 @@ import {
 import { DynamicAssessment } from '@/lib/api';
 
 // FactorBeam Logo Component
-const FactorBeamLogo: React.FC<{ className?: string }> = ({ className = "h-6 w-6" }) => (
+const FactorBeamLogo: React.FC<{ className?: string }> = ({ className = "h-24 w-24" }) => (
   <img 
     src="/logo.png" 
     alt="FactorBeam Logo"
@@ -26,8 +26,8 @@ const FactorBeamLogo: React.FC<{ className?: string }> = ({ className = "h-6 w-6
       objectFit: 'contain',
       width: '100%',
       height: '100%',
-      maxWidth: '50px',
-      maxHeight: '50px',
+      maxWidth: '150px',
+      maxHeight: '150px',
       filter: 'brightness(1.2) contrast(1.1)'
     }}
   />
@@ -69,9 +69,10 @@ const PDFLayout: React.FC<PDFLayoutProps> = ({
         <div className="pdf-header-content">
           <div className="pdf-logo-section">
             <div className="pdf-logo-icon">
-                             <FactorBeamLogo className="h-16 w-24 text-white" />
+              <FactorBeamLogo className="h-24 w-24 text-white" />
             </div>
             <div className="pdf-logo-text">
+              <h1 className="pdf-logo-title">Factor Beam</h1>
               <p className="pdf-logo-subtitle">Career Assessment & Guidance Platform</p>
             </div>
           </div>

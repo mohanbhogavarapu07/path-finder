@@ -1,12 +1,12 @@
 
 import React, { useEffect } from 'react';
-import { Brain, Code, Cloud, Smartphone, Shield, BarChart3, Palette, Briefcase, Award, Heart, Wrench, Cog, Monitor, TrendingUp, Users } from 'lucide-react';
+import { Brain, Code, Cloud, Smartphone, Shield, BarChart3, Palette, Briefcase, Award, Heart, Wrench, Cog, Monitor, TrendingUp, Users, Search } from 'lucide-react';
 import AssessmentCard from '@/components/AssessmentCard';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { useAssessments, useAssessmentCategories } from '@/hooks/useAssessments';
 import { DynamicAssessment } from '@/lib/api';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 import { sampleAssessments } from '@/data/assessments';
 
 const Assessments = () => {
@@ -14,6 +14,9 @@ const Assessments = () => {
   const { categories } = useAssessmentCategories();
   const [searchParams] = useSearchParams();
   const selectedCategory = searchParams.get('category');
+  const searchQuery = searchParams.get('search');
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // Use API data if available, otherwise fallback to sample data
   const assessments = apiAssessments && apiAssessments.length > 0 ? apiAssessments : sampleAssessments;
@@ -31,16 +34,22 @@ const Assessments = () => {
     }
   }, [selectedCategory]);
 
-  // Filter assessments by category if one is selected
-  const filteredAssessments = selectedCategory 
-    ? assessments?.filter(assessment => assessment.category === selectedCategory) || []
-    : assessments || [];
+  // Filter assessments by category and search query
+  const filteredAssessments = assessments?.filter(assessment => {
+    const matchesCategory = !selectedCategory || assessment.category === selectedCategory;
+    const matchesSearch = !searchQuery || 
+      assessment.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      assessment.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      ('tags' in assessment && assessment.tags && assessment.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())));
+    
+    return matchesCategory && matchesSearch;
+  }) || [];
 
   // Group assessments by category (only if no specific category is selected)
   const groupedAssessments = !selectedCategory ? categories.reduce((acc, category) => {
     acc[category] = assessments?.filter(assessment => assessment.category === category) || [];
     return acc;
-  }, {} as Record<string, DynamicAssessment[]>) : {};
+  }, {} as Record<string, (DynamicAssessment | any)[]>) : {};
 
   // Category icons mapping - now dynamic
   const categoryIcons = {
@@ -83,7 +92,7 @@ const Assessments = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background">
-        <Header />
+        <Navigation />
         <div className="pt-40 px-4">
           <div className="container mx-auto max-w-6xl">
             <div className="text-center">
@@ -100,7 +109,7 @@ const Assessments = () => {
   if (error && (!assessments || assessments.length === 0)) {
     return (
       <div className="min-h-screen bg-background">
-        <Header />
+        <Navigation />
         <div className="pt-40 px-4">
           <div className="container mx-auto max-w-6xl">
             <div className="text-center">
@@ -120,19 +129,67 @@ const Assessments = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
+      {/* Secondary Navigation - Assessment Categories */}
+      <div className="border-t border-gray-200 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <nav className="flex items-center space-x-8 overflow-x-auto py-4">
+            <button
+              onClick={() => navigate('/assessments')}
+              className={`text-base font-medium whitespace-nowrap transition-colors hover:text-factorbeam-primary px-2 py-1 cursor-pointer ${
+                location.pathname === "/assessments" && !location.search.includes("category=")
+                  ? "text-factorbeam-primary border-b-2 border-factorbeam-primary"
+                  : "text-gray-600"
+              }`}
+            >
+              View All
+            </button>
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => navigate(`/assessments?category=${encodeURIComponent(category)}`)}
+                className={`text-base font-medium whitespace-nowrap transition-colors hover:text-factorbeam-primary px-2 py-1 cursor-pointer ${
+                  location.search.includes(`category=${encodeURIComponent(category)}`)
+                    ? "text-factorbeam-primary border-b-2 border-factorbeam-primary"
+                    : "text-gray-600"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </nav>
+        </div>
+      </div>
+      
       {/* Hero Section */}
       <div className="pt-40 px-8 md:px-12 lg:px-16">
         <div className="w-full">
           <div className="text-left mb-12">
             <h2 className="text-4xl font-bold mb-4 text-foreground">
-              {selectedCategory ? `${selectedCategory} Assessments` : 'Choose Your Assessment'}
+              {searchQuery 
+                ? `Search Results for "${searchQuery}"`
+                : selectedCategory 
+                  ? `${selectedCategory} Assessments` 
+                  : 'Choose Your Assessment'
+              }
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
-              {selectedCategory 
-                ? `Explore our comprehensive range of ${selectedCategory.toLowerCase()} assessments, each designed with cutting-edge psychometric research to provide you with accurate, actionable insights about your ideal career path.`
-                : 'Explore our comprehensive range of career assessments, each designed with cutting-edge psychometric research to provide you with accurate, actionable insights about your ideal career path.'
+              {searchQuery 
+                ? `Found ${filteredAssessments.length} assessment${filteredAssessments.length !== 1 ? 's' : ''} matching your search.`
+                : selectedCategory 
+                  ? `Explore our comprehensive range of ${selectedCategory.toLowerCase()} assessments, each designed with cutting-edge psychometric research to provide you with accurate, actionable insights about your ideal career path.`
+                  : 'Explore our comprehensive range of career assessments, each designed with cutting-edge psychometric research to provide you with accurate, actionable insights about your ideal career path.'
               }
             </p>
+            {searchQuery && (
+              <div className="mt-4">
+                <button
+                  onClick={() => navigate('/assessments')}
+                  className="text-primary hover:text-primary/80 underline text-sm"
+                >
+                  ← Clear search and view all assessments
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -149,7 +206,34 @@ const Assessments = () => {
           </div>
         )}
         <div className="w-full">
-          {selectedCategory ? (
+          {searchQuery ? (
+            // Show search results
+            <div className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredAssessments.map((assessment) => (
+                  <AssessmentCard key={assessment.id} {...assessment} />
+                ))}
+              </div>
+              
+              {filteredAssessments.length === 0 && (
+                <div className="text-center py-12">
+                  <div className="max-w-md mx-auto">
+                    <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold text-foreground mb-2">No assessments found</h3>
+                    <p className="text-muted-foreground mb-4">
+                      Try adjusting your search terms or browse our categories.
+                    </p>
+                    <button
+                      onClick={() => navigate('/assessments')}
+                      className="text-primary hover:text-primary/80 underline text-sm"
+                    >
+                      View all assessments
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : selectedCategory ? (
             // Show assessments for specific category
             <div className="space-y-8">
               <div className="flex items-center gap-3 mb-6">
@@ -242,3 +326,4 @@ const Assessments = () => {
 };
 
 export default Assessments;
+

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { useAssessments } from "@/hooks/useAssessments";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import AssessmentCard from "@/components/AssessmentCard";
@@ -136,6 +136,7 @@ const fallbackNewAssessments = [
 const New = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState<'newest' | 'recently'>('newest');
+  const navigate = useNavigate();
   
   // Fetch assessments from backend
   const { data: assessments, isLoading } = useAssessments();
@@ -155,14 +156,28 @@ const New = () => {
       .slice(0, 6);
   }, [assessments]);
 
-  // Filter assessments based on search term
-  const filteredAssessments = useMemo(() => {
-    return newAssessments.filter(assessment =>
-      assessment.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      assessment.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      assessment.category.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [newAssessments, searchTerm]);
+  // Remove local filtering - only use global search navigation
+  const filteredAssessments = newAssessments;
+
+  // Handle search navigation
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      navigate(`/assessments?search=${encodeURIComponent(searchTerm.trim())}`);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSearch();
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    // Only navigate if user types and then presses Enter or clicks search
+    // Don't filter locally - let the main assessments page handle all filtering
+  };
 
   // What's New This Month features
   const whatsNewFeatures = [
@@ -196,7 +211,7 @@ const New = () => {
             {/* Header Section */}
             <div className="text-center mb-12">
               <h1 className="text-4xl lg:text-5xl font-bold text-heading mb-4">
-                New Assessments
+                New <span className="text-primary">Assessments</span>
               </h1>
               <p className="text-lg text-foreground-soft max-w-3xl mx-auto">
                 Explore our latest assessments featuring cutting-edge research and innovative approaches to personal growth.
@@ -211,10 +226,14 @@ const New = () => {
                   type="text"
                   placeholder="Search assessments, tools, and calculators..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={handleInputChange}
+                  onKeyPress={handleKeyPress}
                   className="pl-10 pr-4 py-3 text-lg border-2 focus:border-primary"
                 />
-
+                <Filter 
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5 cursor-pointer hover:text-primary" 
+                  onClick={handleSearch}
+                />
               </div>
             </div>
 

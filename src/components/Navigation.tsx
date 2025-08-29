@@ -6,18 +6,16 @@ const Navigation = () => {
   return (
     <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                 <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-3">
-              <Link to="/">
-                <img 
-                  src="/logo.png" 
-                  alt="FactorBeam Logo" 
-                  className="h-24 w-32 object-contain cursor-pointer hover:opacity-80 transition-opacity"
-                />
-              </Link>
-            </div>
+            <Link to="/" className="flex items-center space-x-3">
+              <img 
+                src="/logo.png" 
+                alt="FactorBeam Logo" 
+                className="h-24 w-auto object-contain"
+              />
+            </Link>
           </div>
 
           {/* Center Navigation Categories */}
@@ -40,26 +38,11 @@ const Navigation = () => {
                 New
               </Link>
             </Button>
-            {/* <Button variant="ghost" size="sm" asChild>
-              <Link to="/blog" className="flex items-center gap-2">
-                <BookOpen className="w-4 h-4" />
-                Blog
-              </Link>
-            </Button> */}
           </div>
 
-          {/* Right Actions */}
+          {/* Right Actions - Hidden icons */}
           <div className="flex items-center space-x-4">
-            {/* <Button variant="ghost" size="sm" asChild>
-              <Link to="/about">
-                <User className="w-4 h-4" />
-              </Link>
-            </Button>
-            <Button variant="ghost" size="sm" asChild>
-              <Link to="/contact">
-                <Settings className="w-4 h-4" />
-              </Link>
-            </Button> */}
+            {/* User and Settings icons removed */}
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { Search, Filter, TrendingUp, Clock, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAssessments } from "@/hooks/useAssessments";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import AssessmentCard from "@/components/AssessmentCard";
@@ -129,6 +129,7 @@ const fallbackPopularAssessments = [
 const Popular = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTimeFilter, setActiveTimeFilter] = useState<'all' | 'month' | 'week'>('all');
+  const navigate = useNavigate();
   
   // Fetch assessments from backend
   const { data: assessments, isLoading } = useAssessments();
@@ -149,16 +150,35 @@ const Popular = () => {
       .slice(0, 6);
   }, [assessments]);
 
-  // Filter assessments based on search term
-  const filteredAssessments = useMemo(() => {
-    return popularAssessments.filter(assessment =>
-      assessment.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      assessment.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      assessment.category.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [popularAssessments, searchTerm]);
+  // Remove local filtering - only use global search navigation
+  const filteredAssessments = popularAssessments;
 
+  // Handle search navigation
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      navigate(`/assessments?search=${encodeURIComponent(searchTerm.trim())}`);
+    }
+  };
 
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSearch();
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    // Only navigate if user types and then presses Enter or clicks search
+    // Don't filter locally - let the main assessments page handle all filtering
+  };
+
+  // Statistics
+  const stats = [
+    { value: "2.5M+", label: "Assessments Completed", icon: TrendingUp },
+    { value: "4.9/5", label: "Average Rating", icon: Clock },
+    { value: "94%", label: "Completion Rate", icon: Users },
+  ];
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -188,10 +208,14 @@ const Popular = () => {
                   type="text"
                   placeholder="Search assessments, tools, and calculators..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={handleInputChange}
+                  onKeyPress={handleKeyPress}
                   className="pl-10 pr-4 py-3 text-lg border-2 focus:border-primary"
                 />
-
+                <Filter 
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5 cursor-pointer hover:text-primary" 
+                  onClick={handleSearch}
+                />
               </div>
             </div>
 
@@ -222,7 +246,20 @@ const Popular = () => {
               </div>
             </div>
 
-
+            {/* Statistics Section */}
+            <div className="mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                {stats.map((stat, index) => (
+                  <div key={index} className="text-center">
+                    <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-soft rounded-lg mb-3">
+                      <stat.icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="text-2xl font-bold text-heading">{stat.value}</div>
+                    <div className="text-sm text-foreground-soft">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
 
             {/* Assessment Cards Grid */}
             <div className="mb-12">

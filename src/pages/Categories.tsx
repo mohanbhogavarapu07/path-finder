@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { useAssessments } from "@/hooks/useAssessments";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
@@ -148,6 +148,7 @@ const fallbackCategories = [
 const Categories = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState<'all' | 'popular' | 'newest'>('all');
+  const navigate = useNavigate();
   
   // Fetch assessments from backend
   const { data: assessments, isLoading } = useAssessments();
@@ -179,14 +180,11 @@ const Categories = () => {
     return Array.from(categoryMap.values());
   }, [assessments]);
 
-  // Filter categories based on search term
+  // Remove local filtering - only use global search navigation
   const filteredCategories = useMemo(() => {
-    let filtered = categories.filter(category =>
-      category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      category.description.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // Apply sorting based on active filter only (no search filtering)
+    let filtered = [...categories];
 
-    // Apply sorting based on active filter
     switch (activeFilter) {
       case 'popular':
         filtered.sort((a, b) => b.count - a.count);
@@ -201,7 +199,27 @@ const Categories = () => {
     }
 
     return filtered;
-  }, [categories, searchTerm, activeFilter]);
+  }, [categories, activeFilter]);
+
+  // Handle search navigation
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      navigate(`/assessments?search=${encodeURIComponent(searchTerm.trim())}`);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSearch();
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    // Only navigate if user types and then presses Enter or clicks search
+    // Don't filter locally - let the main assessments page handle all filtering
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -229,10 +247,14 @@ const Categories = () => {
                   type="text"
                   placeholder="Search assessments, tools, and calculators..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={handleInputChange}
+                  onKeyPress={handleKeyPress}
                   className="pl-10 pr-4 py-3 text-lg border-2 focus:border-primary"
                 />
-
+                <Filter 
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5 cursor-pointer hover:text-primary" 
+                  onClick={handleSearch}
+                />
               </div>
 
               {/* Filter Buttons */}
@@ -277,7 +299,8 @@ const Categories = () => {
                         key={index}
                         className={`p-6 rounded-lg border-2 ${category.color} hover:shadow-custom-md transition-all duration-300 group cursor-pointer relative`}
                       >
-
+                        {/* Arrow icon in top right */}
+                        <ArrowRight className="absolute top-4 right-4 w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
                         
                         <div className="flex items-center gap-3 mb-4">
                           <div className={`p-3 rounded-lg ${category.color.replace('border-', 'bg-').replace('/200', '/100')}`}>

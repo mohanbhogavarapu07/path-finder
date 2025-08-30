@@ -143,9 +143,13 @@ const FeaturedSection = () => {
     // Get unique categories from assessments
     const categoryMap = new Map();
     
+    // Only allow these two categories
+    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing'];
+    
     assessments.forEach(assessment => {
       const category = assessment.category;
-      if (!categoryMap.has(category)) {
+      // Only process allowed categories
+      if (allowedCategories.includes(category) && !categoryMap.has(category)) {
         categoryMap.set(category, {
           name: category,
           description: getCategoryDescription(category),
@@ -155,10 +159,13 @@ const FeaturedSection = () => {
           icon: getCategoryIcon(category),
         });
       }
-      categoryMap.get(category).count++;
+      // Count assessments for allowed categories
+      if (allowedCategories.includes(category)) {
+        categoryMap.get(category).count++;
+      }
     });
 
-    // Convert to array and take first 4 categories
+    // Convert to array and take first 4 categories (should be max 2 now)
     return Array.from(categoryMap.values()).slice(0, 4);
   }, [assessments]);
 

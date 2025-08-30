@@ -96,52 +96,20 @@ const getCategoryIcon = (category: string) => {
 // Fallback categories for when API data is not available
 const fallbackCategories = [
   {
-    name: "Education",
-    description: "Learning assessments, skill tests, and educational tools",
-    count: 89,
-    color: "bg-blue-50 border-blue-200",
-    textColor: "text-blue-600",
-    icon: Brain,
-  },
-  {
-    name: "Health & Wellness",
-    description: "Health calculators, fitness assessments, and wellness tools",
-    count: 76,
-    color: "bg-green-50 border-green-200",
-    textColor: "text-green-600",
-    icon: Heart,
-  },
-  {
-    name: "Business",
-    description: "Professional development, finance calculators, and business tools",
-    count: 95,
+    name: "Emerging Technologies",
+    description: "AI, ML, blockchain, and cutting-edge technologies",
+    count: 45,
     color: "bg-purple-50 border-purple-200",
     textColor: "text-purple-600",
-    icon: Briefcase,
+    icon: Zap,
   },
   {
-    name: "Personal Development",
-    description: "Self-improvement tools, personality tests, and growth assessments",
-    count: 62,
-    color: "bg-orange-50 border-orange-200",
-    textColor: "text-orange-600",
-    icon: Target,
-  },
-  {
-    name: "Technology",
-    description: "Technical assessments, coding challenges, and IT tools",
-    count: 45,
-    color: "bg-cyan-50 border-cyan-200",
-    textColor: "text-cyan-600",
-    icon: Code,
-  },
-  {
-    name: "Finance",
-    description: "Financial planning, investment tools, and economic calculators",
+    name: "Engineering & Manufacturing",
+    description: "Engineering, manufacturing, and technical skills",
     count: 38,
-    color: "bg-indigo-50 border-indigo-200",
-    textColor: "text-indigo-600",
-    icon: BarChart3,
+    color: "bg-blue-50 border-blue-200",
+    textColor: "text-blue-600",
+    icon: Wrench,
   },
 ];
 
@@ -159,12 +127,16 @@ const Categories = () => {
       return fallbackCategories;
     }
 
-    // Get unique categories from assessments
+    // Only allow these two categories
+    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing'];
+    
+    // Get unique categories from assessments, but only include allowed ones
     const categoryMap = new Map();
     
     assessments.forEach(assessment => {
       const category = assessment.category;
-      if (!categoryMap.has(category)) {
+      // Only process allowed categories
+      if (allowedCategories.includes(category) && !categoryMap.has(category)) {
         categoryMap.set(category, {
           name: category,
           description: getCategoryDescription(category),
@@ -174,7 +146,10 @@ const Categories = () => {
           icon: getCategoryIcon(category),
         });
       }
-      categoryMap.get(category).count++;
+      // Count assessments for allowed categories
+      if (allowedCategories.includes(category)) {
+        categoryMap.get(category).count++;
+      }
     });
 
     return Array.from(categoryMap.values());
@@ -249,7 +224,7 @@ const Categories = () => {
                   value={searchTerm}
                   onChange={handleInputChange}
                   onKeyPress={handleKeyPress}
-                  className="pl-10 pr-4 py-3 text-lg border-2 focus:border-primary"
+                  className="pl-10 pr-4 py-3 text-lg border-2 border-primary/20 focus:border-primary"
                 />
 
               </div>

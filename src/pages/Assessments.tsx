@@ -21,6 +21,12 @@ const Assessments = () => {
   // Use API data if available, otherwise fallback to sample data
   const assessments = apiAssessments && apiAssessments.length > 0 ? apiAssessments : sampleAssessments;
 
+  // Filter assessments to only include allowed categories
+  const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing'];
+  const allowedAssessments = assessments.filter(assessment => 
+    allowedCategories.includes(assessment.category)
+  );
+
   // Simple scroll handling for initial page load with hash
   useEffect(() => {
     if (window.location.hash && !selectedCategory) {
@@ -35,7 +41,7 @@ const Assessments = () => {
   }, [selectedCategory]);
 
   // Filter assessments by category and search query
-  const filteredAssessments = assessments?.filter(assessment => {
+  const filteredAssessments = allowedAssessments?.filter(assessment => {
     const matchesCategory = !selectedCategory || assessment.category === selectedCategory;
     const matchesSearch = !searchQuery || 
       assessment.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -47,7 +53,7 @@ const Assessments = () => {
 
   // Group assessments by category (only if no specific category is selected)
   const groupedAssessments = !selectedCategory ? categories.reduce((acc, category) => {
-    acc[category] = assessments?.filter(assessment => assessment.category === category) || [];
+    acc[category] = allowedAssessments?.filter(assessment => assessment.category === category) || [];
     return acc;
   }, {} as Record<string, (DynamicAssessment | any)[]>) : {};
 

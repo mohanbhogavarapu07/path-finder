@@ -102,7 +102,13 @@ export const useAssessmentCategories = () => {
   
   if (!assessments) return { categories: [], isLoading: true };
   
-  const categories = Array.from(new Set(assessments.map(a => a.category)));
+  // Only allow these two categories
+  const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing'];
+  
+  // Filter categories to only include allowed ones
+  const allCategories = Array.from(new Set(assessments.map(a => a.category)));
+  const categories = allCategories.filter(category => allowedCategories.includes(category));
+  
   return { categories, isLoading: false };
 };
 

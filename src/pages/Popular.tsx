@@ -140,8 +140,16 @@ const Popular = () => {
       return fallbackPopularAssessments;
     }
     
+    // Only allow these two categories
+    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing'];
+    
+    // Filter assessments to only include allowed categories
+    const filteredAssessments = assessments.filter(assessment => 
+      allowedCategories.includes(assessment.category)
+    );
+    
     // Sort by popularity (userCount) and take top 6
-    return assessments
+    return filteredAssessments
       .sort((a, b) => {
         const aCount = parseInt(a.metadata?.userCount?.replace(/,/g, '') || '0');
         const bCount = parseInt(b.metadata?.userCount?.replace(/,/g, '') || '0');
@@ -210,7 +218,7 @@ const Popular = () => {
                   value={searchTerm}
                   onChange={handleInputChange}
                   onKeyPress={handleKeyPress}
-                  className="pl-10 pr-4 py-3 text-lg border-2 focus:border-primary"
+                  className="pl-10 pr-4 py-3 text-lg border-2 border-primary/20 focus:border-primary"
                 />
 
               </div>

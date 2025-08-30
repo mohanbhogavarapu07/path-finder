@@ -23,9 +23,15 @@ const Index = () => {
   // Use API data if available, otherwise fallback to sample data
   const assessments = apiAssessments && apiAssessments.length > 0 ? apiAssessments : sampleAssessments;
 
+  // Filter assessments to only include allowed categories
+  const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing'];
+  const filteredAssessments = assessments.filter(assessment => 
+    allowedCategories.includes(assessment.category)
+  );
+
   // Sort assessments based on selected criteria
   const sortedAssessments = useMemo(() => {
-    let sorted = [...assessments];
+    let sorted = [...filteredAssessments];
     
     switch (sortBy) {
       case "featured":
@@ -49,7 +55,7 @@ const Index = () => {
       default:
         return sorted;
     }
-  }, [sortBy, assessments]);
+  }, [sortBy, filteredAssessments]);
 
   return (
     <div className="min-h-screen bg-background">

@@ -61,7 +61,7 @@ interface Assessment {
   id: string;
   title: string;
   description: string;
-  category: 'Technology' | 'Business & Strategy' | 'Design & Experience' | 'Healthcare & Life Sciences' | 'Engineering & Manufacturing' | 'Security & Risk' | 'Data & Analytics' | 'Digital Marketing & Content' | 'Product & Innovation' | 'Cloud & Infrastructure' | 'Emerging Technologies' | 'Customer Success & Support' | 'Education & Training' | 'Green & Sustainability' | 'Legal, Compliance & Governance';
+  category: 'Emerging Technologies' | 'Engineering & Manufacturing';
   duration: string;
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
   isActive: boolean;
@@ -141,7 +141,7 @@ const AdminAssessmentEditor = () => {
     id: `assessment-${Date.now()}`,
     title: 'New Assessment',
     description: 'Assessment description',
-    category: 'Technology',
+    category: 'Emerging Technologies',
     duration: '10-15 mins',
     difficulty: 'Intermediate',
     isActive: true,
@@ -213,23 +213,10 @@ const AdminAssessmentEditor = () => {
   const [jsonError, setJsonError] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<'psychometric' | 'technical' | 'wiscar'>('psychometric');
 
-  const categories = [
-  'Technology',
-  'Business & Strategy', 
-  'Design & Experience',
-  'Healthcare & Life Sciences',
-  'Engineering & Manufacturing',
-  'Security & Risk',
-  'Data & Analytics',
-  'Digital Marketing & Content',
-  'Product & Innovation',
-  'Cloud & Infrastructure',
-  'Emerging Technologies',
-  'Customer Success & Support',
-  'Education & Training',
-  'Green & Sustainability',
-  'Legal, Compliance & Governance'
-];
+    const categories = [
+    'Emerging Technologies',
+    'Engineering & Manufacturing'
+  ];
   const difficulties = ['Beginner', 'Intermediate', 'Advanced'];
 
   useEffect(() => {

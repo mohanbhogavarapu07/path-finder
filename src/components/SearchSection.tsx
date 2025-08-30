@@ -51,7 +51,7 @@ const SearchSection = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="pl-12 pr-12 h-14 text-lg bg-card border-input-border rounded-xl shadow-custom-sm"
+                className="pl-12 pr-12 h-14 text-lg bg-card border-2 border-primary/20 rounded-xl shadow-custom-sm"
               />
               <Button
                 size="sm"

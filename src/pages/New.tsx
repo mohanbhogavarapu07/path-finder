@@ -147,8 +147,16 @@ const New = () => {
       return fallbackNewAssessments;
     }
     
+    // Only allow these two categories
+    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing'];
+    
+    // Filter assessments to only include allowed categories
+    const filteredAssessments = assessments.filter(assessment => 
+      allowedCategories.includes(assessment.category)
+    );
+    
     // Sort by creation date (newest first) and take top 6
-    return assessments
+    return filteredAssessments
       .sort((a, b) => {
         // For now, just reverse the order as a proxy for newest
         return -1;
@@ -228,7 +236,7 @@ const New = () => {
                   value={searchTerm}
                   onChange={handleInputChange}
                   onKeyPress={handleKeyPress}
-                  className="pl-10 pr-4 py-3 text-lg border-2 focus:border-primary"
+                  className="pl-10 pr-4 py-3 text-lg border-2 border-primary/20 focus:border-primary"
                 />
 
               </div>

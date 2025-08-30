@@ -210,8 +210,8 @@ const New = () => {
           <div className="max-w-7xl mx-auto">
             {/* Header Section */}
             <div className="text-center mb-12">
-              <h1 className="text-4xl lg:text-5xl font-bold text-heading mb-4">
-                New <span className="text-primary">Assessments</span>
+              <h1 className="text-4xl lg:text-5xl font-bold text-black mb-4">
+                New Assessments
               </h1>
               <p className="text-lg text-foreground-soft max-w-3xl mx-auto">
                 Explore our latest assessments featuring cutting-edge research and innovative approaches to personal growth.
@@ -230,10 +230,7 @@ const New = () => {
                   onKeyPress={handleKeyPress}
                   className="pl-10 pr-4 py-3 text-lg border-2 focus:border-primary"
                 />
-                <Filter 
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5 cursor-pointer hover:text-primary" 
-                  onClick={handleSearch}
-                />
+
               </div>
             </div>
 

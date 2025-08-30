@@ -280,7 +280,7 @@ const Index = () => {
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-accent-400 text-accent-400" />
+                    <Star key={i} className="h-4 w-4 fill-yellow-500 text-yellow-500" />
                   ))}
                 </div>
                 <p className="text-foreground mb-4">
@@ -297,7 +297,7 @@ const Index = () => {
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-accent-400 text-accent-400" />
+                    <Star key={i} className="h-4 w-4 fill-yellow-500 text-yellow-500" />
                   ))}
                 </div>
                 <p className="text-foreground mb-4">
@@ -314,7 +314,7 @@ const Index = () => {
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-accent-400 text-accent-400" />
+                    <Star key={i} className="h-4 w-4 fill-yellow-500 text-yellow-500" />
                   ))}
                 </div>
                 <p className="text-foreground mb-4">

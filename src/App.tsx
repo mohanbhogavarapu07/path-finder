@@ -17,6 +17,9 @@ import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import AdminBlogEditor from "./pages/AdminBlogEditor";
 import AdminAssessmentEditor from "./pages/AdminAssessmentEditor";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import DataProtection from "./pages/DataProtection";
 import NotFound from "./pages/NotFound";
 
 // Import dynamic assessment components
@@ -41,6 +44,9 @@ const App = () => (
             <Route path="/popular" element={<Popular />} />
             <Route path="/new" element={<New />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/data-protection" element={<DataProtection />} />
             
             {/* Dynamic Assessment Routes */}
             <Route path="/assessments/:assessmentId/*" element={<DynamicAssessment />} />

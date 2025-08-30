@@ -74,20 +74,19 @@ const About = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative py-24 bg-primary overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+      <section className="relative py-24 bg-gradient-to-br from-background via-card to-muted/30 overflow-hidden">
+        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <div className="relative container mx-auto px-4">
-          <div className="max-w-5xl mx-auto text-center text-white">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
-              <span className="text-sm font-medium">🚀 Empowering 50,000+ Students Worldwide</span>
+          <div className="max-w-5xl mx-auto text-center">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 backdrop-blur-sm border border-primary/20 mb-6">
+              <span className="text-sm font-medium text-primary">🚀 Empowering 50,000+ Students Worldwide</span>
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              About
-              <span className="bg-gradient-to-r from-accent to-accent/80 bg-clip-text text-transparent"> PathFinder </span>
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight text-black">
+              About PathFinder
             </h1>
             
-            <p className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-xl text-foreground-soft max-w-4xl mx-auto leading-relaxed">
               We're revolutionizing career guidance through cutting-edge technology and scientifically-backed assessments. 
               Our mission is to help every student discover their perfect career path with confidence and clarity.
             </p>

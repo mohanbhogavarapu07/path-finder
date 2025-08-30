@@ -212,10 +212,7 @@ const Popular = () => {
                   onKeyPress={handleKeyPress}
                   className="pl-10 pr-4 py-3 text-lg border-2 focus:border-primary"
                 />
-                <Filter 
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5 cursor-pointer hover:text-primary" 
-                  onClick={handleSearch}
-                />
+
               </div>
             </div>
 
@@ -247,19 +244,7 @@ const Popular = () => {
             </div>
 
             {/* Statistics Section */}
-            <div className="mb-12">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-                {stats.map((stat, index) => (
-                  <div key={index} className="text-center">
-                    <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-soft rounded-lg mb-3">
-                      <stat.icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <div className="text-2xl font-bold text-heading">{stat.value}</div>
-                    <div className="text-sm text-foreground-soft">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
+           
 
             {/* Assessment Cards Grid */}
             <div className="mb-12">

@@ -28,11 +28,12 @@ const Footer = () => {
 
   const legal = [
     { name: "Privacy Policy", href: "/privacy" },
-    { name: "Terms of Service", href: "/terms" }
+    { name: "Terms of Service", href: "/terms" },
+    { name: "Data Protection Policy", href: "/data-protection" }
   ];
 
   const socialLinks = [
-    { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
+    { name: "LinkedIn", icon: Linkedin, href: "https://www.linkedin.com/company/factorbeam" },
     { name: "WhatsApp", icon: WhatsAppIcon, href: "https://whatsapp.com/channel/0029VbBDp9i7DAWpPbckVq1n" }
   ];
 

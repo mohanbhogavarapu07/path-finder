@@ -17,15 +17,6 @@ const Footer = () => {
     { name: "Trending", href: "/trending" }
   ];
 
-  const company = [
-    { name: "About Us", href: "/about" },
-    { name: "Our Team", href: "/team" },
-    { name: "Careers", href: "/careers" },
-    { name: "Press Kit", href: "/press" },
-    { name: "Blog", href: "/blog" },
-    { name: "Contact Us", href: "/contact" }
-  ];
-
   const legal = [
     { name: "Privacy Policy", href: "/privacy" },
     { name: "Terms of Service", href: "/terms" },
@@ -40,29 +31,44 @@ const Footer = () => {
   return (
     <footer className="bg-card border-t border-border">
       {/* Main Footer Content */}
-      <div className="py-10">
+      <div className="py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             
             {/* Brand Section */}
             <div className="lg:col-span-2">
-            <div className="flex items-center space-x-3 mb-4">
+              <div className="flex items-center space-x-3 mb-3">
                 <img 
                   src="/logo.png" 
                   alt="FactorBeam Logo" 
                   className="h-24 w-auto object-contain"
                 />
-            </div>
-              <p className="text-foreground-soft mb-6 max-w-sm">
+              </div>
+              <p className="text-foreground-soft mb-4 max-w-sm">
                 The world's most comprehensive platform for personal and professional assessments. 
                 Trusted by millions worldwide to unlock potential and drive growth.
               </p>
+              
+              {/* Social Links moved here */}
+              <div className="flex items-center space-x-4">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-foreground-soft hover:text-primary transition-colors"
+                  >
+                    <social.icon className="w-5 h-5" />
+                  </a>
+                ))}
+              </div>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h4 className="text-sm font-semibold text-heading mb-4">Quick Links</h4>
-              <ul className="space-y-2">
+              <h4 className="text-sm font-semibold text-heading mb-3">Quick Links</h4>
+              <ul className="space-y-1">
                 {quickLinks.map((link) => (
                   <li key={link.name}>
                     <Link 
@@ -74,31 +80,12 @@ const Footer = () => {
                   </li>
                 ))}
               </ul>
-          </div>
-
-
-
-            {/* Company */}
-          <div>
-              <h4 className="text-sm font-semibold text-heading mb-4">Company</h4>
-              <ul className="space-y-2">
-                {company.map((link) => (
-                  <li key={link.name}>
-                    <Link 
-                      to={link.href} 
-                      className="text-sm text-foreground-soft hover:text-primary transition-colors"
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-            </ul>
-          </div>
+            </div>
 
             {/* Legal */}
-          <div>
-              <h4 className="text-sm font-semibold text-heading mb-4">Legal</h4>
-              <ul className="space-y-2">
+            <div>
+              <h4 className="text-sm font-semibold text-heading mb-3">Legal</h4>
+              <ul className="space-y-1">
                 {legal.map((link) => (
                   <li key={link.name}>
                     <Link 
@@ -113,33 +100,18 @@ const Footer = () => {
             </div>
           </div>
 
-          <Separator className="my-8" />
+          <Separator className="my-4" />
 
           {/* Bottom Section */}
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
             {/* Copyright and Disclaimer */}
             <div className="flex flex-col md:flex-row items-center space-y-1 md:space-y-0 md:space-x-4">
               <p className="text-sm text-foreground-soft">
                 © {currentYear} FactorBeam. All rights reserved.
               </p>
               <p className="text-sm text-foreground-soft">
-                All the assessments are educational purposes only.
+                All the test/assessments are for educational purposes only.
               </p>
-            </div>
-            
-            {/* Social Links */}
-            <div className="flex items-center space-x-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-foreground-soft hover:text-primary transition-colors"
-                >
-                  <social.icon className="w-5 h-5" />
-                </a>
-              ))}
             </div>
           </div>
         </div>

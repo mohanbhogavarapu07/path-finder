@@ -12,6 +12,7 @@ import { Grid, List, SlidersHorizontal } from "lucide-react";
 import { Shield, Users, Award, Globe, Clock, Star, Target, Lightbulb, Brain, Compass } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -137,10 +138,12 @@ const Index = () => {
           )}
           
           <div className="text-center mt-12">
-            <Button size="lg" className="px-8">
-              View All Assessments
-                  </Button>
-        </div>
+            <Button size="lg" className="px-8" asChild>
+              <Link to="/assessments">
+                View All Assessments
+              </Link>
+            </Button>
+          </div>
       </div>
       </section>
           

@@ -28,7 +28,7 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
 }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
+    country: '',
     email: '',
     ageRange: '',
   });
@@ -45,8 +45,8 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+    if (!formData.country.trim()) {
+      newErrors.country = 'Country is required';
     }
 
     if (!formData.email.trim()) {
@@ -64,78 +64,48 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
   };
 
   const handleStartAssessment = async () => {
-    if (validateForm()) {
-      // Store user data in localStorage or sessionStorage
-      localStorage.setItem('assessmentUserData', JSON.stringify(formData));
-      
-      // Map sample assessment IDs to actual assessment routes
-      const assessmentRouteMap: Record<string, string> = {
-        '1': 'AWS', // Personality Assessment -> AWS
-        '2': 'ReactJS', // Emotional Intelligence -> ReactJS
-        '3': 'ScrumMaster', // Leadership Style -> ScrumMaster
-        '4': 'DataScience', // Learning Style -> DataScience
-        '5': 'CyberSecurity', // Stress and Burnout -> CyberSecurity
-        '6': 'DevOps', // Career Aptitude -> DevOps
-        '7': 'bussinessanalyst', // Team Dynamics -> Business Analyst
-        '8': 'MedicalCoding', // Nutrition and Lifestyle -> Medical Coding
-        '9': 'DigitalMarketing', // Creative Problem Solving -> Digital Marketing
-        '10': 'Flutter', // Communication Skills -> Flutter
-        '11': 'PowerBI', // Time Management -> PowerBI
-        '12': 'Servicenow', // Conflict Resolution -> ServiceNow
-        '13': 'Blockchain', // Decision Making -> Blockchain
-        '14': 'MultiCloudEngineer', // Adaptability -> MultiCloud Engineer
-        '15': 'GenAI', // Innovation Mindset -> GenAI
-        '16': 'FullStackJAVA', // Entrepreneurship Readiness -> FullStack Java
-        '17': 'Microsoft365', // Sales Aptitude -> Microsoft 365
-        '18': 'OracleCloud', // Customer Service -> Oracle Cloud
-        '19': 'MERNStack', // Project Management -> MERN Stack
-        '20': 'PythonwithDataAnalytics', // Data Analysis -> Python with Data Analytics
-        '21': 'AIML', // Design Thinking -> AI/ML
-        '22': 'FullStackDotNet', // Writing Skills -> FullStack .NET
-        '23': 'GoogleCloudPlatform', // Language Learning -> Google Cloud Platform
-        '24': 'EthicalHacking', // Music Aptitude -> Ethical Hacking
-        '25': 'snowflake', // Artistic Abilities -> Snowflake
-        '26': 'fullstackpython' // Sports Performance -> FullStack Python
-      };
-      
-      // Use mapped route if available, otherwise use the original ID
-      const routeId = assessmentRouteMap[assessmentId] || assessmentId;
-      
-      // Close dialog and navigate to assessment
-      onClose();
-      navigate(`/assessments/${routeId}`);
-      try {
-        // Send user data to backend
-        const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://pf-backend-6p4g.onrender.com/api';
-        const response = await fetch(`${API_BASE_URL}/users`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        });
+    if (!validateForm()) {
+      return;
+    }
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Failed to save user data');
-        }
+    try {
+      // Send user data to backend
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://pf-backend-6p4g.onrender.com/api';
+      const response = await fetch(`${API_BASE_URL}/users`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          country: formData.country,
+          email: formData.email,
+          ageRange: formData.ageRange
+        }),
+      });
 
-        const result = await response.json();
-        
-        // Store user data in localStorage with backend user ID
-        const userDataWithId = {
-          ...formData,
-          userId: result.user.id
-        };
-        localStorage.setItem('assessmentUserData', JSON.stringify(userDataWithId));
-        
-        // Close dialog and navigate to assessment
-        onClose();
-        navigate(`/assessments/${assessmentId}`);
-      } catch (error) {
-        console.error('Error saving user data:', error);
-        setErrors({ submit: error.message });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to save user data');
       }
+
+      const result = await response.json();
+      
+      // Store user data in localStorage with backend user ID
+      const userData = {
+        country: formData.country,
+        email: formData.email,
+        ageRange: formData.ageRange,
+        userId: result.user.id,
+        timestamp: new Date().toISOString()
+      };
+      localStorage.setItem('assessmentUserData', JSON.stringify(userData));
+
+      // Navigate to assessment
+      navigate(`/assessments/${assessmentId}`);
+      onClose();
+    } catch (error) {
+      console.error('Error starting assessment:', error);
+      setErrors({ submit: error.message });
     }
   };
 
@@ -153,20 +123,24 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
         
         <div className="space-y-4 py-4">
           <div className="space-y-2">
-            <Label htmlFor="name" className="text-sm font-medium text-factorbeam-heading">
-              Full Name *
+            <Label htmlFor="country" className="text-sm font-medium text-factorbeam-heading">
+              Country *
             </Label>
-            <Input
-              id="name"
-              type="text"
-              placeholder="Enter your full name"
-              value={formData.name}
-              onChange={(e) => handleInputChange('name', e.target.value)}
-              className={errors.name ? 'border-red-500 focus:border-red-500' : ''}
-            />
-            {errors.name && (
-              <p className="text-sm text-red-500">{errors.name}</p>
+            <Select
+              value={formData.country}
+              onValueChange={(value) => handleInputChange('country', value)}
+            >
+              <SelectTrigger className={errors.country ? 'border-red-500 focus:border-red-500' : ''}>
+                <SelectValue placeholder="Select your country" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="India">India</SelectItem>
+              </SelectContent>
+            </Select>
+            {errors.country && (
+              <p className="text-sm text-red-500">{errors.country}</p>
             )}
+            <p className="text-xs text-gray-500">Currently available for India only</p>
           </div>
 
           <div className="space-y-2">

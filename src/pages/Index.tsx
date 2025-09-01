@@ -66,7 +66,7 @@ const Index = () => {
       <FeaturedSection />
 
       {/* Assessment Grid Section */}
-      <section className="py-16 bg-background-soft">
+      <section className="py-12 bg-background-soft">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
             <div>
@@ -293,7 +293,7 @@ const Index = () => {
                   ))}
                 </div>
                 <p className="text-foreground mb-4">
-                  "Finally understood why I was struggling with programming. The assessment helped me switch to UX design - best decision ever!"
+                  "The assessment completely changed my perspective on my career path. I discovered my passion for product management and couldn't be happier!"
                 </p>
                 <div className="text-sm text-muted-foreground">
                   <p className="font-semibold text-foreground">Priya S.</p>

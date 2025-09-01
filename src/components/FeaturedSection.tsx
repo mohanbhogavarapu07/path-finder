@@ -172,23 +172,6 @@ const FeaturedSection = () => {
   return (
     <div className="py-16 px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Stats Section */}
-        <div className="text-center mb-16">
-          <Badge className="mb-4 bg-primary-soft text-primary border-primary/20 px-4 py-2">
-            <TrendingUp className="w-4 h-4 mr-2" />
-            Trusted by Professionals Worldwide
-          </Badge>
-          <h2 className="text-3xl lg:text-4xl font-bold text-heading mb-4">
-            Comprehensive Assessment Platform
-          </h2>
-          <p className="text-lg text-foreground-soft max-w-3xl mx-auto mb-8">
-            Join thousands of individuals and organizations using our scientifically-backed assessments
-            to unlock potential, drive growth, and achieve measurable results.
-          </p>
-          
-     
-        </div>
-
         {/* Categories Grid */}
         <div className="mb-12">
           <div className="flex items-center justify-between mb-8">
@@ -247,6 +230,22 @@ const FeaturedSection = () => {
           )}
         </div>
 
+        {/* Stats Section */}
+        <div className="text-center mb-8">
+          <Badge className="mb-4 bg-primary-soft text-primary border-primary/20 px-4 py-2">
+            <TrendingUp className="w-4 h-4 mr-2" />
+            Trusted by Professionals Worldwide
+          </Badge>
+          <h2 className="text-3xl lg:text-4xl font-bold text-heading mb-4">
+            Comprehensive Assessment Platform
+          </h2>
+          <p className="text-lg text-foreground-soft max-w-3xl mx-auto mb-8">
+            Join thousands of individuals and organizations using our scientifically-backed assessments
+            to unlock potential, drive growth, and achieve measurable results.
+          </p>
+          
+     
+        </div>
 
       </div>
     </div>

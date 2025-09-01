@@ -8,20 +8,10 @@ const SearchSection = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
-  const popularSearches = [
-    "AWS Cloud", "React Development", "Data Science", "Cybersecurity", 
-    "Digital Marketing", "Full Stack", "Machine Learning", "DevOps"
-  ];
-
   const handleSearch = () => {
     if (searchQuery.trim()) {
       navigate(`/assessments?search=${encodeURIComponent(searchQuery.trim())}`);
     }
-  };
-
-  const handlePopularSearch = (search: string) => {
-    setSearchQuery(search);
-    navigate(`/assessments?search=${encodeURIComponent(search)}`);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -62,22 +52,6 @@ const SearchSection = () => {
                 AI Suggest
               </Button>
             </div>
-          </div>
-        </div>
-
-        {/* Popular Searches */}
-        <div className="text-center">
-          <p className="text-sm text-foreground-soft mb-3">Popular searches:</p>
-          <div className="flex flex-wrap justify-center gap-2">
-            {popularSearches.map((search) => (
-              <button
-                key={search}
-                onClick={() => handlePopularSearch(search)}
-                className="px-3 py-1 text-sm bg-card hover:bg-card-hover border border-border rounded-md transition-colors cursor-pointer"
-              >
-                {search}
-              </button>
-            ))}
           </div>
         </div>
       </div>

@@ -216,17 +216,18 @@ const Categories = () => {
             {/* Search and Filter Section */}
             <div className="mb-8">
               {/* Search Bar */}
-              <div className="relative mb-6">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
-                <Input
-                  type="text"
-                  placeholder="Search assessments, tools, and calculators..."
-                  value={searchTerm}
-                  onChange={handleInputChange}
-                  onKeyPress={handleKeyPress}
-                  className="pl-10 pr-4 py-3 text-lg border-2 border-primary/20 focus:border-primary"
-                />
-
+              <div className="mb-6">
+                <div className="relative max-w-2xl mx-auto">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+                  <Input
+                    type="text"
+                    placeholder="Search assessments, tools, and calculators..."
+                    value={searchTerm}
+                    onChange={handleInputChange}
+                    onKeyPress={handleKeyPress}
+                    className="pl-10 pr-4 py-3 text-lg border-2 border-primary/20 focus:border-primary"
+                  />
+                </div>
               </div>
 
               {/* Filter Buttons */}

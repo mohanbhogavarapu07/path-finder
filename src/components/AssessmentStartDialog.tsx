@@ -91,6 +91,23 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
       };
       localStorage.setItem('assessmentUserData', JSON.stringify(userData));
 
+      // Start the assessment tracking
+      const startAssessmentResponse = await fetch(`${API_BASE_URL}/users/${result.user.id}/start-assessment`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          assessmentId: assessmentId,
+          assessmentTitle: assessmentTitle,
+          totalQuestions: 0 // Will be updated when assessment loads
+        }),
+      });
+
+      if (!startAssessmentResponse.ok) {
+        console.warn('Failed to start assessment tracking, but continuing...');
+      }
+
       // Navigate to assessment
       navigate(`/assessments/${assessmentId}`);
       onClose();
@@ -146,13 +163,13 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
                 <SelectValue placeholder="Select your age range" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="11-20">11-20 years</SelectItem>
-                <SelectItem value="21-30">21-30 years</SelectItem>
-                <SelectItem value="31-40">31-40 years</SelectItem>
-                <SelectItem value="41-50">41-50 years</SelectItem>
-                <SelectItem value="51-60">51-60 years</SelectItem>
-                <SelectItem value="61-70">61-70 years</SelectItem>
-                <SelectItem value="71-80">71-80 years</SelectItem>
+                <SelectItem value="11-17">11 to 17</SelectItem>
+                <SelectItem value="18-24">18 to 24</SelectItem>
+                <SelectItem value="25-34">25 to 34</SelectItem>
+                <SelectItem value="35-44">35 to 44</SelectItem>
+                <SelectItem value="45-54">45 to 54</SelectItem>
+                <SelectItem value="55-64">55 to 64</SelectItem>
+                <SelectItem value="65+">65 or over</SelectItem>
               </SelectContent>
             </Select>
             {errors.ageRange && (

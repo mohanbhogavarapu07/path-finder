@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import FeedbackDialog from '@/components/FeedbackDialog';
-import { useSubmitAssessment } from '@/hooks/useAssessments';
+
 import { 
   Brain, 
   Code, 
@@ -19,6 +19,7 @@ import {
   Download,
   Share2
 } from 'lucide-react';
+import SocialShareDialog from '@/components/SocialShareDialog';
 
 type AssessmentResults = {
   answers: Record<string, any>;
@@ -45,7 +46,7 @@ const Results = () => {
   const [recommendation, setRecommendation] = useState<RecommendationType>('Maybe');
   const [confidenceScore, setConfidenceScore] = useState(0);
   const [showFeedback, setShowFeedback] = useState(true);
-  const submitAssessment = useSubmitAssessment();
+
 
   useEffect(() => {
     const data = location.state as AssessmentResults;
@@ -441,10 +442,15 @@ const Results = () => {
             Download Report
           </Button>
           
-          <Button variant="outline" size="lg" className="px-8 py-6">
-            <Share2 className="w-5 h-5 mr-2" />
-            Share Results
-          </Button>
+          <SocialShareDialog 
+            assessmentTitle="AI/ML Assessment"
+            results={scoreData}
+          >
+            <Button variant="outline" size="lg" className="px-8 py-6">
+              <Share2 className="w-5 h-5 mr-2" />
+              Share Results
+            </Button>
+          </SocialShareDialog>
         </div>
       </div>
     </div>

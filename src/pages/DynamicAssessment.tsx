@@ -4,8 +4,8 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { BookOpen, Brain, Code, Target, TrendingUp, CheckCircle, ArrowLeft } from 'lucide-react';
 import AssessmentLayout from '@/components/AssessmentLayout';
-import { useAssessment, useStartAssessmentSession, useSubmitAssessment } from '@/hooks/useAssessments';
-import { AssessmentSection, Question } from '@/lib/api';
+import { useAssessment } from '@/hooks/useAssessments';
+import { AssessmentSection, Question, API_BASE_URL } from '@/lib/api';
 import DynamicAssessmentIntro from '@/components/dynamic/DynamicAssessmentIntro';
 import DynamicPsychometricSection from '@/components/dynamic/DynamicPsychometricSection';
 import DynamicTechnicalSection from '@/components/dynamic/DynamicTechnicalSection';
@@ -17,7 +17,6 @@ const DynamicAssessment = () => {
   const navigate = useNavigate();
   
   const [currentSection, setCurrentSection] = useState('intro');
-  const [sessionId, setSessionId] = useState<string | null>(null);
   const [assessmentData, setAssessmentData] = useState({
     psychometric: {},
     technical: {},
@@ -27,12 +26,6 @@ const DynamicAssessment = () => {
 
   // Fetch assessment data
   const { data: assessmentDataResponse, isLoading: isLoadingAssessment } = useAssessment(assessmentId!);
-  
-  // Start session mutation
-  const startSessionMutation = useStartAssessmentSession();
-  
-  // Submit assessment mutation
-  const submitAssessmentMutation = useSubmitAssessment();
 
   // Get user data from localStorage
   const getUserData = () => {
@@ -45,25 +38,9 @@ const DynamicAssessment = () => {
     }
   };
 
-  // Initialize session when assessment data is loaded
-  useEffect(() => {
-    if (assessmentDataResponse && !sessionId) {
-      const userData = getUserData();
-      const userId = userData?.userId;
-      
-      startSessionMutation.mutate(
-        { assessmentId: assessmentId!, userId },
-        {
-          onSuccess: (data) => {
-            setSessionId(data.sessionId);
-          },
-          onError: (error) => {
-            console.error('Failed to start assessment session:', error);
-          }
-        }
-      );
-    }
-  }, [assessmentDataResponse, sessionId, assessmentId]);
+
+
+
 
   if (!assessmentId) {
     return (
@@ -138,10 +115,13 @@ const DynamicAssessment = () => {
   const progress = ((getCurrentSectionIndex() + 1) / sectionConfig.length) * 100;
 
   const updateAssessmentData = (section: string, data: any) => {
-    setAssessmentData(prev => ({
-      ...prev,
-      [section]: { ...prev[section as keyof typeof prev], ...data }
-    }));
+    setAssessmentData(prev => {
+      const currentSectionData = prev[section as keyof typeof prev] || {};
+      return {
+        ...prev,
+        [section]: { ...currentSectionData, ...data }
+      };
+    });
   };
 
   const goToNextSection = () => {
@@ -152,56 +132,50 @@ const DynamicAssessment = () => {
   };
 
   const handleCompleteAssessment = async (finalData: Record<string, any>) => {
-    if (!sessionId || !assessmentId) return;
-
-    // Flatten and transform answers to expected array shape
-    const sectionsArray = assessmentDataResponse?.sections || [];
-    const answerEntries: Array<{ questionId: string; sectionId: string; value: any }> = [];
-
-    const pushSectionAnswers = (sectionKey: 'psychometric' | 'technical' | 'wiscar', data: Record<string, any>) => {
-      const sec = sectionsArray.find(s => s.type === sectionKey);
-      if (!sec) return;
-      Object.entries(data || {}).forEach(([qId, val]) => {
-        // Only include if the question exists in the section
-        if (sec.questions?.some(q => q.id === qId)) {
-          answerEntries.push({ questionId: qId, sectionId: sectionKey, value: val });
-        }
-      });
-    };
-
-    pushSectionAnswers('psychometric', assessmentData.psychometric as any);
-    pushSectionAnswers('technical', assessmentData.technical as any);
-    // Merge wiscar answers with finalData safely
-    const mergedWiscar: Record<string, any> = {
-      ...(typeof assessmentData.wiscar === 'object' && assessmentData.wiscar !== null ? (assessmentData.wiscar as Record<string, any>) : {}),
-      ...(typeof finalData === 'object' && finalData !== null ? finalData : {})
-    };
-    pushSectionAnswers('wiscar', mergedWiscar);
+    if (!assessmentId) return;
 
     try {
+      // Get user data from localStorage
       const userData = getUserData();
-      const userId = userData?.userId;
-      // Attach any pre-collected feedback (from results gate popup)
-      let feedback: { rating?: number; comments?: string } | undefined = undefined;
-      try {
-        const stored = localStorage.getItem('assessmentFeedback');
-        feedback = stored ? JSON.parse(stored) : undefined;
-      } catch {}
-      
-      await submitAssessmentMutation.mutateAsync({
-        assessmentId,
-        sessionId,
-        answers: answerEntries,
-        userId,
-        feedback
-      });
-      
+      if (userData && userData.userId) {
+        // Get feedback from localStorage if available
+        const feedbackData = localStorage.getItem('assessmentFeedback');
+        let feedback = { rating: 5, comments: 'Great assessment!' }; // Default feedback
+        
+        if (feedbackData) {
+          try {
+            feedback = JSON.parse(feedbackData);
+          } catch (e) {
+            console.warn('Could not parse feedback data');
+          }
+        }
+
+        // Complete the assessment with feedback
+        const response = await fetch(`${API_BASE_URL}/users/${userData.userId}/complete-assessment`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            assessmentId: assessmentId,
+            feedback: feedback
+          }),
+        });
+
+        if (response.ok) {
+          console.log('Assessment completed successfully with feedback');
+        } else {
+          console.warn('Failed to complete assessment');
+        }
+      }
+
       setAssessmentData(prev => ({ ...prev, completed: true }));
       goToNextSection();
     } catch (error) {
-      console.error('Failed to submit assessment:', error);
+      console.error('Failed to complete assessment:', error);
     }
   };
+
 
   const renderCurrentSection = () => {
     switch (currentSection) {
@@ -280,7 +254,7 @@ const DynamicAssessment = () => {
           <DynamicResultsSection
             assessment={assessment}
             assessmentData={assessmentData}
-            sessionId={sessionId}
+            onComplete={handleCompleteAssessment}
           />
         );
       default:

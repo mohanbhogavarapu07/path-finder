@@ -2,10 +2,10 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { 
   assessmentAPI, 
   assessmentKeys,
+  API_BASE_URL,
   type DynamicAssessment,
   type AssessmentSection,
-  type AssessmentResults,
-  type AssessmentSession
+  type AssessmentResults
 } from '@/lib/api';
 
 // Hook to get all assessments
@@ -50,40 +50,11 @@ export const useAssessment = (assessmentId: string) => {
   });
 };
 
-// Hook to start an assessment session
-export const useStartAssessmentSession = () => {
-  return useMutation({
-    mutationFn: ({ assessmentId, userId }: { assessmentId: string; userId?: string }) =>
-      assessmentAPI.startAssessmentSession(assessmentId, userId),
-  });
-};
 
-// Hook to submit assessment answers
-export const useSubmitAssessment = () => {
-  const queryClient = useQueryClient();
-  
-  return useMutation({
-    mutationFn: ({ assessmentId, sessionId, answers, userId, feedback }: { assessmentId: string; sessionId: string; answers: Array<{ questionId: string; sectionId: string; value: any }>; userId?: string; feedback?: { rating?: number; comments?: string } }) =>
-      assessmentAPI.submitAssessment(assessmentId, sessionId, answers, userId, feedback),
-    onSuccess: (data, variables) => {
-      // Invalidate session data
-      queryClient.invalidateQueries({
-        queryKey: assessmentKeys.session(variables.sessionId),
-      });
-    },
-  });
-};
 
-// Hook to get assessment results
-export const useAssessmentResults = (assessmentId: string, sessionId: string) => {
-  return useQuery({
-    queryKey: assessmentKeys.session(sessionId),
-    queryFn: () => assessmentAPI.getAssessmentResults(assessmentId, sessionId),
-    enabled: !!sessionId && !!assessmentId,
-    staleTime: 10 * 60 * 1000, // 10 minutes
-    gcTime: 30 * 60 * 1000, // 30 minutes
-  });
-};
+
+
+
 
 // Hook to check API health
 export const useAssessmentHealth = () => {
@@ -122,12 +93,67 @@ export const useAssessmentFromCache = (assessmentId: string) => {
   }>(assessmentKeys.detail(assessmentId));
 };
 
-// Hook to get session from cache
-export const useSessionFromCache = (sessionId: string) => {
+// Hook to start assessment tracking
+export const useStartAssessment = () => {
   const queryClient = useQueryClient();
   
-  return queryClient.getQueryData<{
-    session: AssessmentSession;
-    results: AssessmentResults;
-  }>(assessmentKeys.session(sessionId));
+  return useMutation({
+    mutationFn: async ({ userId, assessmentData }: { userId: string; assessmentData: any }) => {
+      const response = await fetch(`${API_BASE_URL}/users/${userId}/start-assessment`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(assessmentData),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to start assessment tracking');
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: assessmentKeys.lists() });
+    },
+  });
 };
+
+// Hook to complete assessment with feedback
+export const useCompleteAssessment = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async ({ userId, assessmentId, feedback }: { userId: string; assessmentId: string; feedback: any }) => {
+      const response = await fetch(`${API_BASE_URL}/users/${userId}/complete-assessment`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ assessmentId, feedback }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to complete assessment');
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: assessmentKeys.lists() });
+    },
+  });
+};
+
+// Hook to get assessment status
+export const useAssessmentStatus = (userId: string) => {
+  return useQuery({
+    queryKey: ['assessmentStatus', userId],
+    queryFn: async () => {
+      const response = await fetch(`${API_BASE_URL}/users/${userId}/assessment-status`);
+      if (!response.ok) {
+        throw new Error('Failed to get assessment status');
+      }
+      return response.json();
+    },
+    enabled: !!userId,
+  });
+};
+
+

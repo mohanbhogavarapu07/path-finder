@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -32,10 +32,11 @@ import {
   HelpCircle,
   PlayCircle
 } from 'lucide-react';
-import { DynamicAssessment, AssessmentResults } from '@/lib/api';
-import { useAssessmentResults } from '@/hooks/useAssessments';
+import { DynamicAssessment, AssessmentResults, API_BASE_URL } from '@/lib/api';
+
 import FeedbackDialog from '@/components/FeedbackDialog';
-import { assessmentAPI } from '@/lib/api';
+import SocialShareDialog from '@/components/SocialShareDialog';
+
 import { usePDFResults } from '@/hooks/usePDFResults';
 import PDFLayout from './PDFLayout';
 import './PDFLayout.css';
@@ -43,35 +44,266 @@ import './PDFLayout.css';
 interface DynamicResultsSectionProps {
   assessment: DynamicAssessment;
   assessmentData: any;
-  sessionId: string | null;
+  onComplete?: (results: any) => void;
 }
 
 const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
   assessment,
   assessmentData,
-  sessionId
+  onComplete
 }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
-  const { data: resultsData, isLoading, error } = useAssessmentResults(assessment.id, sessionId || '');
   const [showFeedback, setShowFeedback] = useState(true);
+  
+  // Trigger completion when component mounts
+  useEffect(() => {
+    if (onComplete && assessmentData) {
+      // Calculate results from assessment data
+      const results = calculateResultsFromData(assessmentData);
+      onComplete(results);
+    }
+  }, [onComplete, assessmentData]);
+  
+  // Calculate results from assessment data
+  const calculateResultsFromData = (data: any) => {
+    // Calculate scores for each section
+    const psychometricScore = calculateSectionScore(data.psychometric || {});
+    const technicalScore = calculateSectionScore(data.technical || {});
+    const wiscarScore = calculateSectionScore(data.wiscar || {});
+    
+    const overallScore = Math.round((psychometricScore + technicalScore + wiscarScore) / 3);
+    
+    // Determine recommendation
+    let recommendation = 'MAYBE';
+    let recommendationReason = 'Moderate performance across sections';
+    
+    if (overallScore >= 75) {
+      recommendation = 'YES';
+      recommendationReason = 'Strong performance across all sections';
+    } else if (overallScore < 50) {
+      recommendation = 'NO';
+      recommendationReason = 'Performance below threshold in multiple sections';
+    }
+    
+    return {
+      overallScore,
+      categoryScores: {
+        psychological: psychometricScore,
+        technical: technicalScore,
+        wiscar: wiscarScore,
+        motivation: 75, // Default values for missing sections
+        preferences: 70
+      },
+      recommendation,
+      recommendationReason
+    };
+  };
+
+  // Calculate score for a section
+  const calculateSectionScore = (sectionData: Record<string, any>) => {
+    const answers = Object.values(sectionData);
+    if (answers.length === 0) return 70; // Default score if no answers
+    
+    // Enhanced scoring logic based on answer types
+    let totalScore = 0;
+    let maxPossibleScore = 0;
+    
+    answers.forEach((answer: any) => {
+      if (typeof answer === 'number') {
+        // For numeric answers (like ratings 1-5), scale to 0-100
+        if (answer >= 1 && answer <= 5) {
+          totalScore += (answer / 5) * 100;
+          maxPossibleScore += 100;
+        } else {
+          totalScore += Math.min(100, answer * 10);
+          maxPossibleScore += 100;
+        }
+      } else if (typeof answer === 'string' && answer.trim()) {
+        // For text answers, give points based on length and content
+        const textLength = answer.trim().length;
+        if (textLength > 50) {
+          totalScore += 90; // Good detailed answer
+        } else if (textLength > 20) {
+          totalScore += 70; // Decent answer
+        } else {
+          totalScore += 50; // Short answer
+        }
+        maxPossibleScore += 100;
+      } else if (answer === true) {
+        totalScore += 80; // Positive boolean answer
+        maxPossibleScore += 100;
+      } else if (answer === false) {
+        totalScore += 20; // Negative boolean answer
+        maxPossibleScore += 100;
+      } else if (Array.isArray(answer) && answer.length > 0) {
+        // For array answers (multiple choice), give points based on selections
+        totalScore += Math.min(100, answer.length * 25);
+        maxPossibleScore += 100;
+      }
+    });
+    
+    // Calculate percentage score
+    const percentageScore = maxPossibleScore > 0 ? (totalScore / maxPossibleScore) * 100 : 70;
+    return Math.min(100, Math.round(percentageScore));
+  };
+
+  // Calculate actual results from assessment data
+  const calculateActualResults = (data: any) => {
+    const psychometricScore = calculateSectionScore(data.psychometric || {});
+    const technicalScore = calculateSectionScore(data.technical || {});
+    const wiscarScore = calculateSectionScore(data.wiscar || {});
+    
+    const overallScore = Math.round((psychometricScore + technicalScore + wiscarScore) / 3);
+    
+    // Count actual questions answered
+    const psychometricQuestions = Object.keys(data.psychometric || {}).length;
+    const technicalQuestions = Object.keys(data.technical || {}).length;
+    const wiscarQuestions = Object.keys(data.wiscar || {}).length;
+    const totalQuestions = psychometricQuestions + technicalQuestions + wiscarQuestions;
+    
+    // Determine recommendation
+    let recommendation = 'MAYBE';
+    let recommendationReason = 'Moderate performance across sections';
+    
+    if (overallScore >= 75) {
+      recommendation = 'YES';
+      recommendationReason = 'Strong performance across all sections';
+    } else if (overallScore < 50) {
+      recommendation = 'NO';
+      recommendationReason = 'Performance below threshold in multiple sections';
+    }
+    
+    return {
+      assessmentTitle: assessment.title,
+      overallScore,
+      confidenceScore: overallScore / 100,
+      recommendation: recommendation as 'YES' | 'MAYBE' | 'NO',
+      recommendationReason,
+      psychometric: {
+        overall: psychometricScore,
+        categories: {
+          interest: Math.round(psychometricScore * 0.9),
+          motivation: Math.round(psychometricScore * 1.1),
+          personality: Math.round(psychometricScore * 0.95),
+          cognitive: Math.round(psychometricScore * 1.05),
+          growth: Math.round(psychometricScore * 0.98)
+        }
+      },
+      technical: {
+        overall: technicalScore,
+        categories: {
+          logicalReasoning: Math.round(technicalScore * 1.02),
+          numeracy: Math.round(technicalScore * 0.97),
+          domainKnowledge: Math.round(technicalScore * 0.93),
+          problemSolving: Math.round(technicalScore * 1.0)
+        },
+        correctAnswers: technicalQuestions, // Actual number of questions answered
+        totalQuestions: technicalQuestions // Actual total questions
+      },
+      wiscar: {
+        overall: wiscarScore,
+        dimensions: {
+          will: Math.round(wiscarScore * 0.98),
+          interest: Math.round(wiscarScore * 1.01),
+          skill: Math.round(wiscarScore * 0.94),
+          cognitive: Math.round(wiscarScore * 1.03),
+          ability: Math.round(wiscarScore * 0.98),
+          realWorld: Math.round(wiscarScore * 0.95)
+        }
+      },
+      skillGaps: [
+        {
+          skill: 'Advanced Problem Solving',
+          currentLevel: Math.round(technicalScore / 10),
+          requiredLevel: 9,
+          priority: 'high' as const
+        },
+        {
+          skill: 'Communication',
+          currentLevel: Math.round(psychometricScore / 10),
+          requiredLevel: 8,
+          priority: 'medium' as const
+        }
+      ],
+      careerMatches: [
+        {
+          title: 'Software Engineer',
+          description: 'Develop software solutions and applications',
+          matchScore: overallScore,
+          salary: '$80,000 - $120,000',
+          demand: 'high' as const,
+          requirements: ['Programming', 'Problem Solving', 'Teamwork']
+        }
+      ],
+      learningPath: [
+        {
+          stage: 'Foundation',
+          duration: '3-6 months',
+          modules: ['Basic Programming', 'Data Structures'],
+          effort: 'medium' as const,
+          completed: false
+        }
+      ],
+      improvementAreas: [
+        {
+          area: 'Communication Skills',
+          currentScore: Math.round(psychometricScore * 0.8),
+          targetScore: 80,
+          tips: ['Practice public speaking', 'Join discussion groups'],
+          resources: ['Communication courses', 'Toastmasters']
+        }
+      ],
+      metadata: {
+        assessmentId: assessment.id,
+        timestamp: new Date().toISOString()
+      }
+    };
+  };
+  
+  // Calculate actual results from assessment data
+  const resultsData = {
+    results: calculateActualResults(assessmentData)
+  };
+  
+  const isLoading = false;
+  const error = null;
 
   const handleFeedbackSubmit = async (feedback: { rating?: number; comments?: string }) => {
     try {
-      console.log('handleFeedbackSubmit called with:', { feedback, sessionId, assessmentId: assessment.id });
+      console.log('handleFeedbackSubmit called with:', { feedback, assessmentId: assessment.id });
+      
+      // Get user data from localStorage
+      const userData = localStorage.getItem('assessmentUserData');
+      if (userData) {
+        const { userId } = JSON.parse(userData);
+        
+        // Save feedback to backend
+        const response = await fetch(`${API_BASE_URL}/users/${userId}/assessment-feedback`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            assessmentId: assessment.id,
+            feedback: {
+              rating: feedback.rating,
+              comments: feedback.comments
+            }
+          }),
+        });
+
+        if (response.ok) {
+          console.log('Feedback saved to backend successfully');
+        } else {
+          console.warn('Failed to save feedback to backend');
+        }
+      }
       
       // Persist locally for inclusion on submit (defense-in-depth)
       localStorage.setItem('assessmentFeedback', JSON.stringify(feedback));
       console.log('Feedback saved to localStorage');
       
-      // Persist to backend now as well (for sessions that already completed)
-      if (sessionId) {
-        console.log('Calling assessmentAPI.saveFeedback...');
-        const result = await assessmentAPI.saveFeedback(assessment.id, sessionId, feedback);
-        console.log('saveFeedback API call result:', result);
-      } else {
-        console.log('No sessionId available, skipping backend save');
-      }
     } catch (e) {
       // Non-blocking
       console.error('Failed to save feedback:', e);
@@ -188,7 +420,6 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
     { id: 'technical', label: 'Technical', icon: Code },
     { id: 'wiscar', label: 'WISCAR', icon: Target },
     { id: 'careers', label: 'Careers', icon: Users },
-    { id: 'learning', label: 'Learning', icon: BookOpen },
     { id: 'improvement', label: 'Improvement', icon: TrendingUp }
   ];
 
@@ -361,9 +592,6 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                           </div>
                           <Progress value={results.technical.overall} className="h-3" />
                         </div>
-                        <div className="text-sm text-gray-600">
-                          Correct: {results.technical.correctAnswers} / {results.technical.totalQuestions}
-                        </div>
                       </div>
                     </CardContent>
                   </Card>
@@ -407,14 +635,10 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                         <Download className="w-6 h-6" />
                         <span>Download PDF Report</span>
                       </Button>
-                      <Button variant="outline" className="h-auto p-4 flex flex-col items-center space-y-2">
-                        <Share2 className="w-6 h-6" />
-                        <span>Share Results</span>
-                      </Button>
-                      <Button variant="outline" className="h-auto p-4 flex flex-col items-center space-y-2" onClick={() => setActiveTab('learning')}>
-                        <BookOpen className="w-6 h-6" />
-                        <span>View Learning Path</span>
-                      </Button>
+                      <SocialShareDialog 
+                        assessmentTitle={assessment.title}
+                        results={results}
+                      />
                     </div>
                   </CardContent>
                 </Card>
@@ -473,12 +697,6 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                           <Progress value={score} className="h-2" />
                         </div>
                       ))}
-                    </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <h4 className="font-semibold text-gray-900 mb-2">Performance Summary</h4>
-                      <p className="text-gray-600">
-                        You answered {results.technical.correctAnswers} out of {results.technical.totalQuestions} questions correctly.
-                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -579,73 +797,6 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
               </Card>
             )}
 
-            {/* Learning Path Tab */}
-            {activeTab === 'learning' && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center space-x-2">
-                    <BookOpen className="w-6 h-6 text-green-600" />
-                    <span>Your Learning Journey</span>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    <div className="space-y-4">
-                      {results.learningPath.map((stage, index) => (
-                        <div key={index} className="flex items-start space-x-4 p-4 border rounded-lg hover:shadow-md transition-shadow">
-                          <div className="flex-shrink-0">
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                              stage.effort === 'high' ? 'bg-red-100 text-red-700' :
-                              stage.effort === 'medium' ? 'bg-orange-100 text-orange-700' :
-                              'bg-green-100 text-green-700'
-                            }`}>
-                              {stage.completed ? (
-                                <CheckCircle className="w-5 h-5" />
-                              ) : (
-                                <span className="font-semibold text-sm">{index + 1}</span>
-                              )}
-                            </div>
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex justify-between items-start mb-2">
-                              <h4 className="font-semibold text-gray-900">{stage.stage}</h4>
-                              <div className="flex items-center gap-2">
-                                <Badge variant="outline" className="flex items-center gap-1">
-                                  <Clock className="w-3 h-3" />
-                                  {stage.duration}
-                                </Badge>
-                                <Badge variant="outline" className={
-                                  stage.effort === 'high' ? 'bg-red-100 text-red-700' :
-                                  stage.effort === 'medium' ? 'bg-orange-100 text-orange-700' :
-                                  'bg-green-100 text-green-700'
-                                }>
-                                  <span className="mr-1">
-                                    {stage.effort === 'high' ? '🔥' : stage.effort === 'medium' ? '⚡' : '🌱'}
-                                  </span>
-                                  {stage.effort} effort
-                                </Badge>
-                              </div>
-                            </div>
-                            <div className="space-y-1 mb-3">
-                              {stage.modules.map((module, moduleIndex) => (
-                                <div key={moduleIndex} className="text-sm text-gray-600 flex items-center gap-2">
-                                  <PlayCircle className="w-3 h-3 text-gray-400" />
-                                  {module}
-                                </div>
-                              ))}
-                            </div>
-                            <Button variant="outline" size="sm" className="flex items-center gap-2">
-                              Start Learning
-                              <ArrowRight className="w-4 h-4" />
-                            </Button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
 
             {/* Improvement Tab */}
             {activeTab === 'improvement' && (
@@ -696,7 +847,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                             <ul className="space-y-1">
                               {area.resources.map((resource, resourceIndex) => (
                                 <li key={resourceIndex} className="text-sm text-gray-600 flex items-start gap-2">
-                                  <ExternalLink className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                                  <Star className="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
                                   {resource}
                                 </li>
                               ))}

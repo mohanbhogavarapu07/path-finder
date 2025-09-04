@@ -129,16 +129,7 @@ export interface QuestionOption {
   score?: number;
 }
 
-export interface AssessmentSession {
-  sessionId: string;
-  assessmentId: string;
-  userId?: string;
-  status: 'in-progress' | 'completed' | 'abandoned';
-  currentSection: 'introduction' | 'psychometric' | 'technical' | 'wiscar' | 'results';
-  startedAt: string;
-  completedAt?: string;
-  duration?: number;
-}
+
 
 export interface AssessmentResults {
   assessmentTitle: string;
@@ -285,60 +276,13 @@ class AssessmentAPI {
     return this.request<DynamicAssessment & { sections: AssessmentSection[] }>(`/assessments/${assessmentId}`);
   }
 
-  // Start a new assessment session
-  async startAssessmentSession(assessmentId: string, userId?: string): Promise<{
-    sessionId: string;
-    assessment: DynamicAssessment;
-    sections: AssessmentSection[];
-  }> {
-    return this.request<{
-      sessionId: string;
-      assessment: DynamicAssessment;
-      sections: AssessmentSection[];
-    }>(`/assessments/${assessmentId}/start`, {
-      method: 'POST',
-      body: JSON.stringify({ userId }),
-    });
-  }
 
-  // Submit assessment answers
-  async submitAssessment(
-    assessmentId: string,
-    sessionId: string,
-    answers: Array<{ questionId: string; sectionId: string; value: any }>,
-    userId?: string,
-    feedback?: { rating?: number; comments?: string }
-  ): Promise<{ sessionId: string; results: AssessmentResults; duration: number }> {
-    return this.request<{ sessionId: string; results: AssessmentResults; duration: number }>(`/assessments/${assessmentId}/submit`, {
-      method: 'POST',
-      body: JSON.stringify({ sessionId, answers, userId, feedback }),
-    });
-  }
 
-  // Get assessment results
-  async getAssessmentResults(assessmentId: string, sessionId: string): Promise<{
-    sessionId: string;
-    assessmentId: string;
-    results: AssessmentResults;
-    duration: number;
-    completedAt: string;
-  }> {
-    return this.request<{
-      sessionId: string;
-      assessmentId: string;
-      results: AssessmentResults;
-      duration: number;
-      completedAt: string;
-    }>(`/assessments/${assessmentId}/results/${sessionId}`);
-  }
 
-  // Save feedback for a session (if user exits before results)
-  async saveFeedback(assessmentId: string, sessionId: string, feedback: { rating?: number; comments?: string }) {
-    return this.request<{ ok: boolean }>(`/assessments/${assessmentId}/feedback/${sessionId}`, {
-      method: 'POST',
-      body: JSON.stringify({ feedback }),
-    });
-  }
+
+
+
+
 
   // Health check
   async healthCheck(): Promise<{ status: string; timestamp: string }> {
@@ -356,8 +300,6 @@ export const assessmentKeys = {
   list: (filters: string) => [...assessmentKeys.lists(), { filters }] as const,
   details: () => [...assessmentKeys.all, 'detail'] as const,
   detail: (id: string) => [...assessmentKeys.details(), id] as const,
-  sessions: () => [...assessmentKeys.all, 'session'] as const,
-  session: (sessionId: string) => [...assessmentKeys.sessions(), sessionId] as const,
 };
 
 // Blog API functions

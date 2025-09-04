@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
+import FeedbackDialog from '@/components/FeedbackDialog';
+import { useSubmitAssessment } from '@/hooks/useAssessments';
 import { 
   Brain, 
   Code, 
@@ -42,6 +44,8 @@ const Results = () => {
   const [scores, setScores] = useState<ScoreData | null>(null);
   const [recommendation, setRecommendation] = useState<RecommendationType>('Maybe');
   const [confidenceScore, setConfidenceScore] = useState(0);
+  const [showFeedback, setShowFeedback] = useState(true);
+  const submitAssessment = useSubmitAssessment();
 
   useEffect(() => {
     const data = location.state as AssessmentResults;
@@ -196,6 +200,12 @@ const Results = () => {
     </div>;
   }
 
+  const handleFeedbackSubmit = async (feedback: { rating?: number; comments?: string }) => {
+    // Store feedback client-side in case session submit is elsewhere in flow.
+    localStorage.setItem('assessmentFeedback', JSON.stringify(feedback));
+    setShowFeedback(false);
+  };
+
   // Color mapping for cards and badges
   const cardStyles = {
     psychological: 'border-purple-200 bg-purple-50',
@@ -214,6 +224,11 @@ const Results = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <FeedbackDialog
+        open={showFeedback}
+        onClose={() => setShowFeedback(false)}
+        onSubmit={handleFeedbackSubmit}
+      />
       <div className="max-w-6xl mx-auto px-4 py-12 space-y-8">
         {/* Header */}
         <div className="text-center mb-8">

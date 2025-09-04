@@ -34,12 +34,12 @@ const DataProtection = () => {
               <h2 className="text-2xl font-semibold text-heading mb-6">Preamble: Our Commitment to Your Privacy & Educational Mission</h2>
               
               <h3 className="text-xl font-semibold text-heading mb-4">Introduction</h3>
-              <p className="text-foreground-soft mb-4">
+              <p className="text-foreground-soft mb-4 text-justify">
                 Welcome to factorbeam.com (hereinafter "Factorbeam," "the Company," "we," "us," or "our"). Our platform is designed to provide users with a suite of assessments and tools for the purpose of gaining clarity about themselves and their potential career paths. We are dedicated to empowering your journey of self-discovery.
               </p>
 
               <h3 className="text-xl font-semibold text-heading mb-4">Our Core Commitment</h3>
-              <p className="text-foreground-soft mb-4">
+              <p className="text-foreground-soft mb-4 text-justify">
                 The foundation of our service is the trust you place in us when you share your information. We are fundamentally committed to protecting your privacy and handling your personal data with the utmost care, transparency, and respect. This Data Protection Policy ("Policy") outlines our practices for collecting, processing, using, storing, and disclosing your personal data. Our approach is designed to comply with the highest international standards, recognizing that the right to data protection is a fundamental right for all individuals, regardless of their nationality or residence.
               </p>
 
@@ -58,56 +58,56 @@ const DataProtection = () => {
               <h2 className="text-2xl font-semibold text-heading mb-6">Section 1: The Guiding Principles of Our Data Protection Policy</h2>
               
               <h3 className="text-xl font-semibold text-heading mb-4">Introduction to Principles</h3>
-              <p className="text-foreground-soft mb-4">
+              <p className="text-foreground-soft mb-4 text-justify">
                 Our data handling practices are governed by a set of core principles derived from leading global data protection frameworks, including the European Union's General Data Protection Regulation (GDPR), which sets a global benchmark for privacy. These principles are the bedrock of our commitment to you and ensure that your data is always processed ethically and lawfully.
               </p>
 
               <div className="space-y-6">
                 <div>
                   <h4 className="text-lg font-semibold text-heading mb-2">1.1 Lawfulness, Fairness, and Transparency</h4>
-                  <p className="text-foreground-soft">
+                  <p className="text-foreground-soft text-justify">
                     We will only process your personal data when we have a legitimate and lawful reason to do so. The primary legal basis for processing data related to your assessments will be your explicit and informed consent. Our processing will always be fair, meaning we will not handle your data in ways you would not reasonably expect or that could have unjustified adverse effects on you. We are committed to being fully transparent about our data practices, which is the purpose of this comprehensive Policy.
                   </p>
                 </div>
 
                 <div>
                   <h4 className="text-lg font-semibold text-heading mb-2">1.2 Purpose Limitation</h4>
-                  <p className="text-foreground-soft">
+                  <p className="text-foreground-soft text-justify">
                     We will only collect your personal data for specified, explicit, and legitimate purposes that are clearly communicated to you at the time of collection. We will not process your data for any new purpose that is incompatible with the original purpose unless we obtain your fresh, specific consent for that new use.
                   </p>
                 </div>
 
                 <div>
                   <h4 className="text-lg font-semibold text-heading mb-2">1.3 Data Minimization</h4>
-                  <p className="text-foreground-soft">
+                  <p className="text-foreground-soft text-justify">
                     We are committed to collecting and processing only the minimum amount of personal data that is absolutely necessary to achieve the stated purpose. We will only ask for data that is adequate, relevant, and limited to what is required to provide you with our assessment services and manage your account.
                   </p>
                 </div>
 
                 <div>
                   <h4 className="text-lg font-semibold text-heading mb-2">1.4 Accuracy</h4>
-                  <p className="text-foreground-soft">
+                  <p className="text-foreground-soft text-justify">
                     We will take every reasonable step to ensure that the personal data we hold is accurate and, where necessary, kept up to date. We recognize that the value of our assessments depends on the accuracy of the input data. We provide you with the means to review and correct your personal information, and we will rectify or erase inaccurate data without undue delay upon your request.
                   </p>
                 </div>
 
                 <div>
                   <h4 className="text-lg font-semibold text-heading mb-2">1.5 Storage Limitation</h4>
-                  <p className="text-foreground-soft">
+                  <p className="text-foreground-soft text-justify">
                     We will not retain your personal data in a form that permits your identification for longer than is necessary for the purposes for which it was collected. We have established clear data retention periods, after which your personal data will be securely deleted or anonymized.
                   </p>
                 </div>
 
                 <div>
                   <h4 className="text-lg font-semibold text-heading mb-2">1.6 Integrity and Confidentiality</h4>
-                  <p className="text-foreground-soft">
+                  <p className="text-foreground-soft text-justify">
                     We take the security of your personal data very seriously. We will process your data in a manner that ensures its appropriate security, including protection against unauthorized or unlawful processing and against accidental loss, destruction, or damage. We achieve this by using appropriate and robust technical and organizational security measures.
                   </p>
                 </div>
 
                 <div>
                   <h4 className="text-lg font-semibold text-heading mb-2">1.7 Accountability</h4>
-                  <p className="text-foreground-soft">
+                  <p className="text-foreground-soft text-justify">
                     As the entity responsible for your data (referred to as the "Data Controller" or "Data Fiduciary"), Factorbeam accepts full responsibility for complying with these principles. We are not only committed to adhering to them but also to being able to demonstrate our compliance to you and to regulatory authorities.
                   </p>
                 </div>
@@ -119,14 +119,14 @@ const DataProtection = () => {
               <h2 className="text-2xl font-semibold text-heading mb-6">Section 2: The Personal Data We Process</h2>
               
               <h3 className="text-xl font-semibold text-heading mb-4">Introduction</h3>
-              <p className="text-foreground-soft mb-4">
+              <p className="text-foreground-soft mb-4 text-justify">
                 To provide our services, we must collect and process certain types of information. This section provides a comprehensive and transparent overview of the categories of personal data we handle. We have categorized this data based on how it is obtained: directly from you, generated by our systems, or collected automatically.
               </p>
 
               <div className="space-y-6">
                 <div>
                   <h4 className="text-lg font-semibold text-heading mb-2">2.1 Information You Directly and Voluntarily Provide</h4>
-                  <p className="text-foreground-soft mb-2">This is information you knowingly share with us when you use our services.</p>
+                  <p className="text-foreground-soft mb-2 text-justify">This is information you knowingly share with us when you use our services.</p>
                   <ul className="list-disc pl-6 space-y-2 text-foreground-soft">
                     <li><strong>Account and Profile Data:</strong> When you register for an account, we collect basic information necessary for account creation and management. This includes your name, email address, and a securely hashed password.</li>
                     <li><strong>Assessment Response Data:</strong> This is the core data you provide when you interact with our assessments. It consists of your answers, selections, and responses to the questions and prompts within our various self-clarity, personality, and career assessments.</li>
@@ -136,7 +136,7 @@ const DataProtection = () => {
 
                 <div>
                   <h4 className="text-lg font-semibold text-heading mb-2">2.2 Information We Generate or Infer (Derived Data)</h4>
-                  <p className="text-foreground-soft mb-2">This is new information that our systems create based on the data you provide.</p>
+                  <p className="text-foreground-soft mb-2 text-justify">This is new information that our systems create based on the data you provide.</p>
                   <ul className="list-disc pl-6 space-y-2 text-foreground-soft">
                     <li><strong>Assessment Results and Profiles:</strong> Based on your Assessment Response Data, our proprietary algorithms generate personalized results. This derived data includes personality type classifications, career compatibility scores, analyses of your strengths and weaknesses, and other detailed character or work-style profiles.</li>
                     <li><strong>Inferred Sensitive Personal Information:</strong> This is a critical category of data that requires special attention. While we do not directly ask you for information concerning your racial or ethnic origin, political opinions, religious or philosophical beliefs, health, or sexual orientation, the nature of in-depth personality and psychological assessments means that your Assessment Response Data and the resulting Assessment Results and Profiles could be used to infer such information.</li>
@@ -145,7 +145,7 @@ const DataProtection = () => {
 
                 <div>
                   <h4 className="text-lg font-semibold text-heading mb-2">2.3 Information We Collect Automatically (Technical Data)</h4>
-                  <p className="text-foreground-soft mb-2">This is technical information collected automatically when you access our website.</p>
+                  <p className="text-foreground-soft mb-2 text-justify">This is technical information collected automatically when you access our website.</p>
                   <ul className="list-disc pl-6 space-y-2 text-foreground-soft">
                     <li><strong>Usage and Log Data:</strong> To ensure the security, stability, and performance of our platform, our servers automatically log certain information. This includes your Internet Protocol (IP) address, browser type and settings, operating system, referral URLs, the pages you visit on our site, and the dates and times of your activity.</li>
                     <li><strong>Cookie and Tracking Data:</strong> We use cookies and similar technologies to operate and personalize our website. For example, cookies help us remember that you are logged in.</li>
@@ -159,7 +159,7 @@ const DataProtection = () => {
               <h2 className="text-2xl font-semibold text-heading mb-6">Section 3: Lawful Basis and Purpose of Processing</h2>
               
               <h3 className="text-xl font-semibold text-heading mb-4">Introduction</h3>
-              <p className="text-foreground-soft mb-4">
+              <p className="text-foreground-soft mb-4 text-justify">
                 In this section, we explain why we process the different categories of your personal data. In accordance with global data protection laws, every processing activity must be justified by a valid "lawful basis". For Factorbeam, the primary bases are the necessity of processing for the performance of our contract with you (our Terms of Service), your explicit consent, and our legitimate interests in operating and improving our service.
               </p>
 
@@ -216,14 +216,14 @@ const DataProtection = () => {
               <h2 className="text-2xl font-semibold text-heading mb-6">Section 4: Your Global Data Protection Rights</h2>
               
               <h3 className="text-xl font-semibold text-heading mb-4">Introduction</h3>
-              <p className="text-foreground-soft mb-4">
+              <p className="text-foreground-soft mb-4 text-justify">
                 We believe in empowering you with control over your personal data. This section outlines the rights you have regarding your information and explains how you can exercise them. We are committed to providing a high standard of data protection to all our users, regardless of their location.
               </p>
 
               <div className="space-y-6">
                 <div>
                   <h4 className="text-lg font-semibold text-heading mb-2">4.1 How to Exercise Your Rights</h4>
-                  <p className="text-foreground-soft mb-2">To exercise any of the rights described in this section, please submit a verifiable request to us via email at privacy@factorbeam.com.</p>
+                  <p className="text-foreground-soft mb-2 text-justify">To exercise any of the rights described in this section, please submit a verifiable request to us via email at privacy@factorbeam.com.</p>
                   <ul className="list-disc pl-6 space-y-2 text-foreground-soft">
                     <li>For your protection, we must verify your identity before we can act on your request.</li>
                     <li>We will respond to your request without undue delay, and in any case, within one month of receipt.</li>
@@ -277,7 +277,7 @@ const DataProtection = () => {
               <div className="space-y-6">
                 <div>
                   <h3 className="text-xl font-semibold text-heading mb-4">5.1 Our Commitment to Data Security</h3>
-                  <p className="text-foreground-soft mb-4">
+                  <p className="text-foreground-soft mb-4 text-justify">
                     We have implemented and will maintain a comprehensive information security program with appropriate technical and organizational measures (TOMs) designed to protect the personal data in our custody from unauthorized access, use, alteration, or destruction.
                   </p>
                   <ul className="list-disc pl-6 space-y-2 text-foreground-soft">
@@ -291,7 +291,7 @@ const DataProtection = () => {
 
                 <div>
                   <h3 className="text-xl font-semibold text-heading mb-4">5.2 Our Data Retention Policy</h3>
-                  <p className="text-foreground-soft mb-4">
+                  <p className="text-foreground-soft mb-4 text-justify">
                     In line with the principle of storage limitation, we retain your personal data only for as long as it is necessary to fulfill the purposes for which it was collected, including for the purposes of satisfying any legal, accounting, or reporting requirements.
                   </p>
                   <ul className="list-disc pl-6 space-y-2 text-foreground-soft">
@@ -303,10 +303,10 @@ const DataProtection = () => {
 
                 <div>
                   <h3 className="text-xl font-semibold text-heading mb-4">5.3 International Data Transfers</h3>
-                  <p className="text-foreground-soft mb-4">
+                  <p className="text-foreground-soft mb-4 text-justify">
                     Factorbeam's operations are global, and our primary data processing facilities are located in the United States. This means that if you are accessing our services from outside the United States, your personal data will be transferred to, stored, and processed in the United States.
                   </p>
-                  <p className="text-foreground-soft mb-4">
+                  <p className="text-foreground-soft mb-4 text-justify">
                     We ensure the lawfulness of these transfers through the following mechanisms:
                   </p>
                   <ul className="list-disc pl-6 space-y-2 text-foreground-soft">
@@ -336,14 +336,14 @@ const DataProtection = () => {
               <h2 className="text-2xl font-semibold text-heading mb-6">Section 7: Disclosures to Third Parties</h2>
               
               <h3 className="text-xl font-semibold text-heading mb-4">Our Philosophy on Data Sharing</h3>
-              <p className="text-foreground-soft mb-4">
+              <p className="text-foreground-soft mb-4 text-justify">
                 Your trust is paramount. We do not sell, rent, or trade your personal data to third parties for their marketing purposes. This section clarifies the limited and necessary circumstances under which we may disclose your information to other entities.
               </p>
 
               <div className="space-y-6">
                 <div>
                   <h4 className="text-lg font-semibold text-heading mb-2">7.1 Service Providers and Processors</h4>
-                  <p className="text-foreground-soft mb-2">We engage a limited number of third-party companies and individuals to perform essential services on our behalf. These "Data Processors" are contractually bound to act only on our instructions and to protect your data. Examples include:</p>
+                  <p className="text-foreground-soft mb-2 text-justify">We engage a limited number of third-party companies and individuals to perform essential services on our behalf. These "Data Processors" are contractually bound to act only on our instructions and to protect your data. Examples include:</p>
                   <ul className="list-disc pl-6 space-y-2 text-foreground-soft">
                     <li>Cloud Hosting Providers: To store our data and host our application.</li>
                     <li>Email Service Providers: To send you essential service-related communications.</li>
@@ -353,7 +353,7 @@ const DataProtection = () => {
 
                 <div>
                   <h4 className="text-lg font-semibold text-heading mb-2">7.2 Legal Requirements</h4>
-                  <p className="text-foreground-soft mb-2">We may disclose your personal data if we are required to do so by law or in the good faith belief that such action is necessary to:</p>
+                  <p className="text-foreground-soft mb-2 text-justify">We may disclose your personal data if we are required to do so by law or in the good faith belief that such action is necessary to:</p>
                   <ul className="list-disc pl-6 space-y-2 text-foreground-soft">
                     <li>Comply with a legal obligation, subpoena, court order, or other lawful request by public authorities.</li>
                     <li>Protect and defend the rights or property of Factorbeam.</li>
@@ -364,7 +364,7 @@ const DataProtection = () => {
 
                 <div>
                   <h4 className="text-lg font-semibold text-heading mb-2">7.3 Business Transfers</h4>
-                  <p className="text-foreground-soft">
+                  <p className="text-foreground-soft text-justify">
                     In the event that Factorbeam is involved in a merger, acquisition, divestiture, restructuring, or sale of all or a portion of its assets, your personal data may be transferred as part of that transaction. We will notify you via email and/or a prominent notice on our website of any change in ownership or uses of your personal data, as well as any choices you may have regarding your personal data.
                   </p>
                 </div>
@@ -376,12 +376,12 @@ const DataProtection = () => {
               <h2 className="text-2xl font-semibold text-heading mb-6">Section 8: Cookies and Tracking Technologies Policy</h2>
               
               <h3 className="text-xl font-semibold text-heading mb-4">What are Cookies?</h3>
-              <p className="text-foreground-soft mb-4">
+              <p className="text-foreground-soft mb-4 text-justify">
                 Cookies are small text files that are stored on your computer or mobile device when you visit a website. They contain data related to your visit and are used by websites for a variety of purposes, from enabling essential functionality to remembering your preferences and helping to personalize your experience.
               </p>
 
               <h3 className="text-xl font-semibold text-heading mb-4">How We Use Cookies</h3>
-              <p className="text-foreground-soft mb-4">We use cookies to provide, secure, and improve our services. We categorize our cookies as follows:</p>
+              <p className="text-foreground-soft mb-4 text-justify">We use cookies to provide, secure, and improve our services. We categorize our cookies as follows:</p>
               <ul className="list-disc pl-6 space-y-2 text-foreground-soft mb-6">
                 <li><strong>Strictly Necessary Cookies:</strong> These cookies are essential for the website to function properly. They enable core functionality such as user login, account management, and session security. These cookies do not store any personally identifiable information and do not require your consent.</li>
                 <li><strong>Performance and Analytics Cookies:</strong> These cookies collect information about how you use our website, such as which pages you visit and how much time you spend on them. This data is aggregated and anonymized and helps us understand user behavior, diagnose technical issues, and improve the overall performance of our service.</li>
@@ -389,10 +389,10 @@ const DataProtection = () => {
               </ul>
 
               <h3 className="text-xl font-semibold text-heading mb-4">Your Choices and How to Manage Cookies</h3>
-              <p className="text-foreground-soft mb-4">
+              <p className="text-foreground-soft mb-4 text-justify">
                 When you first visit our website, you will be presented with a cookie consent banner. This tool allows you to accept all cookies or to customize your preferences and consent only to specific categories of non-essential cookies. You can change your cookie settings at any time through this tool.
               </p>
-              <p className="text-foreground-soft">
+              <p className="text-foreground-soft text-justify">
                 Additionally, most web browsers allow you to control cookies through their settings. You can set your browser to block cookies or to alert you when cookies are being sent. Please note that if you disable or refuse cookies, some parts of our service may become inaccessible or not function properly.
               </p>
             </section>
@@ -402,15 +402,15 @@ const DataProtection = () => {
               <h2 className="text-2xl font-semibold text-heading mb-6">Section 9: Policy Updates and Contact Information</h2>
               
               <h3 className="text-xl font-semibold text-heading mb-4">Changes to This Policy</h3>
-              <p className="text-foreground-soft mb-6">
+              <p className="text-foreground-soft mb-6 text-justify">
                 The digital world and its legal landscape are constantly evolving. We reserve the right to update or modify this Data Protection Policy at any time. If we make material changes to this Policy, we will notify you by updating the "Last Updated" date at the top of this page and by providing a more prominent notice, such as through an email to the address associated with your account or a notification on our website. We encourage you to review this Policy periodically to stay informed about how we are protecting your information.
               </p>
 
               <h3 className="text-xl font-semibold text-heading mb-4">How to Contact Us</h3>
-              <p className="text-foreground-soft mb-4">If you have any questions, comments, or concerns about this Data Protection Policy, our data practices, or if you wish to exercise your rights, please do not hesitate to contact us.</p>
+              <p className="text-foreground-soft mb-4 text-justify">If you have any questions, comments, or concerns about this Data Protection Policy, our data practices, or if you wish to exercise your rights, please do not hesitate to contact us.</p>
               <div className="bg-gray-50 p-6 rounded-lg">
                 <p className="text-foreground-soft mb-2"><strong>For general privacy inquiries:</strong></p>
-                <p className="text-foreground-soft mb-4">Email: privacy@factorbeam.com</p>
+                <p className="text-foreground-soft mb-4">Email: info@factorbeam.com</p>
                 <p className="text-foreground-soft mb-2"><strong>For grievances under the Indian DPDP Act, 2023:</strong></p>
                 <p className="text-foreground-soft">Grievance Officer Email: grievance.officer@factorbeam.com</p>
               </div>
@@ -419,7 +419,7 @@ const DataProtection = () => {
             {/* Section 10: Glossary */}
             <section className="mb-12">
               <h2 className="text-2xl font-semibold text-heading mb-6">Section 10: Glossary of Key Terms</h2>
-              <p className="text-foreground-soft mb-4">
+              <p className="text-foreground-soft mb-4 text-justify">
                 To ensure this Policy is as transparent and understandable as possible, here are definitions of some key terms used throughout this document.
               </p>
               <ul className="list-disc pl-6 space-y-2 text-foreground-soft">

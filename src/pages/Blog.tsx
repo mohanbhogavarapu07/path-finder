@@ -192,7 +192,7 @@ const Blog = () => {
                       {post.featuredImage && (
                         <div className="aspect-video overflow-hidden">
                           <img 
-                            src={`https://pf-backend-6p4g.onrender.com${post.featuredImage}`}
+                            src={`${API_BASE_URL.replace('/api','')}${post.featuredImage}`}
                             alt={post.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />

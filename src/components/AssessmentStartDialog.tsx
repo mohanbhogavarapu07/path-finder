@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { API_BASE_URL } from '@/lib/api';
 
 interface AssessmentStartDialogProps {
   isOpen: boolean;
@@ -29,7 +30,6 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     country: '',
-    email: '',
     ageRange: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -49,12 +49,6 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
       newErrors.country = 'Country is required';
     }
 
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-
     if (!formData.ageRange.trim()) {
       newErrors.ageRange = 'Age range is required';
     }
@@ -70,7 +64,6 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
 
     try {
       // Send user data to backend
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://pf-backend-6p4g.onrender.com/api';
       const response = await fetch(`${API_BASE_URL}/users`, {
         method: 'POST',
         headers: {
@@ -78,7 +71,6 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
         },
         body: JSON.stringify({
           country: formData.country,
-          email: formData.email,
           ageRange: formData.ageRange
         }),
       });
@@ -93,7 +85,6 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
       // Store user data in localStorage with backend user ID
       const userData = {
         country: formData.country,
-        email: formData.email,
         ageRange: formData.ageRange,
         userId: result.user.id,
         timestamp: new Date().toISOString()
@@ -105,7 +96,7 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
       onClose();
     } catch (error) {
       console.error('Error starting assessment:', error);
-      setErrors({ submit: error.message });
+      setErrors({ submit: (error as Error).message });
     }
   };
 
@@ -141,23 +132,6 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
               <p className="text-sm text-red-500">{errors.country}</p>
             )}
             <p className="text-xs text-gray-500">Currently available for India only</p>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="email" className="text-sm font-medium text-factorbeam-heading">
-              Email Address *
-            </Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="Enter your email address"
-              value={formData.email}
-              onChange={(e) => handleInputChange('email', e.target.value)}
-              className={errors.email ? 'border-red-500 focus:border-red-500' : ''}
-            />
-            {errors.email && (
-              <p className="text-sm text-red-500">{errors.email}</p>
-            )}
           </div>
 
           <div className="space-y-2">

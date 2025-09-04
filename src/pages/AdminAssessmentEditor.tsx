@@ -24,6 +24,7 @@ import {
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { toast } from 'sonner';
+import { API_BASE_URL } from '@/lib/api';
 
 // Simple interface for any JSON input
 interface RawAssessmentData {
@@ -234,7 +235,7 @@ const AdminAssessmentEditor = () => {
         return;
       }
 
-             const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/admin/assessments/${assessmentId}`, {
+      const response = await fetch(`${API_BASE_URL}/admin/assessments/${assessmentId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -751,7 +752,7 @@ const AdminAssessmentEditor = () => {
 
       let response;
       if (assessmentId) {
-                 response = await fetch(`https://pf-backend-6p4g.onrender.com/api/admin/assessments/${assessmentId}`, {
+        response = await fetch(`${API_BASE_URL}/admin/assessments/${assessmentId}`, {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -761,7 +762,7 @@ const AdminAssessmentEditor = () => {
           credentials: 'include'
         });
       } else {
-                 response = await fetch('https://pf-backend-6p4g.onrender.com/api/admin/assessments', {
+        response = await fetch(`${API_BASE_URL}/admin/assessments`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -977,7 +978,7 @@ const AdminAssessmentEditor = () => {
                        onClick={async () => {
                          try {
                            const token = localStorage.getItem('adminToken');
-                           const response = await fetch('https://pf-backend-6p4g.onrender.com/api/admin/assessments/test', {
+                           const response = await fetch(`${API_BASE_URL}/admin/assessments/test`, {
                              method: 'POST',
                              headers: {
                                'Authorization': `Bearer ${token}`,
@@ -1128,7 +1129,7 @@ const AdminAssessmentEditor = () => {
                              }
                            };
                            
-                           const response = await fetch('https://pf-backend-6p4g.onrender.com/api/admin/assessments', {
+                           const response = await fetch(`${API_BASE_URL}/admin/assessments`, {
                              method: 'POST',
                              headers: {
                                'Authorization': `Bearer ${token}`,

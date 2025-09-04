@@ -110,7 +110,7 @@ const AdminBlogEditor = () => {
         return;
       }
 
-              const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/blog/posts/${postId}`, {
+              const response = await fetch(`${API_BASE_URL}/blog/posts/${postId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -178,7 +178,7 @@ const AdminBlogEditor = () => {
       let response;
       if (postId) {
         // Update existing post
-        response = await fetch(`https://pf-backend-6p4g.onrender.com/api/blog/posts/${postId}`, {
+        response = await fetch(`${API_BASE_URL}/blog/posts/${postId}`, {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -189,7 +189,7 @@ const AdminBlogEditor = () => {
         });
       } else {
         // Create new post
-        response = await fetch('https://pf-backend-6p4g.onrender.com/api/blog/posts', {
+        response = await fetch(`${API_BASE_URL}/blog/posts`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -227,7 +227,7 @@ const AdminBlogEditor = () => {
           await uploadFiles(savedPost._id);
 
           // Refresh the post data to get the updated attachments
-          const refreshResponse = await fetch(`https://pf-backend-6p4g.onrender.com/api/blog/posts/${savedPost._id}`, {
+          const refreshResponse = await fetch(`${API_BASE_URL}/blog/posts/${savedPost._id}`, {
             headers: {
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json'
@@ -357,7 +357,7 @@ const AdminBlogEditor = () => {
       console.log('FormData created, sending request...'); // Debug
 
       const token = localStorage.getItem('adminToken');
-              const response = await fetch('https://pf-backend-6p4g.onrender.com/api/blog/upload', {
+              const response = await fetch(`${API_BASE_URL}/blog/upload`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -403,7 +403,7 @@ const AdminBlogEditor = () => {
     const token = localStorage.getItem('adminToken');
     
     try {
-              const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/blog/posts/${postId}/attachments/${attachmentId}`, {
+              const response = await fetch(`${API_BASE_URL}/blog/posts/${postId}/attachments/${attachmentId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -810,7 +810,7 @@ const AdminBlogEditor = () => {
                           </div>
                           <div className="flex items-center gap-2">
                             <a
-                              href={`https://pf-backend-6p4g.onrender.com${attachment.url}`}
+                              href={`${API_BASE_URL.replace('/api','')}${attachment.url}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:text-blue-800"

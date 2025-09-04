@@ -1,5 +1,5 @@
-// API base URL - should match your backend URL
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://pf-backend-6p4g.onrender.com/api';
+// API base URL - centralized single source of truth
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://pf-backend-x9gc.onrender.com/api';
 console.log('🔧 API Base URL:', API_BASE_URL);
 console.log('🔧 Environment variables:', {
   VITE_API_URL: import.meta.env.VITE_API_URL,
@@ -306,11 +306,12 @@ class AssessmentAPI {
     assessmentId: string,
     sessionId: string,
     answers: Array<{ questionId: string; sectionId: string; value: any }>,
-    userId?: string
+    userId?: string,
+    feedback?: { rating?: number; comments?: string }
   ): Promise<{ sessionId: string; results: AssessmentResults; duration: number }> {
-    return this.request<AssessmentResults>(`/assessments/${assessmentId}/submit`, {
+    return this.request<{ sessionId: string; results: AssessmentResults; duration: number }>(`/assessments/${assessmentId}/submit`, {
       method: 'POST',
-      body: JSON.stringify({ sessionId, answers, userId }),
+      body: JSON.stringify({ sessionId, answers, userId, feedback }),
     });
   }
 
@@ -331,6 +332,14 @@ class AssessmentAPI {
     }>(`/assessments/${assessmentId}/results/${sessionId}`);
   }
 
+  // Save feedback for a session (if user exits before results)
+  async saveFeedback(assessmentId: string, sessionId: string, feedback: { rating?: number; comments?: string }) {
+    return this.request<{ ok: boolean }>(`/assessments/${assessmentId}/feedback/${sessionId}`, {
+      method: 'POST',
+      body: JSON.stringify({ feedback }),
+    });
+  }
+
   // Health check
   async healthCheck(): Promise<{ status: string; timestamp: string }> {
     return this.request<{ status: string; timestamp: string }>('/assessments/health/status');
@@ -338,7 +347,7 @@ class AssessmentAPI {
 }
 
 // Export singleton instance
-export const assessmentAPI = new AssessmentAPI();
+export const assessmentAPI = new AssessmentAPI(API_BASE_URL);
 
 // React Query keys for caching
 export const assessmentKeys = {

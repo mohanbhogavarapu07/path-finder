@@ -23,7 +23,7 @@ import {
 import { toast } from 'sonner';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import { assessmentAPI, DynamicAssessment } from '@/lib/api';
+import { assessmentAPI, DynamicAssessment, API_BASE_URL } from '@/lib/api';
 
 interface BlogPost {
   _id: string;
@@ -127,7 +127,7 @@ const Admin = () => {
   // Request OTP
   const requestOTP = async () => {
     try {
-      const response = await fetch('https://pf-backend-6p4g.onrender.com/api/auth/send-otp', {
+      const response = await fetch(`${API_BASE_URL}/auth/send-otp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -205,7 +205,7 @@ const Admin = () => {
         return;
       }
 
-      const response = await fetch('https://pf-backend-6p4g.onrender.com/api/auth/verify-otp', {
+      const response = await fetch(`${API_BASE_URL}/auth/verify-otp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -258,7 +258,7 @@ const Admin = () => {
         params.append('category', categoryFilter);
       }
 
-      const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/blog/posts?${params.toString()}`, {
+      const response = await fetch(`${API_BASE_URL}/blog/posts?${params.toString()}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -300,7 +300,7 @@ const Admin = () => {
 
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/blog/posts/${postId}`, {
+      const response = await fetch(`${API_BASE_URL}/blog/posts/${postId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -327,7 +327,7 @@ const Admin = () => {
       const post = posts.find(p => p._id === postId);
       if (!post) return;
 
-      const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/blog/posts/${postId}`, {
+      const response = await fetch(`${API_BASE_URL}/blog/posts/${postId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -358,7 +358,7 @@ const Admin = () => {
       const post = posts.find(p => p._id === postId);
       if (!post) return;
 
-      const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/blog/posts/${postId}`, {
+      const response = await fetch(`${API_BASE_URL}/blog/posts/${postId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -411,7 +411,7 @@ const Admin = () => {
     }
 
     try {
-      const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/admin/assessments/${assessmentId}`, {
+      const response = await fetch(`${API_BASE_URL}/admin/assessments/${assessmentId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
@@ -433,7 +433,7 @@ const Admin = () => {
 
   const handleAssessmentToggleActive = async (assessmentId: string, currentStatus: boolean) => {
     try {
-      const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/admin/assessments/${assessmentId}/toggle-active`, {
+      const response = await fetch(`${API_BASE_URL}/admin/assessments/${assessmentId}/toggle-active`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
@@ -456,7 +456,7 @@ const Admin = () => {
 
   const handleAssessmentToggleFeatured = async (assessmentId: string, currentStatus: boolean) => {
     try {
-      const response = await fetch(`https://pf-backend-6p4g.onrender.com/api/admin/assessments/${assessmentId}/toggle-featured`, {
+      const response = await fetch(`${API_BASE_URL}/admin/assessments/${assessmentId}/toggle-featured`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,

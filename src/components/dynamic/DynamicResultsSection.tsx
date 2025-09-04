@@ -34,6 +34,8 @@ import {
 } from 'lucide-react';
 import { DynamicAssessment, AssessmentResults } from '@/lib/api';
 import { useAssessmentResults } from '@/hooks/useAssessments';
+import FeedbackDialog from '@/components/FeedbackDialog';
+import { assessmentAPI } from '@/lib/api';
 import { usePDFResults } from '@/hooks/usePDFResults';
 import PDFLayout from './PDFLayout';
 import './PDFLayout.css';
@@ -52,6 +54,32 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
   const { data: resultsData, isLoading, error } = useAssessmentResults(assessment.id, sessionId || '');
+  const [showFeedback, setShowFeedback] = useState(true);
+
+  const handleFeedbackSubmit = async (feedback: { rating?: number; comments?: string }) => {
+    try {
+      console.log('handleFeedbackSubmit called with:', { feedback, sessionId, assessmentId: assessment.id });
+      
+      // Persist locally for inclusion on submit (defense-in-depth)
+      localStorage.setItem('assessmentFeedback', JSON.stringify(feedback));
+      console.log('Feedback saved to localStorage');
+      
+      // Persist to backend now as well (for sessions that already completed)
+      if (sessionId) {
+        console.log('Calling assessmentAPI.saveFeedback...');
+        const result = await assessmentAPI.saveFeedback(assessment.id, sessionId, feedback);
+        console.log('saveFeedback API call result:', result);
+      } else {
+        console.log('No sessionId available, skipping backend save');
+      }
+    } catch (e) {
+      // Non-blocking
+      console.error('Failed to save feedback:', e);
+      console.error('Error details:', e);
+    } finally {
+      setShowFeedback(false);
+    }
+  };
   
   // Print functionality
   const { pdfContainerRef, printResults, saveAsPDF, isPrinting, isSavingPDF } = usePDFResults({
@@ -166,6 +194,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
 
   return (
     <>
+      <FeedbackDialog open={showFeedback} onClose={() => setShowFeedback(false)} onSubmit={handleFeedbackSubmit} />
       {/* Print Layout Container - Hidden but accessible for printing */}
       <div 
         ref={pdfContainerRef} 

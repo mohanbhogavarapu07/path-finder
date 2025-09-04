@@ -68,36 +68,36 @@ const Footer = () => {
   return (
     <footer className="bg-card border-t border-border">
       {/* Main Footer Content */}
-      <div className="py-16">
+      <div className="py-8">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             
             {/* Brand Section - Spans 2 columns */}
             <div className="lg:col-span-2">
-              <div className="flex items-center space-x-4 mb-6">
+              <div className="flex items-center space-x-4 mb-3">
                 <img 
                   src="/logo.png" 
                   alt="FactorBeam Logo" 
                   className="h-24 w-auto object-contain"
                 />
               </div>
-              <p className="text-foreground-soft mb-8 max-w-lg leading-relaxed text-base">
+              <p className="text-foreground-soft mb-4 max-w-lg leading-relaxed text-sm">
                 The world's most comprehensive platform for personal and professional assessments. 
                 Trusted by millions worldwide to unlock potential and drive growth.
               </p>
               
               {/* Social Links */}
-              <div className="flex items-center space-x-4">
-                <span className="text-sm text-foreground-soft font-medium">Follow us on:</span>
+              <div className="flex items-center space-x-3">
+                <span className="text-xs text-foreground-soft font-medium">Follow us on:</span>
                 {socialLinks.map((social) => (
                   <a
                     key={social.name}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-foreground-soft hover:text-primary transition-all duration-300 p-3 rounded-full hover:bg-primary/10 border border-border hover:border-primary/30"
+                    className="text-foreground-soft hover:text-primary transition-all duration-300 p-2 rounded-full hover:bg-primary/10 border border-border hover:border-primary/30"
                   >
-                    <social.icon className="w-5 h-5" />
+                    <social.icon className="w-4 h-4" />
                   </a>
                 ))}
               </div>
@@ -105,16 +105,16 @@ const Footer = () => {
 
             {/* Categories */}
             <div>
-              <h4 className="text-lg font-bold text-heading mb-6">Categories</h4>
-              <ul className="space-y-4">
+              <h4 className="text-base font-bold text-heading mb-3">Categories</h4>
+              <ul className="space-y-1">
                 {isLoading ? (
-                  <li className="text-foreground-soft">Loading categories...</li>
+                  <li className="text-foreground-soft text-sm">Loading categories...</li>
                 ) : (
                   categories.map((category) => (
                     <li key={category.name}>
                       <Link 
                         to={category.href} 
-                        className="text-foreground-soft hover:text-primary transition-all duration-300 block py-2 hover:translate-x-1"
+                        className="text-foreground-soft hover:text-primary transition-all duration-300 block py-0.5 hover:translate-x-1 text-sm"
                         onClick={() => {
                           // Scroll to top when category link is clicked
                           setTimeout(() => {
@@ -132,13 +132,13 @@ const Footer = () => {
 
             {/* Company */}
             <div>
-              <h4 className="text-lg font-bold text-heading mb-6">Company</h4>
-              <ul className="space-y-4">
+              <h4 className="text-base font-bold text-heading mb-3">Company</h4>
+              <ul className="space-y-1">
                 {company.map((link) => (
                   <li key={link.name}>
                     <Link 
                       to={link.href} 
-                      className="text-foreground-soft hover:text-primary transition-all duration-300 block py-2 hover:translate-x-1"
+                      className="text-foreground-soft hover:text-primary transition-all duration-300 block py-0.5 hover:translate-x-1 text-sm"
                       onClick={() => {
                         // Scroll to top when company link is clicked
                         setTimeout(() => {
@@ -155,13 +155,13 @@ const Footer = () => {
 
             {/* Legal */}
             <div>
-              <h4 className="text-lg font-bold text-heading mb-6">Legal</h4>
-              <ul className="space-y-4">
+              <h4 className="text-base font-bold text-heading mb-3">Legal</h4>
+              <ul className="space-y-1">
                 {legal.map((link) => (
                   <li key={link.name}>
                     <Link 
                       to={link.href} 
-                      className="text-foreground-soft hover:text-primary transition-all duration-300 block py-2 hover:translate-x-1"
+                      className="text-foreground-soft hover:text-primary transition-all duration-300 block py-0.5 hover:translate-x-1 text-sm"
                     >
                       {link.name}
                     </Link>
@@ -171,16 +171,16 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="border-t border-border my-12"></div>
+          <div className="border-t border-border my-6"></div>
 
           {/* Bottom Section */}
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
             {/* Copyright and Disclaimer */}
-            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6">
-              <p className="text-sm text-foreground-soft">
+            <div className="flex flex-col md:flex-row items-center space-y-1 md:space-y-0 md:space-x-4">
+              <p className="text-xs text-foreground-soft">
                 © {currentYear} FactorBeam. All rights reserved.
               </p>
-              <p className="text-sm text-foreground-soft">
+              <p className="text-xs text-foreground-soft">
                 All assessments are for educational purposes only.
               </p>
             </div>

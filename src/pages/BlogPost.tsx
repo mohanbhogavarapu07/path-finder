@@ -258,7 +258,7 @@ const BlogPost = () => {
                   <div className="grid grid-cols-1 gap-4">
                     {post.attachments.map((attachment) => {
                       const isImage = attachment.type.startsWith('image/');
-                      const fileUrl = `https://pf-backend-6p4g.onrender.com${attachment.url}`;
+                      const fileUrl = `${API_BASE_URL.replace('/api','')}${attachment.url}`;
                       
                       return (
                         <div key={attachment._id} className="border border-gray-200 rounded-lg overflow-hidden">

@@ -181,12 +181,19 @@ const DynamicAssessment = () => {
     try {
       const userData = getUserData();
       const userId = userData?.userId;
+      // Attach any pre-collected feedback (from results gate popup)
+      let feedback: { rating?: number; comments?: string } | undefined = undefined;
+      try {
+        const stored = localStorage.getItem('assessmentFeedback');
+        feedback = stored ? JSON.parse(stored) : undefined;
+      } catch {}
       
       await submitAssessmentMutation.mutateAsync({
         assessmentId,
         sessionId,
         answers: answerEntries,
-        userId
+        userId,
+        feedback
       });
       
       setAssessmentData(prev => ({ ...prev, completed: true }));

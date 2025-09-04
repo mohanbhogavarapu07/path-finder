@@ -24,8 +24,8 @@ const FactorBeamLogo: React.FC<{ className?: string }> = ({ className = "h-24 w-
     className={className}
     style={{ 
       objectFit: 'contain',
-      width: '100%',
-      height: '100%',
+      display: 'block',
+      margin: '0 auto',
       maxWidth: '150px',
       maxHeight: '150px',
       filter: 'brightness(1.2) contrast(1.1)'
@@ -64,30 +64,17 @@ const PDFLayout: React.FC<PDFLayoutProps> = ({
 
   return (
     <div className="pdf-layout-container">
-      {/* Header */}
-      <div className="pdf-header">
-        <div className="pdf-header-content">
-          <div className="pdf-logo-section">
-            <div className="pdf-logo-icon">
-              <FactorBeamLogo className="h-24 w-24 text-white" />
-            </div>
-            <div className="pdf-logo-text">
-              <h1 className="pdf-logo-title">Factor Beam</h1>
-              <p className="pdf-logo-subtitle">Career Assessment & Guidance Platform</p>
-            </div>
-          </div>
-          <div className="pdf-header-info">
-            <p className="pdf-date">Generated: {currentDate}</p>
-            <p className="pdf-assessment-name">{assessment.title}</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Title Section */}
+      {/* Title Section with Logo */}
       <div className="pdf-title-section">
+        <div className="pdf-logo-center">
+          <FactorBeamLogo className="h-8 w-8" />
+        </div>
         <h1 className="pdf-main-title">Assessment Results Report</h1>
         <h2 className="pdf-assessment-title">{assessment.title}</h2>
         <p className="pdf-assessment-description">{assessment.description}</p>
+        <div className="pdf-date-info">
+          <p className="pdf-date">Generated: {currentDate}</p>
+        </div>
       </div>
 
       {/* Overall Recommendation */}

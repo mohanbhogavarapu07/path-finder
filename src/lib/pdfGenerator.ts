@@ -492,36 +492,40 @@ export class PDFGenerator {
              flex-direction: column !important;
              gap: 0.75rem !important;
              margin-bottom: 1rem !important;
+             page-break-inside: avoid !important;
            }
            
            .pdf-next-step-item {
              display: flex !important;
-             align-items: center !important;
+             align-items: flex-start !important;
              gap: 0.75rem !important;
-             background: white !important;
-             border: 1px solid #e2e8f0 !important;
-             border-radius: 8px !important;
-             padding: 0.75rem !important;
+             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+             border: 2px solid #e2e8f0 !important;
+             border-radius: 12px !important;
+             padding: 1rem !important;
+             page-break-inside: avoid !important;
            }
            
            .pdf-step-number {
-             background: #1EAEDB !important;
+             background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
              color: white !important;
              border-radius: 50% !important;
-             width: 1.5rem !important;
-             height: 1.5rem !important;
+             width: 24px !important;
+             height: 24px !important;
              display: flex !important;
              align-items: center !important;
              justify-content: center !important;
-             font-size: 0.6rem !important;
-             font-weight: 600 !important;
+             font-size: 0.7rem !important;
+             font-weight: 800 !important;
              flex-shrink: 0 !important;
+             box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3) !important;
            }
            
            .pdf-step-text {
-             font-size: 0.7rem !important;
+             font-size: 0.9rem !important;
              color: #1e293b !important;
              line-height: 1.4 !important;
+             font-weight: 500 !important;
            }
            
            /* Footer */

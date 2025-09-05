@@ -1,5 +1,5 @@
 // API base URL - centralized single source of truth
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://pf-backend-x9gc.onrender.com/api';
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://fb-backend-1-d0b6.onrender.com/api';
 console.log('🔧 API Base URL:', API_BASE_URL);
 console.log('🔧 Environment variables:', {
   VITE_API_URL: import.meta.env.VITE_API_URL,

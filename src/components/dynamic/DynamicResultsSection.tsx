@@ -471,7 +471,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
         {/* Print Header - Hidden on screen, visible in print */}
         <div className="hidden print:block print-header">
           <div className="print-logo">FactorBeam</div>
-          <div className="print-subtitle">Career Assessment & Guidance Platform</div>
+          <div className="print-subtitle">Illuminate your potential</div>
           <div className="print-date">Generated on: {new Date().toLocaleDateString()}</div>
         </div>
 

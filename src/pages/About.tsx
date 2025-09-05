@@ -142,7 +142,7 @@ const About = () => {
               </CardHeader>
                <CardContent className="flex-1 flex items-center">
                  <p className="text-muted-foreground text-lg leading-relaxed text-justify">
-                 To establish the world's most trusted assessment and insights platform  empowering individuals, professionals, and organizations to make confident, data-driven decisions that unlock growth, opportunity, and purpose.
+                 Illuminate your potential - empowering individuals, professionals, and organizations to make confident, data-driven decisions that unlock growth, opportunity, and purpose.
                 </p>
               </CardContent>
             </Card>

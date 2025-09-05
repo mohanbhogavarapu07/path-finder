@@ -61,8 +61,8 @@ const FeedbackDialog: React.FC<FeedbackDialogProps> = ({ open, onClose, onSubmit
   };
 
   return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+    <Dialog open={open} onOpenChange={() => {}}>
+      <DialogContent className="sm:max-w-md" hideCloseButton={true}>
         <DialogHeader>
           <DialogTitle className="text-xl font-bold">Share quick feedback</DialogTitle>
           <DialogDescription>
@@ -95,7 +95,6 @@ const FeedbackDialog: React.FC<FeedbackDialogProps> = ({ open, onClose, onSubmit
         {error && <p className="text-sm text-red-500">{error}</p>}
 
         <DialogFooter>
-          <Button variant="outline" onClick={onClose} disabled={submitting}>Cancel</Button>
           <Button onClick={handleSubmit} disabled={submitting || !rating}>
             {submitting ? 'Submitting...' : 'Submit feedback'}
           </Button>

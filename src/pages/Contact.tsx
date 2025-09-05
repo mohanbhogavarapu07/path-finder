@@ -36,7 +36,7 @@ const Contact = () => {
                         </div>
             <h2 className="text-xl font-semibold text-gray-900 mb-2 tracking-tight">Feedback & Suggestions</h2>
             <p className="text-gray-600 mb-5 leading-relaxed">Help us improve! If you're referring to a specific assessment, please mention it in the subject line.</p>
-            <a href="mailto:contact.factorbeam@gmail.com?subject=Feedback%20and%20Suggestions" className="font-semibold text-blue-600 hover:text-blue-700 transition-colors">contact.factorbeam@gmail.com</a>
+            <a href="mailto:contact.factorbeam@gmail.com?subject=Feedback%20and%20Suggestions" className="font-semibold text-blue-600 hover:text-blue-700 transition-colors">feedback@factorbeam.com</a>
                       </div>
                       
           {/* Card 2: Media */}
@@ -51,7 +51,7 @@ const Contact = () => {
                       </div>
             <h2 className="text-xl font-semibold text-gray-900 mb-2 tracking-tight">Media Inquiries</h2>
             <p className="text-gray-600 mb-5 leading-relaxed">We have exciting career assessment stories to share, and our career experts are happy to answer your questions.</p>
-            <a href="mailto:contact.factorbeam@gmail.com?subject=Media%20Inquiry" className="font-semibold text-purple-600 hover:text-purple-700 transition-colors">contact.factorbeam@gmail.com</a>
+            <a href="mailto:contact.factorbeam@gmail.com?subject=Media%20Inquiry" className="font-semibold text-purple-600 hover:text-purple-700 transition-colors">media@factorbeam.com</a>
                       </div>
                       
           {/* Card 3: Partnerships */}
@@ -65,7 +65,7 @@ const Contact = () => {
                           </div>
             <h2 className="text-xl font-semibold text-gray-900 mb-2 tracking-tight">Partnerships & Collabs</h2>
             <p className="text-gray-600 mb-5 leading-relaxed">For assessment integrations, educational partnerships, or collaboration ideas, let's explore the possibilities together! 😀</p>
-            <a href="mailto:contact.factorbeam@gmail.com?subject=Partnership%20Inquiry" className="font-semibold text-green-600 hover:text-green-700 transition-colors">contact.factorbeam@gmail.com</a>
+            <a href="mailto:contact.factorbeam@gmail.com?subject=Partnership%20Inquiry" className="font-semibold text-green-600 hover:text-green-700 transition-colors">partnerships@factorbeam.com</a>
               </div>
 
           {/* Card 4: Advertising */}
@@ -79,7 +79,7 @@ const Contact = () => {
             </div>
             <h2 className="text-xl font-semibold text-gray-900 mb-2 tracking-tight">Advertising</h2>
             <p className="text-gray-600 mb-5 leading-relaxed">Interested in advertising your career services or educational programs? Let's discuss opportunities.</p>
-            <a href="mailto:contact.factorbeam@gmail.com?subject=Advertising%20Inquiry" className="font-semibold text-yellow-700 hover:text-yellow-800 transition-colors">contact.factorbeam@gmail.com</a>
+            <a href="mailto:contact.factorbeam@gmail.com?subject=Advertising%20Inquiry" className="font-semibold text-yellow-700 hover:text-yellow-800 transition-colors">sales@factorbeam.com</a>
                 </div>
 
           {/* Card 5: Ethics & Integrity */}
@@ -91,7 +91,7 @@ const Contact = () => {
                         </div>
             <h2 className="text-xl font-semibold text-gray-900 mb-2 tracking-tight">Ethics & Integrity</h2>
             <p className="text-gray-600 mb-5 leading-relaxed">We're committed to the highest standards in career assessment. Report any suspected violations of policy, law, or ethics.</p>
-            <a href="mailto:contact.factorbeam@gmail.com?subject=Ethics%20Report" className="font-semibold text-red-600 hover:text-red-700 transition-colors">contact.factorbeam@gmail.com</a>
+            <a href="mailto:contact.factorbeam@gmail.com?subject=Ethics%20Report" className="font-semibold text-red-600 hover:text-red-700 transition-colors">ethics@factorbeam.com</a>
                 </div>
 
           {/* Card 6: Main Office */}
@@ -104,9 +104,9 @@ const Contact = () => {
             </div>
             <h2 className="text-xl font-semibold text-gray-900 mb-2 tracking-tight">Our Office</h2>
             <address className="text-gray-600 not-italic">
-              FactorBeam<br />
-              Career Assessment Center<br />
-              Global Remote Team
+              Drehill Private Limited <br/>
+              Chhatrapati Sambhaji Nagar <br/>
+              Maharashtra , India 431001
             </address>
           </div>
         </main>
@@ -114,10 +114,10 @@ const Contact = () => {
         {/* Privacy & Consent Footer */}
         <footer className="mt-16 md:mt-24 pt-8 border-t border-gray-200 text-center text-xs text-gray-500 max-w-4xl mx-auto">
           <p className="mb-4">
-            By providing your email address, you agree to receive communications from FactorBeam. You can withdraw consent at any time by responding to any communication or by contacting <a href="mailto:contact.factorbeam@gmail.com?subject=Unsubscribe" className="font-medium text-gray-600 hover:text-gray-800 underline">contact.factorbeam@gmail.com</a>.
+            By providing your email address, you agree to receive communications from FactorBeam. You can withdraw consent at any time by responding to any communication or by contacting <a href="mailto:contact.factorbeam@gmail.com?subject=Unsubscribe" className="font-medium text-gray-600 hover:text-gray-800 underline">feedback@factorbeam.com</a>
           </p>
           <p>
-            Your personal information will only be used to handle your inquiry. We store and process personal data on the terms defined in our <Link to="/privacy" className="font-medium text-gray-600 hover:text-gray-800 underline">Privacy Policy</Link>.
+            Your personal information will only be used to handle your inquiry. We store and process personal data on the terms defined in our <Link to="/privacy" className="font-medium text-gray-600 hover:text-gray-800 underline">Privacy Policy</Link>
           </p>
         </footer>
         </div>

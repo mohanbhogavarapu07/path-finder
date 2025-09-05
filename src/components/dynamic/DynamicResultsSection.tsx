@@ -418,7 +418,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
     { id: 'overview', label: 'Overview', icon: BarChart3 },
     { id: 'psychometric', label: 'Psychometric', icon: Brain },
     { id: 'technical', label: 'Technical', icon: Code },
-    { id: 'FB6 Index', label: 'FB6 Index', icon: Target },
+    { id: 'wiscar', label: 'FB6 Index', icon: Target },
     { id: 'careers', label: 'Careers', icon: Users },
     { id: 'improvement', label: 'Improvement', icon: TrendingUp }
   ];
@@ -712,19 +712,34 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
-                      {Object.entries(results.wiscar.dimensions).map(([dimension, score]) => (
-                        <div key={dimension} className="space-y-2">
-                          <div className="flex justify-between items-center">
-                            <h4 className="font-semibold text-gray-900 capitalize">{dimension}</h4>
-                            <Badge variant={score >= 75 ? 'default' : score >= 60 ? 'secondary' : 'destructive'}>
-                              {score}%
-                            </Badge>
+                    {results.wiscar && results.wiscar.dimensions ? (
+                      <div className="grid md:grid-cols-2 gap-6">
+                        {Object.entries(results.wiscar.dimensions).map(([dimension, score]) => (
+                          <div key={dimension} className="space-y-2">
+                            <div className="flex justify-between items-center">
+                              <h4 className="font-semibold text-gray-900 capitalize">
+                                {dimension === 'will' ? 'Will & Perseverance' :
+                                 dimension === 'interest' ? 'Interest & Motivation' :
+                                 dimension === 'skill' ? 'Skill & Experience' :
+                                 dimension === 'cognitive' ? 'Cognitive Readiness' :
+                                 dimension === 'ability' ? 'Learning Ability' :
+                                 dimension === 'realWorld' ? 'Real-world Fit' :
+                                 dimension}
+                              </h4>
+                              <Badge variant={score >= 75 ? 'default' : score >= 60 ? 'secondary' : 'destructive'}>
+                                {score}%
+                              </Badge>
+                            </div>
+                            <Progress value={score} className="h-2" />
                           </div>
-                          <Progress value={score} className="h-2" />
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-8">
+                        <p className="text-gray-600">FB6 Index data not available</p>
+                        <p className="text-sm text-gray-500 mt-2">Overall Score: {results.wiscar?.overall || 0}%</p>
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>

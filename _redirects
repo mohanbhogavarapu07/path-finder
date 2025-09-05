@@ -2,4 +2,4 @@
 /*    /index.html   200
 
 # API proxy (if needed)
-/api/*  https://pf-backend-6p4g.onrender.com/api/:splat  200 
+/api/*  https://fb-backend-1-d0b6.onrender.com/api/:splat  200 

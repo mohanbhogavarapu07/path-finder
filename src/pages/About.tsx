@@ -40,7 +40,7 @@ const About = () => {
   ];
 
   const achievements = [
-    { number: "50,000+", label: "Students Assessed", icon: Users },
+    { number: "1,000+", label: "Students Assessed", icon: Users },
     { number: "95%", label: "Accuracy Rate", icon: Target },
     { number: "200+", label: "University Partners", icon: Award },
     { number: "4.8/5", label: "Student Satisfaction", icon: Star }
@@ -78,18 +78,31 @@ const About = () => {
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <div className="relative container mx-auto px-4">
           <div className="max-w-5xl mx-auto text-center">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 backdrop-blur-sm border border-primary/20 mb-6">
-              <span className="text-sm font-medium text-primary">🚀 Empowering 50,000+ Students Worldwide</span>
-            </div>
-            
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight text-black">
-              About PathFinder
+              About FactorBeam
             </h1>
-            
             <p className="text-xl text-foreground-soft max-w-4xl mx-auto leading-relaxed">
               We're revolutionizing career guidance through cutting-edge technology and scientifically-backed assessments. 
-              Our mission is to help every student discover their perfect career path with confidence and clarity.
+              
             </p>
+            {/* Statistics Cards */}
+            <div className="flex justify-center gap-6 mt-8">
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 text-center min-w-[160px]">
+                <div className="flex justify-center mb-3">
+                  <Users className="h-6 w-6 text-blue-600" />
+                </div>
+                <div className="text-2xl font-bold text-blue-600 mb-1">1M+</div>
+                <div className="text-gray-600 text-xs">Users Empowered</div>
+              </div>
+              
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 text-center min-w-[160px]">
+                <div className="flex justify-center mb-3">
+                  <Target className="h-6 w-6 text-blue-600" />
+                </div>
+                <div className="text-2xl font-bold text-blue-600 mb-1">300+</div>
+                <div className="text-gray-600 text-xs">Assessment Tools</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -98,41 +111,37 @@ const About = () => {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <Card className="p-8 border-2 hover:border-primary/20 transition-colors bg-card shadow-card">
-              <CardHeader className="pb-6">
-                <CardTitle className="text-3xl text-foreground flex items-center gap-3">
-                  <div className="p-3 rounded-lg bg-primary/10">
-                    <Target className="h-8 w-8 text-primary" />
-                  </div>
-                  <span>Our Mission</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  To democratize access to world-class career guidance by providing scientifically-backed assessments 
-                  that help students discover their true potential. We believe every individual deserves personalized 
-                  insights to make confident career decisions.
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="p-8 border-2 hover:border-primary/20 transition-colors bg-card shadow-card">
-              <CardHeader className="pb-6">
-                <CardTitle className="text-3xl text-foreground flex items-center gap-3">
-                  <div className="p-3 rounded-lg bg-secondary/10">
-                    <Award className="h-8 w-8 text-secondary" />
-                  </div>
-                  <span>Our Vision</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  To become the global standard for career assessment technology, empowering millions of students 
-                  worldwide to unlock their potential and pursue fulfilling careers aligned with their unique 
-                  strengths and passions.
-                </p>
-              </CardContent>
-            </Card>
+                         <Card className="p-8 border-2 hover:border-primary/20 transition-colors bg-card shadow-card flex flex-col h-full">
+               <CardHeader className="pb-6 flex-shrink-0">
+                 <CardTitle className="text-3xl text-foreground flex items-center gap-3">
+                   <div className="p-3 rounded-lg bg-primary/10">
+                     <Target className="h-8 w-8 text-primary" />
+                   </div>
+                   <span>Our Mission</span>
+                 </CardTitle>
+               </CardHeader>
+               <CardContent className="flex-1 flex items-center">
+                 <p className="text-muted-foreground text-lg leading-relaxed text-justify">
+                 To deliver accessible, research-backed assessments across education, careers, skills, and personal growth — enabling clarity, guiding decisions, and setting a new global standard for how people and organizations measure, learn, and evolve.
+                 </p>
+               </CardContent>
+             </Card>
+             
+             <Card className="p-8 border-2 hover:border-primary/20 transition-colors bg-card shadow-card flex flex-col h-full">
+               <CardHeader className="pb-6 flex-shrink-0">
+                 <CardTitle className="text-3xl text-foreground flex items-center gap-3">
+                   <div className="p-3 rounded-lg bg-secondary/10">
+                     <Award className="h-8 w-8 text-secondary" />
+                   </div>
+                   <span>Our Vision</span>
+                 </CardTitle>
+               </CardHeader>
+               <CardContent className="flex-1 flex items-center">
+                 <p className="text-muted-foreground text-lg leading-relaxed text-justify">
+                 To establish the world's most trusted assessment and insights platform — empowering individuals, professionals, and organizations to make confident, data-driven decisions that unlock growth, opportunity, and purpose.
+                 </p>
+               </CardContent>
+             </Card>
           </div>
         </div>
       </section>
@@ -179,6 +188,26 @@ const About = () => {
                 </Card>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Our Story Section */}
+      <section className="py-16 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-12 text-foreground">Our Story</h2>
+            <div className="space-y-6 text-muted-foreground leading-relaxed">
+              <p>
+                FactorBeam was founded in 2025 by a team of psychologists, data scientists, and technology leaders who recognized a gap in the market. While high-quality assessments existed in academic and corporate settings, they were largely inaccessible to individuals seeking personal growth and career clarity.
+              </p>
+              <p>
+                Our founders, having worked at leading assessment companies and research institutions, understood the power of well-designed psychological instruments. They set out to create a platform that would democratize access to these tools while maintaining the highest standards of scientific rigor and user experience.
+              </p>
+              <p>
+                Today, we're proud to serve over 1 million users worldwide, from students and professionals to organizations and researchers. Our commitment to evidence-based assessment design and user-centric experience continues to drive innovation in the career guidance and personal development space.
+              </p>
+            </div>
           </div>
         </div>
       </section>

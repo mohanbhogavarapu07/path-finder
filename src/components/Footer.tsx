@@ -55,9 +55,10 @@ const Footer = () => {
   ];
 
   const company = [
-    { name: "Blog", href: "/blog" },
-    { name: "Contact", href: "/contact" },
-    { name: "About Us", href: "/about" }
+    // { name: "Blog", href: "/blog" },
+    { name: "About Us", href: "/about" },
+    { name: "Contact", href: "/contact" }
+    // { name: "About Us", href: "/about" }
   ];
 
   const socialLinks = [

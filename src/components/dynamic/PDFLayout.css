@@ -11,124 +11,38 @@
   font-size: 14px;
   padding: 0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Professional Header */
-.pdf-header {
-  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
-  color: white;
-  padding: 2.5rem 0;
-  margin-bottom: 2.5rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.pdf-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-  opacity: 0.3;
-}
-
-.pdf-header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  position: relative;
-  z-index: 1;
-}
-
-.pdf-logo-section {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  height: 100%;
-}
-
-.pdf-logo-icon {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  width: 4rem;
-  height: 4rem;
-  flex-shrink: 0;
-}
-
-.pdf-logo-text {
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+/* Logo Center Section */
+.pdf-logo-center {
+  display: flex;
   justify-content: center;
-  align-items: flex-start;
-  text-align: left;
+  align-items: center;
+  margin-bottom: 1.5rem;
   width: 100%;
-  margin-left: 0;
-  padding-left: 0;
+  text-align: center;
 }
 
-.pdf-logo-title {
-  font-size: 2.4rem;
-  font-weight: 800;
-  margin: 0;
-  padding: 0;
-  color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  line-height: 1.1;
-  text-align: left;
-  width: 100%;
-  margin-left: 0;
-  padding-left: 0;
-}
-
-.pdf-logo-subtitle {
-  font-size: 1.2rem;
-  opacity: 0.9;
-  margin: 0.5rem 0 0 0;
-  padding: 0;
-  color: white;
-  font-weight: 500;
-  line-height: 1.2;
-  text-align: left;
-  width: 100%;
-  margin-left: 0;
-  padding-left: 0;
-}
-
-.pdf-header-info {
-  text-align: right;
+.pdf-date-info {
+  text-align: center;
+  margin-top: 1rem;
 }
 
 .pdf-date {
-  font-size: 1rem;
-  opacity: 0.8;
-  margin: 0 0 0.5rem 0;
-  font-weight: 500;
-}
-
-.pdf-assessment-name {
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 0.9rem;
+  color: #64748b;
   margin: 0;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
 }
 
 /* Professional Title Section */
 .pdf-title-section {
   text-align: center;
   margin-bottom: 2.5rem;
-  padding: 2rem;
+  padding: 2.5rem 2rem;
   background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
   border: 2px solid #e2e8f0;
   border-radius: 16px;
@@ -178,12 +92,13 @@
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
   border: 3px solid #1e40af;
   border-radius: 20px;
-  padding: 2.5rem;
-  margin-bottom: 2.5rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
   text-align: center;
   position: relative;
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(30, 64, 175, 0.1);
+  page-break-inside: avoid;
 }
 
 .pdf-recommendation::before {
@@ -343,7 +258,8 @@
 
 /* Professional Score Breakdown Section */
 .pdf-scores-section {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
+  page-break-inside: avoid;
 }
 
 .pdf-section-title {
@@ -543,7 +459,8 @@
 
 /* Enhanced Skills Section */
 .pdf-skills-section {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  page-break-inside: avoid;
 }
 
 .pdf-skills-content {
@@ -610,25 +527,27 @@
 
 /* Enhanced Next Steps Section */
 .pdf-next-steps-section {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  page-break-inside: avoid;
 }
 
 .pdf-next-steps-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .pdf-next-step-item {
   display: flex;
   align-items: flex-start;
-  gap: 1rem;
-  padding: 1.5rem;
+  gap: 0.75rem;
+  padding: 1rem;
   background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
   border: 2px solid #e2e8f0;
   border-radius: 12px;
   position: relative;
   overflow: hidden;
+  page-break-inside: avoid;
 }
 
 .pdf-next-step-item::before {
@@ -645,21 +564,21 @@
   background: linear-gradient(135deg, #3b82f6, #8b5cf6);
   color: white;
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 800;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
 .pdf-step-text {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #1e293b;
-  line-height: 1.5;
+  line-height: 1.4;
   font-weight: 500;
 }
 
@@ -734,12 +653,19 @@
     box-shadow: none !important;
   }
   
-  .pdf-header,
+  .pdf-title-section,
+  .pdf-recommendation,
+  .pdf-scores-section,
+  .pdf-career-section,
+  .pdf-skills-section,
+  .pdf-next-steps-section {
+    page-break-inside: avoid !important;
+  }
+  
   .pdf-scores-grid,
   .pdf-career-grid,
   .pdf-skills-content,
-  .pdf-next-steps-list,
-  .pdf-footer {
+  .pdf-next-steps-list {
     page-break-inside: avoid !important;
   }
   
@@ -753,15 +679,6 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .pdf-header-content {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-  
-  .pdf-header-info {
-    text-align: center;
-  }
   
   .pdf-scores-grid {
     grid-template-columns: 1fr;

@@ -25,7 +25,7 @@ const Index = () => {
     { id: 'intro', title: 'Introduction', icon: BookOpen, color: 'bg-blue-500' },
     { id: 'psychometric', title: 'Psychological Fit', icon: Brain, color: 'bg-purple-500' },
     { id: 'technical', title: 'Technical Aptitude', icon: Code, color: 'bg-green-500' },
-    { id: 'wiscar', title: 'WISCAR Analysis', icon: Target, color: 'bg-orange-500' },
+    { id: 'wiscar', title: 'FB6 Index Analysis', icon: Target, color: 'bg-orange-500' },
     { id: 'results', title: 'Your Results', icon: TrendingUp, color: 'bg-red-500' }
   ];
 

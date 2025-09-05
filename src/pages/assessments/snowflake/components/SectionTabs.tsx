@@ -12,7 +12,7 @@ const sections = [
   { id: 0, title: "Introduction", icon: Target },
   { id: 1, title: "Psychological Fit", icon: Brain },
   { id: 2, title: "Technical Aptitude", icon: Code },
-  { id: 3, title: "WISCAR Analysis", icon: Radar },
+  { id: 3, title: "FB6 Index Analysis", icon: Radar },
   { id: 4, title: "Your Results", icon: CheckCircle }
 ];
 

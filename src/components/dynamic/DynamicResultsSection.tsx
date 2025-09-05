@@ -418,7 +418,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
     { id: 'overview', label: 'Overview', icon: BarChart3 },
     { id: 'psychometric', label: 'Psychometric', icon: Brain },
     { id: 'technical', label: 'Technical', icon: Code },
-    { id: 'wiscar', label: 'WISCAR', icon: Target },
+    { id: 'wiscar', label: 'FB6 Index', icon: Target },
     { id: 'careers', label: 'Careers', icon: Users },
     { id: 'improvement', label: 'Improvement', icon: TrendingUp }
   ];
@@ -600,7 +600,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                     <CardHeader>
                       <CardTitle className="flex items-center space-x-2">
                         <Target className="w-5 h-5 text-orange-600" />
-                        <span>WISCAR Analysis</span>
+                        <span>FB6 Index Analysis</span>
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -638,6 +638,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                       <SocialShareDialog 
                         assessmentTitle={assessment.title}
                         results={results}
+                        pdfContainerRef={pdfContainerRef}
                       />
                     </div>
                   </CardContent>
@@ -703,13 +704,13 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
               </Card>
             )}
 
-            {/* WISCAR Tab */}
+            {/* FB6 Index Tab */}
             {activeTab === 'wiscar' && (
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
                     <Target className="w-6 h-6 text-orange-600" />
-                    <span>WISCAR Career Readiness Analysis</span>
+                    <span>FB6 Index Career Readiness Analysis</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>

@@ -83,7 +83,7 @@ const DigitalMarketingAssessment = () => {
   const [technicalAnswers, setTechnicalAnswers] = useState<Record<string, string>>({});
   const [wiscarAnswers, setWiscarAnswers] = useState<Record<string, string>>({});
 
-  const steps = ["Introduction", "Psychological Fit", "Technical Aptitude", "WISCAR Analysis", "Your Results"];
+  const steps = ["Introduction", "Psychological Fit", "Technical Aptitude", "FB6 Index Analysis", "Your Results"];
   const progressPercentage = ((currentStep + 1) / steps.length) * 100;
 
   const handleStartAssessment = () => {

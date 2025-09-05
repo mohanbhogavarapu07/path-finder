@@ -114,7 +114,7 @@ const DynamicAssessment: React.FC<DynamicAssessmentProps> = ({
     const steps = [
       { key: 'psychometric', label: 'Psychological Fit', icon: '🧠' },
       { key: 'technical', label: 'Technical Aptitude', icon: '💻' },
-      { key: 'wiscar', label: 'WISCAR Analysis', icon: '🎯' }
+      { key: 'wiscar', label: 'FB6 Index Analysis', icon: '🎯' }
     ];
 
     const currentIndex = steps.findIndex(step => step.key === currentStep);

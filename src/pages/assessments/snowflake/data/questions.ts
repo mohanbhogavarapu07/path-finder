@@ -187,7 +187,7 @@ export const assessmentSections: AssessmentSection[] = [
   },
   {
     id: 'wiscar',
-    title: 'WISCAR Analysis',
+    title: 'FB6 Index Analysis',
     description: 'Comprehensive evaluation across six key dimensions',
     icon: 'radar',
     questions: [

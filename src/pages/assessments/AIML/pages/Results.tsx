@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import FeedbackDialog from '@/components/FeedbackDialog';
+import { usePDFResults } from '@/hooks/usePDFResults';
 
 import { 
   Brain, 
@@ -46,6 +47,13 @@ const Results = () => {
   const [recommendation, setRecommendation] = useState<RecommendationType>('Maybe');
   const [confidenceScore, setConfidenceScore] = useState(0);
   const [showFeedback, setShowFeedback] = useState(true);
+
+  // PDF functionality
+  const { pdfContainerRef, printResults } = usePDFResults({
+    assessmentTitle: "AI/ML Assessment",
+    onSuccess: () => console.log('PDF generated successfully'),
+    onError: (error) => console.error('PDF generation failed:', error)
+  });
 
 
   useEffect(() => {
@@ -94,7 +102,7 @@ const Results = () => {
     });
     technicalScore = Math.min(technicalScore, 100);
 
-    // WISCAR Score (0-100)
+    // FB6 Index Score (0-100)
     const wiscarAnswers = Object.entries(answers)
       .filter(([key]) => key.startsWith('will_') || key.startsWith('interest_3') || key.startsWith('skill_') || key.startsWith('cognitive_2') || key.startsWith('ability_') || key.startsWith('real_world_'))
       .map(([, value]) => value);
@@ -230,7 +238,7 @@ const Results = () => {
         onClose={() => setShowFeedback(false)}
         onSubmit={handleFeedbackSubmit}
       />
-      <div className="max-w-6xl mx-auto px-4 py-12 space-y-8">
+      <div className="max-w-6xl mx-auto px-4 py-12 space-y-8" ref={pdfContainerRef}>
         {/* Header */}
         <div className="text-center mb-8">
           <Badge className="mb-4 px-4 py-2 text-sm font-medium border border-blue-200 bg-blue-50 text-blue-700">
@@ -328,7 +336,7 @@ const Results = () => {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 {iconStyles.wiscar}
-                <span>WISCAR</span>
+                <span>FB6 Index</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -444,7 +452,8 @@ const Results = () => {
           
           <SocialShareDialog 
             assessmentTitle="AI/ML Assessment"
-            results={scoreData}
+            results={scores}
+            pdfContainerRef={pdfContainerRef}
           >
             <Button variant="outline" size="lg" className="px-8 py-6">
               <Share2 className="w-5 h-5 mr-2" />

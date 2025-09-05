@@ -187,7 +187,7 @@ const AdminAssessmentEditor = () => {
         questions: []
       },
       wiscar: {
-        title: 'WISCAR Analysis',
+        title: 'FB6 Index Analysis',
         description: 'Comprehensive evaluation across 6 key dimensions',
         type: 'wiscar',
         weight: 25,
@@ -354,7 +354,7 @@ const AdminAssessmentEditor = () => {
       whoShouldConsider: getValue(jsonData, ['whoShouldConsider', 'targetAudience', 'audience'], []),
       idealTraits: getValue(jsonData, ['idealTraits', 'traits', 'qualities'], []),
              assessmentOverview: {
-         modules: ['Psychological Fit', 'Technical Aptitude', 'WISCAR Analysis', 'Results'],
+         modules: ['Psychological Fit', 'Technical Aptitude', 'FB6 Index Analysis', 'Results'],
          resultsInclude: ['Detailed Analysis', 'Career Recommendations', 'Skill Assessment', 'Personalized Insights']
        },
       sections: {
@@ -383,7 +383,7 @@ const AdminAssessmentEditor = () => {
           questions: []
         },
         wiscar: {
-          title: 'WISCAR Analysis',
+          title: 'FB6 Index Analysis',
           description: 'Comprehensive evaluation across 6 key dimensions',
           type: 'wiscar',
           weight: 25,
@@ -619,7 +619,7 @@ const AdminAssessmentEditor = () => {
     
     // Ensure assessmentOverview has proper structure
     cleaned.assessmentOverview = {
-      modules: cleaned.assessmentOverview?.modules || ['Psychological Fit', 'Technical Aptitude', 'WISCAR Analysis', 'Results'],
+      modules: cleaned.assessmentOverview?.modules || ['Psychological Fit', 'Technical Aptitude', 'FB6 Index Analysis', 'Results'],
       resultsInclude: cleaned.assessmentOverview?.resultsInclude || ['Detailed Analysis', 'Career Recommendations', 'Skill Assessment', 'Personalized Insights']
     };
     
@@ -650,7 +650,7 @@ const AdminAssessmentEditor = () => {
         questions: []
       },
       wiscar: {
-        title: 'WISCAR Analysis',
+        title: 'FB6 Index Analysis',
         description: 'Comprehensive evaluation across 6 key dimensions',
         type: 'wiscar',
         weight: 25,
@@ -1023,7 +1023,7 @@ const AdminAssessmentEditor = () => {
                               whoShouldConsider: [],
                               idealTraits: [],
                               assessmentOverview: {
-                                modules: ['Psychological Fit', 'Technical Aptitude', 'WISCAR Analysis', 'Results'],
+                                modules: ['Psychological Fit', 'Technical Aptitude', 'FB6 Index Analysis', 'Results'],
                                 resultsInclude: ['Detailed Analysis', 'Career Recommendations', 'Skill Assessment', 'Personalized Insights']
                               },
                              sections: {
@@ -1096,7 +1096,7 @@ const AdminAssessmentEditor = () => {
                                   ]
                                 },
                                 wiscar: {
-                                  title: 'WISCAR Analysis',
+                                  title: 'FB6 Index Analysis',
                                   description: 'Comprehensive evaluation across 6 key dimensions',
                                   type: 'wiscar',
                                   weight: 25,
@@ -1289,7 +1289,7 @@ const AdminAssessmentEditor = () => {
                       className="flex items-center gap-2"
                     >
                       <Badge variant="secondary">{assessment.sections.wiscar.questions.length}</Badge>
-                      WISCAR Analysis
+                      FB6 Index Analysis
                     </Button>
                   </div>
                 </CardContent>
@@ -1396,7 +1396,7 @@ const AdminAssessmentEditor = () => {
                    <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
                      <p className="text-blue-700 text-sm">
                        The Introduction section is for theory and content only. 
-                       Questions should be added to the other sections (Psychological Fit, Technical Aptitude, WISCAR Analysis).
+                       Questions should be added to the other sections (Psychological Fit, Technical Aptitude, FB6 Index Analysis).
                      </p>
                    </div>
                  </CardContent>

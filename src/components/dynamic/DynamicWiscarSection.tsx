@@ -82,7 +82,7 @@ const DynamicWiscarSection: React.FC<DynamicWiscarSectionProps> = ({
       'ability': 'Learning Ability',
       'realWorld': 'Real-world Fit'
     };
-    return categoryMap[category] || 'WISCAR Analysis';
+    return categoryMap[category] || 'FB6 Index Analysis';
   };
 
   return (
@@ -91,7 +91,7 @@ const DynamicWiscarSection: React.FC<DynamicWiscarSectionProps> = ({
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <Target className="h-6 w-6 text-orange-600" />
-          <h1 className="text-2xl font-bold text-gray-900">WISCAR Analysis</h1>
+          <h1 className="text-2xl font-bold text-gray-900">FB6 Index Analysis</h1>
         </div>
         <div className="flex items-center space-x-4">
           <span className="text-sm text-gray-600">Question {currentQuestionIndex + 1} of {questions.length}</span>

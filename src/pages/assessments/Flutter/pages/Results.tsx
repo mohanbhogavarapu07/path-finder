@@ -154,7 +154,7 @@ export default function Results() {
               { id: 'intro', title: 'Introduction', icon: BookOpen, color: 'bg-blue-500' },
               { id: 'psychometric', title: 'Psychological Fit', icon: Brain, color: 'bg-purple-500' },
               { id: 'technical', title: 'Technical Aptitude', icon: Code, color: 'bg-green-500' },
-              { id: 'wiscar', title: 'WISCAR Analysis', icon: Target, color: 'bg-orange-500' },
+              { id: 'wiscar', title: 'FB6 Index Analysis', icon: Target, color: 'bg-orange-500' },
               { id: 'results', title: 'Your Results', icon: TrendingUp, color: 'bg-red-500' }
             ].map((section, index) => {
               const Icon = section.icon;
@@ -328,7 +328,7 @@ export default function Results() {
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Target className="w-5 h-5 text-orange-600" />
-                  <span>WISCAR Analysis</span>
+                  <span>FB6 Index Analysis</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>

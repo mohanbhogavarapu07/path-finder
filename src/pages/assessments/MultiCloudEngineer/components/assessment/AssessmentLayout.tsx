@@ -47,7 +47,7 @@ const AssessmentLayout: React.FC<AssessmentLayoutProps> = ({ children }) => {
     },
     {
       id: 'wiscar',
-      title: 'WISCAR Analysis',
+      title: 'FB6 Index Analysis',
       icon: Target,
       color: 'bg-orange-500',
       completed: state.currentSection === 'results',

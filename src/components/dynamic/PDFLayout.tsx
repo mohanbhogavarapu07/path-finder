@@ -159,12 +159,12 @@ const PDFLayout: React.FC<PDFLayoutProps> = ({
             </div>
           </div>
 
-          {/* WISCAR Analysis */}
+          {/* FB6 Index Analysis */}
           {hasWiscarData && (
             <div className="pdf-score-card">
               <div className="pdf-score-header">
                 <Target className="h-5 w-5" />
-                <h4>WISCAR Analysis</h4>
+                <h4>FB6 Index Analysis</h4>
               </div>
               <div className="pdf-score-content">
                 <div className="pdf-score-value">{wiscarOverall}%</div>

@@ -103,7 +103,7 @@ const DynamicAssessment = () => {
     })) : [
       { id: 'psychometric', title: 'Psychological Fit', icon: Brain, color: 'bg-[#4CAF50]' },
       { id: 'technical', title: 'Technical Aptitude', icon: Code, color: 'bg-[#4CAF50]' },
-      { id: 'wiscar', title: 'WISCAR Analysis', icon: Target, color: 'bg-[#4CAF50]' }
+      { id: 'wiscar', title: 'FB6 Index Analysis', icon: Target, color: 'bg-[#4CAF50]' }
     ]),
     { id: 'results', title: 'Your Results', icon: TrendingUp, color: 'bg-[#4CAF50]' }
   ];
@@ -233,7 +233,7 @@ const DynamicAssessment = () => {
         if (!wiscarSection) {
           return (
             <div className="text-center py-8">
-              <p className="text-gray-600">WISCAR section not available</p>
+              <p className="text-gray-600">FB6 Index section not available</p>
               <button onClick={goToNextSection} className="mt-4 px-4 py-2 bg-factorbeam-primary text-white rounded-lg">
                 Continue
               </button>

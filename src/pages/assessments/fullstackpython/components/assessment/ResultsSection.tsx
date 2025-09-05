@@ -247,7 +247,7 @@ export const ResultsSection = ({ assessmentData }: ResultsSectionProps) => {
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
               <Target className="w-5 h-5 text-orange-600" />
-              <span>WISCAR Analysis</span>
+              <span>FB6 Index Analysis</span>
             </CardTitle>
           </CardHeader>
           <CardContent>

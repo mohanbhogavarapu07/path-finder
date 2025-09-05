@@ -140,35 +140,103 @@ export class PDFGenerator {
            
            /* Title section */
            .pdf-title-section {
-             text-align: center !important;
-             margin-bottom: 1.5rem !important;
-             padding: 1.25rem !important;
-             background: #f8fafc !important;
+             margin-bottom: 0.75rem !important;
+             padding: 0.5rem 1rem !important;
+             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
              border: 2px solid #e2e8f0 !important;
-             border-radius: 10px !important;
+             border-radius: 12px !important;
+             position: relative !important;
+             overflow: hidden !important;
+             min-height: 80px !important;
+             display: flex !important;
+             align-items: center !important;
+           }
+           
+           .pdf-title-section::before {
+             content: '' !important;
+             position: absolute !important;
+             top: 0 !important;
+             left: 0 !important;
+             right: 0 !important;
+             height: 4px !important;
+             background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4) !important;
+           }
+           
+           /* Header Content Layout */
+           .pdf-header-content {
+             display: flex !important;
+             align-items: flex-start !important;
+             justify-content: space-between !important;
+             width: 100% !important;
+             max-width: 100% !important;
+             gap: 2rem !important;
+             padding: 0.25rem 0 !important;
+           }
+           
+           .pdf-logo-left {
+             flex-shrink: 0 !important;
+             display: flex !important;
+             flex-direction: column !important;
+             align-items: flex-start !important;
+             justify-content: flex-start !important;
+             width: auto !important;
+             min-width: 120px !important;
+           }
+           
+           .pdf-header-text {
+             flex: 1 !important;
+             text-align: right !important;
+             max-width: calc(100% - 8rem) !important;
+             padding-left: 0 !important;
+             display: flex !important;
+             flex-direction: column !important;
+             align-items: flex-end !important;
+             justify-content: flex-start !important;
+           }
+           
+           .pdf-date-info {
+             text-align: right !important;
+             margin-top: 0.2rem !important;
+             align-self: flex-end !important;
            }
            
            .pdf-main-title {
-             font-size: 1.4rem !important;
-             font-weight: 700 !important;
+             font-size: 1.6rem !important;
+             font-weight: 800 !important;
              color: #1e293b !important;
-             margin: 0 0 0.4rem 0 !important;
+             margin: 0 0 0.15rem 0 !important;
+             background: linear-gradient(135deg, #1e293b, #475569) !important;
+             -webkit-background-clip: text !important;
+             -webkit-text-fill-color: transparent !important;
+             background-clip: text !important;
+             text-align: right !important;
            }
            
            .pdf-assessment-title {
              font-size: 1.1rem !important;
              color: #64748b !important;
              font-weight: 600 !important;
-             margin: 0 0 0.6rem 0 !important;
+             margin: 0 0 0.2rem 0 !important;
+             text-align: right !important;
            }
            
            .pdf-assessment-description {
              font-size: 0.9rem !important;
              color: #64748b !important;
-             margin: 0 !important;
-             max-width: 550px !important;
-             margin: 0 auto !important;
+             margin: 0 0 0.15rem 0 !important;
+             line-height: 1.2 !important;
+             text-align: right !important;
+             max-width: 400px !important;
            }
+           
+                       .pdf-date {
+              font-size: 0.85rem !important;
+              color: #64748b !important;
+              margin: 0 !important;
+              font-weight: 500 !important;
+              text-align: right !important;
+              font-style: italic !important;
+            }
            
            /* Recommendation section */
            .pdf-recommendation {
@@ -488,9 +556,9 @@ export class PDFGenerator {
            
            /* Next steps */
            .pdf-next-steps-list {
-             display: flex !important;
-             flex-direction: column !important;
-             gap: 0.75rem !important;
+             display: grid !important;
+             grid-template-columns: 1fr 1fr !important;
+             gap: 0.5rem !important;
              margin-bottom: 1rem !important;
              page-break-inside: avoid !important;
            }
@@ -498,11 +566,11 @@ export class PDFGenerator {
            .pdf-next-step-item {
              display: flex !important;
              align-items: flex-start !important;
-             gap: 0.75rem !important;
+             gap: 0.5rem !important;
              background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
              border: 2px solid #e2e8f0 !important;
-             border-radius: 12px !important;
-             padding: 1rem !important;
+             border-radius: 8px !important;
+             padding: 0.75rem !important;
              page-break-inside: avoid !important;
            }
            
@@ -510,21 +578,21 @@ export class PDFGenerator {
              background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
              color: white !important;
              border-radius: 50% !important;
-             width: 24px !important;
-             height: 24px !important;
+             width: 20px !important;
+             height: 20px !important;
              display: flex !important;
              align-items: center !important;
              justify-content: center !important;
-             font-size: 0.7rem !important;
+             font-size: 0.6rem !important;
              font-weight: 800 !important;
              flex-shrink: 0 !important;
              box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3) !important;
            }
            
            .pdf-step-text {
-             font-size: 0.9rem !important;
+             font-size: 0.8rem !important;
              color: #1e293b !important;
-             line-height: 1.4 !important;
+             line-height: 1.3 !important;
              font-weight: 500 !important;
            }
            

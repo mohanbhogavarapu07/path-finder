@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import { apiClient } from '@/lib/api';
+import { API_BASE_URL } from '@/lib/api';
 import { toast } from 'sonner';
 
 interface BlogPost {

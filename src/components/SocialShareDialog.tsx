@@ -25,9 +25,9 @@ const SocialShareDialog: React.FC<SocialShareDialogProps> = ({
   const generateShareText = () => {
     if (results) {
       const overallScore = results.overall || results.technical?.overall || 0;
-      return `I just completed the ${assessmentTitle} assessment and scored ${overallScore}%! Check out your technical readiness at PathFinder.`;
+      return `I just completed the ${assessmentTitle} assessment and scored ${overallScore}%! Check out your technical readiness at FactorBeam.`;
     }
-    return `I just completed the ${assessmentTitle} assessment! Check out your technical readiness at PathFinder.`;
+    return `I just completed the ${assessmentTitle} assessment! Check out your technical readiness at FactorBeam.`;
   };
 
   const shareText = generateShareText();
@@ -55,11 +55,6 @@ const SocialShareDialog: React.FC<SocialShareDialogProps> = ({
         <html>
           <head>
             <title>${assessmentTitle} - Results</title>
-            <style>
-              @page { margin: 0.5in; size: A4; }
-              body { font-family: 'Inter', sans-serif; font-size: 12pt; line-height: 1.5; }
-              .pdf-layout-container { width: 100%; background: white; color: #1e293b; }
-            </style>
           </head>
           <body>${tempElement.outerHTML}</body>
         </html>

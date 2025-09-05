@@ -66,7 +66,7 @@ const DynamicAssessment: React.FC<DynamicAssessmentProps> = ({
       case 'psychometric':
         return (
           <DynamicPsychometricSection
-            section={assessment.sections?.psychometric}
+            section={assessment.sections?.find(s => s.type === 'psychometric')}
             onComplete={handlePsychometricComplete}
           />
         );
@@ -74,7 +74,7 @@ const DynamicAssessment: React.FC<DynamicAssessmentProps> = ({
       case 'technical':
         return (
           <DynamicTechnicalSection
-            section={assessment.sections?.technical}
+            section={assessment.sections?.find(s => s.type === 'technical')}
             onComplete={handleTechnicalComplete}
           />
         );
@@ -82,7 +82,7 @@ const DynamicAssessment: React.FC<DynamicAssessmentProps> = ({
       case 'wiscar':
         return (
           <DynamicWiscarSection
-            section={assessment.sections?.wiscar}
+            section={assessment.sections?.find(s => s.type === 'wiscar')}
             onComplete={handleWiscarComplete}
           />
         );
@@ -91,7 +91,7 @@ const DynamicAssessment: React.FC<DynamicAssessmentProps> = ({
         return (
           <DynamicResultsSection
             assessment={assessment}
-            sectionAnswers={sectionAnswers}
+            assessmentData={sectionAnswers}
             onComplete={handleResultsComplete}
           />
         );

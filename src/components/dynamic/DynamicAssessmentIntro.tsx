@@ -193,7 +193,7 @@ const DynamicAssessmentIntro: React.FC<DynamicAssessmentIntroProps> = ({
                 </li>
                 <li className="flex items-center space-x-2">
                   <Badge variant="outline" className="bg-orange-50 text-orange-700">3</Badge>
-                  <span className="text-sm">WISCAR Framework Analysis</span>
+                  <span className="text-sm">FB6 Index Analysis</span>
                 </li>
               </ul>
             </div>

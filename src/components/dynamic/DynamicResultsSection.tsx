@@ -470,8 +470,8 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 assessment-print-container">
         {/* Print Header - Hidden on screen, visible in print */}
         <div className="hidden print:block print-header">
-          <div className="print-logo">Path Finder</div>
-          <div className="print-subtitle">Career Assessment & Guidance Platform</div>
+          <div className="print-logo">FactorBeam</div>
+          <div className="print-subtitle">Illuminate your potential</div>
           <div className="print-date">Generated on: {new Date().toLocaleDateString()}</div>
         </div>
 
@@ -624,24 +624,21 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                 {/* Quick Actions */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <Zap className="w-6 h-6 text-blue-600" />
-                      <span>Quick Actions</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid md:grid-cols-3 gap-4">
-                      <Button variant="outline" className="h-auto p-4 flex flex-col items-center space-y-2" onClick={printResults}>
-                        <Download className="w-6 h-6" />
+                    <div className="flex items-center gap-4">
+                      <CardTitle className="flex items-center space-x-2">
+                        <Zap className="w-6 h-6 text-blue-600" />
+                        <span>Quick Actions</span>
+                      </CardTitle>
+                      <Button 
+                        variant="outline" 
+                        className="flex items-center space-x-2 px-4 py-2" 
+                        onClick={printResults}
+                      >
+                        <Download className="w-4 h-4" />
                         <span>Download PDF Report</span>
                       </Button>
-                      <SocialShareDialog 
-                        assessmentTitle={assessment.title}
-                        results={results}
-                        pdfContainerRef={pdfContainerRef}
-                      />
                     </div>
-                  </CardContent>
+                  </CardHeader>
                 </Card>
               </div>
             )}
@@ -715,19 +712,34 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
-                      {Object.entries(results.wiscar.dimensions).map(([dimension, score]) => (
-                        <div key={dimension} className="space-y-2">
-                          <div className="flex justify-between items-center">
-                            <h4 className="font-semibold text-gray-900 capitalize">{dimension}</h4>
-                            <Badge variant={score >= 75 ? 'default' : score >= 60 ? 'secondary' : 'destructive'}>
-                              {score}%
-                            </Badge>
+                    {results.wiscar && results.wiscar.dimensions ? (
+                      <div className="grid md:grid-cols-2 gap-6">
+                        {Object.entries(results.wiscar.dimensions).map(([dimension, score]) => (
+                          <div key={dimension} className="space-y-2">
+                            <div className="flex justify-between items-center">
+                              <h4 className="font-semibold text-gray-900 capitalize">
+                                {dimension === 'will' ? 'Will & Perseverance' :
+                                 dimension === 'interest' ? 'Interest & Motivation' :
+                                 dimension === 'skill' ? 'Skill & Experience' :
+                                 dimension === 'cognitive' ? 'Cognitive Readiness' :
+                                 dimension === 'ability' ? 'Learning Ability' :
+                                 dimension === 'realWorld' ? 'Real-world Fit' :
+                                 dimension}
+                              </h4>
+                              <Badge variant={score >= 75 ? 'default' : score >= 60 ? 'secondary' : 'destructive'}>
+                                {score}%
+                              </Badge>
+                            </div>
+                            <Progress value={score} className="h-2" />
                           </div>
-                          <Progress value={score} className="h-2" />
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-8">
+                        <p className="text-gray-600">FB6 Index data not available</p>
+                        <p className="text-sm text-gray-500 mt-2">Overall Score: {results.wiscar?.overall || 0}%</p>
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>

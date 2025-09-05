@@ -66,14 +66,18 @@ const PDFLayout: React.FC<PDFLayoutProps> = ({
     <div className="pdf-layout-container">
       {/* Title Section with Logo */}
       <div className="pdf-title-section">
-        <div className="pdf-logo-center">
-          <FactorBeamLogo className="h-8 w-8" />
-        </div>
-        <h1 className="pdf-main-title">Assessment Results Report</h1>
-        <h2 className="pdf-assessment-title">{assessment.title}</h2>
-        <p className="pdf-assessment-description">{assessment.description}</p>
-        <div className="pdf-date-info">
-          <p className="pdf-date">Generated: {currentDate}</p>
+        <div className="pdf-header-content">
+          <div className="pdf-logo-left">
+            <FactorBeamLogo className="h-12 w-12" />
+          </div>
+          <div className="pdf-header-text">
+            <h1 className="pdf-main-title">Assessment Results Report</h1>
+            <h2 className="pdf-assessment-title">{assessment.title}</h2>
+            <p className="pdf-assessment-description">{assessment.description}</p>
+            <div className="pdf-date-info">
+              <p className="pdf-date">Generated: {currentDate}</p>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Target, ArrowRight } from 'lucide-react';
+import { Target } from 'lucide-react';
 import { AssessmentSection } from '@/lib/api';
 import DynamicQuestion from './DynamicQuestion';
 
@@ -153,10 +153,7 @@ const DynamicWiscarSection: React.FC<DynamicWiscarSectionProps> = ({
             className="bg-orange-600 hover:bg-orange-700 text-white px-6"
           >
             {currentQuestionIndex < questions.length - 1 ? (
-              <>
-                Next Question
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </>
+              'Next Question'
             ) : (
               'Complete Section'
             )}

@@ -303,7 +303,7 @@ const DynamicAssessment = () => {
                   {assessment?.title || 'Assessment'}
                 </h1>
                 <p className="text-gray-600 text-sm">
-                  Comprehensive Career Assessment & Guidance
+                  Illuminate your potential
                 </p>
               </div>
             </div>

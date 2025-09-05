@@ -82,17 +82,17 @@ export default {
 					'text-alt': '#3C4251'
 				},
 				// Legacy compatibility
-				'pathfinder-green': {
+				'factorbeam-green': {
 					light: '#28C76F',
 					DEFAULT: '#1D63FF',
 					dark: '#2563EB'
 				},
-				'pathfinder-yellow': {
+				'factorbeam-yellow': {
 					light: '#FFCE32',
 					DEFAULT: '#28C76F',
 					dark: '#22C55E'
 				},
-				'pathfinder-gray': {
+				'factorbeam-gray': {
 					light: '#F5F6FA',
 					DEFAULT: '#44494D',
 					dark: '#18213A'

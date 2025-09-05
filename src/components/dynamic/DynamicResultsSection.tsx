@@ -470,7 +470,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 assessment-print-container">
         {/* Print Header - Hidden on screen, visible in print */}
         <div className="hidden print:block print-header">
-          <div className="print-logo">Path Finder</div>
+          <div className="print-logo">FactorBeam</div>
           <div className="print-subtitle">Career Assessment & Guidance Platform</div>
           <div className="print-date">Generated on: {new Date().toLocaleDateString()}</div>
         </div>

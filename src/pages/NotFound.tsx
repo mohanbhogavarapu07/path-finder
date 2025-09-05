@@ -20,7 +20,7 @@ const NotFound = () => {
   const popularPages = [
     { name: 'Home', path: '/', description: 'Return to our homepage' },
     { name: 'Assessments', path: '/assessments', description: 'Browse career assessments' },
-    { name: 'About Us', path: '/about', description: 'Learn more about PathFinder' },
+    { name: 'About Us', path: '/about', description: 'Learn more about FactorBeam' },
     { name: 'Blog', path: '/blog', description: 'Read career guidance articles' },
     { name: 'Contact', path: '/contact', description: 'Get in touch with us' },
   ];
@@ -82,7 +82,7 @@ const NotFound = () => {
           <div className="mt-8 text-sm text-muted-foreground">
             <p>
               If you believe this is an error, please{' '}
-                              <a href="mailto:support@pathfinder.com" className="text-factorbeam-yellow hover:underline">
+                              <a href="mailto:support@factorbeam.com" className="text-factorbeam-yellow hover:underline">
                 contact our support team
               </a>
               .

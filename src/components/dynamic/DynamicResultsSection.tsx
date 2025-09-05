@@ -418,7 +418,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
     { id: 'overview', label: 'Overview', icon: BarChart3 },
     { id: 'psychometric', label: 'Psychometric', icon: Brain },
     { id: 'technical', label: 'Technical', icon: Code },
-    { id: 'wiscar', label: 'FB6 Index', icon: Target },
+    { id: 'FB6 Index', label: 'FB6 Index', icon: Target },
     { id: 'careers', label: 'Careers', icon: Users },
     { id: 'improvement', label: 'Improvement', icon: TrendingUp }
   ];
@@ -624,24 +624,21 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                 {/* Quick Actions */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <Zap className="w-6 h-6 text-blue-600" />
-                      <span>Quick Actions</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid md:grid-cols-3 gap-4">
-                      <Button variant="outline" className="h-auto p-4 flex flex-col items-center space-y-2" onClick={printResults}>
-                        <Download className="w-6 h-6" />
+                    <div className="flex items-center gap-4">
+                      <CardTitle className="flex items-center space-x-2">
+                        <Zap className="w-6 h-6 text-blue-600" />
+                        <span>Quick Actions</span>
+                      </CardTitle>
+                      <Button 
+                        variant="outline" 
+                        className="flex items-center space-x-2 px-4 py-2" 
+                        onClick={printResults}
+                      >
+                        <Download className="w-4 h-4" />
                         <span>Download PDF Report</span>
                       </Button>
-                      <SocialShareDialog 
-                        assessmentTitle={assessment.title}
-                        results={results}
-                        pdfContainerRef={pdfContainerRef}
-                      />
                     </div>
-                  </CardContent>
+                  </CardHeader>
                 </Card>
               </div>
             )}

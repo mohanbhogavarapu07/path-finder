@@ -1,1 +1,0 @@
-export { WiscarSection as default } from './assessment/WiscarSection'; 

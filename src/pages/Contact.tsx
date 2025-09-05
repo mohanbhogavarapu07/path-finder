@@ -1,281 +1,126 @@
-import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import { submitContact } from '@/lib/api';
-import { toast } from 'sonner';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-  const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-      toast.error('Please fill in all fields');
-      return;
-    }
-
-    try {
-      setLoading(true);
-      await submitContact(formData);
-      setSubmitted(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      toast.success('Message sent successfully! We\'ll get back to you soon.');
-    } catch (error) {
-      console.error('Error submitting contact form:', error);
-      toast.error('Failed to send message. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (submitted) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-        <Navigation />
-        <div className="container mx-auto px-4 py-16">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <CheckCircle className="h-8 w-8 text-green-600" />
-            </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Message Sent Successfully!</h1>
-            <p className="text-gray-600 mb-8">
-              Thank you for reaching out to us. We've received your message and will get back to you within 24-48 hours.
-            </p>
-            <Button onClick={() => setSubmitted(false)} variant="outline">
-              Send Another Message
-            </Button>
-          </div>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen gradient-bg text-gray-800 antialiased" style={{
+      fontFamily: "'Inter', sans-serif",
+      backgroundColor: '#f8fafc',
+      backgroundImage: `
+        radial-gradient(at 0% 0%, hsla(212,80%,98%,1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, hsla(280,80%,98%,1) 0px, transparent 50%)
+      `
+    }}>
       <Navigation />
       
-      {/* Hero Section */}
-              				<section className="py-16 bg-gradient-to-r from-[#285C52] to-[#4CAF50] text-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Get in Touch
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-white/90">
-              Have questions about our assessments or need career guidance? We're here to help!
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Main Container */}
+      <div className="container mx-auto px-4 py-12 md:py-20">
+        
+        {/* Header Section */}
+        <header className="text-center mb-12 md:mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">Let's Connect</h1>
+          <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">We're always happy to hear from you. Find the right channel below to get in touch with our team.</p>
+        </header>
 
-      {/* Contact Form and Info */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              
-              {/* Contact Form */}
-              <div>
-                <Card className="shadow-lg">
-                  <CardHeader>
-                    <CardTitle className="text-2xl font-bold">Send us a Message</CardTitle>
-                    <p className="text-gray-600">
-                      Fill out the form below and we'll get back to you as soon as possible.
-                    </p>
-                  </CardHeader>
-                  <CardContent>
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <Label htmlFor="name">Full Name *</Label>
-                          <Input
-                            id="name"
-                            name="name"
-                            type="text"
-                            value={formData.name}
-                            onChange={handleInputChange}
-                            required
-                            className="mt-1"
-                          />
+        {/* Contact Cards Grid */}
+        <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          {/* Card 1: Feedback */}
+          <div className="bg-white/60 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200/50">
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 text-blue-600 mb-5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
                         </div>
-                        <div>
-                          <Label htmlFor="email">Email Address *</Label>
-                          <Input
-                            id="email"
-                            name="email"
-                            type="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            required
-                            className="mt-1"
-                          />
-                        </div>
+            <h2 className="text-xl font-semibold text-gray-900 mb-2 tracking-tight">Feedback & Suggestions</h2>
+            <p className="text-gray-600 mb-5 leading-relaxed">Help us improve! If you're referring to a specific assessment, please mention it in the subject line.</p>
+            <a href="mailto:contact.factorbeam@gmail.com?subject=Feedback%20and%20Suggestions" className="font-semibold text-blue-600 hover:text-blue-700 transition-colors">contact.factorbeam@gmail.com</a>
                       </div>
                       
-                      <div>
-                        <Label htmlFor="subject">Subject *</Label>
-                        <Input
-                          id="subject"
-                          name="subject"
-                          type="text"
-                          value={formData.subject}
-                          onChange={handleInputChange}
-                          required
-                          className="mt-1"
-                        />
+          {/* Card 2: Media */}
+          <div className="bg-white/60 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200/50">
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-purple-100 text-purple-600 mb-5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="23"></line>
+                <line x1="8" y1="23" x2="16" y2="23"></line>
+              </svg>
+                      </div>
+            <h2 className="text-xl font-semibold text-gray-900 mb-2 tracking-tight">Media Inquiries</h2>
+            <p className="text-gray-600 mb-5 leading-relaxed">We have exciting career assessment stories to share, and our career experts are happy to answer your questions.</p>
+            <a href="mailto:contact.factorbeam@gmail.com?subject=Media%20Inquiry" className="font-semibold text-purple-600 hover:text-purple-700 transition-colors">contact.factorbeam@gmail.com</a>
                       </div>
                       
-                      <div>
-                        <Label htmlFor="message">Message *</Label>
-                        <Textarea
-                          id="message"
-                          name="message"
-                          value={formData.message}
-                          onChange={handleInputChange}
-                          required
-                          rows={6}
-                          className="mt-1"
-                          placeholder="Tell us how we can help you..."
-                        />
-                      </div>
-                      
-                      <Button 
-                        type="submit" 
-                                                 className="w-full bg-[#4CAF50] hover:bg-[#43A047]"
-                        disabled={loading}
-                      >
-                        {loading ? (
-                          <div className="flex items-center gap-2">
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                            Sending...
+          {/* Card 3: Partnerships */}
+          <div className="bg-white/60 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200/50">
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-green-100 text-green-600 mb-5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
                           </div>
-                        ) : (
-                          <div className="flex items-center gap-2">
-                            <Send className="h-4 w-4" />
-                            Send Message
-                          </div>
-                        )}
-                      </Button>
-                    </form>
-                  </CardContent>
-                </Card>
+            <h2 className="text-xl font-semibold text-gray-900 mb-2 tracking-tight">Partnerships & Collabs</h2>
+            <p className="text-gray-600 mb-5 leading-relaxed">For assessment integrations, educational partnerships, or collaboration ideas, let's explore the possibilities together! 😀</p>
+            <a href="mailto:contact.factorbeam@gmail.com?subject=Partnership%20Inquiry" className="font-semibold text-green-600 hover:text-green-700 transition-colors">contact.factorbeam@gmail.com</a>
               </div>
 
-              {/* Contact Information */}
-              <div className="space-y-8">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Contact Information</h2>
-                  <p className="text-gray-600 mb-8">
-                    We're here to help you with any questions about our career assessments, 
-                    career guidance, or technical support. Reach out to us through any of the channels below.
-                  </p>
-                </div>
-
-                <div className="space-y-6">
-                  <Card>
-                    <CardContent className="p-6">
-                      <div className="flex items-start gap-4">
-                                                                         <div className="w-10 h-10 bg-[#4CAF50]/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                           <Mail className="h-5 w-5 text-[#4CAF50]" />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold text-gray-900 mb-1">Email Support</h3>
-                          <p className="text-gray-600 mb-2">support@pathfinder.com</p>
-                          <p className="text-sm text-gray-500">We typically respond within 24 hours</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardContent className="p-6">
-                      <div className="flex items-start gap-4">
-                        <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <Phone className="h-5 w-5 text-green-600" />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold text-gray-900 mb-1">Phone Support</h3>
-                          <p className="text-gray-600 mb-2">+1 (555) 123-4567</p>
-                          <p className="text-sm text-gray-500">Monday - Friday, 9 AM - 6 PM EST</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardContent className="p-6">
-                      <div className="flex items-start gap-4">
-                        <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <MapPin className="h-5 w-5 text-purple-600" />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold text-gray-900 mb-1">Office Address</h3>
-                          <p className="text-gray-600 mb-2">
-                            123 Career Street<br />
-                            Tech City, TC 12345<br />
-                            United States
-                          </p>
-                          <p className="text-sm text-gray-500">By appointment only</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                {/* FAQ Section */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-xl font-bold">Frequently Asked Questions</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">How long do assessments take?</h4>
-                      <p className="text-gray-600 text-sm">
-                        Most assessments take 10-15 minutes to complete. You can pause and resume at any time.
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Are the assessments free?</h4>
-                      <p className="text-gray-600 text-sm">
-                        Basic assessments are free. Premium features and detailed reports require a subscription.
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Can I retake assessments?</h4>
-                      <p className="text-gray-600 text-sm">
-                        Yes, you can retake assessments after 30 days to see how your skills have evolved.
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+          {/* Card 4: Advertising */}
+          <div className="bg-white/60 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200/50">
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100 text-yellow-600 mb-5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
             </div>
+            <h2 className="text-xl font-semibold text-gray-900 mb-2 tracking-tight">Advertising</h2>
+            <p className="text-gray-600 mb-5 leading-relaxed">Interested in advertising your career services or educational programs? Let's discuss opportunities.</p>
+            <a href="mailto:contact.factorbeam@gmail.com?subject=Advertising%20Inquiry" className="font-semibold text-yellow-700 hover:text-yellow-800 transition-colors">contact.factorbeam@gmail.com</a>
+                </div>
+
+          {/* Card 5: Ethics & Integrity */}
+          <div className="bg-white/60 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200/50">
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-red-100 text-red-600 mb-5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+                        </div>
+            <h2 className="text-xl font-semibold text-gray-900 mb-2 tracking-tight">Ethics & Integrity</h2>
+            <p className="text-gray-600 mb-5 leading-relaxed">We're committed to the highest standards in career assessment. Report any suspected violations of policy, law, or ethics.</p>
+            <a href="mailto:contact.factorbeam@gmail.com?subject=Ethics%20Report" className="font-semibold text-red-600 hover:text-red-700 transition-colors">contact.factorbeam@gmail.com</a>
+                </div>
+
+          {/* Card 6: Main Office */}
+          <div className="bg-white/60 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200/50">
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 mb-5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9" />
+                <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6" />
+              </svg>
+            </div>
+            <h2 className="text-xl font-semibold text-gray-900 mb-2 tracking-tight">Our Office</h2>
+            <address className="text-gray-600 not-italic">
+              FactorBeam<br />
+              Career Assessment Center<br />
+              Global Remote Team
+            </address>
           </div>
+        </main>
+
+        {/* Privacy & Consent Footer */}
+        <footer className="mt-16 md:mt-24 pt-8 border-t border-gray-200 text-center text-xs text-gray-500 max-w-4xl mx-auto">
+          <p className="mb-4">
+            By providing your email address, you agree to receive communications from FactorBeam. You can withdraw consent at any time by responding to any communication or by contacting <a href="mailto:contact.factorbeam@gmail.com?subject=Unsubscribe" className="font-medium text-gray-600 hover:text-gray-800 underline">contact.factorbeam@gmail.com</a>.
+          </p>
+          <p>
+            Your personal information will only be used to handle your inquiry. We store and process personal data on the terms defined in our <Link to="/privacy" className="font-medium text-gray-600 hover:text-gray-800 underline">Privacy Policy</Link>.
+          </p>
+        </footer>
         </div>
-      </section>
 
       <Footer />
     </div>

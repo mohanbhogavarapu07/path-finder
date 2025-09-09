@@ -8,12 +8,14 @@ import { useAssessments, useAssessmentCategories } from '@/hooks/useAssessments'
 import { DynamicAssessment } from '@/lib/api';
 import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 import { sampleAssessments } from '@/data/assessments';
+import { categoryToSlug, slugToCategory } from '@/lib/utils';
 
 const Assessments = () => {
   const { data: apiAssessments, isLoading, error } = useAssessments();
   const { categories } = useAssessmentCategories();
   const [searchParams] = useSearchParams();
-  const selectedCategory = searchParams.get('category');
+  const categorySlug = searchParams.get('category');
+  const selectedCategory = categorySlug ? slugToCategory(categorySlug) : null;
   const searchQuery = searchParams.get('search');
   const navigate = useNavigate();
   const location = useLocation();
@@ -138,10 +140,10 @@ const Assessments = () => {
       {/* Secondary Navigation - Assessment Categories */}
       <div className="border-t border-gray-200 bg-gray-50">
         <div className="container mx-auto px-4">
-          <nav className="flex items-center space-x-8 overflow-x-auto py-4">
+          <nav className="flex items-center space-x-4 sm:space-x-6 lg:space-x-8 overflow-x-auto py-3 sm:py-4">
             <button
               onClick={() => navigate('/assessments')}
-              className={`text-base font-medium whitespace-nowrap transition-colors hover:text-factorbeam-primary px-2 py-1 cursor-pointer ${
+              className={`text-sm sm:text-base font-medium whitespace-nowrap transition-colors hover:text-factorbeam-primary px-2 py-1 cursor-pointer ${
                 location.pathname === "/assessments" && !location.search.includes("category=")
                   ? "text-factorbeam-primary border-b-2 border-factorbeam-primary"
                   : "text-gray-600"
@@ -152,9 +154,9 @@ const Assessments = () => {
             {categories.map((category) => (
               <button
                 key={category}
-                onClick={() => navigate(`/assessments?category=${encodeURIComponent(category)}`)}
-                className={`text-base font-medium whitespace-nowrap transition-colors hover:text-factorbeam-primary px-2 py-1 cursor-pointer ${
-                  location.search.includes(`category=${encodeURIComponent(category)}`)
+                onClick={() => navigate(`/assessments?category=${categoryToSlug(category)}`)}
+                className={`text-sm sm:text-base font-medium whitespace-nowrap transition-colors hover:text-factorbeam-primary px-2 py-1 cursor-pointer ${
+                  location.search.includes(`category=${categoryToSlug(category)}`)
                     ? "text-factorbeam-primary border-b-2 border-factorbeam-primary"
                     : "text-gray-600"
                 }`}
@@ -167,10 +169,10 @@ const Assessments = () => {
       </div>
       
       {/* Hero Section */}
-      <div className="pt-40 px-8 md:px-12 lg:px-16">
+      <div className="pt-20 sm:pt-24 lg:pt-32 px-4 sm:px-6 lg:px-8">
         <div className="w-full">
-          <div className="text-left mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-foreground">
+          <div className="text-center sm:text-left mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 text-foreground">
               {searchQuery 
                 ? `Search Results for "${searchQuery}"`
                 : selectedCategory 
@@ -178,7 +180,7 @@ const Assessments = () => {
                   : 'Choose Your Assessment'
               }
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
+            <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-3xl leading-relaxed mx-auto sm:mx-0">
               {searchQuery 
                 ? `Found ${filteredAssessments.length} assessment${filteredAssessments.length !== 1 ? 's' : ''} matching your search.`
                 : selectedCategory 
@@ -203,7 +205,7 @@ const Assessments = () => {
 
       
       {/* Assessment Categories Section */}
-      <div className="px-8 md:px-12 lg:px-16 pb-20">
+      <div className="px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16 lg:pb-20">
         {error && (
           <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
             <p className="text-yellow-800 text-sm">
@@ -214,8 +216,8 @@ const Assessments = () => {
         <div className="w-full">
           {searchQuery ? (
             // Show search results
-            <div className="space-y-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="space-y-6 sm:space-y-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {filteredAssessments.map((assessment) => (
                   <AssessmentCard key={assessment.id} {...assessment} />
                 ))}
@@ -241,15 +243,15 @@ const Assessments = () => {
             </div>
           ) : selectedCategory ? (
             // Show assessments for specific category
-            <div className="space-y-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className={`p-3 rounded-lg ${getCategoryColor(selectedCategory)}`}>
-                  {React.createElement(getCategoryIcon(selectedCategory), { className: "h-6 w-6" })}
+            <div className="space-y-6 sm:space-y-8">
+              <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                <div className={`p-2 sm:p-3 rounded-lg ${getCategoryColor(selectedCategory)}`}>
+                  {React.createElement(getCategoryIcon(selectedCategory), { className: "h-5 w-5 sm:h-6 sm:w-6" })}
                 </div>
-                <h3 className="text-2xl font-bold text-foreground">{selectedCategory}</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-foreground">{selectedCategory}</h3>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {filteredAssessments.map((assessment) => (
                   <AssessmentCard key={assessment.id} {...assessment} />
                 ))}
@@ -263,7 +265,7 @@ const Assessments = () => {
             </div>
           ) : (
             // Show all categories
-            <div className="space-y-16">
+            <div className="space-y-12 sm:space-y-16">
               {categories.map((category, categoryIndex) => {
                 const Icon = getCategoryIcon(category);
                 const color = getCategoryColor(category);
@@ -272,15 +274,15 @@ const Assessments = () => {
                 return (
                   <div key={categoryIndex} id={category.toLowerCase()} className="scroll-mt-24">
                     {/* Category Header */}
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className={`p-3 rounded-lg ${color}`}>
-                        <Icon className="h-6 w-6" />
+                    <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                      <div className={`p-2 sm:p-3 rounded-lg ${color}`}>
+                        <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
                       </div>
-                      <h3 className="text-2xl font-bold text-foreground">{category}</h3>
+                      <h3 className="text-xl sm:text-2xl font-bold text-foreground">{category}</h3>
                     </div>
                     
                     {/* Assessment Cards Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                       {categoryAssessments.map((assessment, index) => (
                         <AssessmentCard key={assessment.id} {...assessment} />
                       ))}
@@ -294,11 +296,11 @@ const Assessments = () => {
       </div>
 
       {/* How It Works */}
-      <div className="px-8 md:px-12 lg:px-16 py-16">
+      <div className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="container mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 text-foreground">How Our Assessments Work</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12 text-foreground">How Our Assessments Work</h2>
           
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             <div className="text-center">
                               <div className="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
               <h3 className="text-lg font-semibold mb-2 text-foreground">Choose Assessment</h3>

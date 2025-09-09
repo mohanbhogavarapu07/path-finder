@@ -7,6 +7,7 @@ import { useAssessments } from "@/hooks/useAssessments";
 import { Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { categoryToSlug } from "@/lib/utils";
 
 // Helper functions for category styling
 const getCategoryDescription = (category: string) => {
@@ -201,14 +202,14 @@ const Categories = () => {
       <Navigation />
       
       <main className="flex-1">
-        <div className="py-16 px-4">
+        <div className="py-8 sm:py-12 lg:py-16 px-4">
           <div className="max-w-7xl mx-auto">
             {/* Header Section */}
-            <div className="text-center mb-12">
-              <h1 className="text-4xl lg:text-5xl font-bold text-heading mb-4">
+            <div className="text-center mb-8 sm:mb-12">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-heading mb-3 sm:mb-4">
                 Browse All Categories
               </h1>
-              <p className="text-lg text-foreground-soft max-w-3xl mx-auto">
+              <p className="text-sm sm:text-base lg:text-lg text-foreground-soft max-w-3xl mx-auto px-4">
                 Explore our comprehensive collection of assessment categories to find exactly what you're looking for.
               </p>
             </div>
@@ -216,40 +217,40 @@ const Categories = () => {
             {/* Search and Filter Section */}
             <div className="mb-8">
               {/* Search Bar */}
-              <div className="mb-6">
-                <div className="relative max-w-2xl mx-auto">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+              <div className="mb-4 sm:mb-6">
+                <div className="relative max-w-2xl mx-auto px-4">
+                  <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4 sm:w-5 sm:h-5" />
                   <Input
                     type="text"
                     placeholder="Search assessments, tools, and calculators..."
                     value={searchTerm}
                     onChange={handleInputChange}
                     onKeyPress={handleKeyPress}
-                    className="pl-10 pr-4 py-3 text-lg border-2 border-primary/20 focus:border-primary"
+                    className="pl-9 sm:pl-10 pr-4 py-2 sm:py-3 text-sm sm:text-base lg:text-lg border-2 border-primary/20 focus:border-primary"
                   />
                 </div>
               </div>
 
               {/* Filter Buttons */}
-              <div className="flex justify-center gap-4">
+              <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
                 <Button
                   variant={activeFilter === 'all' ? 'default' : 'outline'}
                   onClick={() => setActiveFilter('all')}
-                  className="px-6 py-2"
+                  className="px-4 sm:px-6 py-2 text-sm sm:text-base"
                 >
                   All Categories
                 </Button>
                 <Button
                   variant={activeFilter === 'popular' ? 'default' : 'outline'}
                   onClick={() => setActiveFilter('popular')}
-                  className="px-6 py-2"
+                  className="px-4 sm:px-6 py-2 text-sm sm:text-base"
                 >
                   Most Popular
                 </Button>
                 <Button
                   variant={activeFilter === 'newest' ? 'default' : 'outline'}
                   onClick={() => setActiveFilter('newest')}
-                  className="px-6 py-2"
+                  className="px-4 sm:px-6 py-2 text-sm sm:text-base"
                 >
                   Newest
                 </Button>
@@ -264,7 +265,7 @@ const Categories = () => {
                   <p className="text-foreground-soft">Loading categories...</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {filteredCategories.map((category, index) => {
                     const IconComponent = category.icon;
                     return (
@@ -291,7 +292,7 @@ const Categories = () => {
                           {category.description}
                         </p>
                         
-                        <Link to={`/assessments?category=${encodeURIComponent(category.name)}`}>
+                        <Link to={`/assessments?category=${categoryToSlug(category.name)}`}>
                           <Button
                             variant="outline"
                             size="sm"

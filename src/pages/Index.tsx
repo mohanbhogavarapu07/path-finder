@@ -66,24 +66,25 @@ const Index = () => {
       <FeaturedSection />
 
       {/* Assessment Grid Section */}
-      <section className="py-12 bg-background-soft">
+      <section className="py-12 bg-factorbeam-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-3xl font-bold text-heading mb-2">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8 gap-4">
+            <div className="text-center lg:text-left">
+              <h2 className="text-2xl sm:text-3xl font-bold text-heading mb-2">
                 Featured Assessments
               </h2>
-              <p className="text-foreground-soft">
+              <p className="text-sm sm:text-base text-foreground-soft">
                 Start with our most popular and scientifically-validated assessments
               </p>
             </div>
             
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
               <div className="flex items-center space-x-2">
                 <Button
                   variant={viewMode === "grid" ? "default" : "outline"}
                   size="sm"
                   onClick={() => setViewMode("grid")}
+                  className="h-8 w-8 p-0"
                 >
                   <Grid className="w-4 h-4" />
                 </Button>
@@ -91,17 +92,18 @@ const Index = () => {
                   variant={viewMode === "list" ? "default" : "outline"}
                   size="sm"
                   onClick={() => setViewMode("list")}
+                  className="h-8 w-8 p-0"
                 >
                   <List className="w-4 h-4" />
                 </Button>
-                    </div>
+              </div>
               
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="text-xs sm:text-sm">
                 <SlidersHorizontal className="w-4 h-4 mr-2" />
-                Sort by: {sortBy}
+                <span className="hidden sm:inline">Sort by: </span>{sortBy}
               </Button>
-        </div>
-      </div>
+            </div>
+          </div>
 
           {isLoading ? (
             <div className="text-center py-12">
@@ -115,9 +117,9 @@ const Index = () => {
                   ⚠️ Using sample data. Some features may be limited.
                 </p>
               </div>
-              <div className={`grid gap-6 ${
+              <div className={`grid gap-4 sm:gap-6 ${
                 viewMode === "grid" 
-                  ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" 
+                  ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" 
                   : "grid-cols-1"
               }`}>
                 {sortedAssessments.slice(0, 6).map((assessment) => (
@@ -126,9 +128,9 @@ const Index = () => {
               </div>
             </div>
           ) : (
-            <div className={`grid gap-6 ${
+            <div className={`grid gap-4 sm:gap-6 ${
               viewMode === "grid" 
-                ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" 
+                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" 
                 : "grid-cols-1"
             }`}>
               {sortedAssessments.slice(0, 6).map((assessment) => (
@@ -149,17 +151,17 @@ const Index = () => {
           
 
      
-      <div className="py-8 px-4">
-        <div className="w-full">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+      <div className="py-8 px-4 bg-factorbeam-bg-alt">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4">
               Complete Coverage for Every Stage of Life
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-3xl mx-auto px-4">
               From high school stream selection to career pivots, we've got assessments for every major decision point in your educational and professional journey.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             <Card className="group hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-white to-primary/5">
               <CardHeader className="text-center pb-4">
                 <div className="mx-auto mb-3 p-3 bg-primary rounded-full w-fit group-hover:scale-110 transition-transform">
@@ -278,13 +280,13 @@ const Index = () => {
       </div>
 
       {/* Social Proof & Testimonials */}
-      <div className="py-8 px-4">
-        <div className="w-full">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">What Students Say</h2>
-            <p className="text-lg text-muted-foreground">Real feedback from students who found their path</p>
+      <div className="py-8 px-4 bg-factorbeam-bg">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">What Students Say</h2>
+            <p className="text-sm sm:text-base lg:text-lg text-muted-foreground">Real feedback from students who found their path</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             <Card className="bg-gradient-to-br from-primary/5 to-white border-primary/20 hover:shadow-lg transition-all">
               <CardContent className="p-6">
                 <div className="flex mb-4">

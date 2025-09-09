@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { useAssessments } from "@/hooks/useAssessments";
 import { Link } from "react-router-dom";
 import { useState, useMemo } from "react";
+import { categoryToSlug } from "@/lib/utils";
 
 // Helper functions for category styling (moved outside component to avoid hoisting issues)
 const getCategoryDescription = (category: string) => {
@@ -170,27 +171,28 @@ const FeaturedSection = () => {
   }, [assessments]);
 
   return (
-    <div className="py-16 px-4">
+    <div className="py-8 sm:py-12 lg:py-16 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Categories Grid */}
-        <div className="mb-12">
-          <div className="flex items-center justify-between mb-8">
-            <h3 className="text-2xl font-bold text-heading">Explore by Category</h3>
-            <Link to="/categories">
-              <Button variant="outline" className="flex items-center gap-2">
-                View All Categories
+        <div className="mb-8 sm:mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8 gap-4">
+            <h3 className="text-xl sm:text-2xl font-bold text-heading text-center sm:text-left">Explore by Category</h3>
+            <Link to="/categories" className="flex justify-center sm:justify-start">
+              <Button variant="outline" className="flex items-center gap-2 text-sm sm:text-base">
+                <span className="hidden sm:inline">View All Categories</span>
+                <span className="sm:hidden">View All</span>
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
           </div>
           
           {isLoading ? (
-            <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-              <p className="text-foreground-soft">Loading categories...</p>
+            <div className="text-center py-8 sm:py-12">
+              <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-b-2 border-primary mx-auto mb-4"></div>
+              <p className="text-sm sm:text-base text-foreground-soft">Loading categories...</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {categories.map((category, index) => {
                 const IconComponent = category.icon;
                 return (
@@ -214,7 +216,7 @@ const FeaturedSection = () => {
                     <p className="text-sm text-foreground-soft mb-4 line-clamp-2">
                       {category.description}
                     </p>
-                    <Link to={`/assessments?category=${encodeURIComponent(category.name)}`}>
+                    <Link to={`/assessments?category=${categoryToSlug(category.name)}`}>
                       <Button
                         variant="outline"
                         size="sm"

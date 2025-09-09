@@ -62,15 +62,15 @@ const FeedbackDialog: React.FC<FeedbackDialogProps> = ({ open, onClose, onSubmit
 
   return (
     <Dialog open={open} onOpenChange={() => {}}>
-      <DialogContent className="sm:max-w-md" hideCloseButton={true}>
-        <DialogHeader>
-          <DialogTitle className="text-xl font-bold">Share quick feedback</DialogTitle>
-          <DialogDescription>
+      <DialogContent className="sm:max-w-md border-2 border-gray-300 shadow-2xl" hideCloseButton={true}>
+        <DialogHeader className="text-center sm:text-left">
+          <DialogTitle className="text-lg sm:text-xl font-bold">Share quick feedback</DialogTitle>
+          <DialogDescription className="text-sm sm:text-base">
             Before viewing results, please rate this assessment and add any comments.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4 py-2">
+        <div className="space-y-4 py-2 sm:py-4">
           <div className="space-y-2">
             <Label>Rating</Label>
             <div className="flex items-center space-x-1">
@@ -95,7 +95,7 @@ const FeedbackDialog: React.FC<FeedbackDialogProps> = ({ open, onClose, onSubmit
         {error && <p className="text-sm text-red-500">{error}</p>}
 
         <DialogFooter>
-          <Button onClick={handleSubmit} disabled={submitting || !rating}>
+          <Button onClick={handleSubmit} disabled={submitting || !rating} className="w-full sm:w-auto">
             {submitting ? 'Submitting...' : 'Submit feedback'}
           </Button>
         </DialogFooter>

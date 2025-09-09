@@ -75,24 +75,24 @@ const Footer = () => {
       {/* Main Footer Content */}
       <div className="py-6 sm:py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
             
-            {/* Brand Section - Spans 2 columns */}
-            <div className="sm:col-span-2 lg:col-span-2 text-center sm:text-left">
-              <div className="flex items-center justify-center sm:justify-start space-x-3 sm:space-x-4 mb-3">
+            {/* Brand Section - Left side */}
+            <div className="flex-1 lg:max-w-md">
+              <div className="flex items-center space-x-3 mb-4">
                 <img 
                   src="/logo.png" 
                   alt="FactorBeam Logo" 
-                  className="h-16 sm:h-20 lg:h-24 w-auto object-contain"
+                  className="h-12 sm:h-16 lg:h-20 w-auto object-contain"
                 />
               </div>
-              <p className="text-foreground-soft mb-4 max-w-lg leading-relaxed text-xs sm:text-sm mx-auto sm:mx-0">
+              <p className="text-foreground-soft mb-6 leading-relaxed text-sm">
                 The world's most comprehensive platform for personal and professional assessments. 
                 Trusted by millions worldwide to unlock potential and drive growth.
               </p>
               
               {/* Social Links */}
-              <div className="flex items-center justify-center sm:justify-start space-x-3">
+              <div className="flex items-center space-x-3">
                 <span className="text-xs text-foreground-soft font-medium">Follow us on:</span>
                 {socialLinks.map((social) => (
                   <a
@@ -108,18 +108,21 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Categories */}
-            <div className="text-center sm:text-left">
-              <h4 className="text-sm sm:text-base font-bold text-heading mb-3">Categories</h4>
-              <ul className="space-y-1">
-                {isLoading ? (
-                  <li className="text-foreground-soft text-sm">Loading categories...</li>
-                ) : (
-                  categories.map((category) => (
-                    <li key={category.name}>
+            {/* Links Section - Right side */}
+            <div className="flex-1 lg:flex-none lg:w-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 lg:gap-12">
+                {/* Categories */}
+                <div>
+                  <h4 className="text-base font-bold text-heading mb-4 hover:text-primary transition-colors duration-300">Categories</h4>
+                  <ul className="space-y-2">
+                    {isLoading ? (
+                      <li className="text-foreground-soft text-sm">Loading categories...</li>
+                    ) : (
+                      categories.map((category) => (
+                        <li key={category.name}>
                       <Link 
                         to={category.href} 
-                        className="text-foreground-soft hover:text-primary transition-all duration-300 block py-0.5 hover:translate-x-1 text-sm"
+                        className="text-foreground-soft hover:text-primary transition-all duration-300 block py-1 text-sm hover:translate-x-1 hover:scale-105"
                         onClick={() => {
                           // Scroll to top when category link is clicked
                           setTimeout(() => {
@@ -129,50 +132,52 @@ const Footer = () => {
                       >
                         {category.name}
                       </Link>
-                    </li>
-                  ))
-                )}
-              </ul>
-            </div>
+                        </li>
+                      ))
+                    )}
+                  </ul>
+                </div>
 
-            {/* Company */}
-            <div className="text-center sm:text-left">
-              <h4 className="text-sm sm:text-base font-bold text-heading mb-3">Company</h4>
-              <ul className="space-y-1">
-                {company.map((link) => (
-                  <li key={link.name}>
-                    <Link 
-                      to={link.href} 
-                      className="text-foreground-soft hover:text-primary transition-all duration-300 block py-0.5 hover:translate-x-1 text-sm"
-                      onClick={() => {
-                        // Scroll to top when company link is clicked
-                        setTimeout(() => {
-                          window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }, 0);
-                      }}
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                {/* Company */}
+                <div>
+                  <h4 className="text-base font-bold text-heading mb-4 hover:text-primary transition-colors duration-300">Company</h4>
+                  <ul className="space-y-2">
+                    {company.map((link) => (
+                      <li key={link.name}>
+                        <Link 
+                          to={link.href} 
+                          className="text-foreground-soft hover:text-primary transition-all duration-300 block py-1 text-sm hover:translate-x-1 hover:scale-105"
+                          onClick={() => {
+                            // Scroll to top when company link is clicked
+                            setTimeout(() => {
+                              window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }, 0);
+                          }}
+                        >
+                          {link.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-            {/* Legal */}
-            <div className="text-center sm:text-left">
-              <h4 className="text-sm sm:text-base font-bold text-heading mb-3">Legal</h4>
-              <ul className="space-y-1">
-                {legal.map((link) => (
-                  <li key={link.name}>
-                    <Link 
-                      to={link.href} 
-                      className="text-foreground-soft hover:text-primary transition-all duration-300 block py-0.5 hover:translate-x-1 text-sm"
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+                {/* Legal */}
+                <div>
+                  <h4 className="text-base font-bold text-heading mb-4 hover:text-primary transition-colors duration-300">Legal</h4>
+                  <ul className="space-y-2">
+                    {legal.map((link) => (
+                      <li key={link.name}>
+                        <Link 
+                          to={link.href} 
+                          className="text-foreground-soft hover:text-primary transition-all duration-300 block py-1 text-sm hover:translate-x-1 hover:scale-105"
+                        >
+                          {link.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
 

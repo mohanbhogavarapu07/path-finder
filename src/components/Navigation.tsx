@@ -16,12 +16,12 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2 sm:space-x-3">
               <img 
                 src="/logo.png" 
                 alt="FactorBeam Logo" 
-                className="h-12 sm:h-16 lg:h-20 w-auto object-contain"
+                className="h-10 sm:h-12 lg:h-16 xl:h-20 w-auto object-contain"
               />
             </Link>
           </div>
@@ -66,12 +66,12 @@ const Navigation = () => {
               variant="ghost"
               size="sm"
               onClick={toggleMobileMenu}
-              className="p-2"
+              className="p-2 h-10 w-10"
             >
               {isMobileMenuOpen ? (
-                <X className="h-6 w-6" />
+                <X className="h-5 w-5" />
               ) : (
-                <Menu className="h-6 w-6" />
+                <Menu className="h-5 w-5" />
               )}
             </Button>
           </div>
@@ -80,15 +80,15 @@ const Navigation = () => {
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-sm">
-            <div className="px-2 pt-2 pb-3 space-y-1">
+            <div className="px-4 py-3 space-y-2">
               <Button 
                 variant={location.pathname === "/categories" ? "default" : "ghost"} 
                 size="sm" 
                 asChild
-                className="w-full justify-start"
+                className="w-full justify-start h-12"
               >
-                <Link to="/categories" className="flex items-center gap-2" onClick={toggleMobileMenu}>
-                  <Grid3X3 className="w-4 h-4" />
+                <Link to="/categories" className="flex items-center gap-3" onClick={toggleMobileMenu}>
+                  <Grid3X3 className="w-5 h-5" />
                   Categories
                 </Link>
               </Button>
@@ -96,10 +96,10 @@ const Navigation = () => {
                 variant={location.pathname === "/popular" ? "default" : "ghost"} 
                 size="sm" 
                 asChild
-                className="w-full justify-start"
+                className="w-full justify-start h-12"
               >
-                <Link to="/popular" className="flex items-center gap-2" onClick={toggleMobileMenu}>
-                  <Sparkles className="w-4 h-4" />
+                <Link to="/popular" className="flex items-center gap-3" onClick={toggleMobileMenu}>
+                  <Sparkles className="w-5 h-5" />
                   Popular
                 </Link>
               </Button>
@@ -107,10 +107,10 @@ const Navigation = () => {
                 variant={location.pathname === "/new" ? "default" : "ghost"} 
                 size="sm" 
                 asChild
-                className="w-full justify-start"
+                className="w-full justify-start h-12"
               >
-                <Link to="/new" className="flex items-center gap-2" onClick={toggleMobileMenu}>
-                  <Clock className="w-4 h-4" />
+                <Link to="/new" className="flex items-center gap-3" onClick={toggleMobileMenu}>
+                  <Clock className="w-5 h-5" />
                   New
                 </Link>
               </Button>

@@ -119,17 +119,17 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="text-xl font-bold text-factorbeam-heading">
+      <DialogContent className="sm:max-w-md border-2 border-gray-300 shadow-2xl">
+        <DialogHeader className="text-center sm:text-left">
+          <DialogTitle className="text-lg sm:text-xl font-bold text-factorbeam-heading">
             Start Assessment
           </DialogTitle>
-          <DialogDescription className="text-factorbeam-text">
+          <DialogDescription className="text-sm sm:text-base text-factorbeam-text">
             Please provide your information to begin the {assessmentTitle} assessment.
           </DialogDescription>
         </DialogHeader>
         
-        <div className="space-y-4 py-4">
+        <div className="space-y-4 py-2 sm:py-4">
           <div className="space-y-2">
             <Label htmlFor="country" className="text-sm font-medium text-factorbeam-heading">
               Country *
@@ -184,17 +184,17 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
           </div>
         )}
         
-        <DialogFooter className="flex gap-2">
+        <DialogFooter className="flex flex-col sm:flex-row gap-2 sm:gap-2">
           <Button
             variant="outline"
             onClick={onClose}
-            className="border-gray-300 text-factorbeam-text hover:bg-gray-50"
+            className="border-gray-300 text-factorbeam-text hover:bg-gray-50 w-full sm:w-auto"
           >
             Cancel
           </Button>
           <Button
             onClick={handleStartAssessment}
-            className="bg-factorbeam-primary hover:bg-factorbeam-primary-alt text-white"
+            className="bg-factorbeam-primary hover:bg-factorbeam-primary-alt text-white w-full sm:w-auto"
           >
             Start Assessment
           </Button>

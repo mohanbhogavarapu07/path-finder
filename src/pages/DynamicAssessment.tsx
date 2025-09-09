@@ -289,36 +289,36 @@ const DynamicAssessment = () => {
   return (
     <AssessmentLayout>
       <div className="bg-white shadow-sm border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+        <div className="container mx-auto px-4 py-3 sm:py-4">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               <button
                 onClick={() => navigate('/assessments')}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-1 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors"
               >
-                <ArrowLeft className="h-5 w-5 text-gray-600" />
+                <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 text-gray-600" />
               </button>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">
+                <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900">
                   {assessment?.title || 'Assessment'}
                 </h1>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 text-xs sm:text-sm">
                   Illuminate your potential
                 </p>
               </div>
             </div>
-            <Badge variant="outline" className="text-sm">
+            <Badge variant="outline" className="text-xs sm:text-sm px-2 sm:px-3 py-1">
               {Math.round(progress)}% Complete
             </Badge>
           </div>
           
           {/* Progress Bar */}
-          <div className="mt-4">
-            <Progress value={progress} className="h-2" />
+          <div className="mt-2 sm:mt-4">
+            <Progress value={progress} className="h-1.5 sm:h-2" />
           </div>
           
           {/* Section Navigation */}
-          <div className="flex mt-4 space-x-4 overflow-x-auto">
+          <div className="flex mt-3 sm:mt-4 space-x-2 sm:space-x-4 overflow-x-auto">
             {sectionConfig.map((section, index) => {
               const Icon = section.icon;
               const isActive = section.id === currentSection;
@@ -327,7 +327,7 @@ const DynamicAssessment = () => {
               return (
                 <div
                   key={section.id}
-                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg min-w-fit ${
+                  className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg min-w-fit ${
                     isActive
                       ? 'bg-[#4CAF50]/10 text-[#4CAF50] border-2 border-[#4CAF50]/30'
                       : isCompleted
@@ -336,11 +336,11 @@ const DynamicAssessment = () => {
                   }`}
                 >
                   {isCompleted ? (
-                    <CheckCircle className="w-4 h-4" />
+                    <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4" />
                   ) : (
-                    <Icon className="w-4 h-4" />
+                    <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
                   )}
-                  <span className="text-sm font-medium">{section.title}</span>
+                  <span className="text-xs sm:text-sm font-medium">{section.title}</span>
                 </div>
               );
             })}

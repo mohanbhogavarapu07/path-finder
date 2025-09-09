@@ -477,9 +477,9 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
 
         <div className="container mx-auto px-4 max-w-6xl">
           {/* Header */}
-          <div className="text-center mb-8 no-print">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Assessment Complete! 🎉</h1>
-            <p className="text-xl text-gray-600">Here are your personalized results for {assessment.title}</p>
+          <div className="text-center mb-6 sm:mb-8 no-print">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">Assessment Complete! 🎉</h1>
+            <p className="text-sm sm:text-base lg:text-xl text-gray-600 px-4">Here are your personalized results for {assessment.title}</p>
           </div>
 
           {/* Print Assessment Title */}
@@ -489,22 +489,25 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
           </div>
 
           {/* Tab Navigation */}
-          <div className="bg-white rounded-lg shadow-sm border mb-8">
-            <div className="flex overflow-x-auto">
+          <div className="bg-white rounded-lg shadow-sm border mb-6 sm:mb-8">
+            <div className="flex overflow-x-auto scrollbar-hide">
               {tabs.map((tab) => {
                 const TabIcon = tab.icon;
                 return (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center space-x-2 px-6 py-4 whitespace-nowrap border-b-2 transition-colors ${
+                    className={`flex items-center space-x-2 px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap border-b-2 transition-colors ${
                       activeTab === tab.id
                         ? 'border-blue-500 text-blue-600 bg-blue-50'
                         : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                     }`}
                   >
-                    <TabIcon className="w-4 h-4" />
-                    <span className="font-medium">{tab.label}</span>
+                    <TabIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span className="font-medium text-xs sm:text-sm">
+                      <span className="hidden sm:inline">{tab.label}</span>
+                      <span className="sm:hidden">{tab.label.split(' ')[0]}</span>
+                    </span>
                   </button>
                 );
               })}
@@ -518,28 +521,28 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
               <div className="space-y-6">
                 {/* Summary Overview */}
                 <Card className={`${config.bgColor} ${config.borderColor} border-2`}>
-                  <CardHeader className="text-center">
-                    <div className="flex justify-center mb-4">
-                      <div className={`p-4 rounded-full ${config.bgColor.replace('50', '100')}`}>
-                        <RecommendationIcon className={`w-12 h-12 ${config.textColor}`} />
+                  <CardHeader className="text-center p-4 sm:p-6">
+                    <div className="flex justify-center mb-3 sm:mb-4">
+                      <div className={`p-3 sm:p-4 rounded-full ${config.bgColor.replace('50', '100')}`}>
+                        <RecommendationIcon className={`w-8 h-8 sm:w-12 sm:h-12 ${config.textColor}`} />
                       </div>
                     </div>
-                    <CardTitle className="text-3xl font-bold text-gray-900 mb-2">
+                    <CardTitle className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
                       {results.recommendation === 'YES' ? 'Excellent Fit!' :
                        results.recommendation === 'MAYBE' ? 'Good Potential with Preparation' :
                        'Consider Alternative Paths'}
                     </CardTitle>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-4">
+                    <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto mb-4 px-4">
                       {results.recommendationReason}
                     </p>
-                    <div className="flex justify-center items-center gap-4 flex-wrap">
-                      <Badge variant="outline" className={`text-lg px-4 py-2 ${config.bgColor} ${config.textColor} ${config.borderColor}`}>
+                    <div className="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
+                      <Badge variant="outline" className={`text-sm sm:text-base px-3 sm:px-4 py-2 ${config.bgColor} ${config.textColor} ${config.borderColor}`}>
                         Recommendation: {results.recommendation}
                       </Badge>
-                      <Badge variant="outline" className="text-lg px-4 py-2">
+                      <Badge variant="outline" className="text-sm sm:text-base px-3 sm:px-4 py-2">
                         Confidence: {results.confidenceScore}%
                       </Badge>
-                      <Badge variant="outline" className="text-lg px-4 py-2">
+                      <Badge variant="outline" className="text-sm sm:text-base px-3 sm:px-4 py-2">
                         Overall Score: {results.overallScore}%
                       </Badge>
                     </div>
@@ -547,7 +550,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                 </Card>
 
                 {/* Score Overview */}
-                <div className="grid md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   <Card className="border-purple-200">
                     <CardHeader>
                       <CardTitle className="flex items-center space-x-2">

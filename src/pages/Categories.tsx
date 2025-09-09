@@ -232,25 +232,25 @@ const Categories = () => {
               </div>
 
               {/* Filter Buttons */}
-              <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+              <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
                 <Button
                   variant={activeFilter === 'all' ? 'default' : 'outline'}
                   onClick={() => setActiveFilter('all')}
-                  className="px-4 sm:px-6 py-2 text-sm sm:text-base"
+                  className="px-4 py-2 text-sm rounded-full"
                 >
                   All Categories
                 </Button>
                 <Button
                   variant={activeFilter === 'popular' ? 'default' : 'outline'}
                   onClick={() => setActiveFilter('popular')}
-                  className="px-4 sm:px-6 py-2 text-sm sm:text-base"
+                  className="px-4 py-2 text-sm rounded-full"
                 >
                   Most Popular
                 </Button>
                 <Button
                   variant={activeFilter === 'newest' ? 'default' : 'outline'}
                   onClick={() => setActiveFilter('newest')}
-                  className="px-4 sm:px-6 py-2 text-sm sm:text-base"
+                  className="px-4 py-2 text-sm rounded-full"
                 >
                   Newest
                 </Button>
@@ -271,18 +271,18 @@ const Categories = () => {
                     return (
                       <div
                         key={index}
-                        className={`p-6 rounded-lg border-2 ${category.color} hover:shadow-custom-md transition-all duration-300 group cursor-pointer relative`}
+                        className={`p-4 sm:p-6 rounded-lg border-2 ${category.color} hover:shadow-custom-md transition-all duration-300 group cursor-pointer relative`}
                       >
                         
                         <div className="flex items-center gap-3 mb-4">
-                          <div className={`p-3 rounded-lg ${category.color.replace('border-', 'bg-').replace('/200', '/100')}`}>
-                            <IconComponent className={`w-6 h-6 ${category.textColor}`} />
+                          <div className={`p-2 sm:p-3 rounded-lg ${category.color.replace('border-', 'bg-').replace('/200', '/100')}`}>
+                            <IconComponent className={`w-5 h-5 sm:w-6 sm:h-6 ${category.textColor}`} />
                           </div>
                           <div>
-                            <h3 className="text-xl font-semibold text-heading group-hover:text-primary transition-colors">
+                            <h3 className="text-lg sm:text-xl font-semibold text-heading group-hover:text-primary transition-colors">
                               {category.name}
                             </h3>
-                            <Badge variant="outline" className={`${category.textColor} text-sm mt-1`}>
+                            <Badge variant="outline" className={`${category.textColor} text-xs sm:text-sm mt-1`}>
                               {category.count} assessments
                             </Badge>
                           </div>

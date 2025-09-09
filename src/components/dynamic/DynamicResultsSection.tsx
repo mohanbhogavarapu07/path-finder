@@ -314,7 +314,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
   };
   
   // Print functionality
-  const { pdfContainerRef, printResults, saveAsPDF, isPrinting, isSavingPDF } = usePDFResults({
+  const { pdfContainerRef, printResults, saveAsPDF, shareMobilePDF, isPrinting, isSavingPDF } = usePDFResults({
     assessmentTitle: assessment.title,
     onSuccess: () => console.log('Print operation completed successfully'),
     onError: (error) => console.error('Print operation failed:', error)
@@ -632,14 +632,26 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                         <Zap className="w-6 h-6 text-blue-600" />
                         <span>Quick Actions</span>
                       </CardTitle>
-                      <Button 
-                        variant="outline" 
-                        className="flex items-center justify-center space-x-2 px-6 py-3 w-full sm:w-auto rounded-md font-medium shadow-sm hover:shadow-md transition-all" 
-                        onClick={printResults}
-                      >
-                        <Download className="w-4 h-4" />
-                        <span>Download PDF Report</span>
-                      </Button>
+                      <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                        <Button 
+                          variant="outline" 
+                          className="flex items-center justify-center space-x-2 px-6 py-3 w-full sm:w-auto rounded-md font-medium shadow-sm hover:shadow-md transition-all" 
+                          onClick={printResults}
+                          disabled={isPrinting}
+                        >
+                          <Download className="w-4 h-4" />
+                          <span>{isPrinting ? 'Generating...' : 'Download PDF Report'}</span>
+                        </Button>
+                        {/* Mobile-specific share button */}
+                        <Button 
+                          variant="secondary" 
+                          className="flex items-center justify-center space-x-2 px-6 py-3 w-full sm:w-auto rounded-md font-medium shadow-sm hover:shadow-md transition-all sm:hidden" 
+                          onClick={shareMobilePDF}
+                        >
+                          <Share2 className="w-4 h-4" />
+                          <span>Share Results</span>
+                        </Button>
+                      </div>
                     </div>
                   </CardHeader>
                 </Card>

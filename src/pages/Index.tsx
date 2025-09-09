@@ -295,11 +295,12 @@ const Index = () => {
                   ))}
                 </div>
                 <p className="text-foreground mb-4">
-                  "The assessment completely changed my perspective on my career path. I discovered my passion for product management and couldn't be happier!"
+                  "I've done some basic IoT projects, but this test made me realize how much I've overlooked the security side. It covered things like encryption protocols and attack vectors, which I hadn't studied deeply. It's eye-opening and definitely pushed me to learn more about secure design in IoT devices."
                 </p>
                 <div className="text-sm text-muted-foreground">
-                  <p className="font-semibold text-foreground">Priya S.</p>
-                  <p>Engineering Student</p>
+                  <p className="font-semibold text-foreground">Ishita R.</p>
+                  <p>ECE Student (3rd Year)</p>
+                  {/* <p className="text-xs text-primary font-medium mt-1">Assessment: IoT Security Engineer</p> */}
                 </div>
               </CardContent>
             </Card>
@@ -312,11 +313,12 @@ const Index = () => {
                   ))}
                 </div>
                 <p className="text-foreground mb-4">
-                  "The career assessment showed me I'm perfect for data analysis. Now I'm interning at a tech startup!"
+                  "This test was a reality check! The questions dove into sensor fusion, path planning, and real-time control. I've worked on autonomous robots before, but the test made me realize how much depth there is in full-system design. Great for anyone interested in self-driving tech or robotics research."
                 </p>
                 <div className="text-sm text-muted-foreground">
-                  <p className="font-semibold text-foreground">Rahul K.</p>
-                  <p>CS Graduate</p>
+                  <p className="font-semibold text-foreground">Yash Bhatt</p>
+                  <p>RAE Student (Final Year)</p>
+                  {/* <p className="text-xs text-primary font-medium mt-1">Assessment: Autonomous Systems Engineer</p> */}
                 </div>
               </CardContent>
             </Card>
@@ -329,11 +331,12 @@ const Index = () => {
                   ))}
                 </div>
                 <p className="text-foreground mb-4">
-                  "Saved me from making a costly mistake. Almost switched streams until this assessment revealed my true strengths."
+                  "This was my first time taking an RPA-focused test and it was a good intro. The questions covered real-world automation flows and tools like UiPath and Blue Prism. I struggled with a few questions on exception handling, but overall, it helped me decide to pursue an RPA-based final-year project."
                 </p>
                 <div className="text-sm text-muted-foreground">
-                  <p className="font-semibold text-foreground">Ananya M.</p>
-                  <p>Electronics Engineering</p>
+                  <p className="font-semibold text-foreground">Riya Kapoor</p>
+                  <p>CSE Student (Final Year)</p>
+                  {/* <p className="text-xs text-primary font-medium mt-1">Assessment: RPA Developer</p> */}
                 </div>
               </CardContent>
             </Card>

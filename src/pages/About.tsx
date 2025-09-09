@@ -259,7 +259,7 @@ const About = () => {
                 Our founders, having worked at leading assessment companies and research institutions, understood the power of well-designed psychological instruments. They set out to create a platform that would democratize access to these tools while maintaining the highest standards of scientific rigor and user experience.
               </p>
               <p>
-                Today, we're proud to serve over Thousand users worldwide, from students and professionals to organizations and researchers. Our commitment to evidence-based assessment design and user-centric experience continues to drive innovation in the career guidance and personal development space.
+                Today, we're proud to serve over 1000+ users worldwide, from students and professionals to organizations and researchers. Our commitment to evidence-based assessment design and user-centric experience continues to drive innovation in the career guidance and personal development space.
               </p>
             </div>
           </div>

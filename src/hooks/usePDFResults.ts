@@ -22,8 +22,17 @@ export const usePDFResults = (options: UsePDFResultsOptions = {}) => {
     setIsPrinting(true);
 
     try {
+      // Check if we're on a mobile device
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
       PDFGenerator.printElement(pdfContainerRef.current);
-      toast.success('Print dialog opened');
+      
+      if (isMobile) {
+        toast.success('PDF view opened. Use the print button to save as PDF');
+      } else {
+        toast.success('Print dialog opened');
+      }
+      
       options.onSuccess?.();
     } catch (error) {
       console.error('Error printing:', error);

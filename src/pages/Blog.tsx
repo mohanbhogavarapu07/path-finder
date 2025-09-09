@@ -136,6 +136,7 @@ const Blog = () => {
                       variant={selectedCategory === 'All' ? 'default' : 'outline'}
                       size="sm"
                       onClick={() => handleCategoryChange('All')}
+                      className="rounded-md font-medium"
                     >
                       All ({totalPosts})
                     </Button>
@@ -145,6 +146,7 @@ const Blog = () => {
                         variant={selectedCategory === category._id ? 'default' : 'outline'}
                         size="sm"
                         onClick={() => handleCategoryChange(category._id)}
+                        className="rounded-md font-medium"
                       >
                         {category._id} ({category.count})
                       </Button>

@@ -236,21 +236,21 @@ const Categories = () => {
                 <Button
                   variant={activeFilter === 'all' ? 'default' : 'outline'}
                   onClick={() => setActiveFilter('all')}
-                  className="px-4 py-2 text-sm rounded-full"
+                  className="px-6 py-2 text-sm rounded-md font-medium"
                 >
                   All Categories
                 </Button>
                 <Button
                   variant={activeFilter === 'popular' ? 'default' : 'outline'}
                   onClick={() => setActiveFilter('popular')}
-                  className="px-4 py-2 text-sm rounded-full"
+                  className="px-6 py-2 text-sm rounded-md font-medium"
                 >
                   Most Popular
                 </Button>
                 <Button
                   variant={activeFilter === 'newest' ? 'default' : 'outline'}
                   onClick={() => setActiveFilter('newest')}
-                  className="px-4 py-2 text-sm rounded-full"
+                  className="px-6 py-2 text-sm rounded-md font-medium"
                 >
                   Newest
                 </Button>

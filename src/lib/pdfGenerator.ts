@@ -4,7 +4,16 @@ export class PDFGenerator {
    * Print the element with custom styles
    */
   static printElement(element: HTMLElement): void {
-    // Create a new window for printing
+    // Check if we're on a mobile device
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+      // For mobile devices, use a different approach
+      this.printElementMobile(element);
+      return;
+    }
+
+    // Create a new window for printing (desktop)
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
       console.error('Failed to open print window');
@@ -667,6 +676,173 @@ export class PDFGenerator {
        printWindow.close();
      }, 1000);
    };
+ }
+
+ /**
+  * Print element for mobile devices
+  */
+ static printElementMobile(element: HTMLElement): void {
+   // Create a temporary container for mobile printing
+   const tempContainer = document.createElement('div');
+   tempContainer.className = 'pdf-temp-container';
+   tempContainer.style.cssText = `
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background: white;
+     z-index: 9999;
+     overflow-y: auto;
+     padding: 20px;
+     box-sizing: border-box;
+   `;
+
+   // Clone the element and add mobile-specific styles
+   const clonedElement = element.cloneNode(true) as HTMLElement;
+   clonedElement.style.cssText = `
+     width: 100% !important;
+     max-width: none !important;
+     margin: 0 !important;
+     padding: 0 !important;
+     background: white !important;
+     color: #1e293b !important;
+     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+     font-size: 14px !important;
+     line-height: 1.5 !important;
+   `;
+
+   // Add mobile print styles
+   const mobileStyles = document.createElement('style');
+   mobileStyles.textContent = `
+     @media print {
+       .pdf-temp-container {
+         position: static !important;
+         width: 100% !important;
+         height: auto !important;
+         padding: 0 !important;
+         margin: 0 !important;
+         background: white !important;
+       }
+       
+       .pdf-temp-container * {
+         -webkit-print-color-adjust: exact !important;
+         color-adjust: exact !important;
+         print-color-adjust: exact !important;
+       }
+       
+       /* Hide interactive elements */
+       button, .btn, .button, .interactive-element {
+         display: none !important;
+       }
+     }
+     
+     /* Mobile-specific styles */
+     .pdf-temp-container {
+       font-size: 14px !important;
+       line-height: 1.5 !important;
+     }
+     
+     .pdf-temp-container .pdf-layout-container {
+       width: 100% !important;
+       max-width: none !important;
+       margin: 0 !important;
+       padding: 0 !important;
+     }
+     
+     .pdf-temp-container .pdf-scores-grid {
+       grid-template-columns: 1fr !important;
+       gap: 1rem !important;
+     }
+     
+     .pdf-temp-container .pdf-career-grid {
+       grid-template-columns: 1fr !important;
+       gap: 1rem !important;
+     }
+     
+     .pdf-temp-container .pdf-skills-content {
+       grid-template-columns: 1fr !important;
+       gap: 1rem !important;
+     }
+     
+     .pdf-temp-container .pdf-next-steps-list {
+       grid-template-columns: 1fr !important;
+       gap: 0.5rem !important;
+     }
+   `;
+
+   tempContainer.appendChild(mobileStyles);
+   tempContainer.appendChild(clonedElement);
+
+   // Add close button for mobile
+   const closeButton = document.createElement('button');
+   closeButton.innerHTML = '✕ Close';
+   closeButton.style.cssText = `
+     position: fixed;
+     top: 10px;
+     right: 10px;
+     background: #ef4444;
+     color: white;
+     border: none;
+     border-radius: 50%;
+     width: 40px;
+     height: 40px;
+     font-size: 18px;
+     cursor: pointer;
+     z-index: 10000;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+   `;
+
+   closeButton.onclick = () => {
+     document.body.removeChild(tempContainer);
+   };
+
+   // Add print button for mobile
+   const printButton = document.createElement('button');
+   printButton.innerHTML = '🖨️ Print';
+   printButton.style.cssText = `
+     position: fixed;
+     top: 10px;
+     left: 10px;
+     background: #3b82f6;
+     color: white;
+     border: none;
+     border-radius: 8px;
+     padding: 10px 20px;
+     font-size: 14px;
+     font-weight: 600;
+     cursor: pointer;
+     z-index: 10000;
+     display: flex;
+     align-items: center;
+     gap: 8px;
+   `;
+
+   printButton.onclick = () => {
+     // Hide the buttons before printing
+     closeButton.style.display = 'none';
+     printButton.style.display = 'none';
+     
+     // Print the content
+     window.print();
+     
+     // Show buttons again after printing
+     setTimeout(() => {
+       closeButton.style.display = 'flex';
+       printButton.style.display = 'flex';
+     }, 1000);
+   };
+
+   tempContainer.appendChild(closeButton);
+   tempContainer.appendChild(printButton);
+
+   // Add to document
+   document.body.appendChild(tempContainer);
+
+   // Scroll to top
+   tempContainer.scrollTop = 0;
  }
 
  /**

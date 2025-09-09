@@ -627,14 +627,14 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                 {/* Quick Actions */}
                 <Card>
                   <CardHeader>
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                       <CardTitle className="flex items-center space-x-2">
                         <Zap className="w-6 h-6 text-blue-600" />
                         <span>Quick Actions</span>
                       </CardTitle>
                       <Button 
                         variant="outline" 
-                        className="flex items-center space-x-2 px-4 py-2" 
+                        className="flex items-center justify-center space-x-2 px-6 py-3 w-full sm:w-auto rounded-md font-medium shadow-sm hover:shadow-md transition-all" 
                         onClick={printResults}
                       >
                         <Download className="w-4 h-4" />

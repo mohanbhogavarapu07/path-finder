@@ -111,6 +111,9 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
       // Navigate to assessment
       navigate(`/assessments/${assessmentId}`);
       onClose();
+      
+      // Scroll to top of the page
+      window.scrollTo(0, 0);
     } catch (error) {
       console.error('Error starting assessment:', error);
       setErrors({ submit: (error as Error).message });

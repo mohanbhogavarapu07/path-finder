@@ -6,7 +6,7 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { useAssessments, useAssessmentCategories } from '@/hooks/useAssessments';
 import { DynamicAssessment } from '@/lib/api';
-import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
+import { useSearchParams, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { sampleAssessments } from '@/data/assessments';
 import { categoryToSlug, slugToCategory } from '@/lib/utils';
 
@@ -14,8 +14,10 @@ const Assessments = () => {
   const { data: apiAssessments, isLoading, error } = useAssessments();
   const { categories } = useAssessmentCategories();
   const [searchParams] = useSearchParams();
-  const categorySlug = searchParams.get('category');
-  const selectedCategory = categorySlug ? slugToCategory(categorySlug) : null;
+  const params = useParams<{ categorySlug?: string }>();
+  const queryCategorySlug = searchParams.get('category');
+  const effectiveCategorySlug = params.categorySlug || queryCategorySlug || null;
+  const selectedCategory = effectiveCategorySlug ? slugToCategory(effectiveCategorySlug) : null;
   const searchQuery = searchParams.get('search');
   const navigate = useNavigate();
   const location = useLocation();
@@ -154,9 +156,9 @@ const Assessments = () => {
             {categories.map((category) => (
               <button
                 key={category}
-                onClick={() => navigate(`/assessments?category=${categoryToSlug(category)}`)}
+                onClick={() => navigate(`/category/${categoryToSlug(category)}`)}
                 className={`text-sm sm:text-base font-medium whitespace-nowrap transition-colors hover:text-factorbeam-primary px-2 py-1 cursor-pointer ${
-                  location.search.includes(`category=${categoryToSlug(category)}`)
+                  (location.pathname === `/category/${categoryToSlug(category)}`)
                     ? "text-factorbeam-primary border-b-2 border-factorbeam-primary"
                     : "text-gray-600"
                 }`}

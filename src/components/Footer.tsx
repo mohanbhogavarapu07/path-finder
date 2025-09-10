@@ -23,7 +23,7 @@ const Footer = () => {
         { name: "All Assessments", href: "/" },
         ...fallbackCategories.map(category => ({
           name: category,
-          href: `/assessments?category=${categoryToSlug(category)}`
+          href: `/category/${categoryToSlug(category)}`
         }))
       ];
     }
@@ -40,7 +40,7 @@ const Footer = () => {
       if (allowedCategories.includes(category) && !categoryMap.has(category)) {
         categoryMap.set(category, {
           name: category,
-          href: `/assessments?category=${categoryToSlug(category)}`
+          href: `/category/${categoryToSlug(category)}`
         });
       }
     });

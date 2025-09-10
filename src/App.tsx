@@ -41,6 +41,8 @@ const App = () => (
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/assessments" element={<Assessments />} />
             <Route path="/categories" element={<Categories />} />
+            {/* New domain/category routes */}
+            <Route path="/category/:categorySlug" element={<Assessments />} />
             <Route path="/popular" element={<Popular />} />
             <Route path="/new" element={<New />} />
             <Route path="/contact" element={<Contact />} />
@@ -48,8 +50,9 @@ const App = () => (
             <Route path="/terms" element={<Terms />} />
             <Route path="/data-protection" element={<DataProtection />} />
             
-            {/* Dynamic Assessment Routes */}
+            {/* Dynamic Assessment Routes (legacy and new) */}
             <Route path="/assessments/:assessmentId/*" element={<DynamicAssessment />} />
+            <Route path="/category/:categorySlug/:assessmentId/*" element={<DynamicAssessment />} />
             
             {/* Admin Routes */}
             <Route path="/admin" element={<Admin />} />

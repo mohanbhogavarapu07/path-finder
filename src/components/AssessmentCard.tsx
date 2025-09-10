@@ -4,6 +4,7 @@ import { Clock, Users, Star, BookOpen, Heart, Briefcase, User, Cpu, DollarSign, 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import AssessmentStartDialog from "./AssessmentStartDialog";
+import { categoryToSlug } from "@/lib/utils";
 
 interface AssessmentCardProps {
   id: string;
@@ -186,6 +187,7 @@ const AssessmentCard = ({
         onClose={handleCloseDialog}
         assessmentId={id}
         assessmentTitle={title}
+        categorySlug={categoryToSlug(category)}
       />
     </div>
   );

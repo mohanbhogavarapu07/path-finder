@@ -19,6 +19,7 @@ interface AssessmentStartDialogProps {
   onClose: () => void;
   assessmentId: string;
   assessmentTitle: string;
+  categorySlug?: string;
 }
 
 const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
@@ -26,6 +27,7 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
   onClose,
   assessmentId,
   assessmentTitle,
+  categorySlug,
 }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -108,8 +110,12 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
         console.warn('Failed to start assessment tracking, but continuing...');
       }
 
-      // Navigate to assessment
-      navigate(`/assessments/${assessmentId}`);
+      // Navigate to assessment (new nested route if category available)
+      if (categorySlug) {
+        navigate(`/category/${categorySlug}/${assessmentId}`);
+      } else {
+        navigate(`/assessments/${assessmentId}`);
+      }
       onClose();
       
       // Scroll to top of the page

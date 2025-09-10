@@ -292,7 +292,7 @@ const Categories = () => {
                           {category.description}
                         </p>
                         
-                        <Link to={`/assessments?category=${categoryToSlug(category.name)}`}>
+                        <Link to={`/category/${categoryToSlug(category.name)}`}>
                           <Button
                             variant="outline"
                             size="sm"

@@ -16,22 +16,27 @@ import {
 } from 'lucide-react';
 import { DynamicAssessment } from '@/lib/api';
 
-// FactorBeam Logo Component
-const FactorBeamLogo: React.FC<{ className?: string }> = ({ className = "h-24 w-24" }) => (
-  <img 
-    src="/logo.png" 
-    alt="FactorBeam Logo"
-    className={className}
-    style={{ 
-      objectFit: 'contain',
-      display: 'block',
-      margin: '0 auto',
-      maxWidth: '150px',
-      maxHeight: '150px',
-      filter: 'brightness(1.2) contrast(1.1)'
-    }}
-  />
-);
+// FactorBeam Logo Component (use absolute URL so it renders inside print window)
+const FactorBeamLogo: React.FC<{ className?: string }> = ({ className = "h-24 w-24" }) => {
+  const logoSrc = typeof window !== 'undefined' 
+    ? `${window.location.origin}/logo.png` 
+    : '/logo.png';
+  return (
+    <img 
+      src={logoSrc}
+      alt="FactorBeam Logo"
+      className={className}
+      style={{ 
+        objectFit: 'contain',
+        display: 'block',
+        margin: '0 auto',
+        maxWidth: '150px',
+        maxHeight: '150px',
+        filter: 'brightness(1.2) contrast(1.1)'
+      }}
+    />
+  );
+};
 
 interface PDFLayoutProps {
   assessment: DynamicAssessment;

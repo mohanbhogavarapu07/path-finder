@@ -19,7 +19,6 @@ import {
   Star,
   Award,
   Download,
-  Share2,
   BarChart3,
   Zap,
   Lightbulb,
@@ -314,7 +313,7 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
   };
   
   // Print functionality
-  const { pdfContainerRef, printResults, saveAsPDF, shareMobilePDF, isPrinting, isSavingPDF } = usePDFResults({
+  const { pdfContainerRef, printResults, saveAsPDF, isPrinting, isSavingPDF } = usePDFResults({
     assessmentTitle: assessment.title,
     onSuccess: () => console.log('Print operation completed successfully'),
     onError: (error) => console.error('Print operation failed:', error)
@@ -636,21 +635,13 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                         <Button 
                           variant="outline" 
                           className="flex items-center justify-center space-x-2 px-6 py-3 w-full sm:w-auto rounded-md font-medium shadow-sm hover:shadow-md transition-all" 
-                          onClick={printResults}
-                          disabled={isPrinting}
+                          onClick={saveAsPDF}
+                          disabled={isSavingPDF}
                         >
                           <Download className="w-4 h-4" />
-                          <span>{isPrinting ? 'Generating...' : 'Download PDF Report'}</span>
+                          <span>{isSavingPDF ? 'Generating...' : 'Download PDF Report'}</span>
                         </Button>
-                        {/* Mobile-specific share button */}
-                        <Button 
-                          variant="secondary" 
-                          className="flex items-center justify-center space-x-2 px-6 py-3 w-full sm:w-auto rounded-md font-medium shadow-sm hover:shadow-md transition-all sm:hidden" 
-                          onClick={shareMobilePDF}
-                        >
-                          <Share2 className="w-4 h-4" />
-                          <span>Share Results</span>
-                        </Button>
+                        {/* Share button removed on mobile */}
                       </div>
                     </div>
                   </CardHeader>

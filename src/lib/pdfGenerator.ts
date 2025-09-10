@@ -1615,6 +1615,60 @@ export class PDFGenerator {
      }
    });
  }
+
+ /**
+  * Directly generate and download a PDF (mobile-friendly) using html2canvas + jsPDF
+  */
+ static async downloadPDF(element: HTMLElement, filename: string = 'assessment-results.pdf'): Promise<void> {
+   const { jsPDF } = await import('jspdf');
+   const html2canvas = (await import('html2canvas')).default;
+
+   // Clone to control layout size for rendering
+   const cloned = element.cloneNode(true) as HTMLElement;
+   cloned.style.width = '800px';
+   cloned.style.position = 'static';
+   cloned.style.left = '0';
+   cloned.style.top = '0';
+   cloned.style.opacity = '1';
+   cloned.style.pointerEvents = 'auto';
+
+   const tempWrapper = document.createElement('div');
+   tempWrapper.style.position = 'fixed';
+   tempWrapper.style.left = '-99999px';
+   tempWrapper.style.top = '0';
+   tempWrapper.appendChild(cloned);
+   document.body.appendChild(tempWrapper);
+
+   const canvas = await html2canvas(cloned, {
+     scale: 2,
+     useCORS: true,
+     backgroundColor: '#ffffff'
+   });
+
+   const imgData = canvas.toDataURL('image/png');
+   const pdf = new jsPDF('p', 'pt', 'a4');
+   const pageWidth = pdf.internal.pageSize.getWidth();
+   const pageHeight = pdf.internal.pageSize.getHeight();
+
+   const imgWidth = pageWidth;
+   const imgHeight = canvas.height * (imgWidth / canvas.width);
+
+   let heightLeft = imgHeight;
+   let position = 0;
+
+   pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+   heightLeft -= pageHeight;
+
+   while (heightLeft > 0) {
+     pdf.addPage();
+     position = heightLeft - imgHeight;
+     pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+     heightLeft -= pageHeight;
+   }
+
+   pdf.save(filename);
+   document.body.removeChild(tempWrapper);
+ }
 }
 
 /**

@@ -1,9 +1,8 @@
 
-import { useState } from "react";
 import { Clock, Users, Star, BookOpen, Heart, Briefcase, User, Cpu, DollarSign, Megaphone, Crown, MessageCircle, Palette, Brain, Users2, Target, Dumbbell, Apple, Shield, Zap, Lightbulb, ShoppingCart, Phone, Clipboard, BarChart, Paintbrush, PenTool, Globe, Music, Image, Trophy } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import AssessmentStartDialog from "./AssessmentStartDialog";
+import { useNavigate } from "react-router-dom";
 import { categoryToSlug } from "@/lib/utils";
 
 interface AssessmentCardProps {
@@ -40,14 +39,12 @@ const AssessmentCard = ({
   isNew = false,
   metadata
 }: AssessmentCardProps) => {
-  const [showStartDialog, setShowStartDialog] = useState(false);
+  const navigate = useNavigate();
 
   const handleStartAssessment = () => {
-    setShowStartDialog(true);
-  };
-
-  const handleCloseDialog = () => {
-    setShowStartDialog(false);
+    // Navigate directly to the assessment page
+    const categorySlug = categoryToSlug(category);
+    navigate(`/category/${categorySlug}/${id}`);
   };
   const getCategoryIcon = () => {
     const categoryLower = category.toLowerCase();
@@ -180,15 +177,6 @@ const AssessmentCard = ({
           Start Assessment
         </Button>
       </div>
-      
-      {/* Assessment Start Dialog */}
-      <AssessmentStartDialog
-        isOpen={showStartDialog}
-        onClose={handleCloseDialog}
-        assessmentId={id}
-        assessmentTitle={title}
-        categorySlug={categoryToSlug(category)}
-      />
     </div>
   );
 };

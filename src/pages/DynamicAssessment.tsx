@@ -11,12 +11,15 @@ import DynamicPsychometricSection from '@/components/dynamic/DynamicPsychometric
 import DynamicTechnicalSection from '@/components/dynamic/DynamicTechnicalSection';
 import DynamicWiscarSection from '@/components/dynamic/DynamicWiscarSection';
 import DynamicResultsSection from '@/components/dynamic/DynamicResultsSection';
+import AssessmentStartDialog from '@/components/AssessmentStartDialog';
+import { categoryToSlug } from '@/lib/utils';
 
 const DynamicAssessment = () => {
-  const { assessmentId } = useParams<{ assessmentId: string }>();
+  const { assessmentId, categorySlug } = useParams<{ assessmentId: string; categorySlug?: string }>();
   const navigate = useNavigate();
   
   const [currentSection, setCurrentSection] = useState('intro');
+  const [showStartDialog, setShowStartDialog] = useState(false);
   const [assessmentData, setAssessmentData] = useState({
     psychometric: {},
     technical: {},
@@ -26,6 +29,13 @@ const DynamicAssessment = () => {
 
   // Fetch assessment data
   const { data: assessmentDataResponse, isLoading: isLoadingAssessment } = useAssessment(assessmentId!);
+
+  // Show start dialog when user first arrives at the assessment page
+  useEffect(() => {
+    if (assessmentDataResponse && currentSection === 'intro') {
+      setShowStartDialog(true);
+    }
+  }, [assessmentDataResponse, currentSection]);
 
   // Get user data from localStorage
   const getUserData = () => {
@@ -74,7 +84,7 @@ const DynamicAssessment = () => {
           <div className="text-center">
             <p className="text-lg text-gray-600">Assessment not found</p>
             <button
-              onClick={() => navigate('/assessments')}
+              onClick={() => navigate(categorySlug ? `/category/${categorySlug}` : '/assessments')}
               className="mt-4 px-4 py-2 bg-[#4CAF50] text-white rounded-lg hover:bg-[#43A047]"
             >
               Back to Assessments
@@ -129,6 +139,10 @@ const DynamicAssessment = () => {
     if (currentIndex < sectionConfig.length - 1) {
       setCurrentSection(sectionConfig[currentIndex + 1].id);
     }
+  };
+
+  const handleStartDialogClose = () => {
+    setShowStartDialog(false);
   };
 
   const handleCompleteAssessment = async (finalData: Record<string, any>) => {
@@ -275,7 +289,7 @@ const DynamicAssessment = () => {
           <div className="text-center">
             <p className="text-lg text-gray-600">Assessment data not available</p>
             <button
-              onClick={() => navigate('/assessments')}
+              onClick={() => navigate(categorySlug ? `/category/${categorySlug}` : '/assessments')}
               className="mt-4 px-4 py-2 bg-[#4CAF50] text-white rounded-lg hover:bg-[#43A047]"
             >
               Back to Assessments
@@ -293,7 +307,7 @@ const DynamicAssessment = () => {
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <div className="flex items-center gap-2 sm:gap-4">
               <button
-                onClick={() => navigate('/assessments')}
+                onClick={() => navigate(categorySlug ? `/category/${categorySlug}` : '/assessments')}
                 className="p-1 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 text-gray-600" />
@@ -352,6 +366,17 @@ const DynamicAssessment = () => {
       <div className="container mx-auto px-4 py-8 flex-1">
         {renderCurrentSection()}
       </div>
+
+      {/* Assessment Start Dialog */}
+      {assessmentDataResponse && (
+        <AssessmentStartDialog
+          isOpen={showStartDialog}
+          onClose={handleStartDialogClose}
+          assessmentId={assessmentId!}
+          assessmentTitle={assessmentDataResponse.title}
+          categorySlug={categorySlug}
+        />
+      )}
     </AssessmentLayout>
   );
 };

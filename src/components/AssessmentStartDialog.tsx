@@ -59,6 +59,16 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
     return Object.keys(newErrors).length === 0;
   };
 
+  const handleCancel = () => {
+    // Navigate back to the appropriate page (same logic as assessment back button)
+    if (categorySlug) {
+      navigate(`/category/${categorySlug}`);
+    } else {
+      navigate('/assessments');
+    }
+    onClose();
+  };
+
   const handleStartAssessment = async () => {
     if (!validateForm()) {
       return;
@@ -128,7 +138,7 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md border-2 border-gray-300 shadow-2xl">
+      <DialogContent className="sm:max-w-md border-2 border-gray-300 shadow-2xl" hideCloseButton>
         <DialogHeader className="text-center sm:text-left">
           <DialogTitle className="text-lg sm:text-xl font-bold text-factorbeam-heading">
             Start Assessment
@@ -139,27 +149,6 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
         </DialogHeader>
         
         <div className="space-y-4 py-2 sm:py-4">
-          <div className="space-y-2">
-            <Label htmlFor="country" className="text-sm font-medium text-factorbeam-heading">
-              Country *
-            </Label>
-            <Select
-              value={formData.country}
-              onValueChange={(value) => handleInputChange('country', value)}
-            >
-              <SelectTrigger className={errors.country ? 'border-red-500 focus:border-red-500' : ''}>
-                <SelectValue placeholder="Select your country" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="India">India</SelectItem>
-              </SelectContent>
-            </Select>
-            {errors.country && (
-              <p className="text-sm text-red-500">{errors.country}</p>
-            )}
-            <p className="text-xs text-gray-500">Currently available for India only</p>
-          </div>
-
           <div className="space-y-2">
             <Label htmlFor="ageRange" className="text-sm font-medium text-factorbeam-heading">
               Age Range *
@@ -185,6 +174,27 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
               <p className="text-sm text-red-500">{errors.ageRange}</p>
             )}
           </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="country" className="text-sm font-medium text-factorbeam-heading">
+              Country *
+            </Label>
+            <Select
+              value={formData.country}
+              onValueChange={(value) => handleInputChange('country', value)}
+            >
+              <SelectTrigger className={errors.country ? 'border-red-500 focus:border-red-500' : ''}>
+                <SelectValue placeholder="Select your country" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="India">India</SelectItem>
+              </SelectContent>
+            </Select>
+            {errors.country && (
+              <p className="text-sm text-red-500">{errors.country}</p>
+            )}
+            <p className="text-xs text-gray-500">Currently available for India only</p>
+          </div>
         </div>
 
         {errors.submit && (
@@ -196,7 +206,7 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
         <DialogFooter className="flex flex-col sm:flex-row gap-2 sm:gap-2">
           <Button
             variant="outline"
-            onClick={onClose}
+            onClick={handleCancel}
             className="border-gray-300 text-factorbeam-text hover:bg-gray-50 w-full sm:w-auto"
           >
             Cancel

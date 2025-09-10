@@ -143,16 +143,7 @@ const Assessments = () => {
       <div className="border-t border-gray-200 bg-gray-50">
         <div className="container mx-auto px-4">
           <nav className="flex items-center space-x-4 sm:space-x-6 lg:space-x-8 overflow-x-auto py-3 sm:py-4">
-            <button
-              onClick={() => navigate('/assessments')}
-              className={`text-sm sm:text-base font-medium whitespace-nowrap transition-colors hover:text-factorbeam-primary px-2 py-1 cursor-pointer ${
-                location.pathname === "/assessments" && !location.search.includes("category=")
-                  ? "text-factorbeam-primary border-b-2 border-factorbeam-primary"
-                  : "text-gray-600"
-              }`}
-            >
-              View All
-            </button>
+            {/* Removed View All button as requested */}
             {categories.map((category) => (
               <button
                 key={category}

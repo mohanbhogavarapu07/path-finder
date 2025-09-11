@@ -47,15 +47,18 @@ export const usePDFResults = (options: UsePDFResultsOptions = {}) => {
       // On mobile: generate and download a real PDF, on desktop: open print dialog
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
                        (window.innerWidth <= 768) || 
-                       ('ontouchstart' in window);
+                       ('ontouchstart' in window) ||
+                       (navigator.maxTouchPoints > 0);
       if (isMobile) {
         PDFGenerator.downloadPDF(pdfContainerRef.current!, `${options.assessmentTitle || 'assessment'}-results.pdf`).then(() => {
           options.onSuccess?.();
           setIsSavingPDF(false);
         }).catch((error) => {
           console.error('Error generating PDF:', error);
-          toast.error('Failed to generate PDF');
-          options.onError?.(error as Error);
+          // Fallback to print dialog on mobile if PDF generation fails
+          console.log('Falling back to print dialog...');
+          PDFGenerator.printElement(pdfContainerRef.current!);
+          options.onSuccess?.();
           setIsSavingPDF(false);
         });
         return;

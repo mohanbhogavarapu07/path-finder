@@ -1620,54 +1620,175 @@ export class PDFGenerator {
   * Directly generate and download a PDF (mobile-friendly) using html2canvas + jsPDF
   */
  static async downloadPDF(element: HTMLElement, filename: string = 'assessment-results.pdf'): Promise<void> {
-   const { jsPDF } = await import('jspdf');
-   const html2canvas = (await import('html2canvas')).default;
+   try {
+     const { jsPDF } = await import('jspdf');
+     const html2canvas = (await import('html2canvas')).default;
 
-   // Clone to control layout size for rendering
-   const cloned = element.cloneNode(true) as HTMLElement;
-   cloned.style.width = '800px';
-   cloned.style.position = 'static';
-   cloned.style.left = '0';
-   cloned.style.top = '0';
-   cloned.style.opacity = '1';
-   cloned.style.pointerEvents = 'auto';
+     // Show loading indicator
+     const loadingToast = document.createElement('div');
+     loadingToast.style.cssText = `
+       position: fixed;
+       top: 50%;
+       left: 50%;
+       transform: translate(-50%, -50%);
+       background: rgba(0, 0, 0, 0.8);
+       color: white;
+       padding: 20px;
+       border-radius: 8px;
+       z-index: 10000;
+       font-family: Arial, sans-serif;
+     `;
+     loadingToast.textContent = 'Generating PDF...';
+     document.body.appendChild(loadingToast);
 
-   const tempWrapper = document.createElement('div');
-   tempWrapper.style.position = 'fixed';
-   tempWrapper.style.left = '-99999px';
-   tempWrapper.style.top = '0';
-   tempWrapper.appendChild(cloned);
-   document.body.appendChild(tempWrapper);
+     // Clone to control layout size for rendering
+     const cloned = element.cloneNode(true) as HTMLElement;
+     
+     // Ensure the cloned element has proper styling
+     cloned.style.cssText = `
+       width: 800px !important;
+       position: static !important;
+       left: 0 !important;
+       top: 0 !important;
+       opacity: 1 !important;
+       pointer-events: auto !important;
+       background: white !important;
+       color: #1e293b !important;
+       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+       line-height: 1.5 !important;
+       box-sizing: border-box !important;
+     `;
 
-   const canvas = await html2canvas(cloned, {
-     scale: 2,
-     useCORS: true,
-     backgroundColor: '#ffffff'
-   });
+     // Create a proper container for rendering
+     const tempWrapper = document.createElement('div');
+     tempWrapper.style.cssText = `
+       position: fixed !important;
+       left: -99999px !important;
+       top: 0 !important;
+       width: 800px !important;
+       background: white !important;
+       overflow: visible !important;
+       z-index: -1 !important;
+     `;
+     tempWrapper.appendChild(cloned);
+     document.body.appendChild(tempWrapper);
 
-   const imgData = canvas.toDataURL('image/png');
-   const pdf = new jsPDF('p', 'pt', 'a4');
-   const pageWidth = pdf.internal.pageSize.getWidth();
-   const pageHeight = pdf.internal.pageSize.getHeight();
+     // Wait for fonts and images to load
+     await new Promise(resolve => setTimeout(resolve, 1000));
 
-   const imgWidth = pageWidth;
-   const imgHeight = canvas.height * (imgWidth / canvas.width);
+     // Generate canvas with better options for mobile
+     const canvas = await html2canvas(cloned, {
+       scale: 1.5, // Reduced scale for better mobile performance
+       useCORS: true,
+       allowTaint: true,
+       backgroundColor: '#ffffff',
+       logging: false,
+       width: 800,
+       height: cloned.scrollHeight,
+       scrollX: 0,
+       scrollY: 0,
+       windowWidth: 800,
+       windowHeight: cloned.scrollHeight,
+       onclone: (clonedDoc) => {
+         // Ensure all styles are properly applied in the cloned document
+         const clonedElement = clonedDoc.querySelector('[data-pdf-content]') || clonedDoc.body;
+         if (clonedElement) {
+           clonedElement.style.cssText = `
+             width: 800px !important;
+             background: white !important;
+             color: #1e293b !important;
+             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+             line-height: 1.5 !important;
+             margin: 0 !important;
+             padding: 20px !important;
+             box-sizing: border-box !important;
+           `;
+         }
+       }
+     });
 
-   let heightLeft = imgHeight;
-   let position = 0;
+     // Check if canvas was generated successfully
+     if (!canvas || canvas.width === 0 || canvas.height === 0) {
+       throw new Error('Failed to generate canvas - element may be empty or not visible');
+     }
 
-   pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-   heightLeft -= pageHeight;
+     const imgData = canvas.toDataURL('image/png', 0.95);
+     
+     // Check if image data is valid
+     if (!imgData || imgData === 'data:,') {
+       throw new Error('Failed to generate image data from canvas');
+     }
 
-   while (heightLeft > 0) {
-     pdf.addPage();
-     position = heightLeft - imgHeight;
-     pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-     heightLeft -= pageHeight;
+     const pdf = new jsPDF('p', 'pt', 'a4');
+     const pageWidth = pdf.internal.pageSize.getWidth();
+     const pageHeight = pdf.internal.pageSize.getHeight();
+
+     const imgWidth = pageWidth - 40; // Add margins
+     const imgHeight = canvas.height * (imgWidth / canvas.width);
+
+     let heightLeft = imgHeight;
+     let position = 0;
+
+     // Add first page
+     pdf.addImage(imgData, 'PNG', 20, 20, imgWidth, imgHeight);
+     heightLeft -= (pageHeight - 40);
+
+     // Add additional pages if needed
+     while (heightLeft > 0) {
+       pdf.addPage();
+       position = heightLeft - imgHeight;
+       pdf.addImage(imgData, 'PNG', 20, 20 + position, imgWidth, imgHeight);
+       heightLeft -= (pageHeight - 40);
+     }
+
+     // Clean up
+     document.body.removeChild(tempWrapper);
+     document.body.removeChild(loadingToast);
+
+     // Save the PDF
+     pdf.save(filename);
+     
+   } catch (error) {
+     console.error('PDF generation error:', error);
+     
+     // Clean up any remaining elements
+     const tempElements = document.querySelectorAll('.pdf-temp-container');
+     tempElements.forEach(el => el.remove());
+     
+     const loadingElements = document.querySelectorAll('[style*="position: fixed"][style*="top: 50%"]');
+     loadingElements.forEach(el => el.remove());
+     
+     // Show error message
+     const errorToast = document.createElement('div');
+     errorToast.style.cssText = `
+       position: fixed;
+       top: 50%;
+       left: 50%;
+       transform: translate(-50%, -50%);
+       background: #ef4444;
+       color: white;
+       padding: 20px;
+       border-radius: 8px;
+       z-index: 10000;
+       font-family: Arial, sans-serif;
+       max-width: 300px;
+       text-align: center;
+     `;
+     errorToast.innerHTML = `
+       <div>Failed to generate PDF</div>
+       <div style="font-size: 12px; margin-top: 8px;">Please try again or use the print option</div>
+     `;
+     document.body.appendChild(errorToast);
+     
+     // Remove error toast after 5 seconds
+     setTimeout(() => {
+       if (errorToast.parentNode) {
+         errorToast.parentNode.removeChild(errorToast);
+       }
+     }, 5000);
+     
+     throw error;
    }
-
-   pdf.save(filename);
-   document.body.removeChild(tempWrapper);
  }
 }
 

@@ -31,7 +31,7 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
 }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    country: '',
+    gender: '',
     ageRange: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -47,8 +47,8 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.country.trim()) {
-      newErrors.country = 'Country is required';
+    if (!formData.gender.trim()) {
+      newErrors.gender = 'Gender is required';
     }
 
     if (!formData.ageRange.trim()) {
@@ -82,7 +82,7 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          country: formData.country,
+          gender: formData.gender,
           ageRange: formData.ageRange
         }),
       });
@@ -96,7 +96,7 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
       
       // Store user data in localStorage with backend user ID
       const userData = {
-        country: formData.country,
+        gender: formData.gender,
         ageRange: formData.ageRange,
         userId: result.user.id,
         timestamp: new Date().toISOString()
@@ -176,24 +176,25 @@ const AssessmentStartDialog: React.FC<AssessmentStartDialogProps> = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="country" className="text-sm font-medium text-factorbeam-heading">
-              Country *
+            <Label htmlFor="gender" className="text-sm font-medium text-factorbeam-heading">
+              Gender *
             </Label>
             <Select
-              value={formData.country}
-              onValueChange={(value) => handleInputChange('country', value)}
+              value={formData.gender}
+              onValueChange={(value) => handleInputChange('gender', value)}
             >
-              <SelectTrigger className={errors.country ? 'border-red-500 focus:border-red-500' : ''}>
-                <SelectValue placeholder="Select your country" />
+              <SelectTrigger className={errors.gender ? 'border-red-500 focus:border-red-500' : ''}>
+                <SelectValue placeholder="Select your gender" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="India">India</SelectItem>
+                <SelectItem value="Male">Male</SelectItem>
+                <SelectItem value="Female">Female</SelectItem>
+                <SelectItem value="Other">Other</SelectItem>
               </SelectContent>
             </Select>
-            {errors.country && (
-              <p className="text-sm text-red-500">{errors.country}</p>
+            {errors.gender && (
+              <p className="text-sm text-red-500">{errors.gender}</p>
             )}
-            <p className="text-xs text-gray-500">Currently available for India only</p>
           </div>
         </div>
 

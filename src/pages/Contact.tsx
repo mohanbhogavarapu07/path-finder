@@ -103,11 +103,13 @@ const Contact = () => {
               </svg>
             </div>
             <h2 className="text-xl font-semibold text-gray-900 mb-2 tracking-tight">Our Office</h2>
-            <address className="text-gray-600 not-italic">
-              Drehill Private Limited <br/>
-              Chhatrapati Sambhaji Nagar <br/>
+
+            <address className="text-gray-600 not-italic mb-5">
+              Drehill Private Limited, <br/>
+              Chhatrapati Sambhajinagar, <br/>
               Maharashtra , India 431001
             </address>
+            <a href="mailto:info@factorbeam.com?subject=General%20Inquiry" className="font-semibold text-indigo-600 hover:text-indigo-700 transition-colors">info@factorbeam.com</a>
           </div>
         </main>
 

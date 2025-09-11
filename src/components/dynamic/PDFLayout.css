@@ -708,54 +708,55 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+  /* Force desktop layout even on small screens */
   .pdf-header-content {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 1.5rem;
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: right;
+    gap: 2rem;
   }
   
   .pdf-logo-left {
-    align-items: center;
+    align-items: flex-start;
   }
   
   .pdf-header-text {
-    text-align: center;
-    max-width: 100%;
-    align-items: center;
+    text-align: right;
+    max-width: calc(100% - 8rem);
+    align-items: flex-end;
   }
   
   .pdf-main-title,
   .pdf-assessment-title,
   .pdf-assessment-description {
-    text-align: center;
+    text-align: right;
   }
   
   .pdf-date-info {
-    text-align: center;
-    align-self: center;
+    text-align: right;
+    align-self: flex-end;
   }
   
   .pdf-scores-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   }
   
   .pdf-career-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
   
   .pdf-skills-content {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
   }
   
   .pdf-next-steps-list {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
   }
   
   .pdf-footer-contact {
-    flex-direction: column;
-    gap: 0.75rem;
+    flex-direction: row;
+    gap: 2rem;
   }
 }

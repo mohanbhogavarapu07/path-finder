@@ -4,21 +4,14 @@ export class PDFGenerator {
    * Print the element with custom styles
    */
   static printElement(element: HTMLElement): void {
-    // Check if we're on a mobile device with more accurate detection
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
-                     (window.innerWidth <= 768) || 
-                     ('ontouchstart' in window);
-    
-    if (isMobile) {
-      // For mobile devices, use a different approach
-      this.printElementMobile(element);
-      return;
-    }
+    // Unified flow: always use the same print layout for all devices
 
     // Create a new window for printing (desktop)
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
       console.error('Failed to open print window');
+      // Fallback to mobile helper (uses same layout styles)
+      this.printElementMobile(element);
       return;
     }
 

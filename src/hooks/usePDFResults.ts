@@ -22,7 +22,7 @@ export const usePDFResults = (options: UsePDFResultsOptions = {}) => {
     setIsPrinting(true);
 
     try {
-      // Open the print immediately without instructional toast for a direct experience
+      // Single unified print flow (desktop layout) for all devices
       PDFGenerator.printElement(pdfContainerRef.current);
       
       options.onSuccess?.();
@@ -44,29 +44,27 @@ export const usePDFResults = (options: UsePDFResultsOptions = {}) => {
     setIsSavingPDF(true);
 
     try {
-      // On mobile: generate and download a real PDF, on desktop: open print dialog
-      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
-                       (window.innerWidth <= 768) || 
-                       ('ontouchstart' in window) ||
-                       (navigator.maxTouchPoints > 0);
-      if (isMobile) {
-        PDFGenerator.downloadPDF(pdfContainerRef.current!, `${options.assessmentTitle || 'assessment'}-results.pdf`).then(() => {
-          options.onSuccess?.();
-          setIsSavingPDF(false);
-        }).catch((error) => {
-          console.error('Error generating PDF:', error);
-          // Fallback to print dialog on mobile if PDF generation fails
-          console.log('Falling back to print dialog...');
-          PDFGenerator.printElement(pdfContainerRef.current!);
-          options.onSuccess?.();
-          setIsSavingPDF(false);
-        });
-        return;
+      // Unify behavior: always trigger the desktop print layout.
+      // If the popup is blocked or printing fails, fall back to downloadable PDF.
+      try {
+        PDFGenerator.printElement(pdfContainerRef.current!);
+        options.onSuccess?.();
+        setIsSavingPDF(false);
+      } catch (err) {
+        console.warn('Print failed, falling back to downloadable PDF...', err);
+        PDFGenerator
+          .downloadPDF(pdfContainerRef.current!, `${options.assessmentTitle || 'assessment'}-results.pdf`)
+          .then(() => {
+            options.onSuccess?.();
+            setIsSavingPDF(false);
+          })
+          .catch((error) => {
+            console.error('Error generating PDF:', error);
+            toast.error('Failed to generate PDF');
+            options.onError?.(error as Error);
+            setIsSavingPDF(false);
+          });
       }
-      // Desktop
-      PDFGenerator.printElement(pdfContainerRef.current!);
-      options.onSuccess?.();
-      setIsSavingPDF(false);
       
     } catch (error) {
       console.error('Error saving as PDF:', error);

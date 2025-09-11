@@ -1643,6 +1643,8 @@ export class PDFGenerator {
 
      // Clone to control layout size for rendering
      const cloned = element.cloneNode(true) as HTMLElement;
+     // Add a marker class so we can force desktop styles on the clone only
+     cloned.classList.add('pdf-force-desktop');
      
      // Ensure the cloned element has proper styling
      cloned.style.cssText = `
@@ -1670,6 +1672,27 @@ export class PDFGenerator {
        overflow: visible !important;
        z-index: -1 !important;
      `;
+
+     // Inject scoped desktop-forcing CSS so mobile viewports don't change layout
+     const desktopStyle = document.createElement('style');
+     desktopStyle.textContent = `
+       .pdf-force-desktop.pdf-layout-container,
+       .pdf-force-desktop .pdf-layout-container { width: 800px !important; max-width: 800px !important; margin: 0 auto !important; }
+       .pdf-force-desktop .pdf-header-content { flex-direction: row !important; align-items: flex-start !important; text-align: right !important; }
+       .pdf-force-desktop .pdf-logo-left { align-items: flex-start !important; }
+       .pdf-force-desktop .pdf-header-text { text-align: right !important; max-width: calc(100% - 8rem) !important; align-items: flex-end !important; }
+       .pdf-force-desktop .pdf-main-title,
+       .pdf-force-desktop .pdf-assessment-title,
+       .pdf-force-desktop .pdf-assessment-description,
+       .pdf-force-desktop .pdf-date-info { text-align: right !important; }
+       .pdf-force-desktop .pdf-scores-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important; }
+       .pdf-force-desktop .pdf-career-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important; }
+       .pdf-force-desktop .pdf-skills-content { grid-template-columns: 1fr 1fr !important; }
+       .pdf-force-desktop .pdf-next-steps-list { grid-template-columns: 1fr 1fr !important; }
+       .pdf-force-desktop .pdf-footer-contact { flex-direction: row !important; }
+     `;
+
+     tempWrapper.appendChild(desktopStyle);
      tempWrapper.appendChild(cloned);
      document.body.appendChild(tempWrapper);
 
@@ -1691,7 +1714,7 @@ export class PDFGenerator {
        windowHeight: cloned.scrollHeight,
        onclone: (clonedDoc) => {
          // Ensure all styles are properly applied in the cloned document
-         const clonedElement = clonedDoc.querySelector('[data-pdf-content]') || clonedDoc.body;
+         const clonedElement = (clonedDoc.querySelector('[data-pdf-content]') as HTMLElement) || (clonedDoc.body as unknown as HTMLElement);
          if (clonedElement) {
            clonedElement.style.cssText = `
              width: 800px !important;

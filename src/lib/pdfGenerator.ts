@@ -1689,8 +1689,27 @@ export class PDFGenerator {
      tempWrapper.appendChild(cloned);
      document.body.appendChild(tempWrapper);
 
-     // Wait for fonts and images to load
-     await new Promise(resolve => setTimeout(resolve, 1000));
+     // Wait for fonts and images to load for reliable rendering
+     try {
+       // Wait for fonts if supported
+       const anyDoc: any = document;
+       if (anyDoc && anyDoc.fonts && typeof anyDoc.fonts.ready?.then === 'function') {
+         await anyDoc.fonts.ready;
+       }
+
+       // Ensure all images inside the clone are loaded
+       const images: HTMLImageElement[] = Array.from(cloned.querySelectorAll('img')) as HTMLImageElement[];
+       await Promise.all(images.map(img => new Promise<void>((resolve) => {
+         // Force CORS-friendly loading when possible
+         try { img.crossOrigin = img.crossOrigin || 'anonymous'; } catch {}
+         if (img.complete && img.naturalWidth > 0) return resolve();
+         img.onload = () => resolve();
+         img.onerror = () => resolve(); // continue even if an image fails
+       })));
+     } catch {}
+
+     // Small extra delay to let layout settle
+     await new Promise(resolve => setTimeout(resolve, 300));
 
      // Generate canvas with better options for mobile
      const canvas = await html2canvas(cloned, {

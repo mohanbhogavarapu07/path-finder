@@ -22,7 +22,7 @@ export const usePDFResults = (options: UsePDFResultsOptions = {}) => {
     setIsPrinting(true);
 
     try {
-      // Single unified print flow (desktop layout) for all devices
+      // Keep explicit print action as unified print flow
       PDFGenerator.printElement(pdfContainerRef.current);
       
       options.onSuccess?.();
@@ -44,14 +44,13 @@ export const usePDFResults = (options: UsePDFResultsOptions = {}) => {
     setIsSavingPDF(true);
 
     try {
-      // Unify behavior: always trigger the desktop print layout.
-      // If the popup is blocked or printing fails, fall back to downloadable PDF.
-      try {
-        PDFGenerator.printElement(pdfContainerRef.current!);
-        options.onSuccess?.();
-        setIsSavingPDF(false);
-      } catch (err) {
-        console.warn('Print failed, falling back to downloadable PDF...', err);
+      // Detect mobile and directly download a PDF (avoid system print UI)
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                       (window.innerWidth <= 768) || 
+                       ('ontouchstart' in window) ||
+                       (navigator.maxTouchPoints > 0);
+
+      if (isMobile) {
         PDFGenerator
           .downloadPDF(pdfContainerRef.current!, `${options.assessmentTitle || 'assessment'}-results.pdf`)
           .then(() => {
@@ -64,7 +63,13 @@ export const usePDFResults = (options: UsePDFResultsOptions = {}) => {
             options.onError?.(error as Error);
             setIsSavingPDF(false);
           });
+        return;
       }
+
+      // Desktop: open print dialog (user can save as PDF there)
+      PDFGenerator.printElement(pdfContainerRef.current!);
+      options.onSuccess?.();
+      setIsSavingPDF(false);
       
     } catch (error) {
       console.error('Error saving as PDF:', error);

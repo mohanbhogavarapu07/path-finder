@@ -1,109 +1,24 @@
-// Helper: copy current document CSS into new windows
-function getHeadStylesHTML(): string {
-  try {
-    const nodes = Array.from(document.querySelectorAll('head link[rel="stylesheet"], head style')) as Array<HTMLLinkElement | HTMLStyleElement>;
-    const html = nodes.map((node) => {
-      if (node.tagName.toLowerCase() === 'link') {
-        const link = node as HTMLLinkElement;
-        const href = link.href ? new URL(link.href, window.location.origin).toString() : '';
-        return `<link rel="stylesheet" href="${href}"${link.media ? ` media="${link.media}"` : ''}>`;
-      }
-      // inline style
-      return `<style>${(node as HTMLStyleElement).innerHTML}</style>`;
-    }).join('\n');
-    return html;
-  } catch {
-    return '';
-  }
-}
-
-export const PDF_LAYOUT_CSS = `
-/* PDF Layout Styles - Professional and Realistic Design */
-.pdf-layout-container { width: 100%; max-width: 800px; margin: 0 auto; background: white; color: #1e293b; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; font-size: 14px; padding: 0; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; align-items: center; }
-.pdf-header-content { display: flex; align-items: flex-start; justify-content: space-between; width: 100%; max-width: 100%; gap: 2rem; padding: 0.25rem 0; }
-.pdf-logo-left { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; width: auto; min-width: 120px; }
-.pdf-header-text { flex: 1; text-align: right; max-width: calc(100% - 8rem); padding-left: 0; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; }
-.pdf-date-info { text-align: right; margin-top: 0.2rem; align-self: flex-end; }
-.pdf-date { font-size: 0.85rem; color: #64748b; margin: 0; font-weight: 500; text-align: right; font-style: italic; }
-.pdf-title-section { margin-bottom: 0.75rem; padding: 0.5rem 1rem; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border: 2px solid #e2e8f0; border-radius: 12px; position: relative; overflow: hidden; min-height: 80px; display: flex; align-items: center; }
-.pdf-title-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4); }
-.pdf-main-title { font-size: 1.6rem; font-weight: 800; color: #1e293b; margin: 0 0 0.15rem 0; background: linear-gradient(135deg, #1e293b, #475569); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-align: right; }
-.pdf-assessment-title { font-size: 1.1rem; color: #64748b; font-weight: 600; margin: 0 0 0.2rem 0; text-align: right; }
-.pdf-assessment-description { font-size: 0.9rem; color: #64748b; margin: 0 0 0.15rem 0; line-height: 1.2; text-align: right; max-width: 400px; }
-.pdf-recommendation { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 3px solid #1e40af; border-radius: 20px; padding: 2rem; margin-bottom: 2rem; text-align: center; position: relative; overflow: hidden; box-shadow: 0 8px 32px rgba(30, 64, 175, 0.1); page-break-inside: avoid; }
-.pdf-recommendation::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, #1e40af, #3b82f6, #60a5fa); }
-.pdf-recommendation.green { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-color: #16a34a; box-shadow: 0 8px 32px rgba(22, 163, 74, 0.1); }
-.pdf-recommendation.orange { background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%); border-color: #ea580c; box-shadow: 0 8px 32px rgba(234, 88, 12, 0.1); }
-.pdf-recommendation.red { background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%); border-color: #dc2626; box-shadow: 0 8px 32px rgba(220, 38, 38, 0.1); }
-.pdf-recommendation-content { display: flex; align-items: center; justify-content: center; gap: 2rem; margin-bottom: 2rem; position: relative; z-index: 1; }
-.pdf-recommendation-icon { background: rgba(30, 64, 175, 0.1); border-radius: 50%; padding: 1.2rem; display: flex; align-items: center; justify-content: center; border: 2px solid rgba(30, 64, 175, 0.2); }
-.pdf-recommendation-text { flex: 1; text-align: left; }
-.pdf-recommendation-title { font-size: 1.8rem; font-weight: 800; color: #1e293b; margin: 0 0 0.75rem 0; line-height: 1.3; }
-.pdf-recommendation-description { font-size: 1.1rem; color: #64748b; margin: 0; line-height: 1.5; }
-.pdf-recommendation-score { display: flex; flex-direction: column; align-items: center; text-align: center; background: rgba(255, 255, 255, 0.8); padding: 1.5rem; border-radius: 16px; border: 2px solid rgba(30, 64, 175, 0.1); }
-.pdf-score-value { font-size: 3rem; font-weight: 900; color: #1e40af; margin-bottom: 0.5rem; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
-.pdf-score-label { font-size: 0.9rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-.pdf-recommendation-badge { text-align: center; margin-top: 1rem; }
-.pdf-badge { background: linear-gradient(135deg, #1e40af, #3b82f6); color: white; border: none; padding: 0.5rem 1.5rem; border-radius: 25px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3); }
-.pdf-scores-section { margin-bottom: 2rem; page-break-inside: avoid; }
-.pdf-section-title { font-size: 1.8rem; font-weight: 800; color: #1e293b; margin: 0 0 2rem 0; text-align: center; border-bottom: 3px solid #e2e8f0; padding-bottom: 1rem; position: relative; }
-.pdf-section-title::after { content: ''; position: absolute; bottom: -3px; left: 50%; transform: translateX(-50%); width: 100px; height: 3px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); border-radius: 2px; }
-.pdf-scores-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
-.pdf-score-card { background: white; border: 2px solid #e2e8f0; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); transition: all 0.3s ease; position: relative; overflow: hidden; }
-.pdf-score-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); }
-.pdf-score-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; color: #64748b; }
-.pdf-score-header h4 { font-size: 1.3rem; font-weight: 700; color: #1e293b; margin: 0; }
-.pdf-score-content { text-align: center; }
-.pdf-score-value { font-size: 3.5rem; font-weight: 900; color: #1e40af; margin-bottom: 1rem; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
-.pdf-score-progress { background: #f1f5f9; border-radius: 10px; height: 8px; margin: 1rem 0; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); }
-.pdf-progress-fill { background: linear-gradient(90deg, #1e40af, #3b82f6, #60a5fa); height: 100%; border-radius: 10px; transition: width 0.3s ease; box-shadow: 0 2px 4px rgba(30, 64, 175, 0.3); }
-.pdf-score-badge { background: linear-gradient(135deg, #1e40af, #3b82f6); color: white; border: none; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700; margin-top: 1rem; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(30, 64, 175, 0.3); }
-.pdf-score-badge.excellent { background: linear-gradient(135deg, #16a34a, #22c55e); box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3); }
-.pdf-score-badge.good { background: linear-gradient(135deg, #ea580c, #f97316); box-shadow: 0 2px 8px rgba(234, 88, 12, 0.3); }
-.pdf-score-badge.needs-work { background: linear-gradient(135deg, #dc2626, #ef4444); box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3); }
-.pdf-career-section { margin-bottom: 2rem; }
-.pdf-career-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-.pdf-career-card { background: white; border: 2px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06); position: relative; overflow: hidden; }
-.pdf-career-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #10b981, #34d399); }
-.pdf-career-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin: 0 0 0.5rem 0; }
-.pdf-career-description { font-size: 0.9rem; color: #64748b; margin: 0 0 1rem 0; line-height: 1.5; }
-.pdf-career-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #f1f5f9; }
-.pdf-career-badge { background: linear-gradient(135deg, #10b981, #34d399); color: white; border: none; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-.pdf-career-match { font-size: 0.8rem; color: #64748b; font-weight: 600; }
-.pdf-skills-section { margin-bottom: 1.5rem; page-break-inside: avoid; }
-.pdf-skills-content { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-.pdf-skills-subtitle { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin: 0 0 1rem 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; }
-.pdf-skills-list { list-style: none; padding: 0; margin: 0; }
-.pdf-skill-item { padding: 0.75rem 0; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; font-weight: 500; position: relative; padding-left: 1.5rem; }
-.pdf-skill-item::before { content: '•'; position: absolute; left: 0; color: #3b82f6; font-weight: bold; font-size: 1.2rem; }
-.pdf-skill-item:last-child { border-bottom: none; }
-.pdf-skill-item.strength { color: #16a34a; }
-.pdf-skill-item.strength::before { color: #16a34a; }
-.pdf-skill-item.gap { color: #ea580c; }
-.pdf-skill-item.gap::before { color: #ea580c; }
-.pdf-next-steps-section { margin-bottom: 1rem; page-break-inside: avoid; }
-.pdf-next-steps-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-.pdf-next-step-item { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.75rem; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border: 2px solid #e2e8f0; border-radius: 8px; position: relative; overflow: hidden; page-break-inside: avoid; }
-.pdf-next-step-item::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(180deg, #3b82f6, #8b5cf6); }
-.pdf-step-number { background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 800; flex-shrink: 0; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3); }
-.pdf-step-text { font-size: 0.8rem; color: #1e293b; line-height: 1.3; font-weight: 500; }
-@media print { .pdf-layout-container { width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 !important; font-size: 10pt !important; box-shadow: none !important; } .pdf-title-section, .pdf-recommendation, .pdf-scores-section, .pdf-career-section, .pdf-skills-section, .pdf-next-steps-section { page-break-inside: avoid !important; } .pdf-scores-grid, .pdf-career-grid, .pdf-skills-content, .pdf-next-steps-list { page-break-inside: avoid !important; } * { -webkit-print-color-adjust: exact !important; color-adjust: exact !important; print-color-adjust: exact !important; } }
-`;
-
 export class PDFGenerator {
 
   /**
    * Print the element with custom styles
    */
   static printElement(element: HTMLElement): void {
-    // Unified flow: always use the same print layout for all devices
+    // Check if we're on a mobile device with more accurate detection
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                     (window.innerWidth <= 768) || 
+                     ('ontouchstart' in window);
+    
+    if (isMobile) {
+      // For mobile devices, use a different approach
+      this.printElementMobile(element);
+      return;
+    }
 
     // Create a new window for printing (desktop)
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
       console.error('Failed to open print window');
-      // Fallback to mobile helper (uses same layout styles)
-      this.printElementMobile(element);
       return;
     }
 
@@ -113,7 +28,6 @@ export class PDFGenerator {
       <html>
         <head>
           <title>Assessment Results - Print</title>
-          ${getHeadStylesHTML()}
           <style>
             @page {
               margin: 0.5in;
@@ -1729,8 +1643,6 @@ export class PDFGenerator {
 
      // Clone to control layout size for rendering
      const cloned = element.cloneNode(true) as HTMLElement;
-     // Add a marker class so we can force desktop styles on the clone only
-     cloned.classList.add('pdf-force-desktop');
      
      // Ensure the cloned element has proper styling
      cloned.style.cssText = `
@@ -1758,52 +1670,11 @@ export class PDFGenerator {
        overflow: visible !important;
        z-index: -1 !important;
      `;
-
-     // Inject scoped desktop-forcing CSS so mobile viewports don't change layout
-     const desktopStyle = document.createElement('style');
-     desktopStyle.textContent = `
-       ${PDF_LAYOUT_CSS}
-       .pdf-force-desktop.pdf-layout-container,
-       .pdf-force-desktop .pdf-layout-container { width: 800px !important; max-width: 800px !important; margin: 0 auto !important; }
-       .pdf-force-desktop .pdf-header-content { flex-direction: row !important; align-items: flex-start !important; text-align: right !important; }
-       .pdf-force-desktop .pdf-logo-left { align-items: flex-start !important; }
-       .pdf-force-desktop .pdf-header-text { text-align: right !important; max-width: calc(100% - 8rem) !important; align-items: flex-end !important; }
-       .pdf-force-desktop .pdf-main-title,
-       .pdf-force-desktop .pdf-assessment-title,
-       .pdf-force-desktop .pdf-assessment-description,
-       .pdf-force-desktop .pdf-date-info { text-align: right !important; }
-       .pdf-force-desktop .pdf-scores-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important; }
-       .pdf-force-desktop .pdf-career-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important; }
-       .pdf-force-desktop .pdf-skills-content { grid-template-columns: 1fr 1fr !important; }
-       .pdf-force-desktop .pdf-next-steps-list { grid-template-columns: 1fr 1fr !important; }
-       .pdf-force-desktop .pdf-footer-contact { flex-direction: row !important; }
-     `;
-
-     tempWrapper.appendChild(desktopStyle);
      tempWrapper.appendChild(cloned);
      document.body.appendChild(tempWrapper);
 
-     // Wait for fonts and images to load for reliable rendering
-     try {
-       // Wait for fonts if supported
-       const anyDoc: any = document;
-       if (anyDoc && anyDoc.fonts && typeof anyDoc.fonts.ready?.then === 'function') {
-         await anyDoc.fonts.ready;
-       }
-
-       // Ensure all images inside the clone are loaded
-       const images: HTMLImageElement[] = Array.from(cloned.querySelectorAll('img')) as HTMLImageElement[];
-       await Promise.all(images.map(img => new Promise<void>((resolve) => {
-         // Force CORS-friendly loading when possible
-         try { img.crossOrigin = img.crossOrigin || 'anonymous'; } catch {}
-         if (img.complete && img.naturalWidth > 0) return resolve();
-         img.onload = () => resolve();
-         img.onerror = () => resolve(); // continue even if an image fails
-       })));
-     } catch {}
-
-     // Small extra delay to let layout settle
-     await new Promise(resolve => setTimeout(resolve, 300));
+     // Wait for fonts and images to load
+     await new Promise(resolve => setTimeout(resolve, 1000));
 
      // Generate canvas with better options for mobile
      const canvas = await html2canvas(cloned, {
@@ -1820,7 +1691,7 @@ export class PDFGenerator {
        windowHeight: cloned.scrollHeight,
        onclone: (clonedDoc) => {
          // Ensure all styles are properly applied in the cloned document
-         const clonedElement = (clonedDoc.querySelector('[data-pdf-content]') as HTMLElement) || (clonedDoc.body as unknown as HTMLElement);
+         const clonedElement = clonedDoc.querySelector('[data-pdf-content]') || clonedDoc.body;
          if (clonedElement) {
            clonedElement.style.cssText = `
              width: 800px !important;

@@ -62,7 +62,7 @@ interface Assessment {
   id: string;
   title: string;
   description: string;
-  category: 'Emerging Technologies' | 'Engineering & Manufacturing';
+  category: 'Emerging Technologies' | 'Engineering & Manufacturing' | 'Cognitive & Learning Intelligence';
   duration: string;
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
   isActive: boolean;
@@ -216,7 +216,8 @@ const AdminAssessmentEditor = () => {
 
     const categories = [
     'Emerging Technologies',
-    'Engineering & Manufacturing'
+    'Engineering & Manufacturing',
+    'Cognitive & Learning Intelligence'
   ];
   const difficulties = ['Beginner', 'Intermediate', 'Advanced'];
 
@@ -597,7 +598,7 @@ const AdminAssessmentEditor = () => {
     cleaned.id = cleaned.id || `assessment-${Date.now()}`;
     cleaned.title = cleaned.title || 'Untitled Assessment';
     cleaned.description = cleaned.description || 'No description provided';
-    cleaned.category = cleaned.category || 'Technology';
+    cleaned.category = cleaned.category || 'Emerging Technologies';
     cleaned.duration = cleaned.duration || '10-15 mins';
     cleaned.difficulty = cleaned.difficulty || 'Intermediate';
     cleaned.isActive = cleaned.isActive !== undefined ? cleaned.isActive : true;

@@ -799,6 +799,7 @@ const Admin = () => {
                   <option value="all">All Categories</option>
                   <option value="Emerging Technologies">Emerging Technologies</option>
                   <option value="Engineering & Manufacturing">Engineering & Manufacturing</option>
+                  <option value="Cognitive & Learning Intelligence">Cognitive & Learning Intelligence</option>
                 </select>
               )}
             </div>

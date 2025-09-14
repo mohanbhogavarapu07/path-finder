@@ -18,7 +18,7 @@ const Footer = () => {
   const categories = useMemo(() => {
     if (!assessments || assessments.length === 0) {
       // Fallback categories if no data - only show allowed categories
-      const fallbackCategories = ['Emerging Technologies', 'Engineering & Manufacturing'];
+      const fallbackCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence'];
       return [
         { name: "All Assessments", href: "/" },
         ...fallbackCategories.map(category => ({
@@ -28,8 +28,8 @@ const Footer = () => {
       ];
     }
 
-    // Only allow these two categories - same as assessments page
-    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing'];
+    // Only allow these three categories - same as assessments page
+    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence'];
     
     // Get unique categories from assessments, but only include allowed ones
     const categoryMap = new Map();

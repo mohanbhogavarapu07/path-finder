@@ -140,8 +140,8 @@ const Popular = () => {
       return fallbackPopularAssessments;
     }
     
-    // Only allow these two categories
-    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing'];
+    // Only allow these three categories
+    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence'];
     
     // Filter assessments to only include allowed categories
     const filteredAssessments = assessments.filter(assessment => 

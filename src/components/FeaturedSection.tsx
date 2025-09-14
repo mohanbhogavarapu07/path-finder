@@ -144,8 +144,8 @@ const FeaturedSection = () => {
     // Get unique categories from assessments
     const categoryMap = new Map();
     
-    // Only allow these two categories
-    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing'];
+    // Only allow these three categories
+    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence'];
     
     assessments.forEach(assessment => {
       const category = assessment.category;
@@ -198,7 +198,7 @@ const FeaturedSection = () => {
                 return (
                   <div
                     key={index}
-                    className={`p-6 rounded-lg border-2 ${category.color} hover:shadow-custom-md transition-all duration-300 group cursor-pointer`}
+                    className={`p-6 rounded-lg border-2 ${category.color} hover:shadow-custom-md transition-all duration-300 group cursor-pointer flex flex-col h-full`}
                   >
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
@@ -213,10 +213,10 @@ const FeaturedSection = () => {
                         {category.count}
                       </Badge>
                     </div>
-                    <p className="text-sm text-foreground-soft mb-4 line-clamp-2">
+                    <p className="text-sm text-foreground-soft mb-4 line-clamp-2 flex-grow">
                       {category.description}
                     </p>
-                    <Link to={`/category/${categoryToSlug(category.name)}`}>
+                    <Link to={`/category/${categoryToSlug(category.name)}`} className="mt-auto">
                       <Button
                         variant="outline"
                         size="sm"

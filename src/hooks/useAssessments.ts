@@ -73,8 +73,8 @@ export const useAssessmentCategories = () => {
   
   if (!assessments) return { categories: [], isLoading: true };
   
-  // Only allow these two categories
-  const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing'];
+  // Only allow these three categories
+  const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence'];
   
   // Filter categories to only include allowed ones
   const allCategories = Array.from(new Set(assessments.map(a => a.category)));

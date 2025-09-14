@@ -15,7 +15,6 @@ import {
   XCircle,
   Users,
   BookOpen,
-  ExternalLink,
   Star,
   Award,
   Download,
@@ -29,12 +28,13 @@ import {
   ArrowRight,
   Info,
   HelpCircle,
-  PlayCircle
+  PlayCircle,
+  Home,
 } from 'lucide-react';
 import { DynamicAssessment, AssessmentResults, API_BASE_URL } from '@/lib/api';
+import { categoryToSlug } from '@/lib/utils';
 
 import FeedbackDialog from '@/components/FeedbackDialog';
-import SocialShareDialog from '@/components/SocialShareDialog';
 
 import { usePDFResults } from '@/hooks/usePDFResults';
 import PDFLayout from './PDFLayout';
@@ -312,11 +312,11 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
     }
   };
   
-  // Print functionality
-  const { pdfContainerRef, printResults, saveAsPDF, isPrinting, isSavingPDF } = usePDFResults({
+  // PDF functionality
+  const { pdfContainerRef, saveAsPDF, isSavingPDF } = usePDFResults({
     assessmentTitle: assessment.title,
-    onSuccess: () => console.log('Print operation completed successfully'),
-    onError: (error) => console.error('Print operation failed:', error)
+    onSuccess: () => console.log('PDF operation completed successfully'),
+    onError: (error) => console.error('PDF operation failed:', error)
   });
 
   if (isLoading) {
@@ -632,6 +632,20 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                         <span>Quick Actions</span>
                       </CardTitle>
                       <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                        {/* Retake assessment */}
+                        <Button
+                          variant="outline"
+                          className="flex items-center justify-center space-x-2 px-6 py-3 w-full sm:w-auto rounded-md font-medium shadow-sm hover:shadow-md transition-all"
+                          onClick={() => {
+                            const categorySlug = categoryToSlug(assessment.category as unknown as string);
+                            navigate(`/category/${categorySlug}/${assessment.id}?retake=1`);
+                          }}
+                        >
+                          <PlayCircle className="w-4 h-4" />
+                          <span>Retake assessment</span>
+                        </Button>
+
+                        {/* Download pdf */}
                         <Button 
                           variant="outline" 
                           className="flex items-center justify-center space-x-2 px-6 py-3 w-full sm:w-auto rounded-md font-medium shadow-sm hover:shadow-md transition-all" 
@@ -639,9 +653,19 @@ const DynamicResultsSection: React.FC<DynamicResultsSectionProps> = ({
                           disabled={isSavingPDF}
                         >
                           <Download className="w-4 h-4" />
-                          <span>{isSavingPDF ? 'Generating...' : 'Download PDF Report'}</span>
+                          <span>{isSavingPDF ? 'Generating...' : 'Download pdf'}</span>
                         </Button>
-                        {/* Share button removed on mobile */}
+
+                        {/* Home page */}
+                        <Button 
+                          variant="outline" 
+                          className="flex items-center justify-center space-x-2 px-6 py-3 w-full sm:w-auto rounded-md font-medium shadow-sm hover:shadow-md transition-all" 
+                          onClick={() => navigate('/')}
+                        >
+                          <Home className="w-4 h-4" />
+                          <span>Home page</span>
+                        </Button>
+
                       </div>
                     </div>
                   </CardHeader>

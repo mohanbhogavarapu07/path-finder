@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AdSenseComponent from "@/components/AdSenseComponent";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
@@ -34,6 +35,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <AdSenseComponent /> {/* 🔥 This will auto-hide on homepage */}
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
@@ -50,8 +52,7 @@ const App = () => (
             <Route path="/terms" element={<Terms />} />
             <Route path="/data-protection" element={<DataProtection />} />
             
-            {/* Dynamic Assessment Routes (legacy and new) */}
-            <Route path="/assessments/:assessmentId/*" element={<DynamicAssessment />} />
+            {/* Dynamic Assessment Route (new) */}
             <Route path="/category/:categorySlug/:assessmentId/*" element={<DynamicAssessment />} />
             
             {/* Admin Routes */}

@@ -59,7 +59,8 @@ export type AssessmentCategory =
   | 'Customer Success & Support'
   | 'Education & Training'
   | 'Green & Sustainability'
-  | 'Legal, Compliance & Governance';
+  | 'Legal, Compliance & Governance'
+  | 'Cognitive & Learning Intelligence';
 
 // Types for the dynamic assessment system
 export interface DynamicAssessment {

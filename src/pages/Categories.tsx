@@ -27,6 +27,7 @@ const getCategoryDescription = (category: string) => {
     'Education & Training': 'Learning, training, and educational assessments',
     'Green & Sustainability': 'Environmental, sustainability, and green technologies',
     'Legal, Compliance & Governance': 'Legal, compliance, and governance assessments',
+    'Cognitive & Learning Intelligence': 'Cognitive abilities, learning styles, and intelligence assessment',
   };
   return descriptions[category] || 'Professional assessments and career guidance';
 };
@@ -90,6 +91,7 @@ const getCategoryIcon = (category: string) => {
     'Education & Training': Brain,
     'Green & Sustainability': Globe,
     'Legal, Compliance & Governance': Cog,
+    'Cognitive & Learning Intelligence': Brain,
   };
   return icons[category] || Monitor;
 };
@@ -112,6 +114,14 @@ const fallbackCategories = [
     textColor: "text-blue-600",
     icon: Wrench,
   },
+  {
+    name: "Cognitive & Learning Intelligence",
+    description: "Cognitive abilities, learning styles, and intelligence assessment",
+    count: 25,
+    color: "bg-indigo-50 border-indigo-200",
+    textColor: "text-indigo-600",
+    icon: Brain,
+  },
 ];
 
 const Categories = () => {
@@ -128,8 +138,8 @@ const Categories = () => {
       return fallbackCategories;
     }
 
-    // Only allow these two categories
-    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing'];
+    // Only allow these three categories
+    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence'];
     
     // Get unique categories from assessments, but only include allowed ones
     const categoryMap = new Map();
@@ -271,9 +281,8 @@ const Categories = () => {
                     return (
                       <div
                         key={index}
-                        className={`p-4 sm:p-6 rounded-lg border-2 ${category.color} hover:shadow-custom-md transition-all duration-300 group cursor-pointer relative`}
+                        className={`p-4 sm:p-6 rounded-lg border-2 ${category.color} hover:shadow-custom-md transition-all duration-300 group cursor-pointer flex flex-col h-full`}
                       >
-                        
                         <div className="flex items-center gap-3 mb-4">
                           <div className={`p-2 sm:p-3 rounded-lg ${category.color.replace('border-', 'bg-').replace('/200', '/100')}`}>
                             <IconComponent className={`w-5 h-5 sm:w-6 sm:h-6 ${category.textColor}`} />
@@ -288,11 +297,11 @@ const Categories = () => {
                           </div>
                         </div>
                         
-                        <p className="text-sm text-foreground-soft mb-4 line-clamp-2">
+                        <p className="text-sm text-foreground-soft mb-4 line-clamp-2 flex-grow">
                           {category.description}
                         </p>
                         
-                        <Link to={`/category/${categoryToSlug(category.name)}`}>
+                        <Link to={`/category/${categoryToSlug(category.name)}`} className="mt-auto">
                           <Button
                             variant="outline"
                             size="sm"

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { BookOpen, Brain, Code, Target, TrendingUp, CheckCircle, ArrowLeft } from 'lucide-react';
@@ -17,6 +17,7 @@ import { categoryToSlug } from '@/lib/utils';
 const DynamicAssessment = () => {
   const { assessmentId, categorySlug } = useParams<{ assessmentId: string; categorySlug?: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   
   const [currentSection, setCurrentSection] = useState('intro');
   const [showStartDialog, setShowStartDialog] = useState(false);
@@ -36,6 +37,19 @@ const DynamicAssessment = () => {
       setShowStartDialog(true);
     }
   }, [assessmentDataResponse, currentSection]);
+
+  // Detect retake flag to reset assessment flow cleanly
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('retake') === '1') {
+      setCurrentSection('intro');
+      setAssessmentData({ psychometric: {}, technical: {}, wiscar: {}, completed: false });
+      setShowStartDialog(true);
+      // Remove the retake flag from URL to avoid loops
+      const cleanUrl = location.pathname;
+      window.history.replaceState({}, '', cleanUrl);
+    }
+  }, [location.search]);
 
   // Get user data from localStorage
   const getUserData = () => {

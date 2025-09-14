@@ -19,7 +19,8 @@ export function slugToCategory(slug: string): string {
   // Map of known slugs to category names
   const slugMap: Record<string, string> = {
     'emerging-technologies': 'Emerging Technologies',
-    'engineering-manufacturing': 'Engineering & Manufacturing'
+    'engineering-manufacturing': 'Engineering & Manufacturing',
+    'cognitive-learning-intelligence': 'Cognitive & Learning Intelligence'
   };
   
   return slugMap[slug] || slug

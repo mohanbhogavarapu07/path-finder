@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import AdSenseComponent from '@/components/AdSenseComponent';
 import { getBlogPosts, getBlogCategories, searchBlogPosts, getBlogPostsByCategory, BlogPost, BlogPostList } from '@/lib/api';
 import { format } from 'date-fns';
 
@@ -120,6 +121,7 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-blue-50">
       <Navigation />
+      <AdSenseComponent />
       
       {/* Main Content */}
       <section className="py-12">

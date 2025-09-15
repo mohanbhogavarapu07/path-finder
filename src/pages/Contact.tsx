@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import AdSenseComponent from '@/components/AdSenseComponent';
 
 const Contact = () => {
   return (
@@ -14,6 +15,7 @@ const Contact = () => {
       `
     }}>
       <Navigation />
+      <AdSenseComponent />
       
       {/* Main Container */}
       <div className="container mx-auto px-4 py-12 md:py-20">

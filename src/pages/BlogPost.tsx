@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import AdSenseComponent from '@/components/AdSenseComponent';
 import { getBlogPost, type BlogPost } from '@/lib/api';
 import { format } from 'date-fns';
 
@@ -153,6 +154,7 @@ const BlogPost = () => {
   return (
     <div className="min-h-screen bg-blue-50">
       <Navigation />
+      <AdSenseComponent />
       
       {/* Article Header */}
       <section className="py-16 bg-white border-b border-gray-100">

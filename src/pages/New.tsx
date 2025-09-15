@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import AssessmentCard from "@/components/AssessmentCard";
+import AdSenseComponent from "@/components/AdSenseComponent";
 
 // Fallback new assessments for when API data is not available
 const fallbackNewAssessments = [
@@ -212,6 +213,7 @@ const New = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navigation />
+      <AdSenseComponent />
       
       <main className="flex-1">
         <div className="py-16 px-4">

@@ -7,6 +7,7 @@ import { useAssessments } from "@/hooks/useAssessments";
 import { Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import AdSenseComponent from "@/components/AdSenseComponent";
 import { categoryToSlug } from "@/lib/utils";
 
 // Helper functions for category styling
@@ -210,6 +211,7 @@ const Categories = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navigation />
+      <AdSenseComponent />
       
       <main className="flex-1">
         <div className="py-8 sm:py-12 lg:py-16 px-4">

@@ -4,6 +4,7 @@ import { Brain, Code, Cloud, Smartphone, Shield, BarChart3, Palette, Briefcase, 
 import AssessmentCard from '@/components/AssessmentCard';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import AdSenseComponent from '@/components/AdSenseComponent';
 import { useAssessments, useAssessmentCategories } from '@/hooks/useAssessments';
 import { DynamicAssessment } from '@/lib/api';
 import { useSearchParams, useNavigate, useLocation, useParams } from 'react-router-dom';
@@ -160,6 +161,8 @@ const Assessments = () => {
           </nav>
         </div>
       </div>
+      
+      <AdSenseComponent />
       
       {/* Hero Section */}
       <div className="pt-20 sm:pt-24 lg:pt-32 px-4 sm:px-6 lg:px-8">

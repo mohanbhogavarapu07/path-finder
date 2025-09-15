@@ -35,7 +35,6 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <AdSenseComponent /> {/* 🔥 This will auto-hide on homepage */}
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />

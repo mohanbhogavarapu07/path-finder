@@ -281,7 +281,7 @@ const Categories = () => {
                     return (
                       <div
                         key={index}
-                        className={`p-4 sm:p-6 rounded-lg border-2 ${category.color} hover:shadow-custom-md transition-all duration-300 group cursor-pointer flex flex-col h-full`}
+                 className={`p-4 sm:p-6 rounded-lg border-2 ${category.color} hover:shadow-custom-md transition-all duration-300 group cursor-pointer flex flex-col h-full`}
                       >
                         <div className="flex items-center gap-3 mb-4">
                           <div className={`p-2 sm:p-3 rounded-lg ${category.color.replace('border-', 'bg-').replace('/200', '/100')}`}>

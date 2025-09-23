@@ -7,6 +7,7 @@ import {
   Cloud, BarChart3, Code, Brain, Users, Briefcase, Heart, Cog, Zap
 } from 'lucide-react';
 import { DynamicAssessment } from '@/lib/api';
+import AdSenseComponent from '@/components/AdSenseComponent';
 
 interface DynamicAssessmentIntroProps {
   assessment: DynamicAssessment;
@@ -63,42 +64,59 @@ const DynamicAssessmentIntro: React.FC<DynamicAssessmentIntroProps> = ({
     : fallbackCareers;
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      {/* Hero Section */}
-      <Card className="border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50">
-        <CardContent className="text-center">
-          <div className="flex justify-center mb-4">
-            <CategoryIcon className="h-16 w-16 text-blue-600" />
-          </div>
-          <h1 className="text-3xl font-bold text-foreground mb-4">
-            Discover Your {title} Career Potential
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
-            {description}
-          </p>
-          <div className="flex justify-center items-center space-x-6 mb-6">
-            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-              <Clock className="w-4 h-4" />
-              <span>{duration}</span>
-            </div>
-            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-              <Target className="w-4 h-4" />
-              <span>Personalized Results</span>
-            </div>
-            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-              <TrendingUp className="w-4 h-4" />
-              <span>Career Guidance</span>
+    <div className="max-w-7xl mx-auto">
+      <div className="flex gap-6">
+        {/* Left Ad Space */}
+        <div className="hidden lg:block w-64 flex-shrink-0">
+          <div className="sticky top-8">
+            <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
+              <div className="text-sm text-gray-500 mb-2">Advertisement</div>
+              <div className="bg-blue-100 rounded p-4 text-blue-800 h-96 flex flex-col justify-center">
+                <div className="text-lg font-semibold mb-2">AdSense Ad Placeholder</div>
+                <div className="text-sm">300 x 600 Skyscraper</div>
+                <div className="text-xs mt-2">This will show real ads in production</div>
+              </div>
             </div>
           </div>
-          <Button 
-            onClick={onNext} 
-            size="lg" 
-            className="bg-factorbeam-primary hover:bg-factorbeam-primary-alt text-white px-8 py-3"
-          >
-            Start Assessment
-          </Button>
-        </CardContent>
-      </Card>
+        </div>
+
+        {/* Main Content */}
+        <div className="flex-1 max-w-4xl mx-auto space-y-8">
+          {/* Hero Section */}
+          <Card className="border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+            <CardContent className="text-center">
+              <div className="flex justify-center mb-4">
+                <CategoryIcon className="h-16 w-16 text-blue-600" />
+              </div>
+              <h1 className="text-3xl font-bold text-foreground mb-4">
+                Discover Your {title} Career Potential
+              </h1>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
+                {description}
+              </p>
+              <div className="flex justify-center items-center space-x-6 mb-6">
+                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                  <Clock className="w-4 h-4" />
+                  <span>{duration}</span>
+                </div>
+                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                  <Target className="w-4 h-4" />
+                  <span>Personalized Results</span>
+                </div>
+                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                  <TrendingUp className="w-4 h-4" />
+                  <span>Career Guidance</span>
+                </div>
+              </div>
+              <Button 
+                onClick={onNext} 
+                size="lg" 
+                className="bg-factorbeam-primary hover:bg-factorbeam-primary-alt text-white px-8 py-3"
+              >
+                Start Assessment
+              </Button>
+            </CardContent>
+          </Card>
 
       {/* What is {title}? */}
       <Card>
@@ -173,44 +191,60 @@ const DynamicAssessmentIntro: React.FC<DynamicAssessmentIntroProps> = ({
         </Card>
       )}
 
-      {/* Assessment Overview */}
-      <Card className="border-2 border-gray-200">
-        <CardHeader>
-          <CardTitle>What You'll Discover</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-semibold text-foreground mb-3">Assessment Modules:</h4>
-              <ul className="space-y-2">
-                <li className="flex items-center space-x-2">
-                  <Badge variant="outline" className="bg-purple-50 text-purple-700">1</Badge>
-                  <span className="text-sm">Psychological Fit Evaluation</span>
-                </li>
-                <li className="flex items-center space-x-2">
-                  <Badge variant="outline" className="bg-green-50 text-green-700">2</Badge>
-                  <span className="text-sm">Technical Aptitude Testing</span>
-                </li>
-                <li className="flex items-center space-x-2">
-                  <Badge variant="outline" className="bg-orange-50 text-orange-700">3</Badge>
-                  <span className="text-sm">FB6 Index Analysis</span>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-foreground mb-3">Your Results Include:</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                {(assessment.assessmentOverview?.resultsInclude?.length
-                  ? assessment.assessmentOverview.resultsInclude
-                  : ['Personalized fit score (0-100)', 'Detailed trait analysis', 'Technical readiness assessment', 'Career pathway recommendations', 'Next steps and learning resources']
-                ).map((item, idx) => (
-                  <li key={idx}>• {item}</li>
-                ))}
-              </ul>
+          {/* Assessment Overview */}
+          <Card className="border-2 border-gray-200">
+            <CardHeader>
+              <CardTitle>What You'll Discover</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h4 className="font-semibold text-foreground mb-3">Assessment Modules:</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-center space-x-2">
+                      <Badge variant="outline" className="bg-purple-50 text-purple-700">1</Badge>
+                      <span className="text-sm">Psychological Fit Evaluation</span>
+                    </li>
+                    <li className="flex items-center space-x-2">
+                      <Badge variant="outline" className="bg-green-50 text-green-700">2</Badge>
+                      <span className="text-sm">Technical Aptitude Testing</span>
+                    </li>
+                    <li className="flex items-center space-x-2">
+                      <Badge variant="outline" className="bg-orange-50 text-orange-700">3</Badge>
+                      <span className="text-sm">FB6 Index Analysis</span>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-foreground mb-3">Your Results Include:</h4>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    {(assessment.assessmentOverview?.resultsInclude?.length
+                      ? assessment.assessmentOverview.resultsInclude
+                      : ['Personalized fit score (0-100)', 'Detailed trait analysis', 'Technical readiness assessment', 'Career pathway recommendations', 'Next steps and learning resources']
+                    ).map((item, idx) => (
+                      <li key={idx}>• {item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Right Ad Space */}
+        <div className="hidden lg:block w-64 flex-shrink-0">
+          <div className="sticky top-8">
+            <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
+              <div className="text-sm text-gray-500 mb-2">Advertisement</div>
+              <div className="bg-blue-100 rounded p-4 text-blue-800 h-96 flex flex-col justify-center">
+                <div className="text-lg font-semibold mb-2">AdSense Ad Placeholder</div>
+                <div className="text-sm">300 x 600 Skyscraper</div>
+                <div className="text-xs mt-2">This will show real ads in production</div>
+              </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

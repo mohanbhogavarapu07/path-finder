@@ -6,7 +6,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import AdSenseComponent from '@/components/AdSenseComponent';
 
 const About = () => {
   const teamMembers = [
@@ -84,7 +83,6 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <AdSenseComponent />
       
       {/* Hero Section - Mission & Vision */}
       <section className="relative py-20 bg-muted/30 overflow-hidden">

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import AdSenseComponent from '@/components/AdSenseComponent';
 
 const Terms = () => {
   const currentYear = new Date().getFullYear();
@@ -14,7 +13,6 @@ const Terms = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <AdSenseComponent />
       
       <main className="pt-20 pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

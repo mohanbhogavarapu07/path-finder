@@ -14,38 +14,22 @@ const AdSenseComponent = () => {
   const adSlot = import.meta.env.VITE_AD_SLOT || '3003658895';
 
   useEffect(() => {
-    // Do nothing on homepage, localhost, or if no ad client/slot configured
-    if (location.pathname === '/' || !adClient || !adSlot) return;
-    
     // Don't load ads on localhost (Google doesn't allow it)
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
       console.log('AdSense: Skipping ads on localhost');
       return;
     }
 
-    // Avoid adding script multiple times
-    const existingScript = document.querySelector('script[data-ad-client]');
-    if (!existingScript) {
-      const script = document.createElement('script');
-      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
-      script.async = true;
-      script.setAttribute('data-ad-client', adClient);
-      document.head.appendChild(script);
+    // Initialize ads using Google's recommended method
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (err) {
+      console.error('AdsbyGoogle error:', err);
     }
+  }, [location.pathname]);
 
-    // Load the ad slot only once per page load
-    const adElement = document.querySelector('.adsbygoogle');
-    if (adElement && !adElement.hasAttribute('data-adsbygoogle-status')) {
-      try {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      } catch (err) {
-        console.error('AdsbyGoogle error:', err);
-      }
-    }
-  }, [location.pathname, adClient, adSlot]);
-
-  // Hide on homepage, localhost, or if no ad client/slot configured
-  if (location.pathname === '/' || !adClient || !adSlot) return null;
+  // Hide on localhost or if no ad client/slot configured
+  if (!adClient || !adSlot) return null;
   
   // Show placeholder on localhost for development
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
@@ -65,17 +49,10 @@ const AdSenseComponent = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 py-4">
-      <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
-        <div className="text-sm text-gray-500 mb-2">Advertisement</div>
+      <div className="text-center">
         <ins 
           className="adsbygoogle"
-          style={{ 
-            display: 'block',
-            maxWidth: '728px',
-            width: '100%',
-            height: '90px',
-            margin: '0 auto'
-          }}
+          style={{ display: 'block' }}
           data-ad-client={adClient}
           data-ad-slot={adSlot}
           data-ad-format="auto"

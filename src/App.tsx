@@ -21,6 +21,7 @@ import AdminAssessmentEditor from "./pages/AdminAssessmentEditor";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import DataProtection from "./pages/DataProtection";
+import ReleaseNotes from "./pages/ReleaseNotes";
 import NotFound from "./pages/NotFound";
 
 // Import dynamic assessment components
@@ -50,6 +51,7 @@ const App = () => (
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/data-protection" element={<DataProtection />} />
+            <Route path="/release-notes" element={<ReleaseNotes />} />
             
             {/* Dynamic Assessment Route (new) */}
             <Route path="/category/:categorySlug/:assessmentId/*" element={<DynamicAssessment />} />

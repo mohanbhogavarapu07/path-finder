@@ -24,11 +24,8 @@ const Index = () => {
   // Use API data if available, otherwise fallback to sample data
   const assessments = apiAssessments && apiAssessments.length > 0 ? apiAssessments : sampleAssessments;
 
-  // Filter assessments to only include allowed categories
-  const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence', 'Personal and emotional intelligence'];
-  const filteredAssessments = assessments.filter(assessment => 
-    allowedCategories.includes(assessment.category)
-  );
+  // Get all assessments (no category filtering)
+  const filteredAssessments = assessments;
 
   // Sort assessments based on selected criteria
   const sortedAssessments = useMemo(() => {

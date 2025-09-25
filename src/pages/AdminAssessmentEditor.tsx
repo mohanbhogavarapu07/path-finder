@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useAssessmentCategories } from '@/hooks/useAssessments';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -62,7 +63,7 @@ interface Assessment {
   id: string;
   title: string;
   description: string;
-  category: 'Emerging Technologies' | 'Engineering & Manufacturing' | 'Cognitive & Learning Intelligence' | 'Personal and emotional intelligence';
+  category: string;
   duration: string;
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
   isActive: boolean;
@@ -142,7 +143,7 @@ const AdminAssessmentEditor = () => {
     id: `assessment-${Date.now()}`,
     title: 'New Assessment',
     description: 'Assessment description',
-    category: 'Emerging Technologies',
+    category: 'General',
     duration: '10-15 mins',
     difficulty: 'Intermediate',
     isActive: true,
@@ -214,12 +215,8 @@ const AdminAssessmentEditor = () => {
   const [jsonError, setJsonError] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<'psychometric' | 'technical' | 'wiscar'>('psychometric');
 
-    const categories = [
-    'Emerging Technologies',
-    'Engineering & Manufacturing',
-    'Cognitive & Learning Intelligence',
-    'Personal and emotional intelligence'
-  ];
+  // Fetch categories from backend
+  const { data: categories } = useAssessmentCategories();
   const difficulties = ['Beginner', 'Intermediate', 'Advanced'];
 
   useEffect(() => {
@@ -599,7 +596,7 @@ const AdminAssessmentEditor = () => {
     cleaned.id = cleaned.id || `assessment-${Date.now()}`;
     cleaned.title = cleaned.title || 'Untitled Assessment';
     cleaned.description = cleaned.description || 'No description provided';
-    cleaned.category = cleaned.category || 'Emerging Technologies';
+    cleaned.category = cleaned.category || 'General';
     cleaned.duration = cleaned.duration || '10-15 mins';
     cleaned.difficulty = cleaned.difficulty || 'Intermediate';
     cleaned.isActive = cleaned.isActive !== undefined ? cleaned.isActive : true;

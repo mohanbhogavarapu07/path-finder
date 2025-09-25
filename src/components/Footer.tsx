@@ -4,53 +4,34 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
-import { useAssessments } from "@/hooks/useAssessments";
+import { useAssessmentCategories } from "@/hooks/useAssessments";
 import { useMemo } from "react";
 import { categoryToSlug } from "@/lib/utils";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
-  // Fetch assessments from backend to get categories
-  const { data: assessments, isLoading } = useAssessments();
+  // Fetch categories from backend
+  const { data: categoryNames, isLoading } = useAssessmentCategories();
 
-  // Generate categories from assessment data
+  // Generate categories dynamically from backend data
   const categories = useMemo(() => {
-    if (!assessments || assessments.length === 0) {
-      // Fallback categories if no data - only show allowed categories
-      const fallbackCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence', 'Personal and emotional intelligence'];
-      return [
-        { name: "All Assessments", href: "/" },
-        ...fallbackCategories.map(category => ({
-          name: category,
-          href: `/category/${categoryToSlug(category)}`
-        }))
-      ];
+    if (!categoryNames || categoryNames.length === 0) {
+      return [{ name: "All Assessments", href: "/" }];
     }
 
-    // Only allow these four categories - same as assessments page
-    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence', 'Personal and emotional intelligence'];
-    
-    // Get unique categories from assessments, but only include allowed ones
-    const categoryMap = new Map();
-    
-    assessments.forEach(assessment => {
-      const category = assessment.category;
-      // Only process allowed categories
-      if (allowedCategories.includes(category) && !categoryMap.has(category)) {
-        categoryMap.set(category, {
-          name: category,
-          href: `/category/${categoryToSlug(category)}`
-        });
-      }
-    });
+    // Convert category names to navigation items
+    const categoryItems = categoryNames.map(categoryName => ({
+      name: categoryName,
+      href: `/category/${categoryToSlug(categoryName)}`
+    }));
 
-    // Convert to array and always include "All Assessments" at the beginning
+    // Always include "All Assessments" at the beginning
     return [
       { name: "All Assessments", href: "/" },
-      ...Array.from(categoryMap.values())
+      ...categoryItems
     ];
-  }, [assessments]);
+  }, [categoryNames]);
 
   const legal = [
     { name: "Privacy Policy", href: "/privacy" },

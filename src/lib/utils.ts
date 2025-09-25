@@ -16,15 +16,8 @@ export function categoryToSlug(category: string): string {
 }
 
 export function slugToCategory(slug: string): string {
-  // Map of known slugs to category names
-  const slugMap: Record<string, string> = {
-    'emerging-technologies': 'Emerging Technologies',
-    'engineering-manufacturing': 'Engineering & Manufacturing',
-    'cognitive-learning-intelligence': 'Cognitive & Learning Intelligence',
-    'personal-emotional-intelligence': 'Personal and emotional intelligence'
-  };
-  
-  return slugMap[slug] || slug
+  // Convert slug to category name dynamically
+  return slug
     .split('-')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');

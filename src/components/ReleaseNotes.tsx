@@ -50,7 +50,6 @@ const ReleaseNotes = () => {
           {/* Header Section */}
           <div className="text-center mb-12">
             <div className="flex items-center justify-center gap-2 mb-4">
-              <Zap className="w-6 h-6 text-primary" />
               <h1 className="text-4xl lg:text-5xl font-bold text-heading">
                 Release Notes
               </h1>
@@ -70,33 +69,32 @@ const ReleaseNotes = () => {
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <Zap className="w-6 h-6 text-blue-600" />
-                <CardTitle className="text-2xl font-bold text-gray-900">Version 1.1</CardTitle>
+                <CardTitle className="text-2xl font-bold text-gray-900">Version<sup className="text-sm italic text-gray-600">beta</sup>     1.0</CardTitle>
                 <Badge className="bg-green-500 text-white">Major</Badge>
               </div>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2 text-gray-600">
                   <Calendar className="w-4 h-4" />
-                  <span>2024-01-15</span>
+                  <span>2025-08-15</span>
                 </div>
-                {expandedCards['version-1-1'] ? (
+                {expandedCards['version-1-0'] ? (
                   <ChevronUp className="w-5 h-5 text-gray-600" />
                 ) : (
                   <ChevronDown className="w-5 h-5 text-gray-600" />
                 )}
               </div>
             </div>
-            <div className="mt-2">
-              <h3 className="text-xl font-semibold text-gray-800">Enhanced Assessment Experience</h3>
-              <p className="text-gray-600">Major improvements to assessment interface and new categories.</p>
-            </div>
           </CardHeader>
           {expandedCards['version-1-1'] && (
             <CardContent className="p-6 space-y-4">
+              <div className="mb-6">
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Enhanced Assessment Experience</h3>
+                <p className="text-gray-600">Major improvements to assessment interface and new categories.</p>
+              </div>
               <div className="flex items-start gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
                 <Plus className="w-6 h-6 text-green-600 mt-1" />
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">3 Assessment Categories</h4>
+                  <h4 className="font-semibold text-gray-900 mb-2">4 Assessment Categories</h4>
                   <div className="space-y-2 text-sm text-gray-700">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
@@ -109,6 +107,10 @@ const ReleaseNotes = () => {
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
                       <span>Engineering & Manufacturing</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+                      <span>Personal and emotional intelligence</span>
                     </div>
                   </div>
                 </div>

@@ -3,7 +3,7 @@ import { Search, Filter, ArrowRight, Code, Cloud, Brain, Shield, BarChart3, Pale
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { useAssessments } from "@/hooks/useAssessments";
+import { useAssessments, useAssessmentCategories } from "@/hooks/useAssessments";
 import { Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -102,98 +102,52 @@ const getCategoryIcon = (category: string) => {
 };
 
 // Fallback categories for when API data is not available
-const fallbackCategories = [
-  {
-    name: "Emerging Technologies",
-    description: "AI, ML, blockchain, and cutting-edge technologies",
-    count: 45,
-    color: "bg-purple-50 border-purple-200",
-    textColor: "text-purple-600",
-    icon: Zap,
-  },
-  {
-    name: "Engineering & Manufacturing",
-    description: "Engineering, manufacturing, and technical skills",
-    count: 38,
-    color: "bg-blue-50 border-blue-200",
-    textColor: "text-blue-600",
-    icon: Wrench,
-  },
-  {
-    name: "Cognitive & Learning Intelligence",
-    description: "Cognitive abilities, learning styles, and intelligence assessment",
-    count: 25,
-    color: "bg-indigo-50 border-indigo-200",
-    textColor: "text-indigo-600",
-    icon: Brain,
-  },
-  {
-    name: "Personal and emotional intelligence",
-    description: "Personal development, emotional intelligence, and interpersonal skills",
-    count: 20,
-    color: "bg-rose-50 border-rose-200",
-    textColor: "text-rose-600",
-    icon: Heart,
-  },
-];
+// No fallback categories - system is now fully dynamic
 
 const Categories = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState<'all' | 'popular' | 'newest'>('all');
   const navigate = useNavigate();
   
-  // Fetch assessments from backend
-  const { data: assessments, isLoading } = useAssessments();
+  // Fetch categories from backend
+  const { data: categoryNames, isLoading: categoriesLoading } = useAssessmentCategories();
+  const { data: assessments, isLoading: assessmentsLoading } = useAssessments();
 
-  // Generate categories from assessment data or use fallback
+  // Generate categories dynamically from backend data
   const categories = useMemo(() => {
-    if (!assessments || assessments.length === 0) {
-      return fallbackCategories;
+    if (!categoryNames || categoryNames.length === 0) {
+      return [];
     }
 
-    // Only allow these four categories
-    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence', 'Personal and emotional intelligence'];
-    
-    // Get unique categories from assessments, but only include allowed ones
-    const categoryMap = new Map();
-    
-    assessments.forEach(assessment => {
-      const category = assessment.category;
-      // Only process allowed categories
-      if (allowedCategories.includes(category) && !categoryMap.has(category)) {
-        categoryMap.set(category, {
-          name: category,
-          description: getCategoryDescription(category),
-          count: 0,
-          color: getCategoryColor(category),
-          textColor: getCategoryTextColor(category),
-          icon: getCategoryIcon(category),
-        });
-      }
-      // Count assessments for allowed categories
-      if (allowedCategories.includes(category)) {
-        categoryMap.get(category).count++;
-      }
-    });
+    // Create category objects with metadata
+    return categoryNames.map(categoryName => ({
+      name: categoryName,
+      description: getCategoryDescription(categoryName),
+      count: assessments?.filter(a => a.category === categoryName).length || 0,
+      color: getCategoryColor(categoryName),
+      textColor: getCategoryTextColor(categoryName),
+      icon: getCategoryIcon(categoryName),
+    }));
+  }, [categoryNames, assessments]);
 
-    return Array.from(categoryMap.values());
-  }, [assessments]);
-
-  // Remove local filtering - only use global search navigation
+  // Filter and sort categories based on active filter
   const filteredCategories = useMemo(() => {
-    // Apply sorting based on active filter only (no search filtering)
     let filtered = [...categories];
 
+    // Apply sorting based on active filter
     switch (activeFilter) {
       case 'popular':
-        filtered.sort((a, b) => b.count - a.count);
+        // Sort by assessment count (most popular first)
+        filtered.sort((a, b) => (b.count || 0) - (a.count || 0));
         break;
       case 'newest':
-        // For now, just reverse the order as a proxy for newest
-        filtered.reverse();
+        // Sort by category name alphabetically as a proxy for newest
+        // In a real implementation, you'd have a creation date field
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
         break;
       default:
-        // 'all' - keep original order
+        // 'all' - keep original order (alphabetical by default)
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
         break;
     }
 
@@ -283,7 +237,7 @@ const Categories = () => {
 
             {/* Categories Grid */}
             <div className="mb-12">
-              {isLoading ? (
+              {(categoriesLoading || assessmentsLoading) ? (
                 <div className="text-center py-12">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
                   <p className="text-foreground-soft">Loading categories...</p>
@@ -331,7 +285,7 @@ const Categories = () => {
               )}
 
               {/* No results message */}
-              {!isLoading && filteredCategories.length === 0 && (
+              {!(categoriesLoading || assessmentsLoading) && filteredCategories.length === 0 && (
                 <div className="text-center py-12">
                   <div className="bg-muted rounded-lg p-8">
                     <Search className="w-12 h-12 text-muted-foreground mx-auto mb-4" />

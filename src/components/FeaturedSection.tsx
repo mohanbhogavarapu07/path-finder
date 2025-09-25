@@ -2,6 +2,7 @@ import { ArrowRight, TrendingUp, Award, Users, Code, Cloud, Brain, Shield, BarCh
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useAssessments } from "@/hooks/useAssessments";
+import { useAssessmentCategories } from "@/hooks/useAssessments";
 import { Link } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { categoryToSlug } from "@/lib/utils";
@@ -100,77 +101,29 @@ const FeaturedSection = () => {
     { label: "Success Rate", value: "94%", icon: TrendingUp },
   ];
 
-  // Fetch assessments from backend to get categories
-  const { data: assessments, isLoading } = useAssessments();
+  // Fetch categories from backend
+  const { data: categoryNames, isLoading: categoriesLoading } = useAssessmentCategories();
+  const { data: assessments, isLoading: assessmentsLoading } = useAssessments();
 
-  // Generate categories from assessment data
+  // Generate categories dynamically from backend data
   const categories = useMemo(() => {
-    if (!assessments || assessments.length === 0) {
-      // Fallback categories if no data
-      return [
-        {
-          name: "Technology",
-          description: "Programming, cloud computing, and technical assessments",
-          count: 0,
-          color: "bg-primary-soft border-primary/20",
-          textColor: "text-primary",
-          icon: Code,
-        },
-        {
-          name: "Business & Strategy",
-          description: "Management, leadership, and business development",
-          count: 0,
-          color: "bg-secondary-soft border-secondary/20",
-          textColor: "text-secondary",
-          icon: Briefcase,
-        },
-        {
-          name: "Data & Analytics",
-          description: "Data science, analytics, and business intelligence",
-          count: 0,
-          color: "bg-highlight-soft border-highlight/20",
-          textColor: "text-highlight",
-          icon: BarChart3,
-        },
-        {
-          name: "Design & Experience",
-          description: "UI/UX design, creative arts, and user experience",
-          count: 0,
-          color: "bg-muted border-border",
-          textColor: "text-muted-foreground",
-          icon: Palette,
-        },
-      ];
+    if (!categoryNames || categoryNames.length === 0) {
+      return [];
     }
 
-    // Get unique categories from assessments
-    const categoryMap = new Map();
-    
-    // Only allow these three categories
-    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence'];
-    
-    assessments.forEach(assessment => {
-      const category = assessment.category;
-      // Only process allowed categories
-      if (allowedCategories.includes(category) && !categoryMap.has(category)) {
-        categoryMap.set(category, {
-          name: category,
-          description: getCategoryDescription(category),
-          count: 0,
-          color: getCategoryColor(category),
-          textColor: getCategoryTextColor(category),
-          icon: getCategoryIcon(category),
-        });
-      }
-      // Count assessments for allowed categories
-      if (allowedCategories.includes(category)) {
-        categoryMap.get(category).count++;
-      }
-    });
+    // Create category objects with metadata
+    const categoryObjects = categoryNames.map(categoryName => ({
+      name: categoryName,
+      description: getCategoryDescription(categoryName),
+      count: assessments?.filter(a => a.category === categoryName).length || 0,
+      color: getCategoryColor(categoryName),
+      textColor: getCategoryTextColor(categoryName),
+      icon: getCategoryIcon(categoryName),
+    }));
 
-    // Convert to array and take first 4 categories (should be max 2 now)
-    return Array.from(categoryMap.values()).slice(0, 4);
-  }, [assessments]);
+    // Take first 4 categories
+    return categoryObjects.slice(0, 4);
+  }, [categoryNames, assessments]);
 
   return (
     <div className="py-8 sm:py-12 lg:py-16 px-4">
@@ -188,7 +141,7 @@ const FeaturedSection = () => {
             </Link>
           </div>
           
-          {isLoading ? (
+            {(categoriesLoading || assessmentsLoading) ? (
             <div className="text-center py-8 sm:py-12">
               <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-b-2 border-primary mx-auto mb-4"></div>
               <p className="text-sm sm:text-base text-foreground-soft">Loading categories...</p>

@@ -67,20 +67,21 @@ export const useAssessmentHealth = () => {
   });
 };
 
-// Utility hook to get assessment categories
+// Utility hook to get assessment categories dynamically from backend
 export const useAssessmentCategories = () => {
-  const { data: assessments } = useAssessments();
-  
-  if (!assessments) return { categories: [], isLoading: true };
-  
-  // Only allow these three categories
-  const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence'];
-  
-  // Filter categories to only include allowed ones
-  const allCategories = Array.from(new Set(assessments.map(a => a.category)));
-  const categories = allCategories.filter(category => allowedCategories.includes(category));
-  
-  return { categories, isLoading: false };
+  return useQuery({
+    queryKey: ['assessment-categories'],
+    queryFn: async () => {
+      const response = await fetch(`${API_BASE_URL}/assessments/categories/list`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch categories');
+      }
+      return response.json();
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
+    refetchInterval: 30 * 1000, // Refetch every 30 seconds
+  });
 };
 
 // Hook to get assessment by ID from cache

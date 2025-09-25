@@ -24,6 +24,7 @@ import { toast } from 'sonner';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { assessmentAPI, DynamicAssessment, API_BASE_URL } from '@/lib/api';
+import { useAssessmentCategories } from '@/hooks/useAssessments';
 
 interface BlogPost {
   _id: string;
@@ -68,6 +69,9 @@ const Admin = () => {
   const [assessmentError, setAssessmentError] = useState<string | null>(null);
   const [assessmentSearchTerm, setAssessmentSearchTerm] = useState('');
   const [assessmentCategoryFilter, setAssessmentCategoryFilter] = useState('all');
+  
+  // Fetch categories for assessment filter
+  const { data: categoryNames } = useAssessmentCategories();
   
   // Authentication states
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -647,13 +651,22 @@ const Admin = () => {
                   New Post
                 </Button>
               ) : (
-                <Button 
-                  onClick={() => navigate('/admin/new-assessment')}
-                  className="bg-green-600 hover:bg-green-700 text-white"
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  New Assessment
-                </Button>
+                <>
+                  <Button 
+                    onClick={() => navigate('/admin/new-assessment')}
+                    className="bg-green-600 hover:bg-green-700 text-white"
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    New Assessment
+                  </Button>
+                  <Button 
+                    onClick={() => navigate('/admin/categories')}
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                  >
+                    <Settings className="h-4 w-4 mr-2" />
+                    Manage Categories
+                  </Button>
+                </>
               )}
               
               <Button 
@@ -797,10 +810,9 @@ const Admin = () => {
                   className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="all">All Categories</option>
-                  <option value="Emerging Technologies">Emerging Technologies</option>
-                  <option value="Engineering & Manufacturing">Engineering & Manufacturing</option>
-                  <option value="Cognitive & Learning Intelligence">Cognitive & Learning Intelligence</option>
-                  <option value="Personal and emotional intelligence">Personal and emotional intelligence</option>
+                  {categoryNames?.map(category => (
+                    <option key={category} value={category}>{category}</option>
+                  ))}
                 </select>
               )}
             </div>

@@ -18,6 +18,7 @@ import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import AdminBlogEditor from "./pages/AdminBlogEditor";
 import AdminAssessmentEditor from "./pages/AdminAssessmentEditor";
+import AdminCategoryManager from "./pages/AdminCategoryManager";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import DataProtection from "./pages/DataProtection";
@@ -62,6 +63,7 @@ const App = () => (
             <Route path="/admin/edit-post/:postId" element={<AdminBlogEditor />} />
             <Route path="/admin/new-assessment" element={<AdminAssessmentEditor />} />
             <Route path="/admin/edit-assessment/:assessmentId" element={<AdminAssessmentEditor />} />
+            <Route path="/admin/categories" element={<AdminCategoryManager />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

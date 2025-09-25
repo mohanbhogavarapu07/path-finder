@@ -148,13 +148,8 @@ const New = () => {
       return fallbackNewAssessments;
     }
     
-    // Only allow these four categories
-    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence', 'Personal and emotional intelligence'];
-    
-    // Filter assessments to only include allowed categories
-    const filteredAssessments = assessments.filter(assessment => 
-      allowedCategories.includes(assessment.category)
-    );
+    // Get all assessments (no category filtering)
+    const filteredAssessments = assessments;
     
     // Sort by creation date (newest first) and take top 6
     return filteredAssessments
@@ -165,8 +160,24 @@ const New = () => {
       .slice(0, 6);
   }, [assessments]);
 
-  // Remove local filtering - only use global search navigation
-  const filteredAssessments = newAssessments;
+  // Filter assessments based on active filter
+  const filteredAssessments = useMemo(() => {
+    let filtered = [...newAssessments];
+
+    // Apply filtering based on active filter
+    switch (activeFilter) {
+      case 'recently':
+        // Show first 4 items as "recently added"
+        filtered = filtered.slice(0, 4);
+        break;
+      case 'newest':
+      default:
+        // Show all items as "newest first"
+        break;
+    }
+
+    return filtered;
+  }, [newAssessments, activeFilter]);
 
   // Handle search navigation
   const handleSearch = () => {
@@ -306,11 +317,11 @@ const New = () => {
                        category={assessment.category}
                        duration={assessment.duration}
                        difficulty={assessment.difficulty}
-                       completions={assessment.completions}
-                       rating={assessment.rating}
-                       tags={assessment.tags}
+                       completions={'completions' in assessment ? assessment.completions : 0}
+                       rating={'rating' in assessment ? assessment.rating : 0}
+                       tags={'tags' in assessment ? assessment.tags : []}
                        featured={assessment.featured}
-                       isNew={assessment.isNew}
+                       isNew={'isNew' in assessment ? assessment.isNew : false}
                        metadata={assessment.metadata}
                      />
                    ))}

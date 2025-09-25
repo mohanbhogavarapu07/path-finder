@@ -13,7 +13,7 @@ import { categoryToSlug, slugToCategory } from '@/lib/utils';
 
 const Assessments = () => {
   const { data: apiAssessments, isLoading, error } = useAssessments();
-  const { categories } = useAssessmentCategories();
+  const { data: categories } = useAssessmentCategories();
   const [searchParams] = useSearchParams();
   const params = useParams<{ categorySlug?: string }>();
   const queryCategorySlug = searchParams.get('category');
@@ -26,11 +26,8 @@ const Assessments = () => {
   // Use API data if available, otherwise fallback to sample data
   const assessments = apiAssessments && apiAssessments.length > 0 ? apiAssessments : sampleAssessments;
 
-  // Filter assessments to only include allowed categories
-  const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence', 'Personal and emotional intelligence'];
-  const allowedAssessments = assessments.filter(assessment => 
-    allowedCategories.includes(assessment.category)
-  );
+  // Get all assessments (no category filtering)
+  const allowedAssessments = assessments;
 
   // Simple scroll handling for initial page load with hash
   useEffect(() => {

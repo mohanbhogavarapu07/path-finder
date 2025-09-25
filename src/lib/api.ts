@@ -43,24 +43,8 @@ export interface BlogCategory {
   count: number;
 }
 
-// Assessment category types
-export type AssessmentCategory = 
-  | 'Technology'
-  | 'Business & Strategy'
-  | 'Design & Experience'
-  | 'Healthcare & Life Sciences'
-  | 'Engineering & Manufacturing'
-  | 'Security & Risk'
-  | 'Data & Analytics'
-  | 'Digital Marketing & Content'
-  | 'Product & Innovation'
-  | 'Cloud & Infrastructure'
-  | 'Emerging Technologies'
-  | 'Customer Success & Support'
-  | 'Education & Training'
-  | 'Green & Sustainability'
-  | 'Legal, Compliance & Governance'
-  | 'Cognitive & Learning Intelligence';
+// Assessment category types - now dynamic
+export type AssessmentCategory = string;
 
 // Types for the dynamic assessment system
 export interface DynamicAssessment {

@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import AssessmentCard from "@/components/AssessmentCard";
 import AdSenseComponent from "@/components/AdSenseComponent";
 
-// Fallback popular assessments for when API data is not available
+// No fallback data - system is now fully dynamic
 const fallbackPopularAssessments = [
   {
     id: "1",
@@ -141,13 +141,8 @@ const Popular = () => {
       return fallbackPopularAssessments;
     }
     
-    // Only allow these three categories
-    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence'];
-    
-    // Filter assessments to only include allowed categories
-    const filteredAssessments = assessments.filter(assessment => 
-      allowedCategories.includes(assessment.category)
-    );
+    // Get all assessments (no category filtering)
+    const filteredAssessments = assessments;
     
     // Sort by popularity (userCount) and take top 6
     return filteredAssessments
@@ -159,8 +154,28 @@ const Popular = () => {
       .slice(0, 6);
   }, [assessments]);
 
-  // Remove local filtering - only use global search navigation
-  const filteredAssessments = popularAssessments;
+  // Filter assessments based on time filter
+  const filteredAssessments = useMemo(() => {
+    let filtered = [...popularAssessments];
+
+    // Apply time-based filtering (this is a simplified implementation)
+    // In a real app, you'd filter based on actual creation dates
+    switch (activeTimeFilter) {
+      case 'week':
+        // For demo purposes, show first 3 items as "this week"
+        filtered = filtered.slice(0, 3);
+        break;
+      case 'month':
+        // For demo purposes, show first 4 items as "this month"
+        filtered = filtered.slice(0, 4);
+        break;
+      default:
+        // 'all' - show all assessments
+        break;
+    }
+
+    return filtered;
+  }, [popularAssessments, activeTimeFilter]);
 
   // Handle search navigation
   const handleSearch = () => {
@@ -274,9 +289,9 @@ const Popular = () => {
                        category={assessment.category}
                        duration={assessment.duration}
                        difficulty={assessment.difficulty}
-                       completions={assessment.completions}
-                       rating={assessment.rating}
-                       tags={assessment.tags}
+                       completions={'completions' in assessment ? assessment.completions : 0}
+                       rating={'rating' in assessment ? assessment.rating : 0}
+                       tags={'tags' in assessment ? assessment.tags : []}
                        featured={assessment.featured}
                        metadata={assessment.metadata}
                      />

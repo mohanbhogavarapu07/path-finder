@@ -148,8 +148,8 @@ const New = () => {
       return fallbackNewAssessments;
     }
     
-    // Only allow these three categories
-    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence'];
+    // Only allow these four categories
+    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence', 'Personal and emotional intelligence'];
     
     // Filter assessments to only include allowed categories
     const filteredAssessments = assessments.filter(assessment => 

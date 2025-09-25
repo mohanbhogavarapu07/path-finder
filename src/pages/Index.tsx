@@ -25,7 +25,7 @@ const Index = () => {
   const assessments = apiAssessments && apiAssessments.length > 0 ? apiAssessments : sampleAssessments;
 
   // Filter assessments to only include allowed categories
-  const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence'];
+  const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence', 'Personal and emotional intelligence'];
   const filteredAssessments = assessments.filter(assessment => 
     allowedCategories.includes(assessment.category)
   );

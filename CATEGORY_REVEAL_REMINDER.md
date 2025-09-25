@@ -1,9 +1,10 @@
 # 🔒 Category Reveal Reminder
 
 ## Current Status
-**Only 2 categories are currently visible:**
+**Only 3 categories are currently visible:**
 - ✅ Emerging Technologies
 - ✅ Engineering & Manufacturing
+- ✅ Cognitive & Learning Intelligence
 
 ## Hidden Categories (Ready to Reveal)
 The following categories are currently hidden but can be revealed when needed:
@@ -21,6 +22,7 @@ The following categories are currently hidden but can be revealed when needed:
 11. Education & Training
 12. Green & Sustainability
 13. Legal, Compliance & Governance
+14. Personal and emotional intelligence
 
 ## How to Reveal All Categories
 
@@ -44,7 +46,8 @@ const categories = [
   'Customer Success & Support',
   'Education & Training',
   'Green & Sustainability',
-  'Legal, Compliance & Governance'
+  'Legal, Compliance & Governance',
+  'Personal and emotional intelligence'
 ];
 ```
 
@@ -65,7 +68,8 @@ categories: [
   'Customer Success & Support',
   'Education & Training',
   'Green & Sustainability',
-  'Legal, Compliance & Governance'
+  'Legal, Compliance & Governance',
+  'Personal and emotional intelligence'
 ]
 ```
 

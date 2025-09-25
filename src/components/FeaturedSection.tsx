@@ -87,6 +87,8 @@ const getCategoryIcon = (category: string) => {
     'Education & Training': Brain,
     'Green & Sustainability': Globe,
     'Legal, Compliance & Governance': Cog,
+    'Cognitive & Learning Intelligence': Brain,
+    'Personal and emotional intelligence': Heart,
   };
   return icons[category] || Monitor;
 };

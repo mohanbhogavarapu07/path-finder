@@ -29,6 +29,7 @@ const getCategoryDescription = (category: string) => {
     'Green & Sustainability': 'Environmental, sustainability, and green technologies',
     'Legal, Compliance & Governance': 'Legal, compliance, and governance assessments',
     'Cognitive & Learning Intelligence': 'Cognitive abilities, learning styles, and intelligence assessment',
+    'Personal and emotional intelligence': 'Personal development, emotional intelligence, and interpersonal skills',
   };
   return descriptions[category] || 'Professional assessments and career guidance';
 };
@@ -50,6 +51,7 @@ const getCategoryColor = (category: string) => {
     'Education & Training': 'bg-violet-50 border-violet-200',
     'Green & Sustainability': 'bg-lime-50 border-lime-200',
     'Legal, Compliance & Governance': 'bg-gray-50 border-gray-200',
+    'Personal and emotional intelligence': 'bg-rose-50 border-rose-200',
   };
   return colors[category] || 'bg-muted border-border';
 };
@@ -71,6 +73,7 @@ const getCategoryTextColor = (category: string) => {
     'Education & Training': 'text-violet-600',
     'Green & Sustainability': 'text-lime-600',
     'Legal, Compliance & Governance': 'text-gray-600',
+    'Personal and emotional intelligence': 'text-rose-600',
   };
   return textColors[category] || 'text-muted-foreground';
 };
@@ -93,6 +96,7 @@ const getCategoryIcon = (category: string) => {
     'Green & Sustainability': Globe,
     'Legal, Compliance & Governance': Cog,
     'Cognitive & Learning Intelligence': Brain,
+    'Personal and emotional intelligence': Heart,
   };
   return icons[category] || Monitor;
 };
@@ -123,6 +127,14 @@ const fallbackCategories = [
     textColor: "text-indigo-600",
     icon: Brain,
   },
+  {
+    name: "Personal and emotional intelligence",
+    description: "Personal development, emotional intelligence, and interpersonal skills",
+    count: 20,
+    color: "bg-rose-50 border-rose-200",
+    textColor: "text-rose-600",
+    icon: Heart,
+  },
 ];
 
 const Categories = () => {
@@ -139,8 +151,8 @@ const Categories = () => {
       return fallbackCategories;
     }
 
-    // Only allow these three categories
-    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence'];
+    // Only allow these four categories
+    const allowedCategories = ['Emerging Technologies', 'Engineering & Manufacturing', 'Cognitive & Learning Intelligence', 'Personal and emotional intelligence'];
     
     // Get unique categories from assessments, but only include allowed ones
     const categoryMap = new Map();

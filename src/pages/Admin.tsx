@@ -800,6 +800,7 @@ const Admin = () => {
                   <option value="Emerging Technologies">Emerging Technologies</option>
                   <option value="Engineering & Manufacturing">Engineering & Manufacturing</option>
                   <option value="Cognitive & Learning Intelligence">Cognitive & Learning Intelligence</option>
+                  <option value="Personal and emotional intelligence">Personal and emotional intelligence</option>
                 </select>
               )}
             </div>

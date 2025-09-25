@@ -62,7 +62,7 @@ interface Assessment {
   id: string;
   title: string;
   description: string;
-  category: 'Emerging Technologies' | 'Engineering & Manufacturing' | 'Cognitive & Learning Intelligence';
+  category: 'Emerging Technologies' | 'Engineering & Manufacturing' | 'Cognitive & Learning Intelligence' | 'Personal and emotional intelligence';
   duration: string;
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
   isActive: boolean;
@@ -217,7 +217,8 @@ const AdminAssessmentEditor = () => {
     const categories = [
     'Emerging Technologies',
     'Engineering & Manufacturing',
-    'Cognitive & Learning Intelligence'
+    'Cognitive & Learning Intelligence',
+    'Personal and emotional intelligence'
   ];
   const difficulties = ['Beginner', 'Intermediate', 'Advanced'];
 

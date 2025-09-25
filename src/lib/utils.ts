@@ -20,7 +20,8 @@ export function slugToCategory(slug: string): string {
   const slugMap: Record<string, string> = {
     'emerging-technologies': 'Emerging Technologies',
     'engineering-manufacturing': 'Engineering & Manufacturing',
-    'cognitive-learning-intelligence': 'Cognitive & Learning Intelligence'
+    'cognitive-learning-intelligence': 'Cognitive & Learning Intelligence',
+    'personal-emotional-intelligence': 'Personal and emotional intelligence'
   };
   
   return slugMap[slug] || slug

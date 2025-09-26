@@ -61,6 +61,64 @@ const ReleaseNotes = () => {
 
       {/* Release Notes Content */}
       <div className="space-y-6">
+        {/* Version 2.0.0 - Major */}
+        <Card className="border-2 border-gray-200 shadow-lg">
+          <CardHeader 
+            className="bg-gradient-to-r from-blue-50 to-indigo-50 cursor-pointer hover:bg-gradient-to-r hover:from-blue-100 hover:to-indigo-100 transition-colors"
+            onClick={() => toggleCard('version-2-0')}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <CardTitle className="text-2xl font-bold text-gray-900">Version 1.5</CardTitle>
+                <Badge className="bg-green-500 text-white">Major</Badge>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 text-gray-600">
+                  <Calendar className="w-4 h-4" />
+                  <span>2024-01-01</span>
+                </div>
+                {expandedCards['version-2-0'] ? (
+                  <ChevronUp className="w-5 h-5 text-gray-600" />
+                ) : (
+                  <ChevronDown className="w-5 h-5 text-gray-600" />
+                )}
+              </div>
+            </div>
+          </CardHeader>
+          {expandedCards['version-2-0'] && (
+            <CardContent className="p-6 space-y-4">
+              <div className="mb-6">
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Complete Platform Redesign</h3>
+                <p className="text-gray-600">Major overhaul of the entire platform with modern design and improved functionality.</p>
+              </div>
+              
+              <div className="flex items-start gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                <Plus className="w-6 h-6 text-green-600 mt-1" />
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-2">New Design System</h4>
+                  <p className="text-sm text-gray-700">Implemented modern design system with improved accessibility and user experience.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                <Plus className="w-6 h-6 text-green-600 mt-1" />
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-2">Assessment Categories</h4>
+                  <p className="text-sm text-gray-700">Organized assessments into clear categories for better navigation.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <TrendingUp className="w-6 h-6 text-blue-600 mt-1" />
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-2">Performance Optimization</h4>
+                  <p className="text-sm text-gray-700">Significantly improved page load times and overall platform performance.</p>
+                </div>
+              </div>
+            </CardContent>
+          )}
+        </Card>
+
         {/* Version 1.1 - Major */}
         <Card className="border-2 border-gray-200 shadow-lg">
           <CardHeader 

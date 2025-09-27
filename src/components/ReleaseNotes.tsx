@@ -75,7 +75,7 @@ const ReleaseNotes = () => {
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2 text-gray-600">
                   <Calendar className="w-4 h-4" />
-                  <span>2024-01-01</span>
+                  <span>2025-09-27</span>
                 </div>
                 {expandedCards['version-2-0'] ? (
                   <ChevronUp className="w-5 h-5 text-gray-600" />
@@ -127,7 +127,7 @@ const ReleaseNotes = () => {
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <CardTitle className="text-2xl font-bold text-gray-900">Version<sup className="text-sm italic text-gray-600">beta</sup>     1.0</CardTitle>
+                <CardTitle className="text-2xl font-bold text-gray-900">Version   1.0</CardTitle>
                 <Badge className="bg-green-500 text-white">Major</Badge>
               </div>
               <div className="flex items-center gap-4">

@@ -112,6 +112,36 @@ const DynamicAssessment = () => {
   const assessment = assessmentDataResponse;
   const sections = assessmentDataResponse?.sections || [];
 
+  // Check if this is a GATE assessment and handle it directly
+  if ((assessment as any)?.assessmentType === 'gate') {
+    // Import and render GATE assessment component directly
+    const GateAssessment = React.lazy(() => import('@/components/gate/GateAssessment'));
+    
+    return (
+      <AssessmentLayout>
+        <React.Suspense fallback={
+          <div className="container mx-auto px-4 py-8">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+              <p className="text-foreground-soft">Loading GATE assessment...</p>
+            </div>
+          </div>
+        }>
+          <GateAssessment
+            assessment={assessment as any}
+            onComplete={(results) => {
+              console.log('GATE assessment completed:', results);
+              // Navigate to results page
+              navigate(`/gate-results/${assessmentId}`, { 
+                state: { results, assessmentType: 'gate' } 
+              });
+            }}
+          />
+        </React.Suspense>
+      </AssessmentLayout>
+    );
+  }
+
   // Define sections based on dynamic data
   const sectionConfig = [
     { id: 'intro', title: 'Introduction', icon: BookOpen, color: 'bg-[#4CAF50]' },

@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
+import Layout from '@/components/Layout';
 
 const Contact = () => {
   return (
-    <div className="min-h-screen gradient-bg text-gray-800 antialiased" style={{
+    <Layout className="gradient-bg text-gray-800 antialiased" style={{
       fontFamily: "'Inter', sans-serif",
       backgroundColor: '#f8fafc',
       backgroundImage: `
@@ -13,8 +12,6 @@ const Contact = () => {
         radial-gradient(at 100% 100%, hsla(280,80%,98%,1) 0px, transparent 50%)
       `
     }}>
-      <Navigation />
-      
       {/* Main Container */}
       <div className="container mx-auto px-4 py-12 md:py-20">
         
@@ -123,9 +120,7 @@ const Contact = () => {
           </p>
         </footer>
         </div>
-
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

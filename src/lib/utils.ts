@@ -18,14 +18,21 @@ export function categoryToSlug(category: string): string {
 
 export function slugToCategory(slug: string): string {
   // Convert slug to category name dynamically
-  return slug
+  const result = slug
     .split('-')
     .map(word => {
       // Handle special case for 'and' -> '&'
       if (word.toLowerCase() === 'and') {
         return '&';
       }
+      // Handle special case for 'gate' -> 'GATE'
+      if (word.toLowerCase() === 'gate') {
+        return 'GATE';
+      }
       return word.charAt(0).toUpperCase() + word.slice(1);
     })
     .join(' ');
+  
+  console.log('🔍 Slug to Category conversion:', { slug, result });
+  return result;
 }

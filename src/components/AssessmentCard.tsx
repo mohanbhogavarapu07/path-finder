@@ -42,12 +42,13 @@ const AssessmentCard = ({
   const navigate = useNavigate();
 
   const handleStartAssessment = () => {
-    // Navigate directly to the assessment page
+    // Navigate to assessment page using consistent category route
     const categorySlug = categoryToSlug(category);
     navigate(`/category/${categorySlug}/${id}`);
   };
   const getCategoryIcon = () => {
     const categoryLower = category.toLowerCase();
+    if (categoryLower === 'gate') return <Trophy className="w-4 h-4" />;
     if (categoryLower.includes('education') || categoryLower.includes('training')) return <BookOpen className="w-4 h-4" />;
     if (categoryLower.includes('health') || categoryLower.includes('medical')) return <Heart className="w-4 h-4" />;
     if (categoryLower.includes('business') || categoryLower.includes('management')) return <Briefcase className="w-4 h-4" />;
@@ -71,6 +72,7 @@ const AssessmentCard = ({
 
   const getCategoryColor = () => {
     const categoryLower = category.toLowerCase();
+    if (categoryLower === 'gate') return "bg-purple-100 text-purple-700 border-purple-300";
     if (categoryLower.includes('education') || categoryLower.includes('training')) return "bg-primary-soft text-primary border-primary/20";
     if (categoryLower.includes('health') || categoryLower.includes('medical')) return "bg-secondary-soft text-secondary border-secondary/20";
     if (categoryLower.includes('business') || categoryLower.includes('management')) return "bg-highlight-soft text-highlight border-highlight/20";
@@ -116,6 +118,13 @@ const AssessmentCard = ({
       {featured && isNew && (
         <div className="absolute -top-2 -right-16 bg-orange-500 text-white px-2 py-1 rounded-md text-xs font-medium">
           Featured
+        </div>
+      )}
+      {/* GATE Assessment Badge */}
+      {category.toLowerCase() === 'gate' && (
+        <div className="absolute -top-2 -left-2 bg-purple-600 text-white px-2 py-1 rounded-md text-xs font-medium flex items-center gap-1">
+          <Trophy className="w-3 h-3" />
+          GATE
         </div>
       )}
       

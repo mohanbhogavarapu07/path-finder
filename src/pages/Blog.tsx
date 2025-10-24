@@ -1,16 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, Clock, User, Tag, Search, Filter, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, User, Tag, Search, Filter, ArrowRight, Mail, Check } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
+import Layout from '@/components/Layout';
 import AdSenseComponent from '@/components/AdSenseComponent';
-import { getBlogPosts, getBlogCategories, searchBlogPosts, getBlogPostsByCategory, BlogPost, BlogPostList } from '@/lib/api';
+import { getBlogPosts, getBlogCategories, searchBlogPosts, getBlogPostsByCategory, BlogPost, BlogPostList, API_BASE_URL } from '@/lib/api';
 import { format } from 'date-fns';
+import { toast } from 'sonner';
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -22,6 +22,11 @@ const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalPosts, setTotalPosts] = useState(0);
+  
+  // Subscriber states
+  const [subscriberEmail, setSubscriberEmail] = useState('');
+  const [subscribing, setSubscribing] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
 
   // Fetch blog posts and categories on component mount
   useEffect(() => {
@@ -80,29 +85,66 @@ const Blog = () => {
     setCurrentPage(page);
   };
 
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!subscriberEmail.trim()) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(subscriberEmail)) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+
+    try {
+      setSubscribing(true);
+      
+      const response = await fetch(`${API_BASE_URL}/subscribers`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: subscriberEmail }),
+      });
+
+      if (response.ok) {
+        setSubscribed(true);
+        setSubscriberEmail('');
+        toast.success('Successfully subscribed to our newsletter!');
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.message || 'Failed to subscribe. Please try again.');
+      }
+    } catch (error) {
+      console.error('Subscription error:', error);
+      toast.error('Failed to subscribe. Please try again.');
+    } finally {
+      setSubscribing(false);
+    }
+  };
+
   const filteredPosts = blogPosts;
 
   const featuredPosts = blogPosts.filter(post => post.featured);
 
   if (loading && blogPosts.length === 0) {
     return (
-      <div className="min-h-screen bg-blue-50">
-        <Navigation />
+      <Layout>
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
             <p className="mt-4 text-gray-600">Loading blog posts...</p>
           </div>
         </div>
-        <Footer />
-      </div>
+      </Layout>
     );
   }
 
   if (error) {
     return (
-              				<div className="min-h-screen bg-gradient-to-br from-[#285C52]/5 via-white to-[#4CAF50]/5">
-        <Navigation />
+      <Layout>
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
             <div className="text-red-500 text-xl mb-4">⚠️</div>
@@ -113,14 +155,12 @@ const Blog = () => {
             </Button>
           </div>
         </div>
-        <Footer />
-      </div>
+      </Layout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-blue-50">
-      <Navigation />
+    <Layout>
       <AdSenseComponent />
       
       {/* Main Content */}
@@ -341,15 +381,65 @@ const Blog = () => {
                   </CardContent>
                 </Card>
 
+                {/* Newsletter Subscription */}
+                <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 shadow-sm">
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <Mail className="h-5 w-5 text-blue-600" />
+                      Newsletter
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {subscribed ? (
+                      <div className="text-center py-4">
+                        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                          <Check className="h-6 w-6 text-green-600" />
+                        </div>
+                        <h3 className="font-semibold text-gray-900 mb-1">Subscribed!</h3>
+                        <p className="text-sm text-gray-600">
+                          Thank you for subscribing to our newsletter.
+                        </p>
+                      </div>
+                    ) : (
+                      <div>
+                        <p className="text-sm text-gray-600 mb-4">
+                          Stay updated with our latest blog posts and career insights.
+                        </p>
+                        <form onSubmit={handleSubscribe} className="space-y-3">
+                          <Input
+                            type="email"
+                            placeholder="Enter your email"
+                            value={subscriberEmail}
+                            onChange={(e) => setSubscriberEmail(e.target.value)}
+                            className="w-full"
+                            disabled={subscribing}
+                          />
+                          <Button
+                            type="submit"
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                            disabled={subscribing || !subscriberEmail.trim()}
+                          >
+                            {subscribing ? (
+                              <div className="flex items-center gap-2">
+                                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                Subscribing...
+                              </div>
+                            ) : (
+                              'Subscribe'
+                            )}
+                          </Button>
+                        </form>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
 
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

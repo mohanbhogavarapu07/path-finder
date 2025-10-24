@@ -18,13 +18,16 @@ import {
   LogOut,
   FileText,
   Target,
-  Settings
+  Settings,
+  Upload,
+  BookOpen
 } from 'lucide-react';
 import { toast } from 'sonner';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { assessmentAPI, DynamicAssessment, API_BASE_URL } from '@/lib/api';
 import { useAssessmentCategories } from '@/hooks/useAssessments';
+import GateJsonUpload from '@/components/admin/GateJsonUpload';
 
 interface BlogPost {
   _id: string;
@@ -69,6 +72,9 @@ const Admin = () => {
   const [assessmentError, setAssessmentError] = useState<string | null>(null);
   const [assessmentSearchTerm, setAssessmentSearchTerm] = useState('');
   const [assessmentCategoryFilter, setAssessmentCategoryFilter] = useState('all');
+  
+  // GATE upload states
+  const [showGateUpload, setShowGateUpload] = useState(false);
   
   // Fetch categories for assessment filter
   const { data: categoryNames } = useAssessmentCategories();
@@ -281,6 +287,8 @@ const Admin = () => {
       }
 
       const data = await response.json();
+      console.log('Fetched posts data:', data);
+      console.log('Posts with IDs:', data.posts?.map((p: any) => p._id));
       setPosts(data.posts);
       setTotalPages(data.totalPages);
       setTotalPosts(data.total);
@@ -296,6 +304,31 @@ const Admin = () => {
       }
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Validate if a post exists before allowing edit
+  const validatePostExists = async (postId: string): Promise<boolean> => {
+    try {
+      const token = localStorage.getItem('adminToken');
+      const response = await fetch(`${API_BASE_URL}/blog/posts/${postId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      });
+      
+      if (response.ok) {
+        return true;
+      } else if (response.status === 404) {
+        console.warn(`Post ${postId} not found in individual endpoint`);
+        return false;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error validating post:', error);
+      return false;
     }
   };
 
@@ -492,7 +525,7 @@ const Admin = () => {
     assessment.description.toLowerCase().includes(assessmentSearchTerm.toLowerCase()) ||
     assessment.category.toLowerCase().includes(assessmentSearchTerm.toLowerCase())
   ).filter(assessment =>
-    assessmentCategoryFilter === 'all' || assessment.category === assessmentCategoryFilter
+    assessmentCategoryFilter === 'all' || assessment.category?.toLowerCase() === assessmentCategoryFilter.toLowerCase()
   );
 
   // Auth Modal Component
@@ -658,6 +691,13 @@ const Admin = () => {
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     New Assessment
+                  </Button>
+                  <Button 
+                    onClick={() => setShowGateUpload(true)}
+                    className="bg-purple-600 hover:bg-purple-700 text-white"
+                  >
+                    <Upload className="h-4 w-4 mr-2" />
+                    Upload GATE JSON
                   </Button>
                   <Button 
                     onClick={() => navigate('/admin/categories')}
@@ -892,7 +932,18 @@ const Admin = () => {
                               <Button
                                 variant="outline"
                                 size="sm"
-                                onClick={() => navigate(`/admin/edit-post/${post._id}`)}
+                                onClick={async () => {
+                                  console.log('Attempting to edit post with ID:', post._id);
+                                  
+                                  // Validate post exists before navigating
+                                  const exists = await validatePostExists(post._id);
+                                  if (exists) {
+                                    navigate(`/admin/edit-post/${post._id}`);
+                                  } else {
+                                    toast.error(`Post "${post.title}" is not accessible for editing. It may have been deleted or there's a data sync issue.`);
+                                    console.error('Post validation failed for ID:', post._id);
+                                  }
+                                }}
                               >
                                 <Edit className="h-4 w-4" />
                               </Button>
@@ -1070,6 +1121,23 @@ const Admin = () => {
       </section>
 
       <Footer />
+      
+      {/* GATE JSON Upload Modal */}
+      {showGateUpload && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <GateJsonUpload
+              onUploadSuccess={(assessment) => {
+                setShowGateUpload(false);
+                // Refresh assessments list
+                fetchAssessments();
+                toast.success(`GATE assessment "${assessment.title}" created successfully!`);
+              }}
+              onClose={() => setShowGateUpload(false)}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

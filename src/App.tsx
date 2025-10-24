@@ -12,6 +12,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Assessments from "./pages/Assessments";
 import Categories from "./pages/Categories";
+import Paths from "./pages/Paths";
 import Popular from "./pages/Popular";
 import New from "./pages/New";
 import Contact from "./pages/Contact";
@@ -27,6 +28,8 @@ import NotFound from "./pages/NotFound";
 
 // Import dynamic assessment components
 import DynamicAssessment from "./pages/DynamicAssessment";
+import GateAssessment from "./pages/GateAssessment";
+import GateResults from "./pages/GateResults";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +47,7 @@ const App = () => (
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/assessments" element={<Assessments />} />
             <Route path="/categories" element={<Categories />} />
+            <Route path="/paths" element={<Paths />} />
             {/* New domain/category routes */}
             <Route path="/category/:categorySlug" element={<Assessments />} />
             <Route path="/popular" element={<Popular />} />
@@ -56,6 +60,12 @@ const App = () => (
             
             {/* Dynamic Assessment Route (new) */}
             <Route path="/category/:categorySlug/:assessmentId/*" element={<DynamicAssessment />} />
+            
+            {/* GATE Assessment Route - Legacy support */}
+            <Route path="/gate/:categorySlug/:assessmentId" element={<GateAssessment />} />
+            
+            {/* GATE Results Route */}
+            <Route path="/gate-results/:assessmentId" element={<GateResults />} />
             
             {/* Admin Routes */}
             <Route path="/admin" element={<Admin />} />

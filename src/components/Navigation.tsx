@@ -1,4 +1,4 @@
-import { BookOpen, TrendingUp, User, Settings, Grid3X3, Sparkles, Clock, Menu, X } from "lucide-react";
+import { BookOpen, TrendingUp, User, Settings, Grid3X3, Sparkles, Clock, Menu, X, FileText, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
@@ -39,6 +39,16 @@ const Navigation = () => {
               </Link>
             </Button>
             <Button 
+              variant={location.pathname === "/paths" ? "default" : "ghost"} 
+              size="sm" 
+              asChild
+            >
+              <Link to="/paths" className="flex items-center gap-2">
+                <Compass className="w-4 h-4" />
+                Paths
+              </Link>
+            </Button>
+            <Button 
               variant={location.pathname === "/popular" ? "default" : "ghost"} 
               size="sm" 
               asChild
@@ -56,6 +66,16 @@ const Navigation = () => {
               <Link to="/new" className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
                 New
+              </Link>
+            </Button>
+            <Button 
+              variant={location.pathname === "/blog" ? "default" : "ghost"} 
+              size="sm" 
+              asChild
+            >
+              <Link to="/blog" className="flex items-center gap-2">
+                <FileText className="w-4 h-4" />
+                Blog
               </Link>
             </Button>
           </div>
@@ -93,6 +113,17 @@ const Navigation = () => {
                 </Link>
               </Button>
               <Button 
+                variant={location.pathname === "/paths" ? "default" : "ghost"} 
+                size="sm" 
+                asChild
+                className="w-full justify-start h-12"
+              >
+                <Link to="/paths" className="flex items-center gap-3" onClick={toggleMobileMenu}>
+                  <Compass className="w-5 h-5" />
+                  Paths
+                </Link>
+              </Button>
+              <Button 
                 variant={location.pathname === "/popular" ? "default" : "ghost"} 
                 size="sm" 
                 asChild
@@ -112,6 +143,17 @@ const Navigation = () => {
                 <Link to="/new" className="flex items-center gap-3" onClick={toggleMobileMenu}>
                   <Clock className="w-5 h-5" />
                   New
+                </Link>
+              </Button>
+              <Button 
+                variant={location.pathname === "/blog" ? "default" : "ghost"} 
+                size="sm" 
+                asChild
+                className="w-full justify-start h-12"
+              >
+                <Link to="/blog" className="flex items-center gap-3" onClick={toggleMobileMenu}>
+                  <FileText className="w-5 h-5" />
+                  Blog
                 </Link>
               </Button>
             </div>

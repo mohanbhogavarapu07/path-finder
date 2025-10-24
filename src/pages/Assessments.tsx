@@ -1,6 +1,6 @@
 
 import React, { useEffect } from 'react';
-import { Brain, Code, Cloud, Smartphone, Shield, BarChart3, Palette, Briefcase, Award, Heart, Wrench, Cog, Monitor, TrendingUp, Users, Search } from 'lucide-react';
+import { Brain, Code, Cloud, Smartphone, Shield, BarChart3, Palette, Briefcase, Award, Heart, Wrench, Cog, Monitor, TrendingUp, Users, Search, Trophy } from 'lucide-react';
 import AssessmentCard from '@/components/AssessmentCard';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -25,6 +25,61 @@ const Assessments = () => {
 
   // Use API data if available, otherwise fallback to sample data
   const assessments = apiAssessments && apiAssessments.length > 0 ? apiAssessments : sampleAssessments;
+  
+  // Enhanced category matching to handle name variations
+  const getMatchingCategory = (targetCategory: string) => {
+    if (!targetCategory || !assessments) return null;
+    
+    // First try exact match
+    const exactMatch = assessments.find(a => a.category === targetCategory);
+    if (exactMatch) return targetCategory;
+    
+    // Try case-insensitive match
+    const caseInsensitiveMatch = assessments.find(a => 
+      a.category?.toLowerCase() === targetCategory.toLowerCase()
+    );
+    if (caseInsensitiveMatch) return caseInsensitiveMatch.category;
+    
+    // Try partial matching for common variations
+    const targetWords = targetCategory.toLowerCase().split(' ');
+    
+    for (const assessment of assessments) {
+      if (!assessment.category) continue;
+      
+      const categoryWords = assessment.category.toLowerCase().split(' ');
+      
+      // Check if all target words are contained in category
+      const allWordsMatch = targetWords.every(targetWord => 
+        categoryWords.some(catWord => 
+          catWord.includes(targetWord) || targetWord.includes(catWord)
+        )
+      );
+      
+      if (allWordsMatch) {
+        console.log('🔍 Found partial category match:', { 
+          targetCategory, 
+          foundCategory: assessment.category 
+        });
+        return assessment.category;
+      }
+    }
+    
+    console.log('🔍 No matching category found:', { targetCategory, availableCategories: assessments.map(a => a.category) });
+    return null;
+  };
+  
+  const actualCategory = selectedCategory ? getMatchingCategory(selectedCategory) : null;
+  
+  // Debug logging
+  console.log('🔍 Assessments Debug:', {
+    apiAssessments: apiAssessments?.length || 0,
+    sampleAssessments: sampleAssessments?.length || 0,
+    selectedCategory,
+    categories: categories?.length || 0,
+    assessments: assessments?.length || 0,
+    availableCategories: categories,
+    assessmentCategories: assessments?.map(a => a.category) || []
+  });
 
   // Get all assessments (no category filtering)
   const allowedAssessments = assessments;
@@ -44,17 +99,36 @@ const Assessments = () => {
 
   // Filter assessments by category and search query
   const filteredAssessments = allowedAssessments?.filter(assessment => {
-    const matchesCategory = !selectedCategory || assessment.category === selectedCategory;
+    const matchesCategory = !actualCategory || assessment.category === actualCategory;
     const matchesSearch = !searchQuery || 
       assessment.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       assessment.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
       ('tags' in assessment && assessment.tags && assessment.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())));
     
+    // Debug logging for category matching
+    if (actualCategory) {
+      console.log('🔍 Category Filter Debug:', {
+        assessmentCategory: assessment.category,
+        selectedCategory,
+        actualCategory,
+        matchesCategory,
+        assessmentTitle: assessment.title
+      });
+    }
+    
     return matchesCategory && matchesSearch;
   }) || [];
 
+  // Debug logging for filtered assessments
+  console.log('🔍 Filtered Assessments Debug:', {
+    filteredAssessments: filteredAssessments?.length || 0,
+    selectedCategory,
+    actualCategory,
+    allAssessments: assessments?.length || 0
+  });
+
   // Group assessments by category (only if no specific category is selected)
-  const groupedAssessments = !selectedCategory ? categories.reduce((acc, category) => {
+  const groupedAssessments = !actualCategory && categories ? categories.reduce((acc, category) => {
     acc[category] = allowedAssessments?.filter(assessment => assessment.category === category) || [];
     return acc;
   }, {} as Record<string, (DynamicAssessment | any)[]>) : {};
@@ -69,6 +143,7 @@ const Assessments = () => {
     'Business': Briefcase,
     'Medical': Heart,
     'Platform': Cog,
+    'GATE': Trophy,
     // Add fallback for any new categories
     'default': Code
   };
@@ -78,11 +153,12 @@ const Assessments = () => {
     'Cloud': 'bg-purple-100 text-purple-700',
     'Data': 'bg-orange-100 text-orange-700',
     'Technology': 'bg-indigo-100 text-indigo-700',
-         'Programming': 'bg-[#4CAF50]/10 text-[#4CAF50]',
+    'Programming': 'bg-[#4CAF50]/10 text-[#4CAF50]',
     'Management': 'bg-green-100 text-green-700',
     'Business': 'bg-yellow-100 text-yellow-700',
     'Medical': 'bg-red-100 text-red-700',
     'Platform': 'bg-teal-100 text-teal-700',
+    'GATE': 'bg-purple-100 text-purple-700 border-purple-300',
     // Add fallback for any new categories
     'default': 'bg-gray-100 text-gray-700'
   };
@@ -168,16 +244,16 @@ const Assessments = () => {
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 text-foreground">
               {searchQuery 
                 ? `Search Results for "${searchQuery}"`
-                : selectedCategory 
-                  ? `${selectedCategory} Assessments` 
+                : actualCategory 
+                  ? `${actualCategory} Assessments` 
                   : 'Choose Your Assessment'
               }
             </h2>
             <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-3xl leading-relaxed mx-auto sm:mx-0">
               {searchQuery 
                 ? `Found ${filteredAssessments.length} assessment${filteredAssessments.length !== 1 ? 's' : ''} matching your search.`
-                : selectedCategory 
-                  ? `Explore our comprehensive range of ${selectedCategory.toLowerCase()} assessments, each designed with cutting-edge psychometric research to provide you with accurate, actionable insights about your ideal career path.`
+                : actualCategory 
+                  ? `Explore our comprehensive range of ${actualCategory.toLowerCase()} assessments, each designed with cutting-edge psychometric research to provide you with accurate, actionable insights about your ideal career path.`
                   : 'Explore our comprehensive range of career assessments, each designed with cutting-edge psychometric research to provide you with accurate, actionable insights about your ideal career path.'
               }
             </p>

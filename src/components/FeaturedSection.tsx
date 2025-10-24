@@ -115,7 +115,7 @@ const FeaturedSection = () => {
     const categoryObjects = categoryNames.map(categoryName => ({
       name: categoryName,
       description: getCategoryDescription(categoryName),
-      count: assessments?.filter(a => a.category === categoryName).length || 0,
+      count: assessments?.filter(a => a.category?.toLowerCase() === categoryName.toLowerCase()).length || 0,
       color: getCategoryColor(categoryName),
       textColor: getCategoryTextColor(categoryName),
       icon: getCategoryIcon(categoryName),

@@ -4,8 +4,7 @@ import { Users, Target, Award, Heart, CheckCircle, Star, Lightbulb } from 'lucid
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
+import Layout from '@/components/Layout';
 
 const About = () => {
   const teamMembers = [
@@ -81,8 +80,7 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
+    <Layout>
       
       {/* Hero Section - Mission & Vision */}
       <section className="relative py-20 bg-muted/30 overflow-hidden">
@@ -336,8 +334,7 @@ const About = () => {
 
 
 
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

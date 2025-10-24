@@ -11,6 +11,14 @@ export interface BlogPost {
   _id: string;
   title: string;
   content: string;
+  contentBlocks?: Array<{
+    id: string;
+    type: 'text' | 'image';
+    content: string;
+    imageUrl?: string;
+    imageAlt?: string;
+    order: number;
+  }>;
   excerpt: string;
   author: string;
   category: string;
@@ -21,6 +29,12 @@ export interface BlogPost {
   slug: string;
   imageUrl?: string;
   readTime?: number;
+  attachments?: Array<{
+    _id: string;
+    name: string;
+    url: string;
+    type: string;
+  }>;
   sections?: Array<{
     type: 'heading' | 'subheading' | 'paragraph' | 'list' | 'image' | 'quote';
     content: string;

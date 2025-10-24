@@ -1,9 +1,9 @@
 
-import Navigation from "@/components/Navigation";
+import Layout from "@/components/Layout";
 import SearchSection from "@/components/SearchSection";
 import FeaturedSection from "@/components/FeaturedSection";
+import CategoriesSection from "@/components/CategoriesSection";
 import AssessmentCard from "@/components/AssessmentCard";
-import Footer from "@/components/Footer";
 import { useAssessments } from "@/hooks/useAssessments";
 import { sampleAssessments } from "@/data/assessments";
 import { useState, useMemo } from "react";
@@ -56,11 +56,12 @@ const Index = () => {
   }, [sortBy, filteredAssessments]);
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-
+    <Layout>
       <SearchSection />
       <FeaturedSection />
+      
+      {/* Categories Section */}
+      <CategoriesSection />
 
       {/* Assessment Grid Section */}
       <section className="py-12 bg-factorbeam-bg">
@@ -360,10 +361,7 @@ const Index = () => {
           </div>
         </div>
       </div> */}
-
-    
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 
